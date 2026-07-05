@@ -53,8 +53,8 @@ Erik stellte den Projektkontext bereit, definierte die verlangten FSD-Themen und
 
 ## Quellen und KI
 
-- [SRC-004](../../../../../sources/sources.md#src-004--functional-specification-bei-techtarget) wird für die Definition, den Zweck und mögliche Inhalte einer Functional Specification verwendet.
-- [SRC-005](../../../../../sources/sources.md#src-005--functional-specification-bei-alltena) wird als praktische Orientierung für Struktur, Nachverfolgbarkeit und Akzeptanzkriterien verwendet.
+- [SRC-004](../../../sources/sources.md#src-004--functional-specification-bei-techtarget) wird für die Definition, den Zweck und mögliche Inhalte einer Functional Specification verwendet.
+- [SRC-005](../../../sources/sources.md#src-005--functional-specification-bei-alltena) wird als praktische Orientierung für Struktur, Nachverfolgbarkeit und Akzeptanzkriterien verwendet.
 - Beide Quellen wurden erst nach dem ersten Entwurf der Fragerunde recherchiert. Sie sind daher keine rückwirkende Grundlage der 307 Fragen und belegen keine Porsche-Geschäftsregel.
 - KI-Nachweis: [AI-001](../../../ai/conversations/2026-07-05-AI-001-repository-setup.md)
 - Ausgangsprompt: [vollständiger Prompt](../../../ai/conversations/2026-07-05-AI-001-repository-setup-prompt.md)

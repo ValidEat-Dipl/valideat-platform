@@ -219,7 +219,7 @@ Tagesprotokolle enthalten je nach Arbeitstag Tätigkeiten, Changes und Issues, E
 
 ## 10. Quellen
 
-Verwendete Quellen werden mit ihren IDs aus `docs/sources/sources.md` referenziert. Im Change-Nachweis und im Abschlussbericht wird zusätzlich erklärt, wofür die jeweilige Quelle verwendet wurde.
+Eriks verwendete Quellen werden mit ihren IDs aus `docs/members/erik/sources/sources.md` referenziert. Im Change-Nachweis und im Abschlussbericht wird zusätzlich erklärt, wofür die jeweilige Quelle verwendet wurde. Gemeinsame Teamquellen bleiben davon getrennt.
 
 Bibliografische Angaben werden nicht ergänzt, wenn sie nicht bekannt sind. Der Zitierstil richtet sich nach dem verpflichtenden Schul-Template; ein technischer numerischer Stil kann vorgeschlagen werden, gilt aber erst nach entsprechender Entscheidung.
 

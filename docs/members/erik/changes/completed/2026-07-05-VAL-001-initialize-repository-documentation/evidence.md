@@ -54,7 +54,8 @@ Erik definierte Projektkontext, Regeln, Phasen, gewünschte Struktur und die Gru
 
 ## Quellen und KI
 
-- Externe Quellen: keine verwendet
+- Für die ursprüngliche Erstellung von Struktur und Methode wurden noch keine externen Quellen verwendet.
+- [SRC-001](../../../sources/sources.md#src-001--what-is-spec-driven-development-sdd), [SRC-002](../../../sources/sources.md#src-002--openspec-readme) und [SRC-003](../../../sources/sources.md#src-003--openspec-workflow) wurden anschließend verwendet, um die bereits entwickelte Methode mit dem tatsächlichen OpenSpec-Ansatz zu vergleichen und für die spätere Diplomarbeit einzuordnen. Sie werden nicht rückwirkend als Grundlage der ursprünglichen Entscheidungen ausgegeben.
 - KI-Nachweis: [AI-001](../../../ai/conversations/2026-07-05-AI-001-repository-setup.md)
 - Ausgangsprompt: [vollständiger Prompt](../../../ai/conversations/2026-07-05-AI-001-repository-setup-prompt.md)
 
