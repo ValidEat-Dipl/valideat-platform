@@ -1,0 +1,24 @@
+.DS_Store
+
+# Lokale Einstellungen
+.env
+.env.*
+!.env.example
+
+# Abhängigkeiten und Build-Ergebnisse
+node_modules/
+target/
+dist/
+coverage/
+
+# Entwicklungsumgebungen
+.idea/
+.vscode/
+
+# Temporäre Dateien
+*.log
+*.tmp
+
+# Erzeugte LaTeX-Dateien
+docs/thesis/build/*
+!docs/thesis/build/README.md
