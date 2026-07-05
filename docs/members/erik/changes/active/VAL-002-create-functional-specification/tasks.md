@@ -17,15 +17,15 @@
 
 ## FSD-Fragerunde
 
-- [ ] Alle Themen des Ausgangsprompts in logische Fragegruppen überführen.
-- [ ] IST-Prozess und Porsche-Zielprozess vollständig abfragen.
-- [ ] Rollen, Daten, Regeln, Fristen und Korrekturen abfragen.
-- [ ] HR-Erfassung, Clearing, Konflikte, Export und Freigabe abfragen.
-- [ ] Authentifizierung, Datenschutz, Auditierung und Schnittstellen abfragen.
-- [ ] Hosting, Offline-Verhalten, Fehlerfälle und Abnahme abfragen.
-- [ ] Porsche-Version von SaaS, Restaurant, Scanner und Forschung trennen.
-- [ ] Jede Frage nach Zeitpunkt und Entscheidungsstelle kennzeichnen.
-- [ ] Fragerunde auf Vollständigkeit und Dopplungen prüfen.
+- [x] Alle Themen des Ausgangsprompts in logische Fragegruppen überführen.
+- [x] IST-Prozess und Porsche-Zielprozess vollständig abfragen.
+- [x] Rollen, Daten, Regeln, Fristen und Korrekturen abfragen.
+- [x] HR-Erfassung, Clearing, Konflikte, Export und Freigabe abfragen.
+- [x] Authentifizierung, Datenschutz, Auditierung und Schnittstellen abfragen.
+- [x] Hosting, Offline-Verhalten, Fehlerfälle und Abnahme abfragen.
+- [x] Porsche-Version von SaaS, Restaurant, Scanner und Forschung trennen.
+- [x] Jede Frage nach Zeitpunkt und Entscheidungsstelle kennzeichnen.
+- [x] Fragerunde auf Vollständigkeit und Dopplungen prüfen.
 
 ## Antworten und Klärung
 

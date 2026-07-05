@@ -37,13 +37,14 @@ Codex unterstützte bei:
 - dem Formulieren von Eriks persönlicher Methode,
 - den Vorlagen für Changes, Tagesprotokolle und Abschlussbericht,
 - der Vorbereitung eines abgeschlossenen Changes für den bisherigen Aufbau,
-- der Vorbereitung eines aktiven Changes für Fragerunde und FSD.
+- der Vorbereitung eines aktiven Changes für Fragerunde und FSD,
+- dem Erstellen einer FSD-Fragerunde mit 307 gekennzeichneten Fragen in 30 Themenblöcken aus dem vollständigen Ausgangsprompt.
 
 Codex führte keine Commits, Pushes, Pull Requests oder Änderungen an GitHub Projects durch.
 
 ## Verwendung
 
-Die Ergebnisse wurden für die initiale Repository-Struktur und die Dokumente unter `docs/members/erik/` verwendet. Die FSD selbst ist noch nicht ausgearbeitet. Der aktive Change [VAL-002-create-functional-specification](../../changes/active/VAL-002-create-functional-specification/proposal.md) beschreibt den nächsten Schritt: zuerst Fragen aus dem vollständigen Projektkontext erstellen, dann Antworten und Teamprüfung dokumentieren und erst danach Anforderungen formulieren.
+Die Ergebnisse wurden für die initiale Repository-Struktur und die Dokumente unter `docs/members/erik/` verwendet. Die Fragerunde liegt unter [docs/requirements/fsd-questionnaire.md](../../../../requirements/fsd-questionnaire.md). Die FSD selbst ist noch nicht ausgearbeitet. Im aktiven Change [VAL-002-create-functional-specification](../../changes/active/VAL-002-create-functional-specification/proposal.md) folgen als Nächstes Eriks Antworten, die Teamprüfung und erst danach die Formulierung der Anforderungen.
 
 ## Prüfung und Grenzen
 

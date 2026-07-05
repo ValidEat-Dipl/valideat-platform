@@ -16,7 +16,9 @@
 - Proposal, Design und Aufgaben für die FSD-Arbeit sind erstellt.
 - Der Ablauf trennt Fragerunde, Eriks Antworten, Teamprüfung und FSD-Erstellung.
 - `docs/FSD.md` wurde noch nicht fachlich ausgearbeitet.
-- `docs/requirements/fsd-questionnaire.md` enthält noch nicht die vollständige Fragerunde.
+- `docs/requirements/fsd-questionnaire.md` enthält eine erste vollständige Fragerunde mit 307 eindeutig nummerierten Fragen in 30 Themenblöcken.
+- Jede Frage ist nach Zeitpunkt und zuständiger Entscheidungsstelle gekennzeichnet.
+- Antworten von Erik und die Teamprüfung sind noch offen.
 
 ## Git- und GitHub-Nachweise
 
@@ -33,7 +35,9 @@
 |---|---|
 | Ausgangsprompt als Datei vorhanden | durchgeführt |
 | Change-Struktur vorhanden | durchgeführt |
-| Fachliche Prüfung der Fragerunde | nicht ausgeführt; Fragerunde noch nicht erstellt |
+| Anzahl und Eindeutigkeit der Fragen-IDs | 307 Fragenzeilen geprüft; keine doppelten IDs in den Fragentabellen festgestellt |
+| Vollständigkeit der Kennzeichnungen | maschinell geprüft; jede Fragenzeile enthält eine vorgesehene Zeit- und Entscheidungskennzeichnung |
+| Themenabdeckung gegen den Ausgangsprompt | durch strukturierte Zuordnung zu 30 Themenblöcken geprüft; fachliche Prüfung durch Erik und Team noch offen |
 | Teamreview | nicht ausgeführt |
 | Prüfung der FSD-Anforderungs-IDs | nicht ausgeführt; FSD noch nicht erstellt |
 
@@ -49,13 +53,15 @@ Erik stellte den Projektkontext bereit, definierte die verlangten FSD-Themen und
 
 ## Quellen und KI
 
-- Externe Quellen: bisher keine verwendet
+- [SRC-004](../../../../../sources/sources.md#src-004--functional-specification-bei-techtarget) wird für die Definition, den Zweck und mögliche Inhalte einer Functional Specification verwendet.
+- [SRC-005](../../../../../sources/sources.md#src-005--functional-specification-bei-alltena) wird als praktische Orientierung für Struktur, Nachverfolgbarkeit und Akzeptanzkriterien verwendet.
+- Beide Quellen wurden erst nach dem ersten Entwurf der Fragerunde recherchiert. Sie sind daher keine rückwirkende Grundlage der 307 Fragen und belegen keine Porsche-Geschäftsregel.
 - KI-Nachweis: [AI-001](../../../ai/conversations/2026-07-05-AI-001-repository-setup.md)
 - Ausgangsprompt: [vollständiger Prompt](../../../ai/conversations/2026-07-05-AI-001-repository-setup-prompt.md)
 
 ## Abschlusscheckliste
 
-- [ ] Fragerunde vollständig erstellt und geprüft.
+- [x] Fragerunde als erster vollständiger Entwurf erstellt und technisch geprüft.
 - [ ] Antworten von Erik dokumentiert.
 - [ ] Teamreview dokumentiert.
 - [ ] Widersprüche und offene externe Entscheidungen sichtbar.
