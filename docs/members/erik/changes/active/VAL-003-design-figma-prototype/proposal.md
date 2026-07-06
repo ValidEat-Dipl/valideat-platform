@@ -40,6 +40,7 @@ In Figma soll ein verständlicher klickbarer Prototyp für die wichtigsten Ablä
 - beispielhafte Export- und Freigabeansicht,
 - wichtige Lade-, Leer-, Fehler- und Bestätigungszustände,
 - wiederverwendbare visuelle Grundlagen und Komponenten,
+- Orientierung der Komponenten an Bootstrap 5.3 mit eigener Anpassung über SCSS,
 - klickbare Verbindung der wichtigsten Abläufe.
 
 ## Nicht-Umfang
@@ -61,6 +62,7 @@ In Figma soll ein verständlicher klickbarer Prototyp für die wichtigsten Ablä
 - [ ] Export beziehungsweise Freigabe ist als vorläufiger Ablauf sichtbar.
 - [ ] Wichtige Fehler-, Leer- und Bestätigungszustände sind berücksichtigt.
 - [ ] Wiederkehrende Elemente sind als konsistente Figma-Komponenten angelegt.
+- [ ] Die Komponenten sind realistisch mit Bootstrap 5.3 und projektspezifischem SCSS umsetzbar.
 - [ ] Ungeklärte fachliche Punkte sind im Design oder den Begleitnotizen als Annahmen markiert.
 - [ ] Das Design wurde von Erik selbst geprüft.
 - [ ] Rückmeldungen von Julian und Joschua sind dokumentiert oder als ausständig gekennzeichnet.

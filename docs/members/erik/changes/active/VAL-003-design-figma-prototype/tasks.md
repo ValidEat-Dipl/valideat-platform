@@ -11,6 +11,10 @@
 ## 1. Vorbereitung
 
 - [x] Change für die Figma-Arbeit anlegen.
+- [x] Ersten User Flow in Figma erstellen.
+- [x] Moodboard als visuelle Orientierung erstellen.
+- [x] Bootstrap 5.3 mit SCSS als UI-Grundlage auswählen.
+- [x] Vergleichs-, Figma- und Bootstrap-Quellen sichern.
 - [ ] Vorhandene Projektbeschreibung und designkritische FSD-Fragen sammeln.
 - [ ] Vorläufigen Porsche-Umfang der Screens festlegen.
 - [ ] Benutzergruppen und wichtigste Aufgaben festhalten.
@@ -21,7 +25,7 @@
 - [ ] Seiten und Navigation für den Mitarbeiterbereich planen.
 - [ ] Seiten und Navigation für HR/Admin planen.
 - [ ] Clearing-, Konflikt-, Export- und Freigabebereich einordnen.
-- [ ] Hauptflows als einfache Übersicht darstellen.
+- [x] Ersten Hauptflow als einfache Übersicht darstellen.
 
 ## 3. Wireframes
 
@@ -37,7 +41,8 @@
 ## 4. Visuelle Grundlagen und Komponenten
 
 - [ ] Farben, Typografie und Abstände als vorläufige Grundlagen festlegen.
-- [ ] Buttons, Felder, Navigation und Statusanzeigen als Komponenten anlegen.
+- [ ] Buttons, Felder, Navigation und Statusanzeigen als Komponenten anlegen. *(in Arbeit)*
+- [ ] Wireframe-Komponenten mit den tatsächlich benötigten Bootstrap-Komponenten abgleichen. *(in Arbeit)*
 - [ ] Benötigte Varianten und Zustände ergänzen.
 - [ ] Kontraste und verständliche Statusdarstellung prüfen.
 

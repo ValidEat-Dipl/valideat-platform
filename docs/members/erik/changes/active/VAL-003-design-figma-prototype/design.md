@@ -84,6 +84,29 @@ Wiederkehrende Elemente sollen als Komponenten aufgebaut werden, beispielsweise:
 
 Varianten werden nur angelegt, wenn sie im Prototyp wirklich gebraucht werden.
 
+## Entscheidung zur UI-Grundlage
+
+Für die spätere Angular-Umsetzung wird Bootstrap 5.3 als CSS-Framework verwendet und über SCSS an ValidEat angepasst. Angular Material wird nicht zusätzlich eingesetzt. Gemeint ist damit nicht „SCSS statt CSS“: Die SCSS-Dateien werden später zu CSS kompiliert. Bootstrap liefert die Grundlage für Grid, responsive Breakpoints, Utilities und häufig benötigte Komponenten.
+
+Die Entscheidung wurde aus folgenden Gründen getroffen:
+
+- Der Mitarbeiterbereich soll mobil und der HR-/Adminbereich für größere Bildschirme gestaltet werden. Bootstraps Mobile-first-Ansatz und responsive Breakpoints passen zu dieser Aufteilung.
+- Formulare, Buttons, Navigation, Tabellen, Dialoge und Statusanzeigen können auf einer bekannten Grundlage aufgebaut werden.
+- Sass-Variablen, Maps und Mixins ermöglichen eigene Farben, Typografie, Abstände und weitere Anpassungen, ohne Bootstrap-Quelldateien direkt zu verändern.
+- Das spätere SaaS-Ziel benötigt flexibleres Branding je Mandant. Eine über SCSS anpassbare Grundlage ist dafür hilfreich.
+- Bootstrap ist nicht an die visuelle Sprache von Material Design gebunden. Dadurch kann ValidEat eine eigenständigere Gestaltung erhalten.
+- Das Bootstrap-UI-Kit in Figma kann als Referenz dienen, damit Designkomponenten und spätere Umsetzung nicht unnötig auseinanderlaufen.
+
+Die Entscheidung besitzt auch Nachteile:
+
+- Bootstrap ist weniger eng in Angular integriert als Angular Material.
+- Nicht benötigte Bestandteile müssen vermieden beziehungsweise später beim Build berücksichtigt werden.
+- Zu viele Utility-Klassen können Templates unübersichtlich machen.
+- Barrierefreiheit entsteht nicht automatisch. Semantisches Markup, ARIA, Fokusführung, Tastaturbedienung und Farbkontraste müssen weiterhin bewusst umgesetzt und geprüft werden.
+- Interaktive Bootstrap-JavaScript-Komponenten sollen nicht ungeprüft neben Angular verwendet werden. Das konkrete Interaktionsverhalten wird später passend zur Angular-Architektur entschieden.
+
+Die Figma-Komponenten werden deshalb nicht einfach unverändert aus dem Community-UI-Kit kopiert. Sie werden an ValidEat angepasst und auf tatsächlichen Bedarf, Zustände und Barrierefreiheit geprüft.
+
 ## Responsive Ausrichtung
 
 Der Mitarbeiterbereich wird zunächst mobil gedacht, weil eine schnelle tägliche Erfassung wahrscheinlich auf kleineren Geräten relevant ist. HR-, Clearing- und Exportansichten werden zunächst für größere Bildschirme entworfen. Diese Annahme muss später mit den tatsächlichen Porsche-Geräten abgeglichen werden.

@@ -90,3 +90,27 @@ Lange Ordnerlisten, alle Vorlagen und die vollständigen 307 Fragen würden den 
 - Wie gut konnten Julian und Joschua die Dokumentation nachvollziehen?
 - Welche Unterschiede gab es zwischen geplantem und tatsächlichem Ablauf?
 - Welche Änderungen würde ich an der Methode nach dem Projekt vornehmen?
+
+## UI/UX-Vorgehen beim Figma-Prototyp
+
+Für den ersten ValidEat-Prototyp habe ich nicht direkt mit fertigen Screens begonnen. Zuerst entstand ein User Flow, um die Abfolge und Beziehungen der wichtigsten Schritte sichtbar zu machen. Danach habe ich ein Moodboard als visuelle Orientierung erstellt. Aktuell entstehen wiederverwendbare Komponenten für die Wireframes.
+
+Diese Reihenfolge hilft mir dabei, Prozess, visuelle Richtung und einzelne UI-Bausteine nicht gleichzeitig entscheiden zu müssen. Der User Flow beschäftigt sich zuerst mit dem Ablauf. Das Moodboard sammelt die gewünschte Wirkung. Die Wireframe-Komponenten bilden anschließend die Grundlage für konsistente Screens. Erst danach sollen detaillierte High-Fidelity-Ansichten und ein klickbarer Prototyp entstehen.
+
+## Entscheidung für Bootstrap mit SCSS
+
+Für die spätere Angular-Umsetzung wurde Bootstrap 5.3 als CSS-Framework gewählt. Das Design soll über SCSS an ValidEat angepasst werden. Angular Material wird nicht zusätzlich eingesetzt.
+
+Die Formulierung „SCSS statt CSS“ wäre dabei technisch nicht richtig, weil SCSS später zu CSS kompiliert wird. Bootstrap stellt die allgemeine Grundlage für responsive Layouts, Grid, Utilities und häufig benötigte Komponenten bereit. Über Sass können Variablen, Maps, Mixins und benötigte Frameworkteile angepasst werden ([SRC-009](../sources/sources.md#src-009--bootstrap-sass)).
+
+Ein wichtiger Grund ist die unterschiedliche Nutzung der Oberflächen. Der Mitarbeiterbereich soll zuerst mobil gedacht werden, während HR-, Clearing- und Adminbereiche mehr Platz für Tabellen, Filter und Detailinformationen brauchen. Bootstrap verfolgt einen Mobile-first-Ansatz und stellt responsive Breakpoints bereit ([SRC-008](../sources/sources.md#src-008--bootstrap-53-introduction)).
+
+Auch das spätere SaaS-Ziel spielt eine Rolle. ValidEat soll nicht dauerhaft auf eine feste Darstellung für ein einziges Unternehmen beschränkt bleiben. Farben, Typografie und andere Teile des Erscheinungsbilds sollen später je Mandant anpassbar werden können. Die Sass-Grundlage von Bootstrap unterstützt diese Richtung, ohne dass das Standarddesign unverändert übernommen werden muss.
+
+Angular Material wäre für Angular technisch enger integriert und bietet Vorteile bei fertigen Komponenten, Fokusverwaltung und Barrierefreiheit. Für ValidEat wurde aber eine weniger stark durch Material Design vorgegebene visuelle Grundlage bevorzugt. Die Vergleichsquelle von BairesDev wurde dafür gemeinsam mit den offiziellen Bootstrap-Seiten betrachtet und nicht als alleinige Begründung verwendet ([SRC-006](../sources/sources.md#src-006--angular-material-vs-bootstrap-bei-bairesdev)).
+
+Das Figma Community UI Kit dient als praktische Referenz für Bootstrap-Komponenten. Es soll helfen, dass Figma-Design und spätere Umsetzung nicht unnötig weit auseinanderliegen. Die Komponenten werden trotzdem für ValidEat angepasst und nicht ungeprüft übernommen ([SRC-007](../sources/sources.md#src-007--bootstrap-5-ui-kit-fuer-figma)).
+
+Eine Grenze der Entscheidung ist die Barrierefreiheit. Bootstrap stellt Hilfen und Beispiele bereit, weist aber selbst darauf hin, dass die tatsächliche Zugänglichkeit von Markup, zusätzlichen Styles und dem implementierten Verhalten abhängt. Kontraste, Tastaturbedienung, Fokusverwaltung und ARIA müssen deshalb separat berücksichtigt und geprüft werden ([SRC-010](../sources/sources.md#src-010--bootstrap-accessibility)).
+
+Später sollte ich in der Diplomarbeit nicht nur begründen, warum Bootstrap gewählt wurde, sondern auch bewerten, ob diese Entscheidung bei der tatsächlichen Angular-Umsetzung funktioniert hat. Dazu gehören Wartbarkeit der SCSS-Anpassungen, Übereinstimmung zwischen Figma und Code, responsive Umsetzung und der zusätzliche Aufwand für barrierefreie Komponenten.

@@ -14,15 +14,19 @@
 
 - Change für die Figma-Arbeit wurde angelegt.
 - Ziel, vorläufiger Umfang, Vorgehensweise und Aufgaben wurden dokumentiert.
-- Eine Figma-Datei wurde im Rahmen dieses Changes noch nicht erstellt oder verlinkt.
-- Es wurden noch keine Screens, Komponenten oder Prototyp-Flows als umgesetzt nachgewiesen.
+- Eine Figma-Datei wurde erstellt und zentral unter `docs/members/erik/design/README.md` verlinkt.
+- Ein erster User Flow wurde erstellt.
+- Ein Moodboard wurde als visuelle Orientierung erstellt.
+- Wireframe-Komponenten werden derzeit ausgearbeitet.
+- Bootstrap 5.3 mit eigener SCSS-Anpassung wurde als spätere UI-Grundlage gewählt; Angular Material wird nicht zusätzlich eingesetzt.
+- Vollständige Screens und klickbare Prototyp-Flows sind noch nicht als fertig nachgewiesen.
 
 ## Designnachweis
 
 | Nachweis | Referenz |
 |---|---|
-| Figma-Datei | noch nicht vorhanden |
-| Figma-Seiten | noch nicht vorhanden |
+| Figma-Datei | [ValidEat in Figma](https://www.figma.com/design/VBtBtXDB2mzApytOZSV2oi/ValidEat?node-id=0-1) |
+| Figma-Seiten | User Flow und Moodboard vorhanden; Komponentenbereich in Arbeit |
 | Prototyp-Link | noch nicht vorhanden |
 | Screenshots oder Exporte | noch nicht vorhanden |
 
@@ -39,7 +43,7 @@
 
 | Prüfung | Ergebnis |
 |---|---|
-| Struktur der Change-Dokumente | noch zu prüfen |
+| Struktur der Change-Dokumente | am 2026-07-06 technisch geprüft; keine fehlerhaften relativen Links festgestellt |
 | Inhaltliche Prüfung des Umfangs | noch nicht durchgeführt |
 | Klickbarer Prototyp | nicht geprüft, da noch nicht vorhanden |
 | Teamreview | noch nicht durchgeführt |
@@ -53,7 +57,11 @@
 
 ## Quellen
 
-Noch keine externen Quellen verwendet.
+- [SRC-006](../../../sources/sources.md#src-006--angular-material-vs-bootstrap-bei-bairesdev): Vergleich von Angular Material und Bootstrap einschließlich Vor- und Nachteilen.
+- [SRC-007](../../../sources/sources.md#src-007--bootstrap-5-ui-kit-fuer-figma): praktische Referenz für Bootstrap-Komponenten in Figma.
+- [SRC-008](../../../sources/sources.md#src-008--bootstrap-53-introduction): offizielle Grundlage für Mobile-first und responsive Bootstrap-Layouts.
+- [SRC-009](../../../sources/sources.md#src-009--bootstrap-sass): offizielle Grundlage für die Anpassung über Sass-Variablen, Maps, Mixins und selektive Imports.
+- [SRC-010](../../../sources/sources.md#src-010--bootstrap-accessibility): offizielle Einordnung der vorhandenen Accessibility-Unterstützung und ihrer Grenzen.
 
 ## Abschlusscheckliste
 
