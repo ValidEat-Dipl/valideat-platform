@@ -4,7 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
 @Entity
-public class Mitarbeiter {
+public class Employee {
 
     @Id
     private Long id;
