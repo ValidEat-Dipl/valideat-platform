@@ -1,4 +1,4 @@
-package at.htl;
+package at.htl.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

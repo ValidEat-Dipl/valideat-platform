@@ -1,23 +1,31 @@
-package at.htl;
+package at.htl.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
 public class FoodTicket {
 
     @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDateTime Date;
+    private LocalDate Date; // Eingabefeld ohne vorgelegte Werte im Frontend (mit Cache)
 
-    @OneToOne
+    @ManyToOne
     private Employee employee;
 
     private int costOrder;
+
+    public FoodTicket() {}
+
+    public FoodTicket(LocalDate date, Employee employee, int costOrder) {
+        Date = date;
+        this.employee = employee;
+        this.costOrder = costOrder;
+    }
 
     public Long getId() {
         return id;
@@ -27,11 +35,11 @@ public class FoodTicket {
         this.id = id;
     }
 
-    public LocalDateTime getDate() {
+    public LocalDate getDate() {
         return Date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(LocalDate date) {
         Date = date;
     }
 
