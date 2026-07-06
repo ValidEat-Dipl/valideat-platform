@@ -29,7 +29,7 @@ public class FoodTicketRepository {
         List<FoodTicket> ticketsList = entityManager.createQuery("""
                                                       select f
                                                       from FoodTicket f
-                                                      where year(f.Date) = year(:date)
+                                                      where f.Date = :date
                                                       and f.employee.id = :empId
                                                       """, FoodTicket.class)
                 .setParameter("date", date)
