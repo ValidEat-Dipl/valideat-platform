@@ -24,4 +24,18 @@ public class FoodTicketRepository {
         FoodTicket foodTicket = new FoodTicket(date, employee, costOrder);
         entityManager.persist(foodTicket);
     }
+
+    public boolean checkIfAmountOfTicketsOnSpecificDayFromOnePersonIsValid (LocalDate date, Employee emp) /* checkIfOnePersonTookMoreThanOneTicketOnOneDay */ {
+        List<FoodTicket> ticketsList = entityManager.createQuery("""
+                                                      select f
+                                                      from FoodTicket f
+                                                      where year(f.Date) = year(:date)
+                                                      and f.employee.id = :empId
+                                                      """, FoodTicket.class)
+                .setParameter("date", date)
+                .setParameter("empId", emp.getId())
+                .getResultList();
+
+        return ticketsList.size() <= 1;
+    }
 }
