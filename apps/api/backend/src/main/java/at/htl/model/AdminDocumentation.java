@@ -7,7 +7,7 @@ import jakarta.persistence.ManyToOne;
 import java.time.LocalDateTime;
 
 @Entity
-public class AdminDocumentationEntry {
+public class AdminDocumentation {
 
     @Id
     private Long id;
@@ -22,7 +22,7 @@ public class AdminDocumentationEntry {
     @ManyToOne
     private Employee admin;
 
-    public AdminDocumentationEntry() {}
+    public AdminDocumentation() {}
 
     public Long getId() {
         return id;

@@ -32,5 +32,10 @@ public class FoodTicketResource {
                                        @PathParam("employee") Employee employee,
                                        @PathParam("costOrder") int costOrder) {
         foodTicketRepository.save(date, employee, costOrder);
+        return null;
+    }
+
+    private boolean checkIfDailyTicketUsageIsNotExceeded(LocalDate date, Employee emp) {
+        return foodTicketRepository.checkIfAmountOfTicketsOnSpecificDayFromOnePersonIsValid(date, emp);
     }
 }
