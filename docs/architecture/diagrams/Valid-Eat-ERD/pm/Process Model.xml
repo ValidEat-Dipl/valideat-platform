@@ -1,0 +1,7 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<ProcessModel class="oracle.dbtools.crest.model.design.process.ProcessModel" name="Process Model" id="5391B09B-9003-29BA-A665-656E8B88ABA8">
+<createdBy>julianrichter</createdBy>
+<createdTime>2026-07-07 13:36:00 UTC</createdTime>
+<ownerDesignName>Valid-Eat-ERD</ownerDesignName>
+<shouldBeOpen>false</shouldBeOpen>
+</ProcessModel>

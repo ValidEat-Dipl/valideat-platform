@@ -1,0 +1,71 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="F73E1C64-99F3-9845-1BC6-A5983ECF9249" name="Änderung">
+<createdBy>julianrichter</createdBy>
+<createdTime>2026-07-07 14:38:53 UTC</createdTime>
+<ownerDesignName>Valid-Eat-ERD</ownerDesignName>
+<engineerTo>
+<item key="EC9518F0-531C-08AE-E133-0E90D51627DA" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="Beschreibung" id="0434D56D-5AD7-94DC-1D92-6194C810FE3D">
+<createdBy>julianrichter</createdBy>
+<createdTime>2026-07-07 14:38:58 UTC</createdTime>
+<ownerDesignName>Valid-Eat-ERD</ownerDesignName>
+<engineerTo>
+<item key="EC9518F0-531C-08AE-E133-0E90D51627DA" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>A3A3C77D-0366-9768-FF89-1C25E56881C8</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Zeitpunkt" id="B18DBDE5-AAFA-B275-D51A-7AF469CDB0BD">
+<createdBy>julianrichter</createdBy>
+<createdTime>2026-07-07 14:39:05 UTC</createdTime>
+<ownerDesignName>Valid-Eat-ERD</ownerDesignName>
+<engineerTo>
+<item key="EC9518F0-531C-08AE-E133-0E90D51627DA" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>A3A3C77D-0366-9768-FF89-1C25E56881C8</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Essensmarken_ID" id="D2DA186F-96ED-A7C0-189D-00D7609349F6">
+<createdBy>julianrichter</createdBy>
+<createdTime>2026-07-07 14:39:18 UTC</createdTime>
+<ownerDesignName>Valid-Eat-ERD</ownerDesignName>
+<engineerTo>
+<item key="EC9518F0-531C-08AE-E133-0E90D51627DA" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>A3A3C77D-0366-9768-FF89-1C25E56881C8</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Mitarbeiter_ID" id="54C9C4AA-F22E-35F1-D4E3-BCE0A31B54E9">
+<createdBy>julianrichter</createdBy>
+<createdTime>2026-07-07 14:39:28 UTC</createdTime>
+<ownerDesignName>Valid-Eat-ERD</ownerDesignName>
+<engineerTo>
+<item key="EC9518F0-531C-08AE-E133-0E90D51627DA" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>A3A3C77D-0366-9768-FF89-1C25E56881C8</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+</Entity>

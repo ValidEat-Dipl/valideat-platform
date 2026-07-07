@@ -1,0 +1,8 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="Valid-Eat-ERD" id="A34309CA-DD98-0D99-FA7E-8A0870B8D19A" version="3.5">
+<createdBy>julianrichter</createdBy>
+<createdTime>2026-07-07 13:36:00 UTC</createdTime>
+<ownerDesignName>Valid-Eat-ERD</ownerDesignName>
+<capitalNames>false</capitalNames>
+<designId>A34309CA-DD98-0D99-FA7E-8A0870B8D19A</designId>
+</OSDM_Design>

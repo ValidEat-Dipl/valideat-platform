@@ -1,0 +1,18 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="Relation_1" directorySegmentName="seg_0" id="41663398-24C2-08A5-37A2-4F0A2F4F4C0B">
+<createdBy>julianrichter</createdBy>
+<createdTime>2026-07-07 13:58:40 UTC</createdTime>
+<ownerDesignName>Valid-Eat-ERD</ownerDesignName>
+<engineerTo>
+<item key="EC9518F0-531C-08AE-E133-0E90D51627DA" value="true"/>
+</engineerTo>
+<identifying>false</identifying>
+<optionalSource>false</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>71413281-4E25-7465-9BE2-B732AA152FDD</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>1366FD84-CB49-80FC-6B17-C74283176DB8</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>
