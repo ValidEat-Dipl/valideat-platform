@@ -3,12 +3,12 @@ import {NavComp} from '../nav-comp/nav-comp';
 import {ButtonComp} from '../button-comp/button-comp';
 
 @Component({
-  selector: 'app-clear-conflict-comp',
+  selector: 'app-export-comp',
   imports: [
     NavComp,
     ButtonComp
   ],
-  templateUrl: './clear-conflict-comp.html',
-  styleUrl: './clear-conflict-comp.css',
+  templateUrl: './export-comp.html',
+  styleUrl: './export-comp.css',
 })
-export class ClearConflictComp {}
+export class ExportComp {}
