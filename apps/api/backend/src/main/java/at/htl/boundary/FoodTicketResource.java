@@ -2,6 +2,7 @@ package at.htl.boundary;
 
 import at.htl.model.Employee;
 import at.htl.model.FoodTicket;
+import at.htl.model.Status;
 import at.htl.repository.EmployeeRepository;
 import at.htl.repository.FoodTicketRepository;
 import jakarta.inject.Inject;
@@ -11,6 +12,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Path("/api/foodticket")
@@ -29,7 +31,7 @@ public class FoodTicketResource {
     }
 
     @POST
-    @Path("/addTicketeEntry/{date}/{employeeId}/{costOrder}")
+    @Path("/addTicketEntry/{date}/{employeeId}/{costOrder}")
     @Transactional
     public Response saveNewTicketEntry(@PathParam("date") LocalDate date,
                                        @PathParam("employeeId") Long empId,
@@ -39,6 +41,18 @@ public class FoodTicketResource {
 
         foodTicketRepository.save(date, employee, costOrder);
         return Response.ok().build();
+    }
+
+    @GET
+    @Path("/filterTickets/{status}/{conflict}/{employeeId}/{startDate}/{endDate}")
+    public List<FoodTicket> filterTicketEntries(@PathParam("status") Status status,
+                                                @PathParam("conflict") String conflict,
+                                                @PathParam("employeeId") Long empId,
+                                                @PathParam("startDate") LocalDateTime startDate,
+                                                @PathParam("endDate") LocalDateTime endDate) {
+
+
+        return foodTicketRepository.filterTickets(status, conflict, empId, startDate, endDate);
     }
 
     @GET
