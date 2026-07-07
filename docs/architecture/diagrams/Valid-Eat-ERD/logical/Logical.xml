@@ -1,0 +1,7 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<LogicalDesign class="oracle.dbtools.crest.model.design.logical.LogicalDesign" name="Logical" id="3E39F306-7972-0570-5A7B-08C2C0EDC7C5" mainViewID="6A7AEB08-B075-D3E8-B4DD-65441962C521">
+<createdBy>julianrichter</createdBy>
+<createdTime>2026-07-07 13:36:00 UTC</createdTime>
+<ownerDesignName>Valid-Eat-ERD</ownerDesignName>
+<shouldBeOpen>false</shouldBeOpen>
+</LogicalDesign>

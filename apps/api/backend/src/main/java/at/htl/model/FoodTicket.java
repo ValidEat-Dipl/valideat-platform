@@ -3,7 +3,6 @@ package at.htl.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 public class FoodTicket {
@@ -12,19 +11,40 @@ public class FoodTicket {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDate Date; // Eingabefeld ohne vorgelegte Werte im Frontend (mit Cache)
+    private LocalDate date; // Eingabefeld ohne vorgelegte Werte im Frontend (mit Cache)
 
     @ManyToOne
     private Employee employee;
 
     private int costOrder;
 
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
+    private String conflict;
+
     public FoodTicket() {}
 
     public FoodTicket(LocalDate date, Employee employee, int costOrder) {
-        Date = date;
+        this.date = date;
         this.employee = employee;
         this.costOrder = costOrder;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public String getConflict() {
+        return conflict;
+    }
+
+    public void setConflict(String conflict) {
+        this.conflict = conflict;
     }
 
     public Long getId() {
@@ -36,11 +56,11 @@ public class FoodTicket {
     }
 
     public LocalDate getDate() {
-        return Date;
+        return date;
     }
 
     public void setDate(LocalDate date) {
-        Date = date;
+        this.date = date;
     }
 
     public Employee getEmployee() {
