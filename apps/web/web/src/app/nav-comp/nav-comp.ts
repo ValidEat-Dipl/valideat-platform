@@ -15,6 +15,7 @@ export class NavComp {
     "http://localhost:4200/admin-overview",
     "http://localhost:4200/create-ticket",
     "http://localhost:4200/clearing-tickets",
+    "http://localhost:4200/open-conflicts",
     "http://localhost:4200/export",
   ]);
 
@@ -22,6 +23,7 @@ export class NavComp {
     "Übersicht",
     "Markerl erfassen",
     "Clearing",
+    "Konflikte",
     "Export & Freigabe"
   ]);
 

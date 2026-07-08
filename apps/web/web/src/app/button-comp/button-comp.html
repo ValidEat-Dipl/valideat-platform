@@ -8,4 +8,7 @@
   @case ("reset") {
     <input type="reset" value="{{ text() }}" class="btn btn-{{ buttonDesignType() }}">
   }
+  @case("submit") {
+    <button type="{{ buttonType() }}" class="btn btn-{{ buttonDesignType() }}">{{ text() }}</button>
+  }
 }

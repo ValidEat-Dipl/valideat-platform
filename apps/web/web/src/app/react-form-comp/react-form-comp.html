@@ -4,21 +4,21 @@
     <input type="text" class="form-control" id="username" formControlName="username" placeholder="Max Mustermann">
   </div>
   <div class="d-flex gap-3">
-    <div class="flex-fill">
+    <div class="w-50">
       <label for="date" class="form-label">2. Datum</label>
       <input type="date" class="form-control" id="date" formControlName="dateTicket">
     </div>
-    <div class="flex-fill">
+    <div class="w-50">
       <label for="costDepartment" class="form-label">3. Kostenstelle</label>
       <input type="text" class="form-control" id="costDepartment" formControlName="costDepartment" placeholder="KST-001">
     </div>
   </div>
   <div class="d-flex gap-3">
-    <div class="flex-fill">
+    <div class="w-50">
       <label for="costRank" class="form-label">4. Markerlstufe</label>
       <input type="text" class="form-control" id="costRank" formControlName="costRank" placeholder="Stufe A">
     </div>
-    <div class="flex-fill">
+    <div class="w-50">
       <label for="restaurant" class="form-label">5. Restaurant</label>
       <input type="text" class="form-control" id="restaurant" formControlName="restaurant" placeholder="Hurry for Curry">
     </div>
@@ -32,8 +32,8 @@
     <label class="form-check-label" for="checkDefault">7. Unterschrift vorhanden</label>
   </div>
   <div class="d-flex gap-1 mt-3">
-    <app-button-comp buttonDesignType="primary" text="Speichern und nächstes"></app-button-comp>
-    <app-button-comp buttonDesignType="secondary" text="Speichern"></app-button-comp>
+    <app-button-comp buttonType="submit" disabledExpression="form.invalid || form.pending" buttonDesignType="primary" text="Speichern und nächstes"></app-button-comp> <!-- Button muss noch onSubmit auslösen können (update im button-comp erforderlich -->
+    <app-button-comp buttonDesignType="secondary" text="Speichern"></app-button-comp> <!-- Button muss noch onSubmit auslösen können (update im button-comp erforderlich -->
     <app-button-comp buttonType="reset" buttonDesignType="outline-secondary" text="Filter zurücksetzen"></app-button-comp>
   </div>
 </form>

@@ -1,0 +1,23 @@
+<app-nav-comp></app-nav-comp>
+
+<div class="m-4 d-grid gap-4">
+
+  <h1>Offene Konflikte</h1>
+
+  <app-info-flex-comp></app-info-flex-comp>
+
+  @if (openConflictsCount < 1) {
+    <div class="bg-success-subtle rounded-3 d-grid p-5 justify-content-center">
+      <p class="text-center m-0 text-success-emphasis fw-bold">Keine offenen Konflikte</p>
+      <p class="text-center m-0 text-success">Alle Einträge für diesen Zeitraum wurden erfolgreich bearbeitet.</p>
+    </div>
+  } @else {
+    <div class="d-grid gap-4 statistics">
+      <div class="d-flex gap-3">
+
+        <app-button-comp buttonType="reset" buttonDesignType="outline-secondary" text="Filter zurücksetzen"></app-button-comp>
+      </div>
+      <app-table-comp></app-table-comp>
+    </div>
+  }
+</div>

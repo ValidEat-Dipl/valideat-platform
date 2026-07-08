@@ -11,5 +11,6 @@ export class ButtonComp {
   text = input<string>("Button");
   buttonType = input<string>("button");
   link = input<string>("");
+  disabledExpression = input<string>("");
 
 }
