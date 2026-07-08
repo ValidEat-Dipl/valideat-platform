@@ -29,7 +29,7 @@
 <logicalDatatype>A3A3C77D-0366-9768-FF89-1C25E56881C8</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="Datum" id="04BED239-C8BB-C538-7097-4B4FBEE631B3">
+<Attribute name="EinloeseDatum" id="04BED239-C8BB-C538-7097-4B4FBEE631B3">
 <createdBy>julianrichter</createdBy>
 <createdTime>2026-07-07 13:39:42 UTC</createdTime>
 <ownerDesignName>Valid-Eat-ERD</ownerDesignName>
@@ -92,6 +92,32 @@
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>A3A3C77D-0366-9768-FF89-1C25E56881C8</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Pruefer_ID" id="6F7078BA-1697-9A8A-D6B8-7578A46802B0">
+<createdBy>julianrichter</createdBy>
+<createdTime>2026-07-08 12:38:12 UTC</createdTime>
+<ownerDesignName>Valid-Eat-ERD</ownerDesignName>
+<engineerTo>
+<item key="EC9518F0-531C-08AE-E133-0E90D51627DA" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="PruefDatum" id="FEB59571-F872-02A1-B190-700B4D5D856F">
+<createdBy>julianrichter</createdBy>
+<createdTime>2026-07-08 12:41:48 UTC</createdTime>
+<ownerDesignName>Valid-Eat-ERD</ownerDesignName>
+<engineerTo>
+<item key="EC9518F0-531C-08AE-E133-0E90D51627DA" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
 </attributes>
