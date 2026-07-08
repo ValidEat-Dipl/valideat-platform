@@ -2,14 +2,14 @@
 
 ## Metadaten
 
-| Feld | Wert |
-|---|---|
-| Change-ID | `VAL-003` |
-| Status | `draft` |
-| Verantwortlich | Erik Bergmair |
-| Erstellt am | 2026-07-06 |
-| FSD-Referenz | `docs/FSD.md`, derzeit noch nicht ausgearbeitet |
-| GitHub Issue | noch nicht vorhanden |
+| Feld           | Wert                                              |
+| -------------- | ------------------------------------------------- |
+| Change-ID      | `VAL-003`                                       |
+| Status         | `implemented`                                   |
+| Verantwortlich | Erik Bergmair                                     |
+| Erstellt am    | 2026-07-06                                        |
+| FSD-Referenz   | `docs/FSD.md`, derzeit noch nicht ausgearbeitet |
+| GitHub Issue   | [#2 – Figma Prototyp](https://github.com/ValidEat-Dipl/valideat-platform/issues/2) |
 
 ## Herkunft und Sicherheit
 
@@ -55,30 +55,30 @@ In Figma soll ein verständlicher klickbarer Prototyp für die wichtigsten Ablä
 
 ## Akzeptanzkriterien
 
-- [ ] Die zentralen Benutzergruppen und Einstiege sind im Prototyp erkennbar.
-- [ ] Der Mitarbeiterablauf kann durchgeklickt werden.
-- [ ] Der HR-Erfassungsablauf kann durchgeklickt werden.
-- [ ] Clearing-Ergebnisse und mindestens ein Konfliktfall sind dargestellt.
-- [ ] Export beziehungsweise Freigabe ist als vorläufiger Ablauf sichtbar.
-- [ ] Wichtige Fehler-, Leer- und Bestätigungszustände sind berücksichtigt.
-- [ ] Wiederkehrende Elemente sind als konsistente Figma-Komponenten angelegt.
-- [ ] Die Komponenten sind realistisch mit Bootstrap 5.3 und projektspezifischem SCSS umsetzbar.
-- [ ] Ungeklärte fachliche Punkte sind im Design oder den Begleitnotizen als Annahmen markiert.
-- [ ] Das Design wurde von Erik selbst geprüft.
-- [ ] Rückmeldungen von Julian und Joschua sind dokumentiert oder als ausständig gekennzeichnet.
+- [X] Die zentralen Benutzergruppen und Einstiege sind im Prototyp erkennbar.
+- [X] Der Mitarbeiterablauf kann durchgeklickt werden.
+- [X] Der HR-Erfassungsablauf kann durchgeklickt werden.
+- [X] Clearing-Ergebnisse und mindestens ein Konfliktfall sind dargestellt.
+- [X] Export ist als vorläufiger Ablauf sichtbar.
+- [X] Wichtige Fehler-, Leer- und Bestätigungszustände sind berücksichtigt.
+- [X] Wiederkehrende Elemente sind als konsistente Figma-Komponenten angelegt.
+- [X] Die Komponenten sind realistisch mit Bootstrap 5.3 und projektspezifischem SCSS umsetzbar.
+- [X] Ungeklärte fachliche Punkte sind im Design oder den Begleitnotizen als Annahmen markiert.
+- [X] Das Design wurde von Erik selbst geprüft.
+- [X] Rückmeldungen von Julian und Joschua sind als ausständig gekennzeichnet.
 
 ## Offene Fragen
 
-| Frage | Zuständige Stelle | Auswirkung |
-|---|---|---|
-| Welche Screens gehören wirklich zum ersten Porsche-Umfang? | Team und Porsche | Umfang des Prototyps |
-| Welche Daten muss eine Mitarbeitererfassung enthalten? | Porsche | Formular und Bestätigung |
-| Welche Markerlstufen und Regeln werden dargestellt? | Porsche | Auswahl und Validierung |
-| Welche Rollen und Berechtigungen braucht der Adminbereich? | Porsche und Team | Navigation und sichtbare Aktionen |
-| Wie sehen Clearing-Status und Konfliktarten aus? | Porsche und Team | Tabellen, Filter und Detailansichten |
-| Wie erfolgt die Freigabe tatsächlich? | Porsche | Abschlussansicht |
-| Gibt es Porsche-Brandingvorgaben? | Porsche | Farben, Logo und Typografie |
-| Welche Geräte sind für Mitarbeitende und HR am wichtigsten? | Porsche | Breakpoints und Bedienkonzept |
+| Frage                                                         | Zuständige Stelle | Auswirkung                           |
+| ------------------------------------------------------------- | ------------------ | ------------------------------------ |
+| Welche Screens gehören wirklich zum ersten Porsche-Umfang?   | Team und Porsche   | Umfang des Prototyps                 |
+| Welche Daten muss eine Mitarbeitererfassung enthalten?        | Porsche            | Formular und Bestätigung            |
+| Welche Markerlstufen und Regeln werden dargestellt?           | Porsche            | Auswahl und Validierung              |
+| Welche Rollen und Berechtigungen braucht der Adminbereich?    | Porsche und Team   | Navigation und sichtbare Aktionen    |
+| Wie sehen Clearing-Status und Konfliktarten aus?              | Porsche und Team   | Tabellen, Filter und Detailansichten |
+| Wie erfolgt die Freigabe tatsächlich?                        | Porsche            | Abschlussansicht                     |
+| Gibt es Porsche-Brandingvorgaben?                             | Porsche            | Farben, Logo und Typografie          |
+| Welche Geräte sind für Mitarbeitende und HR am wichtigsten? | Porsche            | Breakpoints und Bedienkonzept        |
 
 ## Auswirkungen
 

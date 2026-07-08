@@ -114,3 +114,11 @@ Das Figma Community UI Kit dient als praktische Referenz für Bootstrap-Komponen
 Eine Grenze der Entscheidung ist die Barrierefreiheit. Bootstrap stellt Hilfen und Beispiele bereit, weist aber selbst darauf hin, dass die tatsächliche Zugänglichkeit von Markup, zusätzlichen Styles und dem implementierten Verhalten abhängt. Kontraste, Tastaturbedienung, Fokusverwaltung und ARIA müssen deshalb separat berücksichtigt und geprüft werden ([SRC-010](../sources/sources.md#src-010--bootstrap-accessibility)).
 
 Später sollte ich in der Diplomarbeit nicht nur begründen, warum Bootstrap gewählt wurde, sondern auch bewerten, ob diese Entscheidung bei der tatsächlichen Angular-Umsetzung funktioniert hat. Dazu gehören Wartbarkeit der SCSS-Anpassungen, Übereinstimmung zwischen Figma und Code, responsive Umsetzung und der zusätzliche Aufwand für barrierefreie Komponenten.
+
+## Erreichter Stand des Figma-Prototyps
+
+Bis zum 08.07.2026 wurden zwei zusammenhängende Prototypbereiche in einer gemeinsamen Figma-Datei fertiggestellt. Die HR-/Admin-Plattform besteht aus zwölf Screens und deckt Anmeldung, Registrierung, Übersicht, Markerlverwaltung, Korrektur, Clearing, Konfliktbearbeitung und Export ab. Die mobile Webanwendung für Mitarbeitende besteht aus neun Screens und zeigt Einstieg, Anmeldung, Registrierung, Startseite, Erfassung einer Verwendung, Prüfung der Angaben, Bestätigung und Erfassungsverlauf.
+
+Die gemeinsame Figma-Datei reicht als zentraler Designnachweis aus, weil beide Bereiche zum selben Produkt und Change gehören. In der Diplomarbeit ist weniger die Anzahl der Screens interessant als die Frage, wie aus User Flow, Moodboard und Komponenten zwei zusammenhängende Abläufe entstanden sind und wie dabei mobile Mitarbeiterbedienung und umfangreichere HR-Aufgaben unterschiedlich gestaltet wurden.
+
+Der Begriff „fertig“ bezieht sich hier auf den erstellten und verknüpften Prototyp. Eine fachliche Freigabe durch Porsche, ein vollständiges Teamreview, ein Usability-Test und die spätere Übereinstimmung mit der Angular-Implementierung müssen davon getrennt betrachtet werden.

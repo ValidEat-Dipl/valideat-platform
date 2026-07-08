@@ -5,7 +5,7 @@
 | Feld | Wert |
 |---|---|
 | Change-ID | `VAL-003` |
-| Status | `draft` |
+| Status | `implemented` |
 | Verantwortlich | Erik Bergmair |
 | Proposal | [proposal.md](proposal.md) |
 

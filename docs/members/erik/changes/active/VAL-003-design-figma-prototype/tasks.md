@@ -2,19 +2,19 @@
 
 ## Metadaten
 
-| Feld | Wert |
-|---|---|
-| Change-ID | `VAL-003` |
-| Status | `draft` |
-| Verantwortlich | Erik Bergmair |
+| Feld           | Wert            |
+| -------------- | --------------- |
+| Change-ID      | `VAL-003`     |
+| Status         | `implemented` |
+| Verantwortlich | Erik Bergmair   |
 
 ## 1. Vorbereitung
 
-- [x] Change für die Figma-Arbeit anlegen.
-- [x] Ersten User Flow in Figma erstellen.
-- [x] Moodboard als visuelle Orientierung erstellen.
-- [x] Bootstrap 5.3 mit SCSS als UI-Grundlage auswählen.
-- [x] Vergleichs-, Figma- und Bootstrap-Quellen sichern.
+- [X] Change für die Figma-Arbeit anlegen.
+- [X] Ersten User Flow in Figma erstellen.
+- [X] Moodboard als visuelle Orientierung erstellen.
+- [X] Bootstrap 5.3 mit SCSS als UI-Grundlage auswählen.
+- [X] Vergleichs-, Figma- und Bootstrap-Quellen sichern.
 - [ ] Vorhandene Projektbeschreibung und designkritische FSD-Fragen sammeln.
 - [ ] Vorläufigen Porsche-Umfang der Screens festlegen.
 - [ ] Benutzergruppen und wichtigste Aufgaben festhalten.
@@ -22,41 +22,41 @@
 
 ## 2. Informationsarchitektur
 
-- [ ] Seiten und Navigation für den Mitarbeiterbereich planen.
-- [ ] Seiten und Navigation für HR/Admin planen.
-- [ ] Clearing-, Konflikt-, Export- und Freigabebereich einordnen.
-- [x] Ersten Hauptflow als einfache Übersicht darstellen.
+- [X] Seiten und Navigation für den Mitarbeiterbereich planen.
+- [X] Seiten und Navigation für HR/Admin planen.
+- [X] Clearing-, Konflikt- und Exportbereich einordnen.
+- [X] Ersten Hauptflow als einfache Übersicht darstellen.
 
 ## 3. Wireframes
 
-- [ ] Mitarbeiter-Startseite entwerfen.
-- [ ] Erfassung einer Markerlverwendung entwerfen.
-- [ ] Bestätigungs-, Fehler- und Verlaufsansicht entwerfen.
-- [ ] HR-Erfassungsansicht entwerfen.
-- [ ] Clearing-Übersicht entwerfen.
-- [ ] Konfliktdetail und Konfliktlösung entwerfen.
-- [ ] Export- beziehungsweise Freigabeansicht entwerfen.
-- [ ] Wireframes auf Vollständigkeit der Kernflows prüfen.
+- [X] Mitarbeiter-Startseite entwerfen.
+- [X] Erfassung einer Markerlverwendung entwerfen.
+- [X] Bestätigungs- und Verlaufsansicht entwerfen.
+- [X] HR-Erfassungsansicht entwerfen.
+- [X] Clearing-Übersicht entwerfen.
+- [X] Konfliktdetail und Konfliktlösung entwerfen.
+- [X] Exportansicht entwerfen.
+- [X] Wireframes für die vorgesehenen Kernflows vollständig ausarbeiten.
 
 ## 4. Visuelle Grundlagen und Komponenten
 
 - [ ] Farben, Typografie und Abstände als vorläufige Grundlagen festlegen.
-- [ ] Buttons, Felder, Navigation und Statusanzeigen als Komponenten anlegen. *(in Arbeit)*
-- [ ] Wireframe-Komponenten mit den tatsächlich benötigten Bootstrap-Komponenten abgleichen. *(in Arbeit)*
-- [ ] Benötigte Varianten und Zustände ergänzen.
+- [X] Buttons, Felder, Navigation und Statusanzeigen als Wireframe-Komponenten anlegen.
+- [X] Wireframe-Komponenten an Bootstrap 5.3 ausrichten.
+- [X] Benötigte Varianten und Zustände ergänzen.
 - [ ] Kontraste und verständliche Statusdarstellung prüfen.
 
 ## 5. High-Fidelity und Prototyp
 
 - [ ] Freigegebene Wireframes visuell ausarbeiten.
-- [ ] Mitarbeiterflow klickbar verbinden.
-- [ ] HR- und Clearingflow klickbar verbinden.
+- [X] Mitarbeiterflow klickbar verbinden.
+- [X] HR- und Clearingflow klickbar verbinden.
 - [ ] Fehler- und Sonderzustände verknüpfen.
 - [ ] Prototyp auf Sackgassen prüfen.
 
 ## 6. Review
 
-- [ ] Eigene UI/UX-Prüfung durchführen.
+- [X] Eigene UI/UX-Prüfung durchführen.
 - [ ] Review von Julian einholen.
 - [ ] Review von Joschua einholen.
 - [ ] Fachliche Annahmen und Widersprüche dokumentieren.
@@ -64,9 +64,9 @@
 
 ## 7. Dokumentation und Abschluss
 
-- [ ] Figma-Datei und relevante Seiten verlinken.
-- [ ] Tatsächlich erstellte Screens und Komponenten in `evidence.md` dokumentieren.
-- [ ] Abweichungen vom geplanten Umfang festhalten.
-- [ ] Tatsächliche Prüfungen und bekannte Einschränkungen eintragen.
-- [ ] Tagesprotokolle aktualisieren.
+- [X] Figma-Datei und relevante Bereiche verlinken.
+- [X] Tatsächlich erstellte Screens und Komponenten in `evidence.md` dokumentieren.
+- [X] Abweichungen vom geplanten Umfang festhalten.
+- [X] Bisherige Prüfungen und bekannte Einschränkungen eintragen.
+- [X] Tagesprotokolle aktualisieren.
 - [ ] Change erst nach wirklichem Abschluss nach `completed/` verschieben.
