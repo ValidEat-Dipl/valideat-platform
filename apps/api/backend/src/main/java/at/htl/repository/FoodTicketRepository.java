@@ -22,6 +22,16 @@ public class FoodTicketRepository {
         return entityManager.createQuery("select f from FoodTicket f", FoodTicket.class).getResultList();
     }
 
+
+    public FoodTicket findById(Long id) {
+        return entityManager.find(FoodTicket.class, id);
+    }
+
+    public List<FoodTicket> findByEmployee(Long id) {
+        return entityManager.createQuery("select f from FoodTicket f where f.employee.id = :id", FoodTicket.class)
+                .setParameter("id", id).getResultList();
+    }
+
     public void save(LocalDate date, Employee employee, int costOrder) {
         FoodTicket foodTicket = new FoodTicket(date, employee, costOrder);
         entityManager.persist(foodTicket);

@@ -8,6 +8,7 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 
 import javax.swing.text.html.parser.Entity;
+import java.time.LocalDate;
 import java.util.List;
 
 @ApplicationScoped
@@ -16,13 +17,11 @@ public class EmployeeRepository {
     @Inject
     EntityManager em;
 
-    @GET
     public Employee getEmpById(Long id) {
         return em.find(Employee.class, id);
     }
 
 
-    @POST
     public String login(String email) {
         List<Employee> employees = em.createQuery("select e from Employee e where e.email = :email", Employee.class)
                 .setParameter("email", email).getResultList();
@@ -44,5 +43,13 @@ public class EmployeeRepository {
         }
 
         return "New Employee Registered";
+    }
+
+
+    public boolean checkIfTodaysTicketUsed(Employee emp, LocalDate date) {
+        Long count = em.createQuery("select count(f) from FoodTicket f where f.date = :date and f.employee.id = :id", Long.class)
+                .setParameter("date", date).setParameter("id", emp.getId()).getSingleResult();
+
+        return count != 0;
     }
 }

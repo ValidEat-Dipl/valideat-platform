@@ -9,6 +9,8 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 
+import java.time.LocalDate;
+
 @Path("/employee")
 public class EmployeeResource {
 
@@ -26,6 +28,15 @@ public class EmployeeResource {
     @Path("/register/{emp}")
     public String register(@PathParam("emp") Employee emp) {
         return employeeRepository.register(emp);
+    }
+
+    @GET
+    @Path("/checkIfTodaysTicketUsed/{empId}/{date}")
+    public boolean checkIfTodaysTicketUsed(@PathParam("empId") Long id,
+                                           @PathParam("date")LocalDate date) {
+        Employee emp = employeeRepository.getEmpById(id);
+
+        return employeeRepository.checkIfTodaysTicketUsed(emp, date);
     }
 
 }

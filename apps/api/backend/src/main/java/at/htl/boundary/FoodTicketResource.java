@@ -15,7 +15,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Path("/api/foodticket")
+@Path("/foodticket")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class FoodTicketResource {
@@ -28,6 +28,18 @@ public class FoodTicketResource {
     @GET
     public List<FoodTicket> listAll() {
         return foodTicketRepository.listAll();
+    }
+
+    @GET
+    @Path("/{id}")
+    public FoodTicket getTicketById(@PathParam("id") Long id) {
+        return foodTicketRepository.findById(id);
+    }
+
+    @GET
+    @Path("/findByEmployee/{id}")
+    public List<FoodTicket> getTicketByEmployee(@PathParam("id") Long id) {
+        return foodTicketRepository.findByEmployee(id);
     }
 
     @POST
