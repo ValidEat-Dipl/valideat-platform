@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, input} from '@angular/core';
 
 @Component({
   selector: 'app-table-comp',
@@ -6,4 +6,9 @@ import { Component } from '@angular/core';
   templateUrl: './table-comp.html',
   styleUrl: './table-comp.css',
 })
-export class TableComp {}
+export class TableComp {
+
+  caption = input<string>("");
+  data = input();
+
+}

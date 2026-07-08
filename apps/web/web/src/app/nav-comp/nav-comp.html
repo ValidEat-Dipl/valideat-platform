@@ -31,22 +31,17 @@
       </div>
       <div class="offcanvas-body">
         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Übersicht</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Makerl erfassen</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Clearing</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Konflikte</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Export & Freigabe</a>
-          </li>
-          <!--<li class="nav-item dropdown">
+          @for (entry of datalistLabels(); track $index) {
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{{ datalistHrefs().at($index) }}">{{ entry }}</a>
+            </li>
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+<!--<li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Dropdown
             </a>
@@ -59,15 +54,9 @@
               <li><a class="dropdown-item" href="#">Something else here</a></li>
             </ul>
           </li>-->
-        </ul>
-        <!--<form class="d-flex mt-3" role="search">
+<!--<form class="d-flex mt-3" role="search">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
           <button class="btn btn-outline-success" type="submit">Search</button>
         </form>-->
-      </div>
-    </div>
-  </div>
-</nav>
-
 <app-breadcrumb-comp></app-breadcrumb-comp>
 

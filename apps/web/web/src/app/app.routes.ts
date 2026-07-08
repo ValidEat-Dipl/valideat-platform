@@ -7,10 +7,10 @@ import {ExportComp} from './export-comp/export-comp';
 import {NavComp} from './nav-comp/nav-comp';
 
 export const routes: Routes = [
-  { path: "**", component: AdminOverviewComp},
   { path: "admin-overview", component: AdminOverviewComp},
   { path: "clear-conflict", component: ClearConflictComp},
   { path: "clearing-tickets", component: ClearingTicketsComp},
   { path: "create-ticket", component: CreateTicketComp},
-  { path: "export", component: ExportComp}
+  { path: "export", component: ExportComp},
+  { path: "**", component: AdminOverviewComp}
 ];

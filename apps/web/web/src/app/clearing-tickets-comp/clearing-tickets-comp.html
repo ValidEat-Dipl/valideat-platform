@@ -1,26 +1,16 @@
 <app-nav-comp></app-nav-comp>
 
-<div class="clearing-overview-box">
+<div class="m-4 d-grid gap-4">
 
-  <div class="statistics-food-ticket-container">
-    <div class="statistics-food-box">
-      <h1 class="number"></h1>
-      <p class="text"></p>
-    </div>
-    ...
-  </div>
+  <h1>Clearing</h1>
 
-  <div class="statistics">
-    <div class="filter-container">
-      <div class="filter-box">
-        ...
-      </div>
-      ...
-      <app-button-comp></app-button-comp> ### Filter zurücksetzen
-    </div>
-    <div class="statistics-table">
-      ...
-    </div>
+  <app-info-flex-comp></app-info-flex-comp>
 
+  <div class="d-grid gap-4 statistics">
+    <div class="d-flex gap-3">
+
+      <app-button-comp buttonType="reset" buttonDesignType="outline-secondary" text="Filter zurücksetzen"></app-button-comp>
+    </div>
+    <app-table-comp></app-table-comp>
   </div>
 </div>

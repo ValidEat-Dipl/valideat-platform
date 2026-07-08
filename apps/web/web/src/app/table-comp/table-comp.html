@@ -1,5 +1,7 @@
 <table class="table table-bordered caption-top">
-  <caption>Zuletzt erfasste Markerl</caption>
+  @if (caption().length > 0) {
+    <caption>{{ caption() }}</caption>
+  }
   <thead class="table-light">
   <tr>
     <th scope="col">PERSON</th>

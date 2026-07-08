@@ -1,1 +1,11 @@
-<button type="button" class="btn btn-{{ buttonType() }}">{{ text() }}</button>
+@switch (buttonType()) {
+  @case("button") {
+    <button type="{{ buttonType() }}" class="btn btn-{{ buttonDesignType() }}">{{ text() }}</button>
+  }
+  @case ("link") {
+    <a href="{{ link() }}" role="button" class="btn btn-{{ buttonDesignType() }}">{{ text() }}</a>
+  }
+  @case ("reset") {
+    <input type="reset" value="{{ text() }}" class="btn btn-{{ buttonDesignType() }}">
+  }
+}

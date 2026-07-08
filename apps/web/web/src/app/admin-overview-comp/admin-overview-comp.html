@@ -1,36 +1,18 @@
 <app-nav-comp></app-nav-comp>
 
-<div class="m-4 d-grid gap-4 overview-box">
+<div class="m-4 d-grid gap-4">
 
   <h1>Abrechnung</h1>
 
-  <div class="d-flex flex-row gap-3 w-100  statistics-food-ticket-container">
-    <div class="border border-2 rounded-2 p-3 flex-column flex-fill statistics-food-box">
-      <h1 class="number">128</h1>
-      <p class="text">Mitarbeitereinträge</p>
-    </div>
-    <div class="border border-2 rounded-2 p-3 flex-column flex-fill statistics-food-box">
-      <h1 class="number">128</h1>
-      <p class="text">Mitarbeitereinträge</p>
-    </div>
-    <div class="border border-2 rounded-2 p-3 flex-column flex-fill statistics-food-box">
-      <h1 class="number">128</h1>
-      <p class="text">Mitarbeitereinträge</p>
-    </div>
-    <div class="border border-2 rounded-2 p-3 flex-column flex-fill statistics-food-box">
-      <h1 class="number">128</h1>
-      <p class="text">Mitarbeitereinträge</p>
-    </div>
-  </div>
+  <app-info-flex-comp></app-info-flex-comp>
 
   <div class="d-grid gap-4 statistics">
-    <div class="d-flex gap-3 button-container">
-      <app-button-comp text="Markerl erfassen" buttonType="primary"></app-button-comp>
-      <app-button-comp text="Clearing öffnen" buttonType="outline-secondary"></app-button-comp>
+    <div class="d-flex gap-3">
+      <app-button-comp text="Markerl erfassen" buttonDesignType="primary"></app-button-comp>
+      <app-button-comp text="Clearing öffnen" buttonDesignType="outline-secondary" buttonType="link" link="http://localhost:4200/clearing-tickets"></app-button-comp>
     </div>
     <div class="statistics-table">
-      <app-table-comp></app-table-comp>
+      <app-table-comp caption="Zuletzt erfasste Markerl"></app-table-comp>
     </div>
-
   </div>
 </div>

@@ -7,7 +7,9 @@ import {Component, input, Input,} from '@angular/core';
 })
 export class ButtonComp {
 
-  buttonType = input<string>("primary");
+  buttonDesignType = input<string>("primary");
   text = input<string>("Button");
+  buttonType = input<string>("button");
+  link = input<string>("");
 
 }
