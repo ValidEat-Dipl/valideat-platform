@@ -21,6 +21,6 @@ export class ExportComp {
   infoContainerService = inject(InfoFlexService)
 
   mapInfoContainer = this.infoContainerService.getInfoContainerMap();
-  openConflictsCount = this.mapInfoContainer.get("Offen");
+  openConflictsCount = this.mapInfoContainer.get("Offene Konflikte");
 
 }
