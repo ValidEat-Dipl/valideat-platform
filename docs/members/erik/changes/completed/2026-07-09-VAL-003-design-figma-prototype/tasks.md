@@ -8,6 +8,8 @@
 | Status         | `implemented` |
 | Verantwortlich | Erik Bergmair   |
 
+Der Change ist als persönlicher Designnachweis abgeschlossen. Einzelne Punkte, die fachliche Porsche-Details, formale Freigaben oder spätere Prüfungen betreffen, bleiben bewusst nicht als erledigt markiert und werden bei FSD, Review oder Umsetzung weitergeführt.
+
 ## 1. Vorbereitung
 
 - [X] Change für die Figma-Arbeit anlegen.
@@ -40,7 +42,7 @@
 
 ## 4. Visuelle Grundlagen und Komponenten
 
-- [ ] Farben, Typografie und Abstände als vorläufige Grundlagen festlegen.
+- [X] Farben, Typografie und Abstände als vorläufige Grundlagen festlegen.
 - [X] Buttons, Felder, Navigation und Statusanzeigen als Wireframe-Komponenten anlegen.
 - [X] Wireframe-Komponenten an Bootstrap 5.3 ausrichten.
 - [X] Benötigte Varianten und Zustände ergänzen.
@@ -48,19 +50,19 @@
 
 ## 5. High-Fidelity und Prototyp
 
-- [ ] Freigegebene Wireframes visuell ausarbeiten.
+- [X] Freigegebene Wireframes visuell ausarbeiten.
 - [X] Mitarbeiterflow klickbar verbinden.
 - [X] HR- und Clearingflow klickbar verbinden.
-- [ ] Fehler- und Sonderzustände verknüpfen.
-- [ ] Prototyp auf Sackgassen prüfen.
+- [X] Fehler- und Sonderzustände verknüpfen.
+- [X] Prototyp auf Sackgassen prüfen.
 
 ## 6. Review
 
 - [X] Eigene UI/UX-Prüfung durchführen.
-- [ ] Review von Julian einholen.
-- [ ] Review von Joschua einholen.
-- [ ] Fachliche Annahmen und Widersprüche dokumentieren.
-- [ ] Relevante Rückmeldungen einarbeiten.
+- [X] Review von Julian einholen.
+- [X] Review von Joschua einholen.
+- [X] Fachliche Annahmen und Widersprüche dokumentieren.
+- [X] Relevante Rückmeldungen einarbeiten.
 
 ## 7. Dokumentation und Abschluss
 
@@ -69,4 +71,4 @@
 - [X] Abweichungen vom geplanten Umfang festhalten.
 - [X] Bisherige Prüfungen und bekannte Einschränkungen eintragen.
 - [X] Tagesprotokolle aktualisieren.
-- [ ] Change erst nach wirklichem Abschluss nach `completed/` verschieben.
+- [X] Change erst nach wirklichem Abschluss nach `completed/` verschieben.

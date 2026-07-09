@@ -15,7 +15,7 @@
 
 - Art: persönliche UI/UX-Planung von Erik
 - Grundlage: bisher bekannter Porsche-Zielprozess und Eriks Verantwortungsbereich laut Antrag
-- Fachliche Prüfung durch das Team: noch offen
+- Fachliche Prüfung durch das Team: nicht als eigenes Reviewprotokoll dokumentiert
 - Porsche-Freigabe: nicht vorhanden
 
 ## Ausgangslage

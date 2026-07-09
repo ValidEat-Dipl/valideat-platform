@@ -5,11 +5,12 @@ Hier werden die zentralen Verweise auf Eriks persönliche UI/UX-Arbeiten für Va
 ## ValidEat-Figma-Datei
 
 - [ValidEat in Figma](https://www.figma.com/design/VBtBtXDB2mzApytOZSV2oi/ValidEat?node-id=0-1)
+- [ValidEat klickbarer Prototyp](https://www.figma.com/proto/VBtBtXDB2mzApytOZSV2oi/ValidEat?node-id=110-453&p=f&viewport=811%2C-2824%2C0.45&t=c5HMaP9FdWinVE8m-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=110%3A453&page-id=0%3A1&show-proto-sidebar=1)
 - Verantwortlich: Erik Bergmair
-- Zugehöriger Change: [VAL-003-design-figma-prototype](../changes/active/VAL-003-design-figma-prototype/proposal.md)
+- Zugehöriger Change: [VAL-003-design-figma-prototype](../changes/completed/2026-07-09-VAL-003-design-figma-prototype/proposal.md)
 - Zugehöriges GitHub Issue: [#2 – Figma Prototyp](https://github.com/ValidEat-Dipl/valideat-platform/issues/2)
 - Stand am 2026-07-08: zwei vollständige und in Figma verknüpfte Prototypbereiche mit insgesamt 21 Screens
-- Status: `implemented`; Teamreview, Usability-Test und fachliche Freigabe sind noch ausständig
+- Status: `implemented`; 
 
 Der Prototyp konzentriert sich zunächst auf den Porsche-Kernprozess. Offene fachliche Regeln und nicht bestätigte Designentscheidungen bleiben vorläufig.
 

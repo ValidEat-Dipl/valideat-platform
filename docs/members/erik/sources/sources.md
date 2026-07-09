@@ -132,6 +132,71 @@ Die Quellen erhalten stabile `SRC-`IDs. Die Capture-ID aus Eriks Firefox-Erweite
 | Autor/Herausgeber | Mark Otto, Jacob Thornton und Bootstrap contributors |
 | Verwendung | Einordnung der Barrierefreiheit von Bootstrap. Die Quelle stellt klar, dass tatsächliche Barrierefreiheit von semantischem Markup, zusätzlichen Styles und dem implementierten Verhalten abhängt. Für ValidEat müssen insbesondere Farbkontraste, Tastaturbedienung, Fokusverwaltung und ARIA-Angaben zusätzlich geprüft werden. |
 
+## SRC-011 – Figma Components
+
+| Feld | Wert |
+|---|---|
+| Capture-ID | noch nicht über Firefox-Erweiterung erfasst |
+| Titel | Guide to components in Figma |
+| URL | <https://help.figma.com/hc/en-us/articles/360038662654-Guide-to-components-in-Figma> |
+| Abrufdatum | 2026-07-09 |
+| Abrufuhrzeit | 11:29 |
+| Zeitzone | MESZ |
+| Autor/Herausgeber | Figma Help Center |
+| Verwendung | Offizielle Figma-Grundlage für wiederverwendbare Komponenten. Relevant für die Entscheidung, Buttons, Felder, Navigation und Statusanzeigen im ValidEat-Prototyp nicht nur einzeln zu zeichnen, sondern als konsistente Bausteine aufzubauen. |
+
+## SRC-012 – Figma Design Systems
+
+| Feld | Wert |
+|---|---|
+| Capture-ID | noch nicht über Firefox-Erweiterung erfasst |
+| Titel | Introduction to design systems |
+| URL | <https://help.figma.com/hc/en-us/sections/14548397990423-Introduction-to-design-systems> |
+| Abrufdatum | 2026-07-09 |
+| Abrufuhrzeit | 11:29 |
+| Zeitzone | MESZ |
+| Autor/Herausgeber | Figma Help Center |
+| Verwendung | Orientierung für den Designsystem-Gedanken in Figma. Für ValidEat relevant, weil wiederkehrende UI-Elemente, Gestaltung und spätere Umsetzung nicht auseinanderlaufen sollen. Die Quelle wird nicht als Nachweis für ein vollständiges Designsystem verwendet, sondern für die Begründung der komponentenbasierten Arbeitsweise. |
+
+## SRC-013 – Paper Prototyping bei Nielsen Norman Group
+
+| Feld | Wert |
+|---|---|
+| Capture-ID | noch nicht über Firefox-Erweiterung erfasst |
+| Titel | Paper Prototyping: Getting User Data Before You Code |
+| URL | <https://www.nngroup.com/articles/paper-prototyping/> |
+| Abrufdatum | 2026-07-09 |
+| Abrufuhrzeit | 11:29 |
+| Zeitzone | MESZ |
+| Autor/Herausgeber | Jakob Nielsen; Nielsen Norman Group |
+| Verwendung | Begründung dafür, warum frühe Prototypen vor der Implementierung sinnvoll sind. Die Quelle unterstützt die Idee, Abläufe und Usability-Probleme früh sichtbar zu machen, bevor Zeit in technische Umsetzung investiert wird. Für ValidEat wird sie sinngemäß auf den Figma-Prototyp übertragen, auch wenn die Quelle selbst Papierprototypen behandelt. |
+
+## SRC-014 – Designing for Web Accessibility
+
+| Feld | Wert |
+|---|---|
+| Capture-ID | noch nicht über Firefox-Erweiterung erfasst |
+| Titel | Designing for Web Accessibility – Tips for Getting Started |
+| URL | <https://www.w3.org/WAI/tips/designing/> |
+| Abrufdatum | 2026-07-09 |
+| Abrufuhrzeit | 11:29 |
+| Zeitzone | MESZ |
+| Autor/Herausgeber | W3C Web Accessibility Initiative |
+| Verwendung | Grundlage für frühe Accessibility-Überlegungen im UI-Design. Relevant sind unter anderem ausreichende Kontraste, nicht nur farbliche Informationsvermittlung, erkennbare interaktive Elemente, konsistente Navigation, verständliche Formularlabels, Feedback und Gestaltung für verschiedene Viewportgrößen. |
+
+## SRC-015 – WCAG 2 Overview
+
+| Feld | Wert |
+|---|---|
+| Capture-ID | noch nicht über Firefox-Erweiterung erfasst |
+| Titel | WCAG 2 Overview |
+| URL | <https://www.w3.org/WAI/standards-guidelines/wcag/> |
+| Abrufdatum | 2026-07-09 |
+| Abrufuhrzeit | 11:29 |
+| Zeitzone | MESZ |
+| Autor/Herausgeber | W3C Web Accessibility Initiative |
+| Verwendung | Einordnung der Web Content Accessibility Guidelines als internationaler Standard für Barrierefreiheit von Webinhalten. Für ValidEat dient die Quelle als Grundlage für spätere Accessibility-Anforderungen und Prüfungen. Sie belegt nicht, dass der aktuelle Prototyp bereits WCAG-konform ist. |
+
 ## Einordnung
 
-Die OpenSpec-Quellen beschreiben das Werkzeug und seinen eigenen Workflow. Sie sind keine unabhängige wissenschaftliche Bewertung von OpenSpec. TechTarget, Alltena und BairesDev sind praxisorientierte Webquellen und keine verbindlichen Normen. Das Figma Community UI Kit ist eine Designressource und keine technische Spezifikation. Für Bootstrap werden deshalb zusätzlich die offiziellen Dokumentationsseiten als technische Hauptquellen verwendet.
+Die OpenSpec-Quellen beschreiben das Werkzeug und seinen eigenen Workflow. Sie sind keine unabhängige wissenschaftliche Bewertung von OpenSpec. TechTarget, Alltena und BairesDev sind praxisorientierte Webquellen und keine verbindlichen Normen. Das Figma Community UI Kit ist eine Designressource und keine technische Spezifikation. Für Bootstrap werden deshalb zusätzlich die offiziellen Dokumentationsseiten als technische Hauptquellen verwendet. Die neuen Figma-Quellen beschreiben Figma-Funktionen und Arbeitsweisen direkt vom Anbieter. Die W3C-Quellen werden als fachlich stärkere Grundlage für Accessibility verwendet, ersetzen aber keine tatsächliche Prüfung des ValidEat-Prototyps.

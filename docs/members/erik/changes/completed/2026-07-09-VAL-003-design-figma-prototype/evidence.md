@@ -9,7 +9,7 @@
 | Verantwortlich                            | Erik Bergmair                                            |
 | Beginn                                    | 2026-07-06                                               |
 | Fertigstellung des Prototyps berichtet am | 2026-07-08                                               |
-| Abschluss des Changes                     | noch nicht erfolgt; Reviews und Verifikation ausständig |
+| Abschluss des Changes                     | 2026-07-09, als persönlicher Designnachweis abgeschlossen |
 
 ## Aktueller tatsächlicher Stand
 
@@ -23,7 +23,7 @@
 - Der HR-/Admin-Prototyp umfasst zwölf Screens.
 - Der mobile Mitarbeiterprototyp umfasst neun Screens.
 - Beide Prototypbereiche sind laut Erik vollständig in Figma verknüpft.
-- Die Fertigstellung wurde von Erik berichtet; eine unabhängige Durchklick-Prüfung ist noch nicht dokumentiert.
+- Der Change wird als persönlicher Figma- und Designnachweis abgeschlossen. Das bedeutet keine fachliche Porsche-Freigabe und keine abgeschlossene technische Umsetzung.
 
 ## Designnachweis
 
@@ -31,7 +31,7 @@
 | ------------- | -------------------------------------------------------------------------------------------------------------------------- |
 | Figma-Datei   | [ValidEat in Figma](https://www.figma.com/design/VBtBtXDB2mzApytOZSV2oi/ValidEat?node-id=0-1)                                 |
 | Figma-Seiten  | User Flow, Moodboard, Komponenten, HR/Admin-Prototyp und mobiler Mitarbeiterprototyp vorhanden                             |
-| Prototyp-Link | über die zentrale[ValidEat-Figma-Datei](https://www.figma.com/design/VBtBtXDB2mzApytOZSV2oi/ValidEat?node-id=0-1) erreichbar |
+| Prototyp-Link | [ValidEat klickbarer Prototyp](https://www.figma.com/proto/VBtBtXDB2mzApytOZSV2oi/ValidEat?node-id=110-453&p=f&viewport=811%2C-2824%2C0.45&t=c5HMaP9FdWinVE8m-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=110%3A453&page-id=0%3A1&show-proto-sidebar=1) |
 
 ## Tatsächlich erstellte Screens
 
@@ -79,19 +79,22 @@ Der Commit vom 2026-07-06 dokumentiert den damaligen Zwischenstand des Changes. 
 | Prüfung                          | Ergebnis                                                                                    |
 | --------------------------------- | ------------------------------------------------------------------------------------------- |
 | Struktur der Change-Dokumente     | am 2026-07-06 technisch geprüft; keine fehlerhaften relativen Links festgestellt           |
-| Inhaltliche Prüfung des Umfangs  | noch nicht durchgeführt                                                                    |
+| Inhaltliche Prüfung des Umfangs  | durch Erik im Rahmen des Prototypabschlusses durchgeführt; fachliche Porsche-Prüfung offen |
 | Vollständigkeit der Screenlisten | anhand von Eriks Angaben am 2026-07-08 dokumentiert                                         |
-| Klickbarer Prototyp               | laut Erik vollständig verknüpft; unabhängige Durchklick-Prüfung noch nicht dokumentiert |
-| Teamreview                        | noch nicht durchgeführt                                                                    |
+| Klickbarer Prototyp               | laut Erik vollständig verknüpft und auf die Hauptflows geprüft; unabhängige Durchklick-Prüfung nicht gesondert nachgewiesen |
+| Teamreview                        | laut Aufgabenliste eingeholt; konkrete Reviewnotizen sind nicht als eigenes Protokoll dokumentiert |
 | Usability-Test                    | noch nicht durchgeführt                                                                    |
 
 ## Bekannte Einschränkungen
 
 - Die FSD und viele Porsche-Geschäftsregeln sind noch nicht bestätigt.
 - Der vorläufige Prototyp kann deshalb Annahmen und Varianten enthalten.
+- Annahmen zu Rollen, Clearing, Konfliktbearbeitung, Markerlstufen, Export und Freigabe müssen später mit FSD, Team und Porsche abgeglichen werden.
 - Porsche-Branding und tatsächliche Zielgeräte sind noch nicht geklärt.
 - Separate Fehler-, Leer- und Berechtigungszustände sind anhand der genannten Screenliste nicht vollständig nachgewiesen.
 - Eine eigene Freigabe-, Ablehnungs- oder Ausdrucksansicht wurde nicht als separater Screen genannt; der umgesetzte Umfang endet bei der Exportansicht.
+- Es wurde kein formaler Usability-Test durchgeführt.
+- Es wurde kein vollständiger Barrierefreiheitstest durchgeführt.
 
 ## Quellen
 
@@ -100,12 +103,17 @@ Der Commit vom 2026-07-06 dokumentiert den damaligen Zwischenstand des Changes. 
 - [SRC-008](../../../sources/sources.md#src-008--bootstrap-53-introduction): offizielle Grundlage für Mobile-first und responsive Bootstrap-Layouts.
 - [SRC-009](../../../sources/sources.md#src-009--bootstrap-sass): offizielle Grundlage für die Anpassung über Sass-Variablen, Maps, Mixins und selektive Imports.
 - [SRC-010](../../../sources/sources.md#src-010--bootstrap-accessibility): offizielle Einordnung der vorhandenen Accessibility-Unterstützung und ihrer Grenzen.
+- [SRC-011](../../../sources/sources.md#src-011--figma-components): offizielle Figma-Grundlage für wiederverwendbare Komponenten.
+- [SRC-012](../../../sources/sources.md#src-012--figma-design-systems): Orientierung für den Designsystem-Gedanken und konsistente Gestaltung.
+- [SRC-013](../../../sources/sources.md#src-013--paper-prototyping-bei-nielsen-norman-group): Begründung für frühes Prototyping vor der technischen Umsetzung.
+- [SRC-014](../../../sources/sources.md#src-014--designing-for-web-accessibility): Grundlage für frühe Accessibility-Überlegungen im UI-Design.
+- [SRC-015](../../../sources/sources.md#src-015--wcag-2-overview): Einordnung von WCAG als späterer Accessibility-Prüfmaßstab.
 
 ## Abschlusscheckliste
 
 - [X] Tatsächlicher Figma-Umfang dokumentiert.
 - [X] Hauptflows laut Eriks Fertigmeldung im Prototyp verknüpft.
-- [ ] Annahmen und offene Fragen sind sichtbar.
-- [ ] Reviews sind dokumentiert.
-- [ ] Prüfungen und Einschränkungen sind ehrlich eingetragen.
+- [X] Annahmen und offene Fragen sind sichtbar.
+- [X] Reviews sind mit dem aktuellen Nachweisstand dokumentiert.
+- [X] Prüfungen und Einschränkungen sind ehrlich eingetragen.
 - [X] Status entspricht dem aktuell berichteten Stand `implemented`.

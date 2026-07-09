@@ -122,3 +122,31 @@ Bis zum 08.07.2026 wurden zwei zusammenhängende Prototypbereiche in einer gemei
 Die gemeinsame Figma-Datei reicht als zentraler Designnachweis aus, weil beide Bereiche zum selben Produkt und Change gehören. In der Diplomarbeit ist weniger die Anzahl der Screens interessant als die Frage, wie aus User Flow, Moodboard und Komponenten zwei zusammenhängende Abläufe entstanden sind und wie dabei mobile Mitarbeiterbedienung und umfangreichere HR-Aufgaben unterschiedlich gestaltet wurden.
 
 Der Begriff „fertig“ bezieht sich hier auf den erstellten und verknüpften Prototyp. Eine fachliche Freigabe durch Porsche, ein vollständiges Teamreview, ein Usability-Test und die spätere Übereinstimmung mit der Angular-Implementierung müssen davon getrennt betrachtet werden.
+
+## Warum der Prototyp vor der Implementierung wichtig war
+
+Beim Figma-Prototyp ging es nicht nur darum, schon früh etwas Visuelles herzuzeigen. Der wichtigere Punkt ist, dass zentrale Abläufe geprüft werden können, bevor sie im Frontend und Backend technisch fest eingebaut werden. Gerade bei ValidEat sind viele fachliche Regeln noch offen, zum Beispiel Markerlstufen, Clearing-Regeln, Konfliktlösung, Export und Freigabe. Wenn diese Unsicherheiten zuerst im Prototyp sichtbar werden, ist eine Änderung noch deutlich leichter als nach einer fertigen Angular-Implementierung.
+
+Die Nielsen Norman Group beschreibt frühes Prototyping als Möglichkeit, Designideen früh zu testen und Usability-Probleme zu erkennen, bevor unnötig Aufwand in eine nicht passende Umsetzung fließt ([SRC-013](../sources/sources.md#src-013--paper-prototyping-bei-nielsen-norman-group)). Die Quelle spricht konkret über Papierprototypen. Für ValidEat wurde die Grundidee auf Figma übertragen: Der Prototyp ist nicht das fertige Produkt, sondern ein Arbeitsmittel, um Abläufe, Begriffe und offene Fragen früher greifbar zu machen.
+
+Für die Diplomarbeit kann ich deshalb erklären, dass der Figma-Prototyp eine Brücke zwischen FSD und technischer Umsetzung bildet. Die FSD beschreibt fachlich, was das System leisten soll. Der Prototyp zeigt, wie sich diese Abläufe für Mitarbeitende und HR/Admin-Benutzende anfühlen könnten. Dadurch werden Unklarheiten sichtbar, die in reinem Text leichter übersehen werden.
+
+## Komponenten und Designsystem-Gedanke
+
+Im Prototyp wurden wiederkehrende Elemente wie Buttons, Eingabefelder, Navigation, Karten, Tabellenbereiche und Statusanzeigen nicht als komplett unabhängige Einzelteile betrachtet. Sie wurden als wiederverwendbare Bausteine gedacht. Das ist für ValidEat wichtig, weil gleiche Aktionen und Zustände später auch gleich aussehen sollen. Eine Konfliktanzeige, ein Speichern-Button oder ein Formularfeld sollen nicht auf jeder Seite anders wirken.
+
+Figma beschreibt Komponenten als wiederverwendbare Elemente, deren Instanzen mit einer Hauptkomponente verbunden bleiben ([SRC-011](../sources/sources.md#src-011--figma-components)). Für meinen Prototyp bedeutet das: Änderungen an grundlegenden UI-Elementen können sauberer nachvollzogen werden, und die Designs bleiben konsistenter.
+
+Der Begriff Designsystem wäre für den aktuellen Stand aber zu groß, wenn man ihn als vollständig fertiges System versteht. ValidEat hat bisher eher erste Grundlagen dafür: Komponenten, visuelle Richtung, Bootstrap-Nähe und einheitliche Screens. Die Figma-Unterlagen zu Designsystemen sind deshalb als Orientierung sinnvoll, aber nicht als Behauptung, dass bereits ein vollständiges ValidEat-Designsystem existiert ([SRC-012](../sources/sources.md#src-012--figma-design-systems)).
+
+## Accessibility als früher Prüfpunkt
+
+Barrierefreiheit wurde beim Prototyp noch nicht vollständig geprüft. Trotzdem sollte sie schon beim Design mitgedacht werden, weil spätere Korrekturen oft aufwendiger sind. Für ValidEat betrifft das besonders Formulare, Statusanzeigen, Tabellen, Fehlermeldungen und mobile Bedienung.
+
+Die W3C-WAI-Tipps für barrierefreies Design nennen unter anderem ausreichende Kontraste, nicht nur farbliche Informationsvermittlung, gut erkennbare interaktive Elemente, konsistente Navigation, verständliche Formularlabels, klares Feedback und Gestaltung für verschiedene Viewportgrößen ([SRC-014](../sources/sources.md#src-014--designing-for-web-accessibility)). Genau diese Punkte sind für ValidEat relevant, weil das System kurze tägliche Erfassungen, administrative Bearbeitung und Konfliktentscheidungen unterstützen soll.
+
+Für spätere Prüfungen kann zusätzlich WCAG herangezogen werden. W3C beschreibt WCAG als internationalen Standard für barrierefreie Webinhalte, mit Prinzipien wie wahrnehmbar, bedienbar, verständlich und robust ([SRC-015](../sources/sources.md#src-015--wcag-2-overview)). Wichtig ist die saubere Formulierung: Der aktuelle Figma-Prototyp ist dadurch nicht automatisch WCAG-konform. Die Quelle hilft nur dabei, spätere Anforderungen und Prüfungen fachlich einzuordnen.
+
+## Möglicher Textgedanke für die Reflexion
+
+Ich kann später schreiben, dass der Figma-Prototyp zwar als Designstand abgeschlossen wurde, aber bewusst nicht als fachlich freigegebenes Endprodukt gilt. Das ist eigentlich eine Stärke der Dokumentation: Sie trennt zwischen „ich habe den Prototyp erstellt“, „das Team oder Porsche hat ihn fachlich bestätigt“, „er wurde mit Personen getestet“ und „er wurde technisch umgesetzt“. Diese Trennung verhindert, dass der Prototyp mehr beweist, als er tatsächlich beweisen kann.
