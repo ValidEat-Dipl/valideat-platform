@@ -74,7 +74,7 @@ public class FoodTicketResource {
         List<FoodTicket> result = new java.util.ArrayList<>(List.of());
 
         for (FoodTicket ticket : list) {
-            boolean valid = checkIfDailyTicketUsageIsNotExceeded(ticket.getDate(), ticket.getEmployee());
+            boolean valid = checkIfDailyTicketUsageIsNotExceeded(ticket.getUseDate(), ticket.getEmployee());
 
             if (valid) {
                 result.add(ticket);
