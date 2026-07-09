@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {NavComp} from '../nav-comp/nav-comp';
 import {ButtonComp} from '../button-comp/button-comp';
 import {BadgeComp} from '../badge-comp/badge-comp';
 import {InfoFlexComp} from '../info-flex-comp/info-flex-comp';
+import {InfoFlexService} from '../info-flex-service';
 
 @Component({
   selector: 'app-export-comp',
@@ -17,6 +18,9 @@ import {InfoFlexComp} from '../info-flex-comp/info-flex-comp';
 })
 export class ExportComp {
 
-  openConflictsCount = 1;
+  infoContainerService = inject(InfoFlexService)
+
+  mapInfoContainer = this.infoContainerService.getInfoContainerMap();
+  openConflictsCount = this.mapInfoContainer.get("Offen");
 
 }

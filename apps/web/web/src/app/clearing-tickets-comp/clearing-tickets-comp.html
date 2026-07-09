@@ -4,13 +4,38 @@
 
   <h1>Clearing</h1>
 
-  <app-info-flex-comp></app-info-flex-comp>
+  <app-info-flex-comp [data]="mapInfoContainer"></app-info-flex-comp>
 
   <div class="d-grid gap-4 statistics">
-    <div class="d-flex gap-3">
+    <form [formGroup]="form"  class="d-flex gap-3 w-75">
+
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Person</span>
+        <input type="text" class="form-control" placeholder="Filtere nach einer Person..." formControlName="person" aria-describedby="basic-addon1">
+      </div>
+
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Stufe</span>
+        <input type="text" class="form-control" placeholder="Filtere nach einer Stufe..." formControlName="costRank" aria-describedby="basic-addon1">
+      </div>
+
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Kostenstelle</span>
+        <input type="text" class="form-control" placeholder="Filtere nach einer Kostenstelle..." formControlName="costDepartment" aria-describedby="basic-addon1">
+      </div>
+
+      <div class="input-group mb-3">
+        <label class="input-group-text" for="inputGroupSelect01">Status</label>
+        <select formControlName="status" class="form-select" id="inputGroupSelect01">
+          <option selected>Alle</option>
+          <option value="CHECKED">Abgeglichen</option>
+          <option value="CONFLICT">Konflikt</option>
+          <option value="OPEN">Offen</option>
+        </select>
+      </div>
 
       <app-button-comp buttonType="reset" buttonDesignType="outline-secondary" text="Filter zurücksetzen"></app-button-comp>
-    </div>
-    <app-table-comp></app-table-comp>
+    </form>
+    <app-table-comp [data]="dataTable"></app-table-comp>
   </div>
 </div>

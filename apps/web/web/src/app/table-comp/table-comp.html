@@ -4,34 +4,24 @@
   }
   <thead class="table-light">
   <tr>
-    <th scope="col">PERSON</th>
-    <th scope="col">DATUM</th>
-    <th scope="col">STUFE</th>
-    <th scope="col">KOSTENSTELLE</th>
-    <th scope="col">STATUS</th>
+    @for (header of data()?.headers; track $index) {
+      <th scope="col">{{ header.toUpperCase() }}</th>
+    }
   </tr>
   </thead>
   <tbody>
-  <tr>
-    <td>1</td>
-    <td>Mark</td>
-    <td>Otto</td>
-    <td>mdo</td>
-    <td>mdo</td>
-  </tr>
-  <tr>
-    <td>2</td>
-    <td>Jacob</td>
-    <td>Thornton</td>
-    <td>fat</td>
-    <td>mdo</td>
-  </tr>
-  <tr>
-    <td>3</td>
-    <td>John</td>
-    <td>Doe</td>
-    <td>social</td>
-    <td>mdo</td>
-  </tr>
+    @for (row of data()?.rows; track $index) {
+      <tr>
+        @for (key of data()?.headers; track key) {
+          @if (row[key] instanceof Date)  {
+            <td>{{ row[key] | date:'dd.MM.yyyy' }}</td>
+          } @else if (row[key] instanceof Status) {
+            <td><app-badge-comp text="{{ row[key].value }}" bgColor="{{ row[key].color }}"></app-badge-comp></td>
+          } @else {
+            <td>{{ row[key] }}</td>
+          }
+        }
+      </tr>
+    }
   </tbody>
 </table>

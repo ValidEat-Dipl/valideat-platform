@@ -4,15 +4,15 @@
 
   <h1>Abrechnung</h1>
 
-  <app-info-flex-comp></app-info-flex-comp>
+  <app-info-flex-comp [data]="mapInfoContainer"></app-info-flex-comp>
 
   <div class="d-grid gap-4 statistics">
     <div class="d-flex gap-3">
-      <app-button-comp text="Markerl erfassen" buttonDesignType="primary"></app-button-comp>
+      <app-button-comp text="Markerl erfassen" buttonDesignType="primary" buttonType="link" link="http://localhost:4200/create-ticket"></app-button-comp>
       <app-button-comp text="Clearing öffnen" buttonDesignType="outline-secondary" buttonType="link" link="http://localhost:4200/clearing-tickets"></app-button-comp>
     </div>
     <div class="statistics-table">
-      <app-table-comp caption="Zuletzt erfasste Markerl"></app-table-comp>
+      <app-table-comp caption="Alle Markerl" [data]="dataTable"></app-table-comp>
     </div>
   </div>
 </div>

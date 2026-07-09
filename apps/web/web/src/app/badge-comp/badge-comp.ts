@@ -1,4 +1,4 @@
-import {Component, input} from '@angular/core';
+import {Component, computed, input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-badge-comp',
@@ -10,5 +10,14 @@ export class BadgeComp {
 
   text = input("Badge");
   bgColor = input("primary");
+
+  icon = computed(() => {
+    switch (this.bgColor()) {
+      case "success": return "check2-circle";
+      case "warning": return "clock";
+      case "danger": return "exclamation-triangle";
+      default: return "";
+    }
+  })
 
 }

@@ -1,0 +1,43 @@
+import {Injectable, Service} from '@angular/core';
+import {Status} from './status.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class TableDataService {
+
+  getTableData() {
+    return {
+      "headers": [
+        "person",
+        "datum",
+        "stufe",
+        "kostenstelle",
+        "status"
+      ],
+      "rows": [
+        {
+          "person": "Test1",
+          "datum": new Date(2026, 7, 9),
+          "stufe": "Stufe A",
+          "kostenstelle": "KST-001",
+          "status": new Status("Abgeglichen", "success"),
+        },
+        {
+          "person": "Test2",
+          "datum": new Date(2026, 4, 9),
+          "stufe": "Stufe A",
+          "kostenstelle": "KST-001",
+          "status": new Status("Konflikt", "danger"),
+        },
+        {
+          "person": "Test1",
+          "datum": new Date(2026, 5, 9),
+          "stufe": "Stufe B",
+          "kostenstelle": "KST-002",
+          "status": new Status("Offen", "warning"),
+        }
+      ]
+    }
+  }
+}

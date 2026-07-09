@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {NavComp} from '../nav-comp/nav-comp';
 import {ButtonComp} from '../button-comp/button-comp';
 import {InfoFlexComp} from '../info-flex-comp/info-flex-comp';
 import {TableComp} from '../table-comp/table-comp';
+import {InfoFlexService} from '../info-flex-service';
 
 @Component({
   selector: 'app-open-conflicts-comp',
@@ -17,6 +18,9 @@ import {TableComp} from '../table-comp/table-comp';
 })
 export class OpenConflictsComp {
 
-  openConflictsCount = 0;
+  infoContainerService = inject(InfoFlexService)
+
+  mapInfoContainer = this.infoContainerService.getInfoContainerMap();
+  openConflictsCount = this.mapInfoContainer.get("Offen");
 
 }
