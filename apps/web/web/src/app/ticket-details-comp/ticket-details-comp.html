@@ -1,0 +1,51 @@
+<app-nav-comp></app-nav-comp>
+
+<div class="m-4 d-grid gap-4">
+
+  <div class="d-flex gap-3">
+    <h1>Markerldetails</h1>
+    @if (conflict) {
+      <app-badge-comp class="align-self-center" bgColor="danger" text="Konflikt" ></app-badge-comp>
+    }
+  </div>
+
+  <div class="d-flex gap-3">
+    <div class="w-100 d-grid rounded-3 border border-dark-subtle">
+      <div class="p-3 rounded-top border-bottom border-dark-subtle gap-4 bg-secondary-subtle">
+        <p class="m-0 fw-bold">Erfassungsdaten</p>
+      </div>
+      <div class="d-grid gap-3 p-3">
+        <div class="d-flex gap-3">
+          <div class="d-grid w-100">
+            <p class="m-0 text-secondary">Beschäftigte Person</p>
+            <p class="m-0">Testperson</p>
+          </div>
+          <div class="d-grid w-100">
+            <p class="m-0 text-secondary">Datum</p>
+            <p class="m-0">05.07.2026</p>
+          </div>
+        </div>
+        <div class="d-flex gap-3">
+          <div class="d-grid w-100">
+            <p class="m-0 text-secondary">Markerlstufe</p>
+            <p class="m-0">Stufe B</p>
+          </div>
+          <div class="d-grid w-100">
+            <p class="m-0 text-secondary">Kostenstelle</p>
+            <p class="m-0">KST-001</p>
+          </div>
+        </div>
+        <div class="d-flex gap-3">
+          <div class="d-grid w-100">
+            <p class="m-0 text-secondary">Restaurant</p>
+            <p class="m-0">Restaurant 1</p>
+          </div>
+          <div class="d-grid w-100">
+            <p class="m-0 text-secondary">Unterschrift vorhanden</p>
+            <p class="m-0">Ja</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -3,6 +3,7 @@ import {ButtonComp} from '../button-comp/button-comp';
 import {InfoFlexComp} from '../info-flex-comp/info-flex-comp';
 import {NavComp} from '../nav-comp/nav-comp';
 import {TableComp} from '../table-comp/table-comp';
+import {BadgeComp} from '../badge-comp/badge-comp';
 
 @Component({
   selector: 'app-check-conflict-comp',
@@ -10,7 +11,8 @@ import {TableComp} from '../table-comp/table-comp';
     ButtonComp,
     InfoFlexComp,
     NavComp,
-    TableComp
+    TableComp,
+    BadgeComp
   ],
   templateUrl: './check-conflict-comp.html',
   styleUrl: './check-conflict-comp.css',

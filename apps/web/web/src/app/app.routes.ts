@@ -6,6 +6,7 @@ import {CreateTicketComp} from './create-ticket-comp/create-ticket-comp';
 import {ExportComp} from './export-comp/export-comp';
 import {OpenConflictsComp} from './open-conflicts-comp/open-conflicts-comp';
 import {CheckConflictComp} from './check-conflict-comp/check-conflict-comp';
+import {TicketDetailsComp} from './ticket-details-comp/ticket-details-comp';
 
 export const routes: Routes = [
   { path: "admin-overview", component: AdminOverviewComp},
@@ -15,5 +16,6 @@ export const routes: Routes = [
   { path: "open-conflicts", component: OpenConflictsComp},
   { path: "check-conflict", component: CheckConflictComp},
   { path: "export", component: ExportComp},
+  { path: "ticket-details", component: TicketDetailsComp},
   { path: "**", component: AdminOverviewComp}
 ];

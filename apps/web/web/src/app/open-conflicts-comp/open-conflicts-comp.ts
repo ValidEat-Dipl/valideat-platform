@@ -17,6 +17,6 @@ import {TableComp} from '../table-comp/table-comp';
 })
 export class OpenConflictsComp {
 
-  openConflictsCount = 1;
+  openConflictsCount = 0;
 
 }

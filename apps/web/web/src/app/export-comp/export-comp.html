@@ -1,34 +1,34 @@
 <app-nav-comp></app-nav-comp>
 
-<div class="heading">
-  <h1></h1>### status badge
-</div>
+<div class="m-4 d-grid gap-4">
 
-<div class="statistics-food-ticket-container">
-  <div class="statistics-food-box">
-    <h1 class="number"></h1>
-    <p class="text"></p>
-  </div>
-  ...
-  <div class="invalid-feedback">
-    <img alt="ICON">
-    <p class="message"></p>
-    <p class="solution"></p>
-    <p class="cleaering-link"></p>
+  <div class="d-flex gap-3">
+    <h1>Export & Freigabe</h1>
+    <app-badge-comp class="align-self-center" bgColor="info" text="In Bearbeitung" ></app-badge-comp>
   </div>
 
-  <div class="export-container">
-    <div class="head">
-      <h1>Export</h1>
-    </div>
-    <div class="export-box">
-      <ul>
-        <li>
-          <p class="invalid-text"></p>
-          <app-button-comp></app-button-comp>
-          <app-button-comp></app-button-comp>
-        </li>
-      </ul>
+  <div class="d-grid gap-4">
+    <app-info-flex-comp></app-info-flex-comp>
+    @if (openConflictsCount > 0) {
+      <div class="bg-danger-subtle rounded-3 d-grid p-5">
+        <p class="m-0 text-danger-emphasis fw-bold">Es sind noch {{ openConflictsCount }} Konflikt(e) offen</p>
+        <p class="m-0 text-danger">Bitte klären Sie alle Konflikte vor dem Export. <a href="http://localhost:4200/clearing-tickets" class="text-danger-emphasis link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Zum Clearing</a></p>
+      </div>
+    }
+
+    <div class="d-grid rounded-3 border border-dark-subtle">
+      <div class="p-3 rounded-top border-bottom border-dark-subtle gap-4 bg-secondary-subtle">
+        <p class="m-0 fw-bold">Export</p>
+      </div>
+      <div class="d-grid gap-3 p-3">
+        @if (openConflictsCount > 0) {
+          <p class="m-0 text-secondary">Format und Inhalt sind noch nicht fachlich bestätigt.</p>
+        }
+        <div class="d-flex gap-3">
+          <app-button-comp buttonDesignType="outline-secondary" text="Exportvorschau öffnen"></app-button-comp>
+          <app-button-comp buttonDesignType="outline-secondary" text="Export herunterladen"></app-button-comp>
+        </div>
+      </div>
     </div>
   </div>
 </div>
