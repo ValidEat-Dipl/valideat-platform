@@ -10,7 +10,7 @@ export class InfoFlexService {
         .set("Mitarbeitereinträge", 128)
         .set("Physische Markerl erfasst", 121)
         .set("Abgeglichen", 112)
-        .set("Offene Konflikte", 9)
+        .set("Offene Konflikte", 0)
   }
 
 }

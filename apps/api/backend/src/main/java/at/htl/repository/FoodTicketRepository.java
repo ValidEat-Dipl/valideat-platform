@@ -33,7 +33,7 @@ public class FoodTicketRepository {
     }
 
     public void save(LocalDate date, Employee employee, int costOrder) {
-        FoodTicket foodTicket = new FoodTicket(date, employee, costOrder);
+        FoodTicket foodTicket = new FoodTicket(); // TODO: Needs fixing
         entityManager.persist(foodTicket);
     }
 
@@ -41,7 +41,7 @@ public class FoodTicketRepository {
         List<FoodTicket> ticketsList = entityManager.createQuery("""
                                                       select f
                                                       from FoodTicket f
-                                                      where f.date = :date
+                                                      where f.useDate = :date
                                                       and f.employee.id = :empId
                                                       """, FoodTicket.class)
                 .setParameter("date", date)
@@ -56,12 +56,10 @@ public class FoodTicketRepository {
         return entityManager.createQuery("""
                 select f from FoodTicket f
                 where f.status = :status
-                and f.conflict like :conflict
                 and f.employee.id = :emp
-                and f.date between :startDate and :endDate
+                and f.useDate between :startDate and :endDate
                 """, FoodTicket.class)
                 .setParameter("status", status)
-                .setParameter("conflict", conflict)
                 .setParameter("emp", empId)
                 .setParameter("startDate", startDate)
                 .setParameter("endDate", endDate).getResultList();

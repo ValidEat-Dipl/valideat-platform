@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, input} from '@angular/core';
 import {NavComp} from '../nav-comp/nav-comp';
 import {ButtonComp} from '../button-comp/button-comp';
 import {InfoFlexComp} from '../info-flex-comp/info-flex-comp';
@@ -21,6 +21,6 @@ export class OpenConflictsComp {
   infoContainerService = inject(InfoFlexService)
 
   mapInfoContainer = this.infoContainerService.getInfoContainerMap();
-  openConflictsCount = this.mapInfoContainer.get("Offen");
+  openConflictsCount = this.mapInfoContainer.get("Offene Konflikte");
 
 }

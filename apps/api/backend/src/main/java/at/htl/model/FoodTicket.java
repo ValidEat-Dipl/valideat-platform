@@ -11,23 +11,84 @@ public class FoodTicket {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDate date; // Eingabefeld ohne vorgelegte Werte im Frontend (mit Cache)
-
     @ManyToOne
     private Employee employee;
 
-    private int costOrder;
+    private LocalDate useDate; // Eingabefeld ohne vorgelegte Werte im Frontend (mit Cache)
+
+   @ManyToOne
+    private Tier tier;
+
+   @ManyToOne
+    private CostOrder costOrder;
 
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    private String conflict;
+    @ManyToOne
+    private Restaurant restaurant;
+
+    @ManyToOne
+    private Employee admin;
+
+    private LocalDate checkDate;
+
+    @ManyToOne
+    private ChangeLog changeLog;
+
 
     public FoodTicket() {}
 
-    public FoodTicket(LocalDate date, Employee employee, int costOrder) {
-        this.date = date;
+    public FoodTicket(Long id, Employee employee, LocalDate useDate, Tier tier, CostOrder costOrder, Status status, Restaurant restaurant, Employee admin, LocalDate checkDate, ChangeLog changeLog) {
+        this.id = id;
         this.employee = employee;
+        this.useDate = useDate;
+        this.tier = tier;
+        this.costOrder = costOrder;
+        this.status = status;
+        this.restaurant = restaurant;
+        this.admin = admin;
+        this.checkDate = checkDate;
+        this.changeLog = changeLog;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    public LocalDate getUseDate() {
+        return useDate;
+    }
+
+    public void setUseDate(LocalDate useDate) {
+        this.useDate = useDate;
+    }
+
+    public Tier getTier() {
+        return tier;
+    }
+
+    public void setTier(Tier tier) {
+        this.tier = tier;
+    }
+
+    public CostOrder getCostOrder() {
+        return costOrder;
+    }
+
+    public void setCostOrder(CostOrder costOrder) {
         this.costOrder = costOrder;
     }
 
@@ -39,43 +100,35 @@ public class FoodTicket {
         this.status = status;
     }
 
-    public String getConflict() {
-        return conflict;
+    public Restaurant getRestaurant() {
+        return restaurant;
     }
 
-    public void setConflict(String conflict) {
-        this.conflict = conflict;
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
     }
 
-    public Long getId() {
-        return id;
+    public Employee getAdmin() {
+        return admin;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setAdmin(Employee admin) {
+        this.admin = admin;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public LocalDate getCheckDate() {
+        return checkDate;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setCheckDate(LocalDate checkDate) {
+        this.checkDate = checkDate;
     }
 
-    public Employee getEmployee() {
-        return employee;
+    public ChangeLog getChangeLog() {
+        return changeLog;
     }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
-
-    public int getCostOrder() {
-        return costOrder;
-    }
-
-    public void setCostOrder(int costOrder) {
-        this.costOrder = costOrder;
+    public void setChangeLog(ChangeLog changeLog) {
+        this.changeLog = changeLog;
     }
 }

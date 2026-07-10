@@ -4,14 +4,14 @@ import at.htl.model.Employee;
 import at.htl.repository.EmployeeRepository;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
 
 import java.time.LocalDate;
 
 @Path("/employee")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class EmployeeResource {
 
     @Inject
@@ -25,8 +25,8 @@ public class EmployeeResource {
 
     @POST
     @Transactional
-    @Path("/register/{emp}")
-    public String register(@PathParam("emp") Employee emp) {
+    @Path("/register")
+    public String register(Employee emp) {
         return employeeRepository.register(emp);
     }
 
