@@ -18,9 +18,9 @@ public class EmployeeResource {
     EmployeeRepository employeeRepository;
 
     @POST
-    @Path("/login/{email}")
-    public String login(@PathParam("email") String email) {
-        return employeeRepository.login(email);
+    @Path("/login/{email}/{password}")
+    public String login(@PathParam("email") String email, @PathParam("password") String password) {
+        return employeeRepository.login(email, password);
     }
 
     @POST

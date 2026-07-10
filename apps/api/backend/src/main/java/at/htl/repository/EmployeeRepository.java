@@ -1,6 +1,7 @@
 package at.htl.repository;
 
 import at.htl.model.Employee;
+import io.quarkus.elytron.security.common.BcryptUtil;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
@@ -22,21 +23,30 @@ public class EmployeeRepository {
     }
 
 
-    public String login(String email) {
+    public String login(String email, String password) {
         List<Employee> employees = em.createQuery("select e from Employee e where e.email = :email", Employee.class)
                 .setParameter("email", email).getResultList();
 
-        if (employees.size() == 1) {
-            return "Login was Succesfull!";
-        } else if (employees.isEmpty()) {
+        if (employees.isEmpty()) {
             return "No Employee found.";
+        }
+
+        if (employees.size() > 1) {
+            return "There were more than one Result";
+        }
+
+        Employee employee = employees.getFirst();
+
+        if (BcryptUtil.matches(password, employee.getPasswordHash())) {
+            return "Login was Successful!";
         } else {
-            return "There were more then one Result";
+            return "Wrong password!";
         }
     }
 
     public String register(Employee emp) {
         try {
+            emp.setPasswordHash(BcryptUtil.bcryptHash(emp.getPasswordHash()));
             em.persist(emp);
         } catch (Exception e) {
             return e.getMessage();
@@ -47,7 +57,7 @@ public class EmployeeRepository {
 
 
     public boolean checkIfTodaysTicketUsed(Employee emp, LocalDate date) {
-        Long count = em.createQuery("select count(f) from FoodTicket f where f.date = :date and f.employee.id = :id", Long.class)
+        Long count = em.createQuery("select count(f) from FoodTicket f where f.useDate = :date and f.employee.id = :id", Long.class)
                 .setParameter("date", date).setParameter("id", emp.getId()).getSingleResult();
 
         return count != 0;

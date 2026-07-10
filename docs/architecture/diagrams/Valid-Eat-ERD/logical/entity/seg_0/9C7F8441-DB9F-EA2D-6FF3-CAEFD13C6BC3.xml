@@ -28,5 +28,18 @@
 <logicalDatatype>A3A3C77D-0366-9768-FF89-1C25E56881C8</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
+<Attribute name="Rabatt" id="C03B7242-67EB-E97C-8F2B-CFECA21E4296">
+<createdBy>julianrichter</createdBy>
+<createdTime>2026-07-10 17:40:53 UTC</createdTime>
+<ownerDesignName>Valid-Eat-ERD</ownerDesignName>
+<engineerTo>
+<item key="EC9518F0-531C-08AE-E133-0E90D51627DA" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT020</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
 </attributes>
 </Entity>

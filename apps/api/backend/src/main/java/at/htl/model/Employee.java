@@ -19,7 +19,10 @@ public class Employee {
 
     private String phoneNumber;
 
+    @Column(unique = true, nullable = false)
     private String email;
+
+    private String passwordHash;
 
     @ManyToOne
     private ChangeLog changeLog;
@@ -27,13 +30,16 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(String firstName, String lastName, String address, String department, String phoneNumber, String email) {
+    public Employee(Long id, String firstName, String lastName, String address, String department, String phoneNumber, String email, String passwordHash, ChangeLog changeLog) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.department = department;
         this.phoneNumber = phoneNumber;
         this.email = email;
+        this.passwordHash = passwordHash;
+        this.changeLog = changeLog;
     }
 
     public Long getId() {
@@ -90,5 +96,21 @@ public class Employee {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
+    }
+
+    public ChangeLog getChangeLog() {
+        return changeLog;
+    }
+
+    public void setChangeLog(ChangeLog changeLog) {
+        this.changeLog = changeLog;
     }
 }
