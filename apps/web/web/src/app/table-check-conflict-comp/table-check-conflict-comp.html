@@ -1,0 +1,51 @@
+<div class="d-flex gap-3">
+  <table class="w-100 table table-bordered caption-top">
+    <thead class="table-light">
+    <tr>
+      <th scope="col">Mitarbeitererfassung</th>
+    </tr>
+    </thead>
+    <tbody>
+      @for (row of dataEmp()?.rows; track $index) {
+        <tr>
+          @if (conflictFields == "STUFE") {
+            <td class="d-flex gap-2 bg-danger-subtle">
+              <p class="text-secondary text-uppercase">Stufe</p>
+              <span class="text-end fw-bold text-danger">Stufe B <app-badge-comp text="Abweichung" bgColor="danger"></app-badge-comp></span>
+            </td>
+          } @else {
+            <td class="d-flex gap-2">
+              <p class="text-secondary text-uppercase">Person</p>
+              <span class="text-end fw-bold">Testperson 1</span>
+            </td>
+          }
+        </tr>
+      }
+    </tbody>
+  </table>
+  <table class="w-100 table table-bordered caption-top">
+    <thead class="table-light">
+    <tr>
+      <th scope="col">Physisches Markerl</th>
+    </tr>
+    </thead>
+    <tbody>
+      @for (row of dataTicket()?.rows; track $index) {
+        <tr>
+          @if (conflictFields != "STUFE") {
+            <td class="d-flex gap-2 bg-danger-subtle">
+              <p class="text-secondary text-uppercase">Stufe</p>
+              <span class="text-end fw-bold text-danger">Stufe B <app-badge-comp text="Abweichung" bgColor="danger"></app-badge-comp></span>
+            </td>
+          } @else {
+            <td class="d-flex gap-2">
+              <p class="text-secondary text-uppercase">Person</p>
+              <span class="text-end fw-bold">Testperson 1</span>
+            </td>
+          }
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
+
