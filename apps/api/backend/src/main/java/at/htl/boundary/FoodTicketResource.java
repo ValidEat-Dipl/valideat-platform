@@ -1,10 +1,8 @@
 package at.htl.boundary;
 
-import at.htl.model.Employee;
-import at.htl.model.FoodTicket;
-import at.htl.model.Status;
-import at.htl.repository.EmployeeRepository;
-import at.htl.repository.FoodTicketRepository;
+import at.htl.boundary.dto.EmployeeFoodTicketDTO;
+import at.htl.model.*;
+import at.htl.repository.*;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
@@ -24,6 +22,12 @@ public class FoodTicketResource {
     FoodTicketRepository foodTicketRepository;
     @Inject
     EmployeeRepository employeeRepository;
+    @Inject
+    TierRepository tierRepository;
+    @Inject
+    CostOrderRepository costOrderRepository;
+    @Inject
+    RestaurantRepository restaurantRepository;
 
     @GET
     public List<FoodTicket> listAll() {
@@ -43,15 +47,32 @@ public class FoodTicketResource {
     }
 
     @POST
-    @Path("/addTicketEntry/{date}/{employeeId}/{costOrder}")
+    @Path("/empAddTicketEntry")
     @Transactional
-    public Response saveNewTicketEntry(@PathParam("date") LocalDate date,
-                                       @PathParam("employeeId") Long empId,
-                                       @PathParam("costOrder") int costOrder) {
+    public Response empSaveNewTicketEntry(EmployeeFoodTicketDTO employeeFoodTicketDTO) {
+        Employee employee;
+        Tier tier;
+        CostOrder costOrder;
+        Restaurant restaurant;
 
-        Employee employee = employeeRepository.getEmpById(empId);
+        try {
+            employee = employeeRepository.findByName(employeeFoodTicketDTO.employeeName());
+            tier = tierRepository.findByName(employeeFoodTicketDTO.tier());
+            costOrder = costOrderRepository.findByName(employeeFoodTicketDTO.costOrder());
+            restaurant = restaurantRepository.findByName(employeeFoodTicketDTO.restaurantName());
+        } catch (Exception e) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
 
-        foodTicketRepository.save(date, employee, costOrder);
+
+        FoodTicket foodTicket = new FoodTicket(
+                employee,
+                employeeFoodTicketDTO.date(),
+                tier,
+                costOrder,
+                Status.OPEN,
+                restaurant);
+        foodTicketRepository.save(foodTicket);
         return Response.ok().build();
     }
 

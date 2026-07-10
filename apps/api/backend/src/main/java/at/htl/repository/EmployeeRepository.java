@@ -22,6 +22,19 @@ public class EmployeeRepository {
         return em.find(Employee.class, id);
     }
 
+    public Employee findByName(String name) {
+
+        return em.createQuery(
+                        """
+            SELECT e FROM Employee e 
+            WHERE lower(CONCAT(e.firstName, ' ', e.lastName)) = lower(:name)
+               OR LOWER(CONCAT(e.lastName, ' ', e.firstName)) = lower(:name)
+            """,
+                        Employee.class)
+                .setParameter("name", name)
+                .getSingleResult();
+    }
+
 
     public String login(String email, String password) {
         List<Employee> employees = em.createQuery("select e from Employee e where e.email = :email", Employee.class)

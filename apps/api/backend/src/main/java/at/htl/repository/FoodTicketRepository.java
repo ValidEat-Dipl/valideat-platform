@@ -32,8 +32,7 @@ public class FoodTicketRepository {
                 .setParameter("id", id).getResultList();
     }
 
-    public void save(LocalDate date, Employee employee, int costOrder) {
-        FoodTicket foodTicket = new FoodTicket(); // TODO: Needs fixing
+    public void save(FoodTicket foodTicket) {
         entityManager.persist(foodTicket);
     }
 

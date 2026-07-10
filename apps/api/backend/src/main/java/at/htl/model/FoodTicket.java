@@ -39,8 +39,7 @@ public class FoodTicket {
 
     public FoodTicket() {}
 
-    public FoodTicket(Long id, Employee employee, LocalDate useDate, Tier tier, CostOrder costOrder, Status status, Restaurant restaurant, Employee admin, LocalDate checkDate, ChangeLog changeLog) {
-        this.id = id;
+    public FoodTicket(Employee employee, LocalDate useDate, Tier tier, CostOrder costOrder, Status status, Restaurant restaurant, Employee admin, LocalDate checkDate, ChangeLog changeLog) {
         this.employee = employee;
         this.useDate = useDate;
         this.tier = tier;
@@ -50,6 +49,15 @@ public class FoodTicket {
         this.admin = admin;
         this.checkDate = checkDate;
         this.changeLog = changeLog;
+    }
+
+    public FoodTicket(Employee employee, LocalDate useDate, Tier tier, CostOrder costOrder, Status status, Restaurant restaurant) {
+        this.employee = employee;
+        this.useDate = useDate;
+        this.tier = tier;
+        this.costOrder = costOrder;
+        this.status = status;
+        this.restaurant = restaurant;
     }
 
     public Long getId() {
