@@ -10,7 +10,7 @@
   </tr>
   </thead>
   <tbody>
-    @for (row of data()?.rows; track $index) {
+    @for (row of data()?.rows?.slice(0, maxRows); track $index) {
       <tr>
         @for (key of data()?.headers; track key) {
           @if (row[key] instanceof Date)  {
@@ -25,3 +25,18 @@
     }
   </tbody>
 </table>
+<nav aria-label="Page navigation Table">
+  <ul class="pagination">
+    <li class="page-item">
+      <a class="page-link" (click)="setInitRowNumber(0)" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item">
+      <a class="page-link" (click)="setInitRowNumber(10)" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>

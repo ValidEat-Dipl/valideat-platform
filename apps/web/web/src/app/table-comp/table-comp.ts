@@ -1,4 +1,4 @@
-import {Component, input, InputSignal, OnInit} from '@angular/core';
+import {Component, computed, inject, input, InputSignal, OnInit, Signal} from '@angular/core';
 import {TableData} from '../table.model';
 import {DatePipe} from '@angular/common';
 import {Status} from '../status.model';
@@ -19,7 +19,15 @@ export class TableComp{
   caption = input<string>("");
   data = input<TableData>();
 
-  protected readonly Date = Date;
+  length = computed(() => this.data()?.rows.length)
 
+  initRow = 0
+  maxRows = 5
+
+  protected readonly Date = Date;
   protected readonly Status = Status;
+
+  protected setInitRowNumber(number: number) {
+
+  }
 }
