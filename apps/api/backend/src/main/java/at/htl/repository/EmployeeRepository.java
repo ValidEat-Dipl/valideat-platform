@@ -26,7 +26,7 @@ public class EmployeeRepository {
 
         return em.createQuery(
                         """
-            SELECT e FROM Employee e 
+            SELECT e FROM Employee e
             WHERE lower(CONCAT(e.firstName, ' ', e.lastName)) = lower(:name)
                OR LOWER(CONCAT(e.lastName, ' ', e.firstName)) = lower(:name)
             """,

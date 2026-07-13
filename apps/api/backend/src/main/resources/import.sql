@@ -1,13 +1,14 @@
 INSERT INTO ChangeLog (
-    description
+    description,
+    changeDate
 ) VALUES
-      ('Employee created'),
-      ('Employee data updated'),
-      ('FoodTicket submitted'),
-      ('FoodTicket checked by admin'),
-      ('FoodTicket conflict detected'),
-      ('Employee password changed'),
-      ('FoodTicket approved');
+      ('Employee created', '2026-07-01'),
+      ('Employee data updated', '2026-07-03'),
+      ('FoodTicket submitted', '2026-07-05'),
+      ('FoodTicket checked by admin', '2026-07-06'),
+      ('FoodTicket conflict detected', '2026-07-08'),
+      ('Employee password changed', '2026-07-10'),
+      ('FoodTicket approved', '2026-07-11');
 
 INSERT INTO Employee (
     firstName,
@@ -69,27 +70,43 @@ INSERT INTO Tier (
 INSERT INTO FoodTicket (
     employee_id,
     useDate,
+    matching_ticket_id,
     tier_name,
     costOrder_name,
     status,
+    ticketType,
     restaurant_id,
     admin_id,
     checkDate,
     changeLog_id
 ) VALUES
 
--- Offene Anträge
-(1, '2026-07-14', 'INTERN',      '1000 - Verwaltung', 'OPEN',     1, NULL, NULL, NULL),
-(2, '2026-07-15', 'APPRENTICE',  '1100 - Personal',   'OPEN',     2, NULL, NULL, NULL),
-(3, '2026-07-16', 'EMPLOYEE',    '1200 - IT',         'OPEN',     1, NULL, NULL, NULL),
+-- OPEN
+(1, '2026-07-14', NULL, 'INTERN',      '1000 - Verwaltung', 'OPEN', 'EMPLOYEE', 1, NULL, NULL, NULL),
+(2, '2026-07-15', NULL, 'APPRENTICE',  '1100 - Personal',   'OPEN', 'EMPLOYEE', 2, NULL, NULL, NULL),
+(3, '2026-07-16', NULL, 'EMPLOYEE',    '1200 - IT',         'OPEN', 'ADMIN', 1, NULL, NULL, NULL),
 
--- Geprüfte Anträge
-(1, '2026-07-10', 'APPRENTICE',  '1000 - Verwaltung', 'CHECKED',  2, 5, '2026-07-10', 4),
-(2, '2026-07-09', 'EMPLOYEE',    '1100 - Personal',   'CHECKED',  3, 5, '2026-07-09', 4),
-(4, '2026-07-08', 'INTERN',      '2000 - Produktion', 'CHECKED',  1, 6, '2026-07-08', 4),
-(3, '2026-07-07', 'APPRENTICE',  '1200 - IT',         'CHECKED',  2, 6, '2026-07-07', 4),
+-- CHECKED Paar
+(1, '2026-07-10', NULL, 'APPRENTICE', '1000 - Verwaltung', 'CHECKED', 'EMPLOYEE', 2, 5, '2026-07-10', 4),
+(1, '2026-07-10', NULL, 'APPRENTICE', '1000 - Verwaltung', 'CHECKED', 'ADMIN', 2, 5, '2026-07-10', 4),
 
--- Konflikte
-(1, '2026-07-17', 'EMPLOYEE',    '1100 - Personal',   'CONFLICT', 3, 5, '2026-07-17', 5),
-(4, '2026-07-18', 'APPRENTICE',  '2000 - Produktion', 'CONFLICT', 1, 6, '2026-07-18', 5),
-(2, '2026-07-19', 'INTERN',      '1000 - Verwaltung', 'CONFLICT', 2, 5, '2026-07-19', 5);
+-- CONFLICT Paar
+(2, '2026-07-09', NULL, 'EMPLOYEE', '1100 - Personal', 'CONFLICT', 'EMPLOYEE', 3, 5, '2026-07-09', 5),
+(2, '2026-07-09', NULL, 'EMPLOYEE', '1100 - Personal', 'CONFLICT', 'ADMIN', 3, 5, '2026-07-09', 5);
+
+UPDATE FoodTicket
+SET matching_ticket_id = 5
+WHERE id = 4;
+
+UPDATE FoodTicket
+SET matching_ticket_id = 4
+WHERE id = 5;
+
+
+UPDATE FoodTicket
+SET matching_ticket_id = 7
+WHERE id = 6;
+
+UPDATE FoodTicket
+SET matching_ticket_id = 6
+WHERE id = 7;

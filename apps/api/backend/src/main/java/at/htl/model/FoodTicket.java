@@ -16,6 +16,10 @@ public class FoodTicket {
 
     private LocalDate useDate;
 
+    @OneToOne
+    @JoinColumn(name = "matching_ticket_id", nullable = true)
+    private FoodTicket matchingTicket;
+
    @ManyToOne
     private Tier tier;
 
@@ -24,6 +28,9 @@ public class FoodTicket {
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    @Enumerated(EnumType.STRING)
+    private TicketType ticketType;
 
     @ManyToOne
     private Restaurant restaurant;
@@ -39,12 +46,14 @@ public class FoodTicket {
 
     public FoodTicket() {}
 
-    public FoodTicket(Employee employee, LocalDate useDate, Tier tier, CostOrder costOrder, Status status, Restaurant restaurant, Employee admin, LocalDate checkDate, ChangeLog changeLog) {
+    public FoodTicket(Employee employee, LocalDate useDate, FoodTicket matchingTicket, Tier tier, CostOrder costOrder, Status status, TicketType ticketType, Restaurant restaurant, Employee admin, LocalDate checkDate, ChangeLog changeLog) {
         this.employee = employee;
         this.useDate = useDate;
+        this.matchingTicket = matchingTicket;
         this.tier = tier;
         this.costOrder = costOrder;
         this.status = status;
+        this.ticketType = ticketType;
         this.restaurant = restaurant;
         this.admin = admin;
         this.checkDate = checkDate;
@@ -138,5 +147,21 @@ public class FoodTicket {
 
     public void setChangeLog(ChangeLog changeLog) {
         this.changeLog = changeLog;
+    }
+
+    public FoodTicket getMatchingTicket() {
+        return matchingTicket;
+    }
+
+    public void setMatchingTicket(FoodTicket matchingTicket) {
+        this.matchingTicket = matchingTicket;
+    }
+
+    public TicketType getTicketType() {
+        return ticketType;
+    }
+
+    public void setTicketType(TicketType ticketType) {
+        this.ticketType = ticketType;
     }
 }
