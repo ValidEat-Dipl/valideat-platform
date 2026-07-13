@@ -11,11 +11,11 @@ export class InfoFlexServiceAdminOverview {
     const params: any = {};
 
     if (lastYear) {
-      params.lastYear = lastYear;
+      params.last12months = lastYear;
     }
 
     return this.http.get<Record<string, number>>(
-      'http://localhost:8080/api/admin-overview-info-box',
+      'http://localhost:8080/foodticket/admin-overview-info-box',
       { params },
     );
   }

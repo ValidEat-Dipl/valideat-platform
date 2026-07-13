@@ -20,6 +20,6 @@ export class OpenConflictsComp {
   infoContainerService = inject(InfoFlexServiceAdminOverview)
 
   mapInfoContainer = this.infoContainerService.getInfoContainerMap();
-  openConflictsCount = this.mapInfoContainer.get("Offene Konflikte");
+  openConflictsCount = 0;
 
 }

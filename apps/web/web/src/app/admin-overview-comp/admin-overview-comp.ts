@@ -27,11 +27,13 @@ export class AdminOverviewComp implements OnInit {
 
   protected onToggleLastYear() {
     this.lastYear = !this.lastYear;
+    this.loadData();
   }
 
   private loadData() {
     this.infoContainerService.getInfoContainerMap(this.lastYear).subscribe((data) => {
       this.infoContainer = data;
+      console.log(data)
     });
 
     this.dataTable = this.tableService.getTableData();

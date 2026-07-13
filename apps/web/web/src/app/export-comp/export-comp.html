@@ -8,7 +8,7 @@
   </div>
 
   <div class="d-grid gap-4">
-    <app-info-flex-comp [data]="mapInfoContainer"></app-info-flex-comp>
+    <app-info-flex-comp></app-info-flex-comp>
     @if (openConflictsCount > 0) {
       <div class="bg-danger-subtle rounded-3 d-grid p-4">
         <p class="m-0 text-danger-emphasis fw-bold">Es sind noch {{ openConflictsCount }} @if (openConflictsCount > 1) {Konflikte} @else {Konflikt} offen</p>

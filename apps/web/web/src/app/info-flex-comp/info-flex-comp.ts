@@ -1,4 +1,4 @@
-import {Component, input, InputSignal} from '@angular/core';
+import { Component, computed, input, InputSignal } from '@angular/core';
 
 @Component({
   selector: 'app-info-flex-comp',
@@ -7,7 +7,6 @@ import {Component, input, InputSignal} from '@angular/core';
   styleUrl: './info-flex-comp.css',
 })
 export class InfoFlexComp {
-
-  data: InputSignal<Map<string, number> | undefined> = input<Map<string, number>>();
-
+  data: InputSignal<Record<string, number> | undefined> = input<Record<string, number>>();
+  dataEntries = computed(() => Object.entries(this.data() ?? {}));
 }

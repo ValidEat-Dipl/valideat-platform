@@ -67,7 +67,7 @@ public class FoodTicketResource {
         Map<String, Integer> result = new LinkedHashMap<>();
 
         result.put("Mitarbeitereinträge", employeeTickets);
-        result.put("Physische Marker erfasst", restaurantTickets);
+        result.put("Physische Markerl erfasst", restaurantTickets);
         result.put("Abgeglichen", checkedTickets);
         result.put("Konflikte", conflictTickets);
 
