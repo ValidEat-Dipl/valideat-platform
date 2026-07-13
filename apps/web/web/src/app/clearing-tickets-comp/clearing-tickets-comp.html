@@ -7,7 +7,7 @@
   <app-info-flex-comp [data]="mapInfoContainer"></app-info-flex-comp>
 
   <div class="d-grid gap-4 statistics">
-    <form [formGroup]="form"  class="d-flex gap-3 w-75">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()"  class="d-flex gap-3 w-75">
 
       <div class="input-group mb-3">
         <span class="input-group-text" id="basic-addon1">Person</span>
@@ -35,6 +35,7 @@
       </div>
 
       <app-button-comp buttonType="reset" buttonDesignType="outline-secondary" text="Filter zurücksetzen"></app-button-comp>
+      <app-button-comp buttonType="submit" buttonDesignType="primary" text="Suchen"></app-button-comp>
     </form>
     <app-table-overview-comp [data]="dataTable"></app-table-overview-comp>
   </div>

@@ -1,0 +1,13 @@
+https://copilot.microsoft.com/chats/W4QJ5jPu4AZXSer544YML
+Table Pagination
+
+
+
+ChatGPT #1
+currentRoute: string = "";
+  constructor(private router: Router){
+    console.log(router.url);
+    router.events.filter(event => event instanceof NavigationEnd)
+      .subscribe(event => {this.currentRoute = event.url;
+        console.log(event);});}
+filter doesnt exist on observable obwohl ich es 1:1 aus einer guide website kopiert hab

@@ -24,3 +24,7 @@ https://icons.getbootstrap.com/
 
 https://thehaseebahmed.medium.com/how-to-implement-autosearch-in-angular-6e562c1ee4d4
 09.07.2026
+
+[https://www.angularjswiki.com/angular/how-to-get-current-route-in-angular](https://www.angularjswiki.com/angular/how-to-get-current-route-in-angular/)
+
+10.07.2026

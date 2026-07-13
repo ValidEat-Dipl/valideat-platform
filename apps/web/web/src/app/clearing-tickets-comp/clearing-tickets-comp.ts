@@ -7,6 +7,7 @@ import {TableDataOverviewService} from '../table-data-overview-service';
 import {FormBuilder, ReactiveFormsModule} from '@angular/forms';
 import { InfoFlexServiceClearing } from '../info-flex-service-clearing';
 import { TableDataClearingService } from '../table-data-clearing-service';
+import { Status } from '../status.model';
 
 @Component({
   selector: 'app-clearing-tickets-comp',
@@ -22,28 +23,19 @@ export class ClearingTicketsComp {
   dataTable = this.tableService.getTableData();
 
   form = inject(FormBuilder).nonNullable.group({
-    person: [''],
-    dateTicket: [''],
-    costRank: [''],
-    costDepartment: [''],
-    status: [''],
+    person: '',
+    dateTicket: '',
+    costRank: '',
+    costDepartment: '',
+    status: '',
   });
 
-  /*private readonly _autoSearch$: Subject<string> = new Subject<string>();
-  private readonly _debounce: number = 500;
-  private todos$: any;
-
-  ngOnInit(): void {
-    this.todos$ = this._autoSearch$.pipe(
-      debounceTime(this._debounce),
-      distinctUntilChanged(),
-      switchMap((text) => {
-        // TODO: REPLACE THIS WITH YOUR OWN HTTP CALL HERE.
-        return this._http.get<ITodo[]>(`http://www.some-api.com/todos?search=${text}`);
-      })
+  protected onSubmit() {
+    this.dataTable = this.tableService.getTableData(
+      this.form.value.person,
+      this.form.value.costRank,
+      this.form.value.costDepartment,
+      new Status(<string>this.form.value.status)
     );
   }
-  public onSearch(text: string) {
-    this._autoSearch$.next(text);
-  }*/
 }

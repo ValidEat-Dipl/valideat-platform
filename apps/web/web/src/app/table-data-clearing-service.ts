@@ -2,6 +2,9 @@ import { inject, Injectable, Service } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FoodTicket } from './food-ticket.model';
 import { Status } from './status.model';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
+
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +18,19 @@ export class TableDataClearingService {
     // @ts-ignore
     this.data = data;
   });
+
+  // ChatGpt #1 Anfang
+  currentRoute: string = "";
+  constructor(private router: Router) {
+    console.log(router.url);
+
+    router.events
+      .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
+      .subscribe((event) => {
+        this.currentRoute = event.url;
+    });
+  }
+  // ChatGpt #1 Ende
 
   /*processedTableData = {
     "headers": ['person', 'datum', 'stufe', 'kostenstelle', 'status'],
@@ -37,6 +53,7 @@ export class TableDataClearingService {
       { key: 'kostenstelle', label: 'Kostenstelle' },
       { key: 'status', label: 'Status' },
       { key: 'lastChange', label: 'Letzte Änderung' },
+      { key: 'action', label: 'Aktion' },
     ],
     rows: [
       {
@@ -46,6 +63,7 @@ export class TableDataClearingService {
         kostenstelle: 'KST-001',
         status: new Status('Abgeglichen', 'success'),
         lastChange: new Date(2026, 7, 10),
+        action: 'Ticket öffnen',
       },
       {
         person: 'Test2',
@@ -54,6 +72,7 @@ export class TableDataClearingService {
         kostenstelle: 'KST-001',
         status: new Status('Offen', 'warning'),
         lastChange: null,
+        action: 'Ticket öffnen',
       },
       {
         person: 'Test3',
@@ -62,6 +81,7 @@ export class TableDataClearingService {
         kostenstelle: 'KST-001',
         status: new Status('Konflikt', 'danger'),
         lastChange: new Date(2026, 7, 10),
+        action: 'Ticket öffnen',
       },
       {
         person: 'Test4',
@@ -70,6 +90,7 @@ export class TableDataClearingService {
         kostenstelle: 'KST-001',
         status: new Status('Abgeglichen', 'success'),
         lastChange: new Date(2026, 7, 10),
+        action: 'Ticket öffnen',
       },
       {
         person: 'Test5',
@@ -78,6 +99,7 @@ export class TableDataClearingService {
         kostenstelle: 'KST-001',
         status: new Status('Abgeglichen', 'success'),
         lastChange: null,
+        action: 'Ticket öffnen',
       },
       {
         person: 'Test6',
@@ -86,6 +108,7 @@ export class TableDataClearingService {
         kostenstelle: 'KST-001',
         status: new Status('Abgeglichen', 'success'),
         lastChange: new Date(2026, 7, 10),
+        action: 'Ticket öffnen',
       },
       {
         person: 'Test7',
@@ -94,6 +117,7 @@ export class TableDataClearingService {
         kostenstelle: 'KST-001',
         status: new Status('Abgeglichen', 'success'),
         lastChange: new Date(2026, 7, 10),
+        action: 'Ticket öffnen',
       },
       {
         person: 'Test8',
@@ -102,11 +126,17 @@ export class TableDataClearingService {
         kostenstelle: 'KST-001',
         status: new Status('Abgeglichen', 'success'),
         lastChange: new Date(2026, 7, 10),
-      }
+        action: 'Ticket öffnen',
+      },
     ],
   };
 
-  getTableData() {
-    return this.processedTableData;
+  getTableData(person?: string, costRank?: string, costDepartment?: string, status?: Status) {
+    this.data$ = this.http.get('http://localhost:8080/api/table-clearing?'+person).subscribe((data) => {
+      console.log(data);
+      // @ts-ignore
+      this.data = data;
+    });
+      return this.processedTableData;
   }
 }

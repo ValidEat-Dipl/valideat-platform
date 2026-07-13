@@ -51,9 +51,10 @@ export class TableOverviewComp {
   protected pageCount = computed(() => Math.ceil(this.length() / this.maxRows));
 
   protected currentPage = computed(() => Math.floor(this.initRow() / this.maxRows) + 1);
+
+  protected readonly Array = Array;
   // Copilot #1 Ende
 
   protected readonly Date = Date;
   protected readonly Status = Status;
-  protected readonly Array = Array;
 }
