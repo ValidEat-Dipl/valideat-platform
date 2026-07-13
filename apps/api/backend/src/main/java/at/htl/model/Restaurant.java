@@ -1,23 +1,25 @@
 package at.htl.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 @Entity
 public class Restaurant {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String address;
 
     private String name;
 
-    @ManyToOne
-    private Meal menu;
 
     public Restaurant() {}
+
+    public Restaurant(String address, String name) {
+        this.address = address;
+        this.name = name;
+    }
 
     public Long getId() {
         return id;
@@ -41,13 +43,5 @@ public class Restaurant {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Meal getMenu() {
-        return menu;
-    }
-
-    public void setMenu(Meal menu) {
-        this.menu = menu;
     }
 }

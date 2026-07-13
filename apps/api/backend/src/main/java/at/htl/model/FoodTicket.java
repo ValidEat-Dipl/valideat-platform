@@ -14,13 +14,13 @@ public class FoodTicket {
     @ManyToOne
     private Employee employee;
 
-    private LocalDate useDate; // Eingabefeld ohne vorgelegte Werte im Frontend (mit Cache)
+    private LocalDate useDate;
 
    @ManyToOne
     private Tier tier;
 
    @ManyToOne
-    private CostOrder costOrder;
+    private CostOrder costOrder; // Eingabefeld ohne vorgelegte Werte im Frontend (mit Cache)
 
     @Enumerated(EnumType.STRING)
     private Status status;
