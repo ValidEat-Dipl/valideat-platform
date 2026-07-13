@@ -8,12 +8,15 @@ import {CheckConflictComp} from './check-conflict-comp/check-conflict-comp';
 import {TicketDetailsComp} from './ticket-details-comp/ticket-details-comp';
 
 export const routes: Routes = [
-  { path: "admin-overview", component: AdminOverviewComp},
-  { path: "clearing-tickets", component: ClearingTicketsComp},
-  { path: "clearing-tickets/check-conflict", component: CheckConflictComp},
-  { path: "create-ticket", component: CreateTicketComp},
-  { path: "open-conflicts", component: OpenConflictsComp},
-  { path: "export", component: ExportComp},
-  { path: "ticket-details", component: TicketDetailsComp},
-  { path: "**", component: AdminOverviewComp}
+  { path: 'admin-overview', component: AdminOverviewComp },
+  { path: 'clearing-tickets', component: ClearingTicketsComp },
+  { path: 'clearing-tickets/check-conflict', component: CheckConflictComp },
+  { path: 'create-ticket', component: CreateTicketComp },
+  { path: 'open-conflicts', component: OpenConflictsComp },
+  { path: 'export', component: ExportComp },
+  { path: 'ticket-details', component: TicketDetailsComp },
+  { path: 'employee', loadChildren: () =>
+      import('./features/employee/employee.routes').then((module) => module.EMPLOYEE_ROUTES),
+  },
+  { path: '**', component: AdminOverviewComp },
 ];
