@@ -6,7 +6,7 @@ import { TableData } from '../table.model';
 
 @Component({
   selector: 'app-table-check-conflict-comp',
-  imports: [BadgeComp, DatePipe],
+  imports: [BadgeComp],
   templateUrl: './table-check-conflict-comp.html',
   styleUrl: './table-check-conflict-comp.css',
 })

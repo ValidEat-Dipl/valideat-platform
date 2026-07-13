@@ -5,34 +5,43 @@
   <thead class="table-light">
   <tr>
     @for (header of data()?.headers; track $index) {
-      <th scope="col">{{ header.toUpperCase() }}</th>
+      <th scope="col">{{ header.label.toUpperCase() }}</th>
     }
   </tr>
   </thead>
   <tbody>
-    @for (row of visibleRows() ; track $index) { <!-- Copilot #1-->
+    @for (row of visibleRows(); track $index) {
       <tr>
-        @for (key of data()?.headers; track $index) {
-          @if (row[key] instanceof Date)  {
-            <td>{{ row[key] | date:'dd.MM.yyyy' }}</td>
-          } @else if (row[key] instanceof Status) {
-            <td><app-badge-comp text="{{ row[key].value }}" bgColor="{{ row[key].color }}"></app-badge-comp></td>
+        @for (header of data()?.headers; track $index) {
+          @if (row[header.key] instanceof Date) {
+            <td>{{ asDate(row[header.key]) | date:'dd.MM.yyyy' }}</td>
+          } @else if (row[header.key] instanceof Status) {
+            <td>
+              <app-badge-comp
+                [text]="asStatus(row[header.key])?.value ?? ''"
+                [bgColor]="asStatus(row[header.key])?.color ?? ''">
+              </app-badge-comp>
+            </td>
+          } @else if (header.key == 'lastChange' && row[header.key] == null) {
+            <td>--.--.----</td>
           } @else {
-            <td>{{ row[key] }}</td>
+            <td>{{ row[header.key] }}</td>
           }
         }
       </tr>
     }
   </tbody>
 </table>
+
 <nav aria-label="Page navigation Table">
   <ul class="pagination">
-    <!-- Copilot #1 Anfang -->
+
     <li class="page-item" [class.disabled]="currentPage() === 1">
       <a class="page-link" (click)="prevPage()" aria-label="Previous">
         <span aria-hidden="true">&laquo;</span>
       </a>
     </li>
+
     @for (i of Array.from({length: pageCount()}); track $index) {
       <li class="page-item" [class.active]="currentPage() === ($index + 1)">
         <a class="page-link" (click)="setInitRowNumber($index * maxRows)">
@@ -40,11 +49,12 @@
         </a>
       </li>
     }
+
     <li class="page-item" [class.disabled]="currentPage() === pageCount()">
       <a class="page-link" (click)="nextPage()" aria-label="Next">
         <span aria-hidden="true">&raquo;</span>
       </a>
     </li>
-    <!-- Copilot #1 Ende -->
+
   </ul>
 </nav>

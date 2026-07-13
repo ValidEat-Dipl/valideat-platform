@@ -1,17 +1,16 @@
-import { computed, inject, Injectable, Service} from '@angular/core';
-import {Status} from './status.model';
-import {HttpClient} from '@angular/common/http';
+import { inject, Injectable, Service } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { FoodTicket } from './food-ticket.model';
-import { TableData } from './table.model';
+import { Status } from './status.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class TableDataOverviewService {
+export class TableDataClearingService {
   http = inject(HttpClient);
 
   data: FoodTicket[] = [];
-  data$ = this.http.get('http://localhost:8080/api/table-overview').subscribe((data) => {
+  data$ = this.http.get('http://localhost:8080/api/table-clearing').subscribe((data) => {
     console.log(data);
     // @ts-ignore
     this.data = data;
@@ -36,7 +35,8 @@ export class TableDataOverviewService {
       { key: 'datum', label: 'Datum' },
       { key: 'stufe', label: 'Stufe' },
       { key: 'kostenstelle', label: 'Kostenstelle' },
-      { key: 'status', label: 'Status' }
+      { key: 'status', label: 'Status' },
+      { key: 'lastChange', label: 'Letzte Änderung' },
     ],
     rows: [
       {
@@ -45,20 +45,23 @@ export class TableDataOverviewService {
         stufe: 'Stufe A',
         kostenstelle: 'KST-001',
         status: new Status('Abgeglichen', 'success'),
+        lastChange: new Date(2026, 7, 10),
       },
       {
         person: 'Test2',
-        datum: new Date(2026, 4, 9),
+        datum: new Date(2026, 7, 9),
         stufe: 'Stufe A',
         kostenstelle: 'KST-001',
-        status: new Status('Konflikt', 'danger'),
+        status: new Status('Offen', 'warning'),
+        lastChange: null,
       },
       {
         person: 'Test3',
-        datum: new Date(2026, 5, 9),
-        stufe: 'Stufe B',
-        kostenstelle: 'KST-002',
-        status: new Status('Offen', 'warning'),
+        datum: new Date(2026, 7, 9),
+        stufe: 'Stufe A',
+        kostenstelle: 'KST-001',
+        status: new Status('Konflikt', 'danger'),
+        lastChange: new Date(2026, 7, 10),
       },
       {
         person: 'Test4',
@@ -66,20 +69,23 @@ export class TableDataOverviewService {
         stufe: 'Stufe A',
         kostenstelle: 'KST-001',
         status: new Status('Abgeglichen', 'success'),
+        lastChange: new Date(2026, 7, 10),
       },
       {
         person: 'Test5',
-        datum: new Date(2026, 4, 9),
+        datum: new Date(2026, 7, 9),
         stufe: 'Stufe A',
         kostenstelle: 'KST-001',
-        status: new Status('Konflikt', 'danger'),
+        status: new Status('Abgeglichen', 'success'),
+        lastChange: null,
       },
       {
         person: 'Test6',
-        datum: new Date(2026, 5, 9),
-        stufe: 'Stufe B',
-        kostenstelle: 'KST-002',
-        status: new Status('Offen', 'warning'),
+        datum: new Date(2026, 7, 9),
+        stufe: 'Stufe A',
+        kostenstelle: 'KST-001',
+        status: new Status('Abgeglichen', 'success'),
+        lastChange: new Date(2026, 7, 10),
       },
       {
         person: 'Test7',
@@ -87,42 +93,16 @@ export class TableDataOverviewService {
         stufe: 'Stufe A',
         kostenstelle: 'KST-001',
         status: new Status('Abgeglichen', 'success'),
+        lastChange: new Date(2026, 7, 10),
       },
       {
         person: 'Test8',
-        datum: new Date(2026, 5, 9),
-        stufe: 'Stufe B',
-        kostenstelle: 'KST-002',
-        status: new Status('Offen', 'warning'),
-      },
-      {
-        person: 'Test9',
         datum: new Date(2026, 7, 9),
         stufe: 'Stufe A',
         kostenstelle: 'KST-001',
         status: new Status('Abgeglichen', 'success'),
-      },
-      {
-        person: 'Test10',
-        datum: new Date(2026, 7, 9),
-        stufe: 'Stufe A',
-        kostenstelle: 'KST-001',
-        status: new Status('Abgeglichen', 'success'),
-      },
-      {
-        person: 'Test11',
-        datum: new Date(2026, 7, 9),
-        stufe: 'Stufe A',
-        kostenstelle: 'KST-001',
-        status: new Status('Abgeglichen', 'success'),
-      },
-      {
-        person: 'Test12',
-        datum: new Date(2026, 7, 9),
-        stufe: 'Stufe A',
-        kostenstelle: 'KST-001',
-        status: new Status('Abgeglichen', 'success'),
-      },
+        lastChange: new Date(2026, 7, 10),
+      }
     ],
   };
 

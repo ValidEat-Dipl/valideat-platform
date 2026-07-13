@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TableCompAdminOverview } from './table-comp-admin-overview';
+import { TableOverviewComp } from './table-overview-comp';
 
-describe('TableCompAdminOverview', () => {
-  let component: TableCompAdminOverview;
-  let fixture: ComponentFixture<TableCompAdminOverview>;
+describe('TableOverviewComp', () => {
+  let component: TableOverviewComp;
+  let fixture: ComponentFixture<TableOverviewComp>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TableCompAdminOverview],
+      imports: [TableOverviewComp],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(TableCompAdminOverview);
+    fixture = TestBed.createComponent(TableOverviewComp);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

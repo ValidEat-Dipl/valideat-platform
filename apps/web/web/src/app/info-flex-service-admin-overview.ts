@@ -4,11 +4,11 @@ import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root',
 })
-export class InfoFlexService {
+export class InfoFlexServiceAdminOverview {
   http = inject(HttpClient);
 
   data = Map<string, number>;
-  data$ = this.http.get('http://localhost:8080/api/foodticket-status-statistics')
+  data$ = this.http.get('http://localhost:8080/api/admin-overview-info-box')
     .subscribe((data) => {
     console.log(data);
     // @ts-ignore
@@ -20,6 +20,6 @@ export class InfoFlexService {
       .set('Mitarbeitereinträge', 128)
       .set('Physische Markerl erfasst', 121)
       .set('Abgeglichen', 112)
-      .set('Offene Konflikte', 0);
+      .set('Konflikte', 9);
   }
 }

@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { InfoFlexService } from './info-flex-service';
+import { InfoFlexServiceAdminOverview } from './info-flex-service-admin-overview';
 
-describe('InfoFlexService', () => {
-  let service: InfoFlexService;
+describe('InfoFlexServiceAdminOverview', () => {
+  let service: InfoFlexServiceAdminOverview;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(InfoFlexService);
+    service = TestBed.inject(InfoFlexServiceAdminOverview);
   });
 
   it('should be created', () => {
