@@ -3,3 +3,12 @@ GET http://localhost:8080/api/foodticket
 
 ###
 GET http://localhost:8080/api/foodticket/getAllValidTickets
+
+
+###
+GET http://localhost:8080/foodticket/overview?
+    last12Months=false
+
+###
+GET http://localhost:8080/foodticket/admin-overview-info-box?
+    last12Months=false

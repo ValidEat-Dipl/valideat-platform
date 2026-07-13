@@ -1,6 +1,7 @@
 package at.htl.boundary;
 
 import at.htl.model.Employee;
+import at.htl.model.FoodTicket;
 import at.htl.repository.EmployeeRepository;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -8,6 +9,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Path("/employee")
 @Produces(MediaType.APPLICATION_JSON)
@@ -17,7 +19,10 @@ public class EmployeeResource {
     @Inject
     EmployeeRepository employeeRepository;
 
-
+    @GET
+    public List<Employee> listAll() {
+        return employeeRepository.findAll();
+    }
 
     @POST
     @Path("/login/{email}/{password}")

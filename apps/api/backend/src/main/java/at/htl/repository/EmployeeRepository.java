@@ -1,6 +1,7 @@
 package at.htl.repository;
 
 import at.htl.model.Employee;
+import at.htl.model.FoodTicket;
 import io.quarkus.elytron.security.common.BcryptUtil;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -17,6 +18,10 @@ public class EmployeeRepository {
 
     @Inject
     EntityManager em;
+
+    public List<Employee> findAll() {
+        return em.createQuery("select e from Employee e", Employee.class).getResultList();
+    }
 
     public Employee getEmpById(Long id) {
         return em.find(Employee.class, id);

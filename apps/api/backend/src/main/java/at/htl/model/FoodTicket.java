@@ -1,5 +1,6 @@
 package at.htl.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -17,6 +18,7 @@ public class FoodTicket {
     private LocalDate useDate;
 
     @OneToOne
+    @JsonIgnore
     @JoinColumn(name = "matching_ticket_id", nullable = true)
     private FoodTicket matchingTicket;
 
