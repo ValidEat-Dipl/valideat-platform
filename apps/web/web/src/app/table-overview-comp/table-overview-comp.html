@@ -18,7 +18,7 @@
           } @else if (row[header.key] instanceof Status) {
             <td>
               <app-badge-comp
-                [text]="asStatus(row[header.key])?.value ?? ''"
+                [text]="asStatus(row[header.key])?.value?.label ?? ''"
                 [bgColor]="asStatus(row[header.key])?.color ?? ''">
               </app-badge-comp>
             </td>

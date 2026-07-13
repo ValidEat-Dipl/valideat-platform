@@ -35,7 +35,11 @@ export class ClearingTicketsComp {
       this.form.value.person,
       this.form.value.costRank,
       this.form.value.costDepartment,
-      new Status(<string>this.form.value.status)
+      this.form.value.status
     );
+  }
+
+  protected onReset() {
+    this.dataTable = this.tableService.getTableData();
   }
 }

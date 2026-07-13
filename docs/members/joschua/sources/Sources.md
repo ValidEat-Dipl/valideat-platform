@@ -27,4 +27,8 @@ https://thehaseebahmed.medium.com/how-to-implement-autosearch-in-angular-6e562c1
 
 [https://www.angularjswiki.com/angular/how-to-get-current-route-in-angular](https://www.angularjswiki.com/angular/how-to-get-current-route-in-angular/)
 
-10.07.2026
+13.07.2026
+
+[angular.dev/guide/http/making-requests#setting-url-parameters](https://angular.dev/guide/http/making-requests#setting-url-parameters)
+
+13.07.2026

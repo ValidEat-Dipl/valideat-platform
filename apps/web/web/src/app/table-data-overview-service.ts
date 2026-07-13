@@ -11,7 +11,7 @@ export class TableDataOverviewService {
   http = inject(HttpClient);
 
   data: FoodTicket[] = [];
-  data$ = this.http.get('http://localhost:8080/api/table-overview').subscribe((data) => {
+  data$ = this.http.get('http://localhost:8080/api/overview').subscribe((data) => {
     console.log(data);
     // @ts-ignore
     this.data = data;
@@ -36,7 +36,9 @@ export class TableDataOverviewService {
       { key: 'datum', label: 'Datum' },
       { key: 'stufe', label: 'Stufe' },
       { key: 'kostenstelle', label: 'Kostenstelle' },
-      { key: 'status', label: 'Status' }
+      { key: 'typ', label: 'Tickettyp' },
+      { key: 'status', label: 'Status' },
+      { key: 'action', label: 'Aktion' },
     ],
     rows: [
       {
@@ -44,89 +46,44 @@ export class TableDataOverviewService {
         datum: new Date(2026, 7, 9),
         stufe: 'Stufe A',
         kostenstelle: 'KST-001',
-        status: new Status('Abgeglichen', 'success'),
+        typ: 'HR',
+        status: new Status({ key: 'OPEN', label: 'Offen' }),
+        action: 'Ticket öffnen',
       },
       {
         person: 'Test2',
         datum: new Date(2026, 4, 9),
         stufe: 'Stufe A',
         kostenstelle: 'KST-001',
-        status: new Status('Konflikt', 'danger'),
+        typ: 'HR',
+        status: new Status({ key: 'CONFLICT', label: 'Konflikt' }),
+        action: 'Ticket öffnen',
       },
       {
         person: 'Test3',
         datum: new Date(2026, 5, 9),
         stufe: 'Stufe B',
         kostenstelle: 'KST-002',
-        status: new Status('Offen', 'warning'),
-      },
-      {
-        person: 'Test4',
-        datum: new Date(2026, 7, 9),
-        stufe: 'Stufe A',
-        kostenstelle: 'KST-001',
-        status: new Status('Abgeglichen', 'success'),
-      },
-      {
-        person: 'Test5',
-        datum: new Date(2026, 4, 9),
-        stufe: 'Stufe A',
-        kostenstelle: 'KST-001',
-        status: new Status('Konflikt', 'danger'),
-      },
-      {
-        person: 'Test6',
-        datum: new Date(2026, 5, 9),
-        stufe: 'Stufe B',
-        kostenstelle: 'KST-002',
-        status: new Status('Offen', 'warning'),
-      },
-      {
-        person: 'Test7',
-        datum: new Date(2026, 7, 9),
-        stufe: 'Stufe A',
-        kostenstelle: 'KST-001',
-        status: new Status('Abgeglichen', 'success'),
-      },
-      {
-        person: 'Test8',
-        datum: new Date(2026, 5, 9),
-        stufe: 'Stufe B',
-        kostenstelle: 'KST-002',
-        status: new Status('Offen', 'warning'),
-      },
-      {
-        person: 'Test9',
-        datum: new Date(2026, 7, 9),
-        stufe: 'Stufe A',
-        kostenstelle: 'KST-001',
-        status: new Status('Abgeglichen', 'success'),
-      },
-      {
-        person: 'Test10',
-        datum: new Date(2026, 7, 9),
-        stufe: 'Stufe A',
-        kostenstelle: 'KST-001',
-        status: new Status('Abgeglichen', 'success'),
-      },
-      {
-        person: 'Test11',
-        datum: new Date(2026, 7, 9),
-        stufe: 'Stufe A',
-        kostenstelle: 'KST-001',
-        status: new Status('Abgeglichen', 'success'),
-      },
-      {
-        person: 'Test12',
-        datum: new Date(2026, 7, 9),
-        stufe: 'Stufe A',
-        kostenstelle: 'KST-001',
-        status: new Status('Abgeglichen', 'success'),
+        typ: 'Employee',
+        status: new Status({ key: 'CHECKED', label: 'Abgeglichen' }),
+        action: 'Ticket öffnen',
       },
     ],
   };
 
-  getTableData() {
+  getTableData(lastYear = false) {
+
+    const params: any = {};
+    if (lastYear) params.lastYear = lastYear;
+
+    this.data$ = this.http
+      .get('http://localhost:8080/api/overview', { params })
+      .subscribe((data) => {
+        console.log(data);
+        // @ts-ignore
+        this.data = data;
+      });
+
     return this.processedTableData;
   }
 }

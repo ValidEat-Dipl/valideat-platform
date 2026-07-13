@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {NavComp} from '../nav-comp/nav-comp';
 import {ButtonComp} from '../button-comp/button-comp';
 import {TableOverviewComp} from '../table-overview-comp/table-overview-comp';
@@ -12,10 +12,28 @@ import {InfoFlexServiceAdminOverview} from '../info-flex-service-admin-overview'
   templateUrl: './admin-overview-comp.html',
   styleUrl: './admin-overview-comp.css',
 })
-export class AdminOverviewComp {
+export class AdminOverviewComp implements OnInit {
   tableService = inject(TableDataOverviewService);
   infoContainerService = inject(InfoFlexServiceAdminOverview);
 
-  mapInfoContainer = this.infoContainerService.getInfoContainerMap();
-  dataTable = this.tableService.getTableData();
+  lastYear: boolean = false;
+
+  infoContainer: Record<string, number> = {};
+  dataTable: any;
+
+  ngOnInit() {
+    this.loadData();
+  }
+
+  protected onToggleLastYear() {
+    this.lastYear = !this.lastYear;
+  }
+
+  private loadData() {
+    this.infoContainerService.getInfoContainerMap(this.lastYear).subscribe((data) => {
+      this.infoContainer = data;
+    });
+
+    this.dataTable = this.tableService.getTableData();
+  }
 }

@@ -20,7 +20,7 @@ export class TableDataClearingService {
   });
 
   // ChatGpt #1 Anfang
-  currentRoute: string = "";
+  currentRoute: string = '';
   constructor(private router: Router) {
     console.log(router.url);
 
@@ -28,7 +28,7 @@ export class TableDataClearingService {
       .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
       .subscribe((event) => {
         this.currentRoute = event.url;
-    });
+      });
   }
   // ChatGpt #1 Ende
 
@@ -53,7 +53,7 @@ export class TableDataClearingService {
       { key: 'kostenstelle', label: 'Kostenstelle' },
       { key: 'status', label: 'Status' },
       { key: 'lastChange', label: 'Letzte Änderung' },
-      { key: 'action', label: 'Aktion' },
+      { key: 'action', label: 'Aktion' }
     ],
     rows: [
       {
@@ -61,7 +61,7 @@ export class TableDataClearingService {
         datum: new Date(2026, 7, 9),
         stufe: 'Stufe A',
         kostenstelle: 'KST-001',
-        status: new Status('Abgeglichen', 'success'),
+        status: new Status({ key: 'CHECKED', label: 'Abgeglichen' }),
         lastChange: new Date(2026, 7, 10),
         action: 'Ticket öffnen',
       },
@@ -70,7 +70,7 @@ export class TableDataClearingService {
         datum: new Date(2026, 7, 9),
         stufe: 'Stufe A',
         kostenstelle: 'KST-001',
-        status: new Status('Offen', 'warning'),
+        status: new Status({ key: 'OPEN', label: 'Offen' }),
         lastChange: null,
         action: 'Ticket öffnen',
       },
@@ -79,7 +79,7 @@ export class TableDataClearingService {
         datum: new Date(2026, 7, 9),
         stufe: 'Stufe A',
         kostenstelle: 'KST-001',
-        status: new Status('Konflikt', 'danger'),
+        status: new Status({ key: 'CONFLICT', label: 'Konflikt' }),
         lastChange: new Date(2026, 7, 10),
         action: 'Ticket öffnen',
       },
@@ -88,7 +88,7 @@ export class TableDataClearingService {
         datum: new Date(2026, 7, 9),
         stufe: 'Stufe A',
         kostenstelle: 'KST-001',
-        status: new Status('Abgeglichen', 'success'),
+        status: new Status({ key: 'NEEDS_FIXING', label: 'Korrektur erforderlich' }),
         lastChange: new Date(2026, 7, 10),
         action: 'Ticket öffnen',
       },
@@ -97,7 +97,7 @@ export class TableDataClearingService {
         datum: new Date(2026, 7, 9),
         stufe: 'Stufe A',
         kostenstelle: 'KST-001',
-        status: new Status('Abgeglichen', 'success'),
+        status: new Status({ key: 'CHECKED', label: 'Abgeglichen' }),
         lastChange: null,
         action: 'Ticket öffnen',
       },
@@ -106,7 +106,7 @@ export class TableDataClearingService {
         datum: new Date(2026, 7, 9),
         stufe: 'Stufe A',
         kostenstelle: 'KST-001',
-        status: new Status('Abgeglichen', 'success'),
+        status: new Status({ key: 'NEEDS_FIXING', label: 'Korrektur erforderlich' }),
         lastChange: new Date(2026, 7, 10),
         action: 'Ticket öffnen',
       },
@@ -115,7 +115,7 @@ export class TableDataClearingService {
         datum: new Date(2026, 7, 9),
         stufe: 'Stufe A',
         kostenstelle: 'KST-001',
-        status: new Status('Abgeglichen', 'success'),
+        status: new Status({ key: 'OPEN', label: 'Offen' }),
         lastChange: new Date(2026, 7, 10),
         action: 'Ticket öffnen',
       },
@@ -124,19 +124,28 @@ export class TableDataClearingService {
         datum: new Date(2026, 7, 9),
         stufe: 'Stufe A',
         kostenstelle: 'KST-001',
-        status: new Status('Abgeglichen', 'success'),
+        status: new Status({ key: 'OPEN', label: 'Offen' }),
         lastChange: new Date(2026, 7, 10),
         action: 'Ticket öffnen',
       },
     ],
   };
 
-  getTableData(person?: string, costRank?: string, costDepartment?: string, status?: Status) {
-    this.data$ = this.http.get('http://localhost:8080/api/table-clearing?'+person).subscribe((data) => {
-      console.log(data);
-      // @ts-ignore
-      this.data = data;
-    });
-      return this.processedTableData;
+  getTableData(person?: string, costRank?: string, costDepartment?: string, status?: string) {
+    const params: any = {};
+    if (person && person.length > 0) params.person = person;
+    if (costRank && costRank.length > 0) params.costRank = costRank;
+    if (costDepartment && costDepartment.length > 0) params.costDepartment = costDepartment;
+    if (status && status != 'ALL') params.status = status;
+
+    this.data$ = this.http
+      .get('http://localhost:8080/api/table-clearing', { params })
+      .subscribe((data) => {
+        console.log(data);
+        // @ts-ignore
+        this.data = data;
+      });
+
+    return this.processedTableData;
   }
 }
