@@ -1,5 +1,6 @@
 package at.htl.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.LinkedList;
@@ -15,9 +16,11 @@ public class ChangeLog {
     private String description;
 
     @OneToMany(mappedBy = "changeLog")
+    @JsonIgnore
     private List<FoodTicket> foodTicket = new LinkedList<>();
 
     @OneToMany(mappedBy = "changeLog")
+    @JsonIgnore
     private List<Employee> employee = new LinkedList<>();
 
     public ChangeLog() {
