@@ -27,6 +27,22 @@ export const EMPLOYEE_ROUTES: Routes = [
             (module) => module.CreateEntryPage,
           ),
       },
+      {
+        path: 'review',
+        title: 'Angaben prüfen | ValidEat',
+        loadComponent: () =>
+          import('./pages/review-entry-page/review-entry-page').then(
+            (module) => module.ReviewEntryPage,
+          ),
+      },
+      {
+        path: 'success',
+        title: 'Erfasst | ValidEat',
+        loadComponent: () =>
+          import('./pages/entry-success-page/entry-success-page').then(
+            (module) => module.EntrySuccessPage,
+          ),
+      },
     ],
   },
 ];

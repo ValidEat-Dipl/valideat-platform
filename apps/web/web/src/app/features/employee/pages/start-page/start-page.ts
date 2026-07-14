@@ -38,6 +38,7 @@ export class StartPage implements OnInit {
     this.employeeTicketService
       .checkIfTodaysTicketUsed(this.employeeId, date)
       .subscribe((result) => {
+        console.log(result)
         this.todaysTicketUsed = result;
       });
 
@@ -45,6 +46,8 @@ export class StartPage implements OnInit {
       if (tickets.length === 0) {
         return;
       }
+
+      console.log(tickets)
 
       this.employeeName = `${tickets[0].firstName} ${tickets[0].lastName}`;
 

@@ -1,9 +1,10 @@
-import { formatDate, Location } from '@angular/common';
+import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EmployeeHeader } from '../../components/employee-header/employee-header';
 import { EmployeeFoodTicketRequest } from '../../models/employee-food-ticket.model';
+import { EmployeeEntryState } from '../../services/employee-entry-state';
 import { EmployeeTicketService } from '../../services/employee-ticket.service';
 
 @Component({
@@ -14,7 +15,6 @@ import { EmployeeTicketService } from '../../services/employee-ticket.service';
 })
 export class CreateEntryPage implements OnInit {
   employeeId = 1; // TODO: später vom Login
-  errorMessage = '';
 
   // Lokale Entwicklungswerte aus import.sql
   tiers = ['INTERN', 'APPRENTICE', 'EMPLOYEE', 'TEAM_LEAD', 'MANAGER'];
@@ -49,11 +49,18 @@ export class CreateEntryPage implements OnInit {
 
   constructor(
     private employeeTicketService: EmployeeTicketService,
+    private employeeEntryState: EmployeeEntryState,
     private router: Router,
-    private location: Location,
   ) {}
 
   ngOnInit(): void {
+    if (this.employeeEntryState.ticket) {
+      this.ticketForm.patchValue({
+        ...this.employeeEntryState.ticket,
+        confirmed: true,
+      });
+    }
+
     this.employeeTicketService.findByEmployee(this.employeeId).subscribe((tickets) => {
       if (tickets.length > 0) {
         this.ticketForm.patchValue({
@@ -78,13 +85,14 @@ export class CreateEntryPage implements OnInit {
       restaurantName: formValue.restaurantName!,
     };
 
-    this.employeeTicketService.addTicketEntry(ticket).subscribe({
-      next: () => this.router.navigate(['/employee/start']),
-      error: () => (this.errorMessage = 'Die Erfassung konnte nicht gespeichert werden.'),
-    });
+    this.employeeEntryState.ticket = ticket;
+    this.employeeEntryState.saved = false;
+    this.router.navigate(['/employee/review']);
   }
 
   cancel(): void {
-    this.location.back();
+    this.employeeEntryState.ticket = undefined;
+    this.employeeEntryState.saved = false;
+    this.router.navigate(['/employee/start']);
   }
 }

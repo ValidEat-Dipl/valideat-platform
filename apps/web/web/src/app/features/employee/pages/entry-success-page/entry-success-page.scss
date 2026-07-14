@@ -1,0 +1,18 @@
+:host {
+  display: block;
+}
+
+.success-icon {
+  width: 6rem;
+  height: 6rem;
+  color: var(--bs-success);
+  font-size: 3rem;
+  background-color: rgba(var(--bs-success-rgb), 0.15);
+  border: 0.2rem solid rgba(var(--bs-success-rgb), 0.2);
+  border-radius: 50%;
+}
+
+.card,
+.list-group-item {
+  border-color: var(--bs-border-color);
+}
