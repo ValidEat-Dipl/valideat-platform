@@ -1,5 +1,6 @@
 package at.htl.repository;
 
+import at.htl.boundary.dto.AdminFoodTicketDTO;
 import at.htl.boundary.dto.EmployeeFoodTicketDTO;
 import at.htl.boundary.dto.EmployeeGetTicketsDTO;
 import at.htl.model.*;
@@ -127,5 +128,63 @@ public class FoodTicketRepository {
                 .setParameter("emp", empId)
                 .setParameter("startDate", startDate)
                 .setParameter("endDate", endDate).getResultList();
+    }
+
+    public List<AdminFoodTicketDTO> findAdminTickets(String employeeName, LocalDateTime startDate, LocalDateTime endDate, Status status) {
+        StringBuilder query = new StringBuilder("""
+                select new at.htl.boundary.dto.AdminFoodTicketDTO(
+                f.id,
+                concat(f.employee.firstName, ' ', f.employee.lastName),
+                f.useDate,
+                f.tier.name,
+                f.costOrder.name,
+                f.status,
+                concat(admin.firstName, ' ', admin.lastName),
+                f.checkDate
+        )
+        from FoodTicket f
+        left join f.admin admin
+        where f.ticketType = :type"""); // left join, weil sonst admin null sein könnte also null.firstname und des wirft einen fehler
+
+        if (employeeName != null) {
+            query.append("and lower(concat(f.employee.firstName, ' ', f.employee.lastName)) like lower(:employeeName)");
+        }
+
+        if (startDate != null) {
+            query.append(" and f.useDate >= :startDate ");
+        }
+
+        if (endDate != null) {
+            query.append(" and f.useDate <= :endDate ");
+        }
+
+        if (status != null) {
+            query.append(" and f.status = :status ");
+        }
+
+
+        TypedQuery<AdminFoodTicketDTO> q = entityManager
+                .createQuery(query.toString(), AdminFoodTicketDTO.class)
+                .setParameter("type", TicketType.ADMIN);
+
+
+        if (employeeName != null) {
+            q.setParameter("employeeName", "%" + employeeName + "%");
+        }
+
+        if (startDate != null) {
+            q.setParameter("startDate", startDate);
+        }
+
+        if (endDate != null) {
+            q.setParameter("endDate", endDate);
+        }
+
+        if (status != null) {
+            q.setParameter("status", status);
+        }
+
+
+        return q.getResultList();
     }
 }

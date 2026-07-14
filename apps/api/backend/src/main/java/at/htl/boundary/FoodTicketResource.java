@@ -1,5 +1,6 @@
 package at.htl.boundary;
 
+import at.htl.boundary.dto.AdminFoodTicketDTO;
 import at.htl.boundary.dto.EmployeeFoodTicketDTO;
 import at.htl.boundary.dto.EmployeeGetTicketsDTO;
 import at.htl.model.*;
@@ -74,6 +75,15 @@ public class FoodTicketResource {
         result.put("Konflikte", conflictTickets);
 
         return result;
+    }
+
+    @GET
+    @Path("/listAdminTickets")
+    public List<AdminFoodTicketDTO> findAdminTickets(@QueryParam("employeeName") String employeeName,
+                                                     @QueryParam("startDate") LocalDateTime startDate,
+                                                     @QueryParam("endDate") LocalDateTime endDate,
+                                                     @QueryParam("status") Status status) {
+        return foodTicketRepository.findAdminTickets(employeeName, startDate, endDate, status);
     }
 
     @POST

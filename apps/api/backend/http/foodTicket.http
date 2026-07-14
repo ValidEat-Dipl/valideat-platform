@@ -16,3 +16,6 @@ GET http://localhost:8080/foodticket/admin-overview-info-box?
 
 ###
 GET http://localhost:8080/foodticket/findByEmployee/1
+
+###
+GET http://localhost:8080/foodticket/listAdminTickets?status=OPEN
