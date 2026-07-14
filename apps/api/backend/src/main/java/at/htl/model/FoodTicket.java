@@ -26,7 +26,7 @@ public class FoodTicket {
     private Tier tier;
 
    @ManyToOne
-    private CostOrder costOrder; // Eingabefeld ohne vorgelegte Werte im Frontend (mit Cache)
+    private CostOrder costOrder;
 
     @Enumerated(EnumType.STRING)
     private Status status;

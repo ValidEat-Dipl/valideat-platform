@@ -44,7 +44,7 @@ export class TableDataClearingService {
           status: foodTicket.status
         }
       })
-  };*/
+  };
   processedTableData = {
     headers: [
       { key: 'person', label: 'Person' },
@@ -129,7 +129,7 @@ export class TableDataClearingService {
         action: 'Ticket öffnen',
       },
     ],
-  };
+  };*/
 
   getTableData(person?: string, costRank?: string, costDepartment?: string, status?: string) {
     const params: any = {};
@@ -146,6 +146,6 @@ export class TableDataClearingService {
         this.data = data;
       });
 
-    return this.processedTableData;
+    return this.data;
   }
 }

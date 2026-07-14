@@ -16,7 +16,7 @@ export class InfoFlexServiceAdminOverview {
 
     return this.http.get<Record<string, number>>(
       'http://localhost:8080/foodticket/admin-overview-info-box',
-      { params },
+      { params }
     );
   }
 }

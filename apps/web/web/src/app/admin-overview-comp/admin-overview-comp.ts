@@ -1,14 +1,17 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import {NavComp} from '../nav-comp/nav-comp';
 import {ButtonComp} from '../button-comp/button-comp';
 import {TableOverviewComp} from '../table-overview-comp/table-overview-comp';
 import {InfoFlexComp} from '../info-flex-comp/info-flex-comp';
 import {TableDataOverviewService} from '../table-data-overview-service';
 import {InfoFlexServiceAdminOverview} from '../info-flex-service-admin-overview';
+import { FormsModule } from '@angular/forms';
+import { TableData } from '../table.model';
+import { Status } from '../status.model';
 
 @Component({
   selector: 'app-admin-overview-comp',
-  imports: [NavComp, ButtonComp, InfoFlexComp, TableOverviewComp],
+  imports: [NavComp, ButtonComp, InfoFlexComp, TableOverviewComp, FormsModule],
   templateUrl: './admin-overview-comp.html',
   styleUrl: './admin-overview-comp.css',
 })
@@ -18,24 +21,46 @@ export class AdminOverviewComp implements OnInit {
 
   lastYear: boolean = false;
 
-  infoContainer: Record<string, number> = {};
-  dataTable: any;
+  infoContainer = signal<Record<string, number>>({});
+  dataTable = signal<TableData>({
+    headers: [],
+    rows: [],
+  });
 
   ngOnInit() {
     this.loadData();
   }
 
-  protected onToggleLastYear() {
-    this.lastYear = !this.lastYear;
+  onToggleLastYear() {
     this.loadData();
   }
 
-  private loadData() {
+  protected loadData() {
     this.infoContainerService.getInfoContainerMap(this.lastYear).subscribe((data) => {
-      this.infoContainer = data;
-      console.log(data)
+      this.infoContainer.set({ ...data });
     });
 
-    this.dataTable = this.tableService.getTableData();
+    this.tableService.getTableData(this.lastYear).subscribe((data) => {
+      this.dataTable.set({
+        headers: [
+          { key: 'person', label: 'Person' },
+          { key: 'datum', label: 'Datum' },
+          { key: 'stufe', label: 'Stufe' },
+          { key: 'kostenstelle', label: 'Kostenstelle' },
+          { key: 'typ', label: 'Tickettyp' },
+          { key: 'status', label: 'Status' },
+          { key: 'action', label: 'Aktion' },
+        ],
+        rows: data.map((ticket) => ({
+          person: ticket.employee.firstName + ' ' + ticket.employee.lastName,
+          datum: ticket.useDate,
+          stufe: ticket.tier.discount,
+          kostenstelle: ticket.costOrder.name,
+          typ: ticket.ticketType,
+          status: new Status(ticket.status),
+          action: 'Ticket öffnen',
+        })),
+      });
+    });
   }
 }

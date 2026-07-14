@@ -15,10 +15,10 @@
         @for (header of data()?.headers; track $index) {
           @if (row[header.key] instanceof Date) {
             <td>{{ asDate(row[header.key]) | date:'dd.MM.yyyy' }}</td>
-          } @else if (row[header.key] instanceof Status) {
+          } @else if (header.key == 'status') {
             <td>
               <app-badge-comp
-                [text]="asStatus(row[header.key])?.value?.label ?? ''"
+                [text]="asStatus(row[header.key])?.label ?? ''"
                 [bgColor]="asStatus(row[header.key])?.color ?? ''">
               </app-badge-comp>
             </td>
