@@ -1,14 +1,13 @@
-import {Component, inject, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import {NavComp} from '../nav-comp/nav-comp';
 import {ButtonComp} from '../button-comp/button-comp';
 import {InfoFlexComp} from '../info-flex-comp/info-flex-comp';
 import {TableOverviewComp} from '../table-overview-comp/table-overview-comp';
-import {TableDataOverviewService} from '../table-data-overview-service';
 import {FormBuilder, ReactiveFormsModule} from '@angular/forms';
 import { InfoFlexServiceClearing } from '../info-flex-service-clearing';
 import { TableDataClearingService } from '../table-data-clearing-service';
-import { Status } from '../status.model';
 import { TableData } from '../table.model';
+import { Status } from '../status.model';
 
 @Component({
   selector: 'app-clearing-tickets-comp',
@@ -16,31 +15,64 @@ import { TableData } from '../table.model';
   templateUrl: './clearing-tickets-comp.html',
   styleUrl: './clearing-tickets-comp.css',
 })
-export class ClearingTicketsComp {
+export class ClearingTicketsComp implements OnInit {
   tableService = inject(TableDataClearingService);
   infoContainerService = inject(InfoFlexServiceClearing);
 
-  mapInfoContainer = this.infoContainerService.getInfoContainerMap();
+  infoContainer = signal<Record<string, number>>({});
   dataTable = signal<TableData>({
     headers: [],
     rows: [],
   });
 
+  ngOnInit() {
+    this.load();
+  }
+
   form = inject(FormBuilder).nonNullable.group({
     person: '',
     dateTicket: '',
-    costRank: '',
-    costDepartment: '',
     status: '',
   });
 
   protected onSubmit() {
-    return this.tableService.getTableData(
-      this.form.value.person,
-      this.form.value.costRank,
-      this.form.value.costDepartment,
-      this.form.value.status,
-    );
+    this.load()
+  }
+
+  protected load() {
+    this.infoContainerService
+      .getInfoContainerMap(
+        this.form.value.person,
+        this.form.value.dateTicket,
+        this.form.value.status
+      )
+      .subscribe((data) => {
+        this.infoContainer.set({ ...data });
+      });
+
+    this.tableService
+      .getTableData(
+        this.form.value.person,
+        this.form.value.dateTicket,
+        this.form.value.status
+      ).subscribe((data) => {
+        this.dataTable.set({
+          headers: [
+            { key: 'person', label: 'Person' },
+            { key: 'datum', label: 'Datum' },
+            { key: 'status', label: 'Status' },
+            { key: 'lastChange', label: 'Letzte Änderung' },
+            { key: 'action', label: 'Aktion' },
+          ],
+          rows: data.map((ticket) => ({
+            person: ticket.employee.firstName + ' ' + ticket.employee.lastName,
+            datum: ticket.useDate,
+            status: new Status(ticket.status),
+            lastChange: ticket.changeLog,
+            action: 'Ticket öffnen'
+          })),
+        });
+      });
   }
 
   protected onReset() {

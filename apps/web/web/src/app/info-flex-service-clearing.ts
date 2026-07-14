@@ -5,21 +5,23 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class InfoFlexServiceClearing {
-  http = inject(HttpClient);
+  private http = inject(HttpClient);
 
-  data = Map<string, number>;
-  data$ = this.http.get('http://localhost:8080/api/clearing-info-box')
-    .subscribe((data) => {
-    console.log(data);
-    // @ts-ignore
-    this.data = data;
-  });
+  getInfoContainerMap(
+    person?: string,
+    costRank?: string,
+    costDepartment?: string,
+    status?: string,
+  ) {
+    const params: any = {};
+    if (person && person.length > 0) params.person = person;
+    if (costRank && costRank.length > 0) params.costRank = costRank;
+    if (costDepartment && costDepartment.length > 0) params.costDepartment = costDepartment;
+    if (status && status != 'ALL') params.status = status;
 
-  getInfoContainerMap() {
-    return new Map()
-      .set('Gesamt', 128)
-      .set('Automatisch abgeglichen', 121)
-      .set('Manuell abgeschlossen', 5)
-      .set('Konflikt', 2);
+    return this.http.get<Record<string, number>>(
+      'http://localhost:8080/foodticket/clearing-info-box',
+      { params },
+    );
   }
 }

@@ -32,3 +32,7 @@ https://thehaseebahmed.medium.com/how-to-implement-autosearch-in-angular-6e562c1
 [angular.dev/guide/http/making-requests#setting-url-parameters](https://angular.dev/guide/http/making-requests#setting-url-parameters)
 
 13.07.2026
+
+[ng-bootstrap.github.io/#/components/datepicker/examples#range](https://ng-bootstrap.github.io/#/components/datepicker/examples#range)
+
+14.07.2026
