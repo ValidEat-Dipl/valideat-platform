@@ -1,6 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { EmployeeFoodTicket } from '../models/employee-food-ticket.model';
+import {
+  EmployeeFoodTicket,
+  EmployeeFoodTicketRequest,
+} from '../models/employee-food-ticket.model';
 
 const API_BASE = 'http://localhost:8080';
 
@@ -18,5 +21,9 @@ export class EmployeeTicketService {
     return this.http.get<EmployeeFoodTicket[]>(
       `${API_BASE}/foodticket/findByEmployee/${employeeId}`,
     );
+  }
+
+  addTicketEntry(ticket: EmployeeFoodTicketRequest) {
+    return this.http.post(`${API_BASE}/foodticket/empAddTicketEntry`, ticket);
   }
 }

@@ -19,6 +19,14 @@ export const EMPLOYEE_ROUTES: Routes = [
         loadComponent: () =>
           import('./pages/start-page/start-page').then((module) => module.StartPage),
       },
+      {
+        path: 'create',
+        title: 'Verwendung erfassen | ValidEat',
+        loadComponent: () =>
+          import('./pages/create-entry-page/create-entry-page').then(
+            (module) => module.CreateEntryPage,
+          ),
+      },
     ],
   },
 ];

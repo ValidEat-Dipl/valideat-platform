@@ -1,6 +1,7 @@
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { EmployeeFoodTicketRequest } from '../models/employee-food-ticket.model';
 import { EmployeeTicketService } from './employee-ticket.service';
 
 describe('EmployeeTicketService', () => {
@@ -42,5 +43,22 @@ describe('EmployeeTicketService', () => {
 
     expect(request.request.method).toBe('GET');
     request.flush([]);
+  });
+
+  it('creates an employee ticket entry', () => {
+    const ticket: EmployeeFoodTicketRequest = {
+      date: '2026-07-14',
+      employeeName: 'Max Mustermann',
+      costOrder: '1000 - Verwaltung',
+      tier: 'APPRENTICE',
+      restaurantName: 'Restaurant Adler',
+    };
+
+    service.addTicketEntry(ticket).subscribe();
+
+    const request = httpTesting.expectOne('http://localhost:8080/foodticket/empAddTicketEntry');
+    expect(request.request.method).toBe('POST');
+    expect(request.request.body).toEqual(ticket);
+    request.flush(null);
   });
 });

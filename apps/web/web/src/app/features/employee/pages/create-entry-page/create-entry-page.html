@@ -1,0 +1,91 @@
+<div class="create-entry-page">
+  <app-employee-header title="Verwendung erfassen" [showBackButton]="true" />
+
+  <div class="px-4 py-4">
+    <div class="row gx-0 justify-content-center">
+      <main class="col-12 col-sm-10 col-md-8 col-lg-7 col-xl-6">
+        <h1 class="h4 mb-4 fw-semibold">Verwendung erfassen</h1>
+
+        <form [formGroup]="ticketForm" (ngSubmit)="onSubmit()">
+          <div class="mb-3">
+            <label class="form-label" for="date">Datum</label>
+            <input id="date" class="form-control" type="date" formControlName="date" readonly />
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" for="employeeName">Name</label>
+            <input
+              id="employeeName"
+              class="form-control"
+              type="text"
+              formControlName="employeeName"
+              readonly
+            />
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" for="costOrder">Kostenstelle</label>
+            <select id="costOrder" class="form-select" formControlName="costOrder">
+              <option value="">Bitte auswählen</option>
+              @for (costOrder of costOrders; track costOrder) {
+                <option [value]="costOrder">{{ costOrder }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" for="tier">Markerlstufe</label>
+            <select id="tier" class="form-select" formControlName="tier">
+              <option value="">Bitte auswählen</option>
+              @for (tier of tiers; track tier) {
+                <option [value]="tier">{{ tier }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" for="restaurantName">Restaurant</label>
+            <select id="restaurantName" class="form-select" formControlName="restaurantName">
+              <option value="">Bitte auswählen</option>
+              @for (restaurant of restaurants; track restaurant) {
+                <option [value]="restaurant">{{ restaurant }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="form-check mb-3">
+            <input
+              id="confirmed"
+              class="form-check-input"
+              type="checkbox"
+              formControlName="confirmed"
+            />
+            <label class="form-check-label" for="confirmed">
+              Ich bestätige, dass ich heute ein physisches Markerl verwendet habe.
+            </label>
+          </div>
+
+          <div class="alert alert-info d-flex gap-2" role="note">
+            <i class="bi bi-info-circle flex-shrink-0" aria-hidden="true"></i>
+            <span>Das physische Markerl muss zusätzlich im Restaurant abgegeben werden.</span>
+          </div>
+
+          @if (errorMessage) {
+            <div class="alert alert-danger">{{ errorMessage }}</div>
+          }
+
+          <button
+            class="btn btn-primary btn-lg w-100 mb-2"
+            type="submit"
+            [disabled]="ticketForm.invalid"
+          >
+            Weiter
+          </button>
+          <button class="btn btn-outline-secondary btn-lg w-100" type="button" (click)="cancel()">
+            Abbrechen
+          </button>
+        </form>
+      </main>
+    </div>
+  </div>
+</div>

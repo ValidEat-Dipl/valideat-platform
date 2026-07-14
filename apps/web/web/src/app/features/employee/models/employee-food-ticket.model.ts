@@ -1,13 +1,19 @@
 export interface EmployeeFoodTicket {
   id: number;
-  employee: {
-    firstName: string;
-    lastName: string;
-  };
+  firstName: string;
+  lastName: string;
   useDate: string;
-  tier: {
-    name: string;
-  };
+  tier: string;
+  costOrder: string;
+  restaurantName: string;
   status: 'OPEN' | 'CONFLICT' | 'CHECKED' | 'NEEDS_FIXING';
-  ticketType: 'EMPLOYEE' | 'ADMIN';
+  checkDate: string | null;
+}
+
+export interface EmployeeFoodTicketRequest {
+  date: string;
+  employeeName: string;
+  costOrder: string;
+  tier: string;
+  restaurantName: string;
 }
