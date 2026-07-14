@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, signal } from '@angular/core';
 import {NavComp} from '../nav-comp/nav-comp';
 import {ButtonComp} from '../button-comp/button-comp';
 import {InfoFlexComp} from '../info-flex-comp/info-flex-comp';
@@ -8,6 +8,7 @@ import {FormBuilder, ReactiveFormsModule} from '@angular/forms';
 import { InfoFlexServiceClearing } from '../info-flex-service-clearing';
 import { TableDataClearingService } from '../table-data-clearing-service';
 import { Status } from '../status.model';
+import { TableData } from '../table.model';
 
 @Component({
   selector: 'app-clearing-tickets-comp',
@@ -20,7 +21,10 @@ export class ClearingTicketsComp {
   infoContainerService = inject(InfoFlexServiceClearing);
 
   mapInfoContainer = this.infoContainerService.getInfoContainerMap();
-  dataTable = this.tableService.getTableData();
+  dataTable = signal<TableData>({
+    headers: [],
+    rows: [],
+  });
 
   form = inject(FormBuilder).nonNullable.group({
     person: '',
@@ -31,15 +35,15 @@ export class ClearingTicketsComp {
   });
 
   protected onSubmit() {
-    this.dataTable = this.tableService.getTableData(
+    return this.tableService.getTableData(
       this.form.value.person,
       this.form.value.costRank,
       this.form.value.costDepartment,
-      this.form.value.status
+      this.form.value.status,
     );
   }
 
   protected onReset() {
-    this.dataTable = this.tableService.getTableData();
+    return this.tableService.getTableData();
   }
 }
