@@ -147,7 +147,7 @@ public class FoodTicketRepository {
         where f.ticketType = :type"""); // left join, weil sonst admin null sein könnte also null.firstname und des wirft einen fehler
 
         if (employeeName != null) {
-            query.append("and lower(concat(f.employee.firstName, ' ', f.employee.lastName)) like lower(:employeeName)");
+            query.append(" and lower(concat(f.employee.firstName, ' ', f.employee.lastName)) like lower(:employeeName)");
         }
 
         if (startDate != null) {
