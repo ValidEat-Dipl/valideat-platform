@@ -24,8 +24,10 @@
             </td>
           } @else if (header.key == 'lastChange' && row[header.key] == null) {
             <td>--.--.----</td>
-          } @else if (header.key == 'action') {
-            <td><a class="link-opacity-100" href="#markerldetails/id">{{ row[header.key] }}</a></td>
+          } @else if (header.key == 'actionOpenCase') {
+            <td><a class="link-opacity-100" href="/clearing-tickets/check-conflict">{{ row[header.key] }}</a></td>
+          } @else if (header.key == 'actionDetail') {
+            <td><a class="link-opacity-100" href="#ticketDetails/id">{{ row[header.key] }}</a></td>
           } @else {
             <td>{{ row[header.key] }}</td>
           }

@@ -11,4 +11,7 @@
   @case("submit") {
     <button type="{{ buttonType() }}" class="btn btn-{{ buttonDesignType() }}">{{ text() }}</button>
   }
+  @case("icon") {
+    <a href="{{ link() }}" role="button" class="btn btn-{{ buttonDesignType() }}"><i class='p-1 bi bi-{{ icon() }}'></i> {{ text() }}</a>
+  }
 }

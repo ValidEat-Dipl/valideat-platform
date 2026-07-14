@@ -8,10 +8,17 @@ import { InfoFlexServiceClearing } from '../info-flex-service-clearing';
 import { TableDataClearingService } from '../table-data-clearing-service';
 import { TableData } from '../table.model';
 import { Status } from '../status.model';
+import { DateRangePickerComp } from '../date-range-picker-comp/date-range-picker-comp';
 
 @Component({
   selector: 'app-clearing-tickets-comp',
-  imports: [NavComp, ButtonComp, InfoFlexComp, ReactiveFormsModule, TableOverviewComp],
+  imports: [
+    NavComp,
+    ButtonComp,
+    InfoFlexComp,
+    ReactiveFormsModule,
+    TableOverviewComp
+  ],
   templateUrl: './clearing-tickets-comp.html',
   styleUrl: './clearing-tickets-comp.css',
 })
@@ -31,20 +38,22 @@ export class ClearingTicketsComp implements OnInit {
 
   form = inject(FormBuilder).nonNullable.group({
     person: '',
-    dateTicket: '',
-    status: '',
+    toDate: '',
+    fromDate: '',
+    status: 'ALL',
   });
 
   protected onSubmit() {
-    this.load()
+    this.load();
   }
 
   protected load() {
     this.infoContainerService
       .getInfoContainerMap(
         this.form.value.person,
-        this.form.value.dateTicket,
-        this.form.value.status
+        this.form.value.toDate,
+        this.form.value.fromDate,
+        this.form.value.status,
       )
       .subscribe((data) => {
         this.infoContainer.set({ ...data });
@@ -53,29 +62,27 @@ export class ClearingTicketsComp implements OnInit {
     this.tableService
       .getTableData(
         this.form.value.person,
-        this.form.value.dateTicket,
-        this.form.value.status
-      ).subscribe((data) => {
+        this.form.value.toDate,
+        this.form.value.fromDate,
+        this.form.value.status,
+      )
+      .subscribe((data) => {
         this.dataTable.set({
           headers: [
             { key: 'person', label: 'Person' },
             { key: 'datum', label: 'Datum' },
             { key: 'status', label: 'Status' },
             { key: 'lastChange', label: 'Letzte Änderung' },
-            { key: 'action', label: 'Aktion' },
+            { key: 'actionOpenCase', label: 'Aktion' },
           ],
           rows: data.map((ticket) => ({
             person: ticket.employee.firstName + ' ' + ticket.employee.lastName,
             datum: ticket.useDate,
             status: new Status(ticket.status),
             lastChange: ticket.changeLog,
-            action: 'Ticket öffnen'
+            action: 'Fall öffnen',
           })),
         });
       });
-  }
-
-  protected onReset() {
-    return this.tableService.getTableData();
   }
 }

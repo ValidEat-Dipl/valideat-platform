@@ -6,11 +6,13 @@ import {ExportComp} from './export-comp/export-comp';
 import {OpenConflictsComp} from './open-conflicts-comp/open-conflicts-comp';
 import {CheckConflictComp} from './check-conflict-comp/check-conflict-comp';
 import {TicketDetailsComp} from './ticket-details-comp/ticket-details-comp';
+import { MostRecentTicketsComp } from './most-recent-tickets-comp/most-recent-tickets-comp';
 
 export const routes: Routes = [
   { path: 'admin-overview', component: AdminOverviewComp },
   { path: 'clearing-tickets', component: ClearingTicketsComp },
   { path: 'clearing-tickets/check-conflict', component: CheckConflictComp },
+  { path: 'most-recent-created', component: MostRecentTicketsComp},
   { path: 'create-ticket', component: CreateTicketComp },
   { path: 'open-conflicts', component: OpenConflictsComp },
   { path: 'export', component: ExportComp },

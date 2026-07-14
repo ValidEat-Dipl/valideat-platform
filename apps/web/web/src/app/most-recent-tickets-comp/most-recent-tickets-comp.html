@@ -2,9 +2,9 @@
 
 <div class="m-4 d-grid gap-4">
 
-  <h1>Clearing</h1>
+  <h1>Zuletzt erfasste Markerl</h1>
 
-  <app-info-flex-comp></app-info-flex-comp>
+  <app-button-comp icon="plus-circle" text="Markerl erfassen" buttonDesignType="primary" buttonType="icon" link="http://localhost:4200/create-ticket"></app-button-comp>
 
   <div class="d-grid gap-4 statistics">
     <form [formGroup]="form" (ngSubmit)="onSubmit()"  class="d-flex gap-3 w-75">
@@ -14,9 +14,6 @@
         <input type="text" class="form-control" placeholder="Filtere nach einer Person..." formControlName="person" aria-describedby="basic-addon1">
       </div>
 
-      <!--<app-date-range-picker-comp
-        (dateRangeChange)="onDateRangeChange($event)">
-      </app-date-range-picker-comp>-->
       <div class="input-group mb-3">
         <span class="input-group-text">Von</span>
         <input formControlName="fromDate" type="date" class="form-control">

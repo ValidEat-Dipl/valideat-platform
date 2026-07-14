@@ -33,6 +33,6 @@ https://thehaseebahmed.medium.com/how-to-implement-autosearch-in-angular-6e562c1
 
 13.07.2026
 
-[ng-bootstrap.github.io/#/components/datepicker/examples#range](https://ng-bootstrap.github.io/#/components/datepicker/examples#range)
+[medium.com/@surajk236789/daterange-picker-in-angular-4e5e6c3cedfe](https://medium.com/@surajk236789/daterange-picker-in-angular-4e5e6c3cedfe)[medium.com/@surajk236789/daterange-picker-in-angular-4e5e6c3cedfe](https://medium.com/@surajk236789/daterange-picker-in-angular-4e5e6c3cedfe)
 
 14.07.2026

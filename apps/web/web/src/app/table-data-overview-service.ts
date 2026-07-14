@@ -1,8 +1,6 @@
-import { computed, inject, Injectable, Service} from '@angular/core';
-import {Status} from './status.model';
+import { inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { FoodTicket } from './food-ticket.model';
-import { TableData } from './table.model';
 
 @Injectable({
   providedIn: 'root',

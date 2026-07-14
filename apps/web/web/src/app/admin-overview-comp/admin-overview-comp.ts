@@ -49,7 +49,7 @@ export class AdminOverviewComp implements OnInit {
           { key: 'kostenstelle', label: 'Kostenstelle' },
           { key: 'typ', label: 'Tickettyp' },
           { key: 'status', label: 'Status' },
-          { key: 'action', label: 'Aktion' },
+          { key: 'actionDetail', label: 'Aktion' },
         ],
         rows: data.map((ticket) => ({
           person: ticket.employee.firstName + ' ' + ticket.employee.lastName,
@@ -58,7 +58,7 @@ export class AdminOverviewComp implements OnInit {
           kostenstelle: ticket.costOrder.name,
           typ: ticket.ticketType,
           status: new Status(ticket.status),
-          action: 'Ticket öffnen',
+          actionDetail: 'Details',
         })),
       });
     });
