@@ -101,7 +101,8 @@ public class FoodTicketResource {
                 tier,
                 costOrder,
                 Status.OPEN,
-                restaurant);
+                restaurant,
+                TicketType.EMPLOYEE);
         foodTicketRepository.save(foodTicket);
         return Response.ok().build();
     }

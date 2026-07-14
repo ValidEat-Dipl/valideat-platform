@@ -62,13 +62,14 @@ public class FoodTicket {
         this.changeLog = changeLog;
     }
 
-    public FoodTicket(Employee employee, LocalDate useDate, Tier tier, CostOrder costOrder, Status status, Restaurant restaurant) {
+    public FoodTicket(Employee employee, LocalDate useDate, Tier tier, CostOrder costOrder, Status status, Restaurant restaurant, TicketType ticketType) {
         this.employee = employee;
         this.useDate = useDate;
         this.tier = tier;
         this.costOrder = costOrder;
         this.status = status;
         this.restaurant = restaurant;
+        this.ticketType = ticketType;
     }
 
     public Long getId() {
