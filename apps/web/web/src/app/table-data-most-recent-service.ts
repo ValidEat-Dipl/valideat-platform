@@ -9,18 +9,18 @@ export class TableDataMostRecentService {
   http = inject(HttpClient);
 
   getTableData(
-    person?: string,
-    fromDate?: string,
-    toDate?: string,
+    employeeName?: string,
+    startDate?: string,
+    endDate?: string,
     status?: string
   ) {
 
     const params: any = {};
-    if (person && person.length > 0) params.person = person;
-    if (fromDate) params.costRank = fromDate;
-    if (toDate) params.costDepartment = toDate;
+    if (employeeName && employeeName.length > 0) params.employeeName = employeeName;
+    if (startDate) params.startDate = startDate;
+    if (endDate) params.endDate = endDate;
     if (status && status != 'ALL') params.status = status;
-
+console.log(params);
     return this.http.get<AdminFoodTicket[]>('http://localhost:8080/foodticket/listAdminTickets', {
       params,
     });

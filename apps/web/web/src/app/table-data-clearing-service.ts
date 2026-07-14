@@ -1,4 +1,4 @@
-import { inject, Injectable, Service } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FoodTicket } from './food-ticket.model';
 
@@ -16,8 +16,8 @@ export class TableDataClearingService {
 
     const params: any = {};
     if (person && person.length > 0) params.person = person;
-    if (fromDate) params.costRank = fromDate;
-    if (toDate) params.costDepartment = toDate;
+    if (fromDate) params.startDate = fromDate;
+    if (toDate) params.endDate = toDate;
     if (status && status != 'ALL') params.status = status;
 
     return this.http.get<FoodTicket[]>('http://localhost:8080/foodticket/table-clearing',
