@@ -1,18 +1,19 @@
 package at.htl.repository;
 
-import at.htl.model.Employee;
-import at.htl.model.FoodTicket;
-import at.htl.model.Status;
-import at.htl.model.TicketType;
+import at.htl.boundary.dto.EmployeeFoodTicketDTO;
+import at.htl.boundary.dto.EmployeeGetTicketsDTO;
+import at.htl.model.*;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
+import jakarta.ws.rs.core.Response;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @ApplicationScoped
 public class FoodTicketRepository {
@@ -28,8 +29,9 @@ public class FoodTicketRepository {
         return entityManager.find(FoodTicket.class, id);
     }
 
-    public List<FoodTicket> findByEmployee(Long id) {
-        return entityManager.createQuery("select f from FoodTicket f where f.employee.id = :id", FoodTicket.class)
+    public List<EmployeeGetTicketsDTO> findByEmployee(Long id) {
+        return entityManager.createQuery("""
+                select new at.htl.boundary.dto.EmployeeGetTicketsDTO(f.id, f.employee.firstName, f.employee.lastName, f.useDate, f.tier.name, f.costOrder.name, f.restaurant.name, f.status, f.checkDate) from FoodTicket f where f.employee.id = :id""", EmployeeGetTicketsDTO.class)
                 .setParameter("id", id).getResultList();
     }
 

@@ -20,3 +20,9 @@ Geschafft: Die Backend Entities an den Stand vom ER-Diagramm angepasst aber nich
 Freitag: 10.7 Wollen: An REST Routen weiterarbeiten.
 
 Geschafft: Login und Registrieren geht jetzt mit Password Hash. Employee kann Markerl erfassen wegen neuer REST Route
+
+
+
+Montag: 13.7 Wollen: Testdaten durch insert.sql und hr rest routen
+
+Geschafft: Testdaten hinzugefügt, hr rest routen die erste seite fertig und langes meeting von uns 3 wo wir schonmal den clearing algorithmus durchgeplant haben

@@ -12,3 +12,7 @@ GET http://localhost:8080/foodticket/overview?
 ###
 GET http://localhost:8080/foodticket/admin-overview-info-box?
     last12Months=false
+
+
+###
+GET http://localhost:8080/foodticket/findByEmployee/1
