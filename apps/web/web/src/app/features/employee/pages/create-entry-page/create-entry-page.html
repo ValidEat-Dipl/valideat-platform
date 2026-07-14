@@ -27,8 +27,8 @@
             <label class="form-label" for="costOrder">Kostenstelle</label>
             <select id="costOrder" class="form-select" formControlName="costOrder">
               <option value="">Bitte auswählen</option>
-              @for (costOrder of costOrders; track costOrder) {
-                <option [value]="costOrder">{{ costOrder }}</option>
+              @for (costOrder of costOrders; track costOrder.name) {
+                <option [value]="costOrder.name">{{ costOrder.name }}</option>
               }
             </select>
           </div>
@@ -37,8 +37,8 @@
             <label class="form-label" for="tier">Markerlstufe</label>
             <select id="tier" class="form-select" formControlName="tier">
               <option value="">Bitte auswählen</option>
-              @for (tier of tiers; track tier) {
-                <option [value]="tier">{{ tier }}</option>
+              @for (tier of tiers; track tier.name) {
+                <option [value]="tier.name">{{ tier.name }}</option>
               }
             </select>
           </div>
@@ -47,8 +47,8 @@
             <label class="form-label" for="restaurantName">Restaurant</label>
             <select id="restaurantName" class="form-select" formControlName="restaurantName">
               <option value="">Bitte auswählen</option>
-              @for (restaurant of restaurants; track restaurant) {
-                <option [value]="restaurant">{{ restaurant }}</option>
+              @for (restaurant of restaurants; track restaurant.id) {
+                <option [value]="restaurant.name">{{ restaurant.name }}</option>
               }
             </select>
           </div>

@@ -4,6 +4,9 @@ import {
   EmployeeFoodTicket,
   EmployeeFoodTicketRequest,
 } from '../models/employee-food-ticket.model';
+import { CostOrder } from '../models/cost-order.model';
+import { Restaurant } from '../models/restaurant.model';
+import { Tier } from '../models/tier.model';
 
 const API_BASE = 'http://localhost:8080';
 
@@ -21,6 +24,18 @@ export class EmployeeTicketService {
     return this.http.get<EmployeeFoodTicket[]>(
       `${API_BASE}/foodticket/findByEmployee/${employeeId}`,
     );
+  }
+
+  getRestaurants() {
+    return this.http.get<Restaurant[]>(`${API_BASE}/restaurant`);
+  }
+
+  getTiers() {
+    return this.http.get<Tier[]>(`${API_BASE}/tier`);
+  }
+
+  getCostOrders() {
+    return this.http.get<CostOrder[]>(`${API_BASE}/costOrder`);
   }
 
   addTicketEntry(ticket: EmployeeFoodTicketRequest) {

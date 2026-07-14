@@ -3,7 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EmployeeHeader } from '../../components/employee-header/employee-header';
+import { CostOrder } from '../../models/cost-order.model';
 import { EmployeeFoodTicketRequest } from '../../models/employee-food-ticket.model';
+import { Restaurant } from '../../models/restaurant.model';
+import { Tier } from '../../models/tier.model';
 import { EmployeeEntryState } from '../../services/employee-entry-state';
 import { EmployeeTicketService } from '../../services/employee-ticket.service';
 
@@ -16,27 +19,9 @@ import { EmployeeTicketService } from '../../services/employee-ticket.service';
 export class CreateEntryPage implements OnInit {
   employeeId = 1; // TODO: später vom Login
 
-  // Lokale Entwicklungswerte aus import.sql
-  tiers = ['INTERN', 'APPRENTICE', 'EMPLOYEE', 'TEAM_LEAD', 'MANAGER'];
-  costOrders = [
-    '1000 - Verwaltung',
-    '1100 - Personal',
-    '1200 - IT',
-    '1300 - Buchhaltung',
-    '2000 - Produktion',
-    '2100 - Logistik',
-    '2200 - Einkauf',
-    '3000 - Vertrieb',
-    '3100 - Marketing',
-    '4000 - Forschung & Entwicklung',
-  ];
-  restaurants = [
-    'Gasthaus zur Stadt',
-    'Restaurant Adler',
-    'Zum Goldenen Löwen',
-    'Café Mozart',
-    'Bistro am Park',
-  ];
+  tiers: Tier[] = [];
+  costOrders: CostOrder[] = [];
+  restaurants: Restaurant[] = [];
 
   ticketForm = new FormGroup({
     date: new FormControl(formatDate(new Date(), 'yyyy-MM-dd', 'en'), Validators.required),
@@ -67,6 +52,21 @@ export class CreateEntryPage implements OnInit {
           employeeName: `${tickets[0].firstName} ${tickets[0].lastName}`,
         });
       }
+    });
+
+    this.employeeTicketService.getRestaurants().subscribe((restaurants) => {
+      console.log(restaurants);
+      this.restaurants = restaurants;
+    });
+
+    this.employeeTicketService.getTiers().subscribe((tiers) => {
+      console.log(tiers);
+      this.tiers = tiers;
+    });
+
+    this.employeeTicketService.getCostOrders().subscribe((costOrders) => {
+      console.log(costOrders);
+      this.costOrders = costOrders;
     });
   }
 

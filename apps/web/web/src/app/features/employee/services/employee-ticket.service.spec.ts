@@ -45,6 +45,36 @@ describe('EmployeeTicketService', () => {
     request.flush([]);
   });
 
+  it('loads restaurants', () => {
+    service.getRestaurants().subscribe((restaurants) => {
+      expect(restaurants[0].name).toBe('Gasthaus zur Stadt');
+    });
+
+    const request = httpTesting.expectOne('http://localhost:8080/restaurant');
+    expect(request.request.method).toBe('GET');
+    request.flush([{ id: 1, address: 'Landstraße 10, 4020 Linz', name: 'Gasthaus zur Stadt' }]);
+  });
+
+  it('loads tiers', () => {
+    service.getTiers().subscribe((tiers) => {
+      expect(tiers[0].name).toBe('INTERN');
+    });
+
+    const request = httpTesting.expectOne('http://localhost:8080/tier');
+    expect(request.request.method).toBe('GET');
+    request.flush([{ name: 'INTERN', discount: 3 }]);
+  });
+
+  it('loads cost orders', () => {
+    service.getCostOrders().subscribe((costOrders) => {
+      expect(costOrders[0].name).toBe('1000 - Verwaltung');
+    });
+
+    const request = httpTesting.expectOne('http://localhost:8080/costOrder');
+    expect(request.request.method).toBe('GET');
+    request.flush([{ name: '1000 - Verwaltung' }]);
+  });
+
   it('creates an employee ticket entry', () => {
     const ticket: EmployeeFoodTicketRequest = {
       date: '2026-07-14',
