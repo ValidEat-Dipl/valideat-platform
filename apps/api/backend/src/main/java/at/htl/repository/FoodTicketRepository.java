@@ -30,6 +30,10 @@ public class FoodTicketRepository {
         return entityManager.find(FoodTicket.class, id);
     }
 
+    public EmployeeGetTicketsDTO findEmployeeTicketDTOById(Long id) {
+        return entityManager.createQuery("select new at.htl.boundary.dto.EmployeeGetTicketsDTO(f.id, f.employee.firstName, f.employee.lastName, f.useDate, f.tier.name, f.costOrder.name, f.restaurant.name, f.status, f.checkDate) from FoodTicket f where f.id = :id", EmployeeGetTicketsDTO.class).setParameter("id", id).getSingleResult();
+    }
+
     public List<EmployeeGetTicketsDTO> findByEmployee(Long id) {
         return entityManager.createQuery("""
                 select new at.htl.boundary.dto.EmployeeGetTicketsDTO(f.id, f.employee.firstName, f.employee.lastName, f.useDate, f.tier.name, f.costOrder.name, f.restaurant.name, f.status, f.checkDate) from FoodTicket f where f.employee.id = :id""", EmployeeGetTicketsDTO.class)

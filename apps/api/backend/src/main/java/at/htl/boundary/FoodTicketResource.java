@@ -45,8 +45,8 @@ public class FoodTicketResource {
 
     @GET
     @Path("/{id}")
-    public FoodTicket getTicketById(@PathParam("id") Long id) {
-        return foodTicketRepository.findById(id);
+    public EmployeeGetTicketsDTO getTicketById(@PathParam("id") Long id) {
+        return foodTicketRepository.findEmployeeTicketDTOById(id);
     }
 
     @GET

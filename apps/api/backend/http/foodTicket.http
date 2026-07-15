@@ -1,5 +1,5 @@
 ###
-GET http://localhost:8080/api/foodticket
+GET http://localhost:8080/foodticket
 
 ###
 GET http://localhost:8080/api/foodticket/getAllValidTickets
@@ -16,6 +16,9 @@ GET http://localhost:8080/foodticket/admin-overview-info-box?
 
 ###
 GET http://localhost:8080/foodticket/findByEmployee/1
+
+###
+GET http://localhost:8080/foodticket/2
 
 ###
 GET http://localhost:8080/foodticket/listAdminTickets?employeeName=nna
