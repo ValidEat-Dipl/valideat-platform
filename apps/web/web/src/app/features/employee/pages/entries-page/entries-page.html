@@ -1,0 +1,46 @@
+<div class="entries-page d-flex flex-column">
+  <app-employee-header title="Meine Erfassungen" [showBackButton]="true" />
+
+  <div class="flex-grow-1 px-4 py-4">
+    <div class="row gx-0 justify-content-center">
+      <main class="col-12 col-sm-10 col-md-8 col-lg-7 col-xl-6">
+        <h1 class="h4 mb-4 fw-semibold">Meine Erfassungen</h1>
+
+        @if (isLoading) {
+          <p class="text-secondary">Erfassungen werden geladen...</p>
+        } @else if (tickets.length === 0) {
+          <p class="text-secondary">Keine Erfassungen gefunden.</p>
+        } @else {
+          <div class="card">
+            <div class="list-group list-group-flush">
+              @for (ticket of tickets; track ticket.id) {
+                <div class="list-group-item px-3 py-3">
+                  <div class="d-flex align-items-center gap-3">
+                    <div class="me-auto">
+                      <p class="mb-1 entry-date">{{ formatTicketDate(ticket.useDate) }}</p>
+                      <p class="mb-0 text-secondary">{{ ticket.tier }}</p>
+                    </div>
+
+                    <span class="badge rounded-pill" [class]="getStatusClass(ticket.status)">
+                      <i
+                        class="bi me-1"
+                        [class]="getStatusIcon(ticket.status)"
+                        aria-hidden="true"
+                      ></i>
+
+                      {{ getStatusText(ticket.status) }}
+                    </span>
+
+                    <span class="text-primary" aria-disabled="true">Details</span>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        }
+      </main>
+    </div>
+  </div>
+
+  <app-employee-navigation />
+</div>

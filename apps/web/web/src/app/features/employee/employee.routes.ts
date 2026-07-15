@@ -43,6 +43,12 @@ export const EMPLOYEE_ROUTES: Routes = [
             (module) => module.EntrySuccessPage,
           ),
       },
+      {
+        path: 'entries',
+        title: 'Meine Erfassungen | ValidEat',
+        loadComponent: () =>
+          import('./pages/entries-page/entries-page').then((module) => module.EntriesPage),
+      },
     ],
   },
 ];
