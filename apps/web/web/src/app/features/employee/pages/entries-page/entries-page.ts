@@ -1,5 +1,6 @@
 import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { EmployeeHeader } from '../../components/employee-header/employee-header';
 import { EmployeeNavigation } from '../../components/employee-navigation/employee-navigation';
 import { EmployeeFoodTicket } from '../../models/employee-food-ticket.model';
@@ -7,7 +8,7 @@ import { EmployeeTicketService } from '../../services/employee-ticket.service';
 
 @Component({
   selector: 'app-entries-page',
-  imports: [EmployeeHeader, EmployeeNavigation],
+  imports: [EmployeeHeader, EmployeeNavigation, RouterLink],
   templateUrl: './entries-page.html',
   styleUrl: './entries-page.scss',
 })

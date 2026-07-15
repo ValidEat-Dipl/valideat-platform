@@ -31,7 +31,7 @@
                       {{ getStatusText(ticket.status) }}
                     </span>
 
-                    <span class="text-primary" aria-disabled="true">Details</span>
+                    <a [routerLink]="['/employee/entries', ticket.id]">Details</a>
                   </div>
                 </div>
               }
