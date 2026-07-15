@@ -5,6 +5,4 @@ public enum Status {
     CONFLICT,
     CHECKED,
     NEEDS_FIXING
-    // übersicht alle mit 12 monaten
-    // nur hr markerl
 }

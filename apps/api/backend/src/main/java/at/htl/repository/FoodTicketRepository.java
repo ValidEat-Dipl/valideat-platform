@@ -1,5 +1,6 @@
 package at.htl.repository;
 
+import at.htl.boundary.dto.AdminClearingDTO;
 import at.htl.boundary.dto.AdminFoodTicketDTO;
 import at.htl.boundary.dto.EmployeeFoodTicketDTO;
 import at.htl.boundary.dto.EmployeeGetTicketsDTO;
@@ -13,8 +14,7 @@ import jakarta.ws.rs.core.Response;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @ApplicationScoped
 public class FoodTicketRepository {
@@ -116,19 +116,6 @@ public class FoodTicketRepository {
         return ticketsList.size() <= 1;
     }
 
-    public List<FoodTicket> filterTickets(Status status, String conflict, Long empId, LocalDateTime startDate, LocalDateTime endDate) {
-
-        return entityManager.createQuery("""
-                select f from FoodTicket f
-                where f.status = :status
-                and f.employee.id = :emp
-                and f.useDate between :startDate and :endDate
-                """, FoodTicket.class)
-                .setParameter("status", status)
-                .setParameter("emp", empId)
-                .setParameter("startDate", startDate)
-                .setParameter("endDate", endDate).getResultList();
-    }
 
     public List<AdminFoodTicketDTO> findAdminTickets(String employeeName, LocalDateTime startDate, LocalDateTime endDate, Status status) {
         StringBuilder query = new StringBuilder("""
@@ -186,5 +173,164 @@ public class FoodTicketRepository {
 
 
         return q.getResultList();
+    }
+
+    public List<AdminClearingDTO> createClearingTable(
+            String employeeName,
+            LocalDateTime startDate,
+            LocalDateTime endDate,
+            Status status,
+            String conflict,
+            String costOrder) {
+
+        StringBuilder jpql = new StringBuilder("""
+        select f
+        from FoodTicket f
+        where 1=1
+    """);
+
+
+        if (employeeName != null) {
+            jpql.append("""
+            and lower(concat(f.employee.firstName, ' ', f.employee.lastName))
+            like lower(:employeeName)
+        """);
+        }
+
+        if (startDate != null) {
+            jpql.append(" and f.useDate >= :startDate ");
+        }
+
+        if (endDate != null) {
+            jpql.append(" and f.useDate <= :endDate ");
+        }
+
+        if (status != null) {
+            jpql.append(" and f.status = :status ");
+        }
+
+        if (conflict != null) {
+            jpql.append(" and lower(f.conflict) like lower(:conflict) ");
+        }
+
+        if (costOrder != null) {
+            jpql.append(" and f.costOrder.name = :costOrder ");
+        }
+
+
+        TypedQuery<FoodTicket> query =
+                entityManager.createQuery(jpql.toString(), FoodTicket.class);
+
+
+        if (employeeName != null) {
+            query.setParameter("employeeName", "%" + employeeName + "%");
+        }
+
+        if (startDate != null) {
+            query.setParameter("startDate", startDate);
+        }
+
+        if (endDate != null) {
+            query.setParameter("endDate", endDate);
+        }
+
+        if (status != null) {
+            query.setParameter("status", status);
+        }
+
+        if (conflict != null) {
+            query.setParameter("conflict", "%" + conflict + "%");
+        }
+
+        if (costOrder != null) {
+            query.setParameter("costOrder", costOrder);
+        }
+
+
+        List<FoodTicket> tickets = query.getResultList();
+
+        // zuerst filter und dann erst clearing dto erstellen
+        Set<Long> processed = new HashSet<>();
+        List<AdminClearingDTO> result = new ArrayList<>();
+
+        for (FoodTicket ticket : tickets) {
+
+            if (processed.contains(ticket.getId())) {
+                continue;
+            }
+
+            result.add(createClearingDTO(ticket));
+
+            processed.add(ticket.getId());
+
+            if (ticket.getMatchingTicket() != null) {
+                processed.add(ticket.getMatchingTicket().getId());
+            }
+        }
+
+        return result;
+    }
+
+    public AdminClearingDTO createClearingDTO(FoodTicket ticket) {
+
+        FoodTicket employeeTicket = null;
+        FoodTicket adminTicket = null;
+
+        if (ticket.getTicketType() == TicketType.EMPLOYEE) {
+            employeeTicket = ticket;
+
+            if (ticket.getMatchingTicket() != null) {
+                adminTicket = ticket.getMatchingTicket();
+            }
+
+        } else if (ticket.getTicketType() == TicketType.ADMIN) {
+            adminTicket = ticket;
+
+            if (ticket.getMatchingTicket() != null) {
+                employeeTicket = ticket.getMatchingTicket();
+            }
+        }
+
+
+        return getAdminClearingDTO(employeeTicket, adminTicket);
+    }
+
+    private AdminClearingDTO getAdminClearingDTO(FoodTicket employeeTicket, FoodTicket adminTicket) {
+        return new AdminClearingDTO(
+                // Employee Ticket
+                employeeTicket != null ? employeeTicket.getId() : null,
+                employeeTicket != null && employeeTicket.getEmployee() != null
+                        ? employeeTicket.getEmployee().getFirstName() + " " + employeeTicket.getEmployee().getLastName()
+                        : null,
+                employeeTicket != null && employeeTicket.getTier() != null
+                        ? employeeTicket.getTier().getName() : null,
+                employeeTicket != null && employeeTicket.getCostOrder() != null
+                        ? employeeTicket.getCostOrder().getName() : null,
+                employeeTicket != null && employeeTicket.getRestaurant() != null
+                        ? employeeTicket.getRestaurant().getName() : null,
+                employeeTicket != null ? employeeTicket.getChangeLog() : null,
+                employeeTicket != null ? employeeTicket.getUseDate() : null,
+                employeeTicket != null ? employeeTicket.getCheckDate() : null,
+                employeeTicket != null ? employeeTicket.getStatus() : null,
+                employeeTicket != null ? employeeTicket.getConflict() : null,
+
+
+                // Admin Ticket
+                adminTicket != null ? adminTicket.getId() : null,
+                adminTicket != null && adminTicket.getEmployee() != null
+                        ? adminTicket.getEmployee().getFirstName() + " " + adminTicket.getEmployee().getLastName()
+                        : null,
+                adminTicket != null && adminTicket.getTier() != null
+                        ? adminTicket.getTier().getName() : null,
+                adminTicket != null && adminTicket.getCostOrder() != null
+                        ? adminTicket.getCostOrder().getName() : null,
+                adminTicket != null && adminTicket.getRestaurant() != null
+                        ? adminTicket.getRestaurant().getName() : null,
+                adminTicket != null ? adminTicket.getChangeLog() : null,
+                adminTicket != null ? adminTicket.getUseDate() : null,
+                adminTicket != null ? adminTicket.getCheckDate() : null,
+                adminTicket != null ? adminTicket.getStatus() : null,
+                adminTicket != null ? adminTicket.getConflict() : null
+        );
     }
 }

@@ -78,21 +78,22 @@ INSERT INTO FoodTicket (
     restaurant_id,
     admin_id,
     checkDate,
-    changeLog_id
+    changeLog_id,
+    conflict
 ) VALUES
 
 -- OPEN
-(1, '2026-07-14', NULL, 'INTERN',      '1000 - Verwaltung', 'OPEN', 'EMPLOYEE', 1, NULL, NULL, NULL),
-(2, '2026-07-15', NULL, 'APPRENTICE',  '1100 - Personal',   'OPEN', 'EMPLOYEE', 2, NULL, NULL, NULL),
-(3, '2026-07-16', NULL, 'EMPLOYEE',    '1200 - IT',         'OPEN', 'ADMIN', 1, 2, '2026-07-10', 5),
+(1, '2026-07-14', NULL, 'INTERN',      '1000 - Verwaltung', 'OPEN', 'EMPLOYEE', 1, NULL, NULL, NULL, null),
+(2, '2026-07-15', NULL, 'APPRENTICE',  '1100 - Personal',   'OPEN', 'EMPLOYEE', 2, NULL, NULL, NULL, null),
+(3, '2026-07-16', NULL, 'EMPLOYEE',    '1200 - IT',         'OPEN', 'ADMIN', 1, 2, '2026-07-10', 5, null),
 
 -- CHECKED Paar
-(1, '2024-07-10', NULL, 'APPRENTICE', '1000 - Verwaltung', 'CHECKED', 'EMPLOYEE', 2, 5, '2026-07-10', 4),
-(1, '2026-07-10', NULL, 'APPRENTICE', '1000 - Verwaltung', 'CHECKED', 'ADMIN', 2, 5, '2026-07-10', 4),
+(1, '2024-07-10', NULL, 'APPRENTICE', '1000 - Verwaltung', 'CHECKED', 'EMPLOYEE', 2, 5, '2026-07-10', 4, null),
+(1, '2026-07-10', NULL, 'APPRENTICE', '1000 - Verwaltung', 'CHECKED', 'ADMIN', 2, 5, '2026-07-10', 4, null),
 
 -- CONFLICT Paar
-(2, '2024-07-09', NULL, 'EMPLOYEE', '1100 - Personal', 'CONFLICT', 'EMPLOYEE', 3, 5, '2026-07-09', 5),
-(2, '2024-07-09', NULL, 'EMPLOYEE', '1100 - Personal', 'CONFLICT', 'ADMIN', 3, 5, '2026-07-09', 5);
+(2, '2024-07-09', NULL, 'EMPLOYEE', '1100 - Personal', 'CONFLICT', 'EMPLOYEE', 3, 5, '2026-07-09', 5, 'Kostenstelle passt nicht zusammen'),
+(2, '2024-07-09', NULL, 'EMPLOYEE', '1000 - Verwaltung', 'CONFLICT', 'ADMIN', 3, 5, '2026-07-09', 5, 'Kostenstelle passt nicht zusammen');
 
 UPDATE FoodTicket
 SET matching_ticket_id = 5

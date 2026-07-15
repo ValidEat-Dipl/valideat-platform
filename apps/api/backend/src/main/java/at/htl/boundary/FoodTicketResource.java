@@ -1,5 +1,6 @@
 package at.htl.boundary;
 
+import at.htl.boundary.dto.AdminClearingDTO;
 import at.htl.boundary.dto.AdminFoodTicketDTO;
 import at.htl.boundary.dto.EmployeeFoodTicketDTO;
 import at.htl.boundary.dto.EmployeeGetTicketsDTO;
@@ -86,6 +87,30 @@ public class FoodTicketResource {
         return foodTicketRepository.findAdminTickets(employeeName, startDate, endDate, status);
     }
 
+    @GET
+    @Path("/table-clearing")
+    public List<AdminClearingDTO> createClearingTable(@QueryParam("employeeName") String employeeName,
+                                                      @QueryParam("startDate") LocalDateTime startDate,
+                                                      @QueryParam("endDate") LocalDateTime endDate,
+                                                      @QueryParam("status") Status status,
+                                                      @QueryParam("conflict") String conflict,
+                                                      @QueryParam("costOrder") String costOrder) {
+        return foodTicketRepository.createClearingTable(employeeName, startDate, endDate, status, conflict, costOrder);
+    }
+
+    @GET
+    @Path("/table-clearing/{id}")
+    public AdminClearingDTO getClearingCase(
+            @PathParam("id") Long id) {
+        FoodTicket ticket = foodTicketRepository.findById(id);
+
+        if (ticket == null) {
+            return null;
+        }
+
+        return foodTicketRepository.createClearingDTO(ticket);
+    }
+
     @POST
     @Path("/empAddTicketEntry")
     @Transactional
@@ -153,18 +178,6 @@ public class FoodTicketResource {
         ticket.setRestaurant(restaurant);
 
         return Response.ok(ticket).build();
-    }
-
-    @GET
-    @Path("/filterTickets/{status}/{conflict}/{employeeId}/{startDate}/{endDate}")
-    public List<FoodTicket> filterTicketEntries(@PathParam("status") Status status,
-                                                @PathParam("conflict") String conflict,
-                                                @PathParam("employeeId") Long empId,
-                                                @PathParam("startDate") LocalDateTime startDate,
-                                                @PathParam("endDate") LocalDateTime endDate) {
-
-
-        return foodTicketRepository.filterTickets(status, conflict, empId, startDate, endDate);
     }
 
     @GET

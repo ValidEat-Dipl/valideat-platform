@@ -42,13 +42,15 @@ public class FoodTicket {
 
     private LocalDate checkDate;
 
+    private String conflict;
+
     @ManyToOne
     private ChangeLog changeLog;
 
 
     public FoodTicket() {}
 
-    public FoodTicket(Employee employee, LocalDate useDate, FoodTicket matchingTicket, Tier tier, CostOrder costOrder, Status status, TicketType ticketType, Restaurant restaurant, Employee admin, LocalDate checkDate, ChangeLog changeLog) {
+    public FoodTicket(Employee employee, LocalDate useDate, FoodTicket matchingTicket, Tier tier, CostOrder costOrder, Status status, TicketType ticketType, Restaurant restaurant, Employee admin, LocalDate checkDate, ChangeLog changeLog, String conflict) {
         this.employee = employee;
         this.useDate = useDate;
         this.matchingTicket = matchingTicket;
@@ -60,6 +62,7 @@ public class FoodTicket {
         this.admin = admin;
         this.checkDate = checkDate;
         this.changeLog = changeLog;
+        this.conflict = conflict;
     }
 
     public FoodTicket(Employee employee, LocalDate useDate, Tier tier, CostOrder costOrder, Status status, Restaurant restaurant, TicketType ticketType) {
@@ -166,5 +169,13 @@ public class FoodTicket {
 
     public void setTicketType(TicketType ticketType) {
         this.ticketType = ticketType;
+    }
+
+    public String getConflict() {
+        return conflict;
+    }
+
+    public void setConflict(String conflict) {
+        this.conflict = conflict;
     }
 }

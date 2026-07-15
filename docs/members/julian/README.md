@@ -26,3 +26,10 @@ Geschafft: Login und Registrieren geht jetzt mit Password Hash. Employee kann Ma
 Montag: 13.7 Wollen: Testdaten durch insert.sql und hr rest routen
 
 Geschafft: Testdaten hinzugefügt, hr rest routen die erste seite fertig und langes meeting von uns 3 wo wir schonmal den clearing algorithmus durchgeplant haben
+
+
+Dienstag: 14.7 Wollen an den HR Routen arbeiten.
+
+Geschafft: Mitarbeiter Seite: mitarbeiter kann eigenes ticket, falls es offen ist bearbeiten und auch ein kleiner fix, dass bei den tickets nicht alle daten mitkommen. Fix das der Tickettype beim erstellen richtig ist und GET calls für costorder, restaurant und tier
+
+Hr Seite: HR tickets seite call mit optionalen filtermöglichkeiten implementiert.

@@ -19,3 +19,11 @@ GET http://localhost:8080/foodticket/findByEmployee/1
 
 ###
 GET http://localhost:8080/foodticket/listAdminTickets?employeeName=nna
+
+
+###
+GET http://localhost:8080/foodticket/table-clearing
+
+
+###
+GET http://localhost:8080/foodticket/table-clearing/4
