@@ -41,4 +41,8 @@ export class EmployeeTicketService {
   addTicketEntry(ticket: EmployeeFoodTicketRequest) {
     return this.http.post(`${API_BASE}/foodticket/empAddTicketEntry`, ticket);
   }
+
+  editTicket(ticketId: number, employeeId: number, ticket: EmployeeFoodTicketRequest) {
+    return this.http.put<void>(`${API_BASE}/foodticket/${ticketId}/${employeeId}`, ticket);
+  }
 }

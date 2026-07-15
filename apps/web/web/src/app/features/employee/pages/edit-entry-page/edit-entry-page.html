@@ -1,0 +1,103 @@
+<div class="edit-entry-page">
+  <app-employee-header title="Erfassung bearbeiten" [showBackButton]="true" />
+
+  <div class="px-4 py-4">
+    <div class="row gx-0 justify-content-center">
+      <main class="col-12 col-sm-10 col-md-8 col-lg-7 col-xl-6">
+        <h1 class="h4 mb-4 fw-semibold">Erfassung bearbeiten</h1>
+
+
+        @if (isLoading()) {
+          <p class="text-secondary">Erfassung wird geladen...</p>
+
+        } @else if (loadError()) {
+          <div class="alert alert-danger">Die Erfassung wurde nicht gefunden.</div>
+
+        } @else {
+
+          <form [formGroup]="ticketForm" (ngSubmit)="save()">
+            <div class="mb-3">
+              <label class="form-label" for="editDate">Datum</label>
+              <input id="editDate" class="form-control" type="date" formControlName="date" />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="editEmployeeName">Name</label>
+              <input
+                id="editEmployeeName"
+                class="form-control"
+                type="text"
+                formControlName="employeeName"
+                readonly
+              />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="editCostOrder">Kostenstelle</label>
+              <select id="editCostOrder" class="form-select" formControlName="costOrder">
+
+                <option value="">Bitte auswählen</option>
+
+                @for (costOrder of costOrders(); track costOrder.name) {
+                  <option [value]="costOrder.name">{{ costOrder.name }}</option>
+
+                }
+
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="editTier">Markerlstufe</label>
+              <select id="editTier" class="form-select" formControlName="tier">
+
+                <option value="">Bitte auswählen</option>
+
+                @for (tier of tiers(); track tier.name) {
+                  <option [value]="tier.name">{{ tier.name }}</option>
+
+                }
+
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="editRestaurant">Restaurant</label>
+              <select id="editRestaurant" class="form-select" formControlName="restaurantName">
+
+                <option value="">Bitte auswählen</option>
+
+                @for (restaurant of restaurants(); track restaurant.id) {
+                  <option [value]="restaurant.name">{{ restaurant.name }}</option>
+                }
+
+              </select>
+            </div>
+
+            @if (saveError()) {
+              <div class="alert alert-danger">Die Änderung konnte nicht gespeichert werden.</div>
+            }
+
+            <button
+              class="btn btn-primary btn-lg w-100 mb-2"
+              type="submit"
+              [disabled]="ticketForm.invalid || isSaving()"
+            >
+
+              {{ isSaving() ? 'Wird gespeichert...' : 'Änderung speichern' }}
+
+            </button>
+
+            <button
+              class="btn btn-outline-secondary btn-lg w-100"
+              type="button"
+              [disabled]="isSaving()"
+              (click)="cancel()"
+            >
+              Abbrechen
+            </button>
+          </form>
+        }
+      </main>
+    </div>
+  </div>
+</div>

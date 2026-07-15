@@ -91,4 +91,21 @@ describe('EmployeeTicketService', () => {
     expect(request.request.body).toEqual(ticket);
     request.flush(null);
   });
+
+  it('edits an employee ticket entry', () => {
+    const ticket: EmployeeFoodTicketRequest = {
+      date: '2026-07-15',
+      employeeName: 'Max Mustermann',
+      costOrder: '1200 - IT',
+      tier: 'EMPLOYEE',
+      restaurantName: 'Café Mozart',
+    };
+
+    service.editTicket(8, 1, ticket).subscribe();
+
+    const request = httpTesting.expectOne('http://localhost:8080/foodticket/8/1');
+    expect(request.request.method).toBe('PUT');
+    expect(request.request.body).toEqual(ticket);
+    request.flush(null);
+  });
 });

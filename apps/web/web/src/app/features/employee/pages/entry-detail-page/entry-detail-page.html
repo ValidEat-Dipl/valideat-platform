@@ -8,16 +8,13 @@
 
         @if (isLoading()) {
           <p class="text-secondary">Erfassung wird geladen...</p>
-
         } @else if (ticket(); as entry) {
           <div class="card mb-3">
             <dl class="list-group list-group-flush mb-0">
               <div class="list-group-item d-flex justify-content-between gap-3 px-4 py-3">
                 <dt class="text-secondary fw-normal">DATUM</dt>
                 <dd class="mb-0 fw-semibold text-end">
-
                   {{ formatTicketDate(entry.useDate) }}
-
                 </dd>
               </div>
 
@@ -42,7 +39,6 @@
 
                   <dd class="mb-0 fw-semibold text-end">
                     {{ formatTicketDate(entry.checkDate) }}
-
                   </dd>
                 </div>
               }
@@ -51,24 +47,28 @@
                 <dt class="text-secondary fw-normal">STATUS</dt>
 
                 <dd class="mb-0">
-
                   <span class="badge rounded-pill" [class]="getStatusClass()">
                     {{ getStatusText() }}
-
                   </span>
-
                 </dd>
               </div>
             </dl>
           </div>
 
           @if (entry.status === 'CONFLICT') {
-
             <div class="alert alert-danger">
               <i class="bi bi-exclamation-triangle me-2" aria-hidden="true"></i>
               Diese Erfassung weist einen Konflikt auf.
             </div>
-            
+          }
+
+          @if (entry.status === 'OPEN') {
+            <a
+              class="btn btn-primary btn-lg w-100 mb-2"
+              [routerLink]="['/employee/entries', entry.id, 'edit']"
+            >
+              Erfassung bearbeiten
+            </a>
           }
 
           <a class="btn btn-outline-secondary btn-lg w-100" routerLink="/employee/entries">
