@@ -469,4 +469,7 @@ public class FoodTicketRepository {
 
         return q.getResultList();
     }
+
+    public void clearing() { // für später wird aufgerufen nachdem admin ticket erstellt
+    }
 }

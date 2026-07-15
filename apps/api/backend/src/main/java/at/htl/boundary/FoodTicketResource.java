@@ -1,9 +1,6 @@
 package at.htl.boundary;
 
-import at.htl.boundary.dto.AdminClearingDTO;
-import at.htl.boundary.dto.AdminFoodTicketDTO;
-import at.htl.boundary.dto.EmployeeFoodTicketDTO;
-import at.htl.boundary.dto.EmployeeGetTicketsDTO;
+import at.htl.boundary.dto.*;
 import at.htl.model.*;
 import at.htl.repository.*;
 import jakarta.inject.Inject;
@@ -162,6 +159,41 @@ public class FoodTicketResource {
         return Response.ok().build();
     }
 
+    @POST
+    @Path("/adminAddTicketEntry")
+    @Transactional
+    public Response adminSaveNewTicketEntry(AdminAddTicketDTO adminAddTicketDTO) {
+        Employee employee;
+        Tier tier;
+        CostOrder costOrder;
+        Restaurant restaurant;
+        Employee admin;
+
+        try {
+            employee = employeeRepository.findByName(adminAddTicketDTO.employeeName());
+            tier = tierRepository.findByName(adminAddTicketDTO.tier());
+            costOrder = costOrderRepository.findByName(adminAddTicketDTO.costOrder());
+            restaurant = restaurantRepository.findByName(adminAddTicketDTO.restaurantName());
+            admin = employeeRepository.findByName(adminAddTicketDTO.adminName());
+        } catch (Exception e) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+
+        FoodTicket foodTicket = new FoodTicket(
+                employee,
+                adminAddTicketDTO.useDate(),
+                tier,
+                costOrder,
+                Status.OPEN,
+                restaurant,
+                TicketType.ADMIN,
+                admin);
+        foodTicketRepository.save(foodTicket);
+
+        foodTicketRepository.clearing();
+        return Response.ok().build();
+    }
+
     @PUT
     @Path("/{ticketId}/{empId}")
     @Transactional
@@ -198,6 +230,64 @@ public class FoodTicketResource {
         ticket.setRestaurant(restaurant);
 
         return Response.ok(ticket).build();
+    }
+
+    @PUT
+    @Path("/adminEditTicket/{ticketId}")
+    @Transactional
+    public Response adminEditTicket(@PathParam("ticketId") Long ticketId, AdminAddTicketDTO adminAddTicketDTO) {
+        FoodTicket ticket = foodTicketRepository.findById(ticketId);
+
+        if (ticket == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+
+        Tier tier;
+        CostOrder costOrder;
+        Restaurant restaurant;
+        Employee employee;
+
+        try {
+            tier = tierRepository.findByName(adminAddTicketDTO.tier());
+            employee = employeeRepository.findByName(adminAddTicketDTO.employeeName());
+            costOrder = costOrderRepository.findByName(adminAddTicketDTO.costOrder());
+            restaurant = restaurantRepository.findByName(adminAddTicketDTO.restaurantName());
+
+            if (tier == null || costOrder == null || restaurant == null || employee == null) {
+                return Response.status(Response.Status.BAD_REQUEST).build();
+            }
+        } catch (Exception e) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+
+        ticket.setUseDate(adminAddTicketDTO.useDate());
+        ticket.setCostOrder(costOrder);
+        ticket.setTier(tier);
+        ticket.setRestaurant(restaurant);
+        ticket.setCheckDate(LocalDate.now());
+
+        return Response.ok(ticket).build();
+    }
+
+    @PUT
+    @Path("/assignTickets/{empTicketId}/{adminTicketId}")
+    @Transactional
+    public Response assignTickets(@PathParam("empTicketId") Long empTicketId, @PathParam("adminTicketId") Long adminTicketId) {
+        FoodTicket empTicket = foodTicketRepository.findById(empTicketId);
+        FoodTicket adminTicket = foodTicketRepository.findById(adminTicketId);
+
+        if (empTicket == null || adminTicket == null) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+
+        if (empTicket.getMatchingTicket() == null) {
+            empTicket.setMatchingTicket(adminTicket);
+            return Response.ok(empTicket).build();
+        } else {
+            adminTicket.setMatchingTicket(empTicket);
+            return Response.ok(adminTicket).build();
+        }
     }
 
     @GET

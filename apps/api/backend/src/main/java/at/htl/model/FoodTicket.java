@@ -75,6 +75,17 @@ public class FoodTicket {
         this.ticketType = ticketType;
     }
 
+    public FoodTicket(Employee employee, LocalDate useDate, Tier tier, CostOrder costOrder, Status status, Restaurant restaurant, TicketType ticketType, Employee admin) {
+        this.employee = employee;
+        this.useDate = useDate;
+        this.tier = tier;
+        this.costOrder = costOrder;
+        this.status = status;
+        this.restaurant = restaurant;
+        this.ticketType = ticketType;
+        this.admin = admin;
+    }
+
     public Long getId() {
         return id;
     }
