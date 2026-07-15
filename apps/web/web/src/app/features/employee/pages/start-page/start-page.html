@@ -4,14 +4,14 @@
   <div class="flex-grow-1 px-4 py-4">
     <div class="row gx-0 justify-content-center">
       <main class="col-12 col-sm-10 col-md-8 col-lg-7 col-xl-6">
-        <h1 class="h4 mb-1 fw-semibold">Guten Tag, {{ employeeName }}</h1>
+        <h1 class="h4 mb-1 fw-semibold">Guten Tag, {{ employeeName() }}</h1>
         <p class="mb-4 text-secondary">{{ currentDate }}</p>
 
         <section class="card mb-3" aria-labelledby="today-status">
           <div class="card-body">
             <p id="today-status" class="d-flex align-items-center gap-2 mb-3">
               <i class="bi bi-clock text-secondary" aria-hidden="true"></i>
-              @if (todaysTicketUsed) {
+              @if (todaysTicketUsed()) {
                 <span>Heute wurde bereits eine Verwendung erfasst</span>
               } @else {
                 <span>Heute noch keine Verwendung erfasst</span>
@@ -21,8 +21,8 @@
             <a
               class="btn btn-primary btn-lg w-100"
               routerLink="/employee/create"
-              [class.disabled]="todaysTicketUsed"
-              [attr.aria-disabled]="todaysTicketUsed"
+              [class.disabled]="todaysTicketUsed()"
+              [attr.aria-disabled]="todaysTicketUsed()"
             >
               Verwendung erfassen
             </a>
@@ -37,7 +37,7 @@
         <section aria-labelledby="latest-entries-heading">
           <h2 id="latest-entries-heading" class="h5 mb-3 fw-semibold">Letzte Erfassungen</h2>
 
-          @if (latestEntry; as entry) {
+          @if (latestEntry(); as entry) {
             <div class="card mb-3">
               <div class="card-body d-flex align-items-center gap-3">
                 <div class="me-auto">
@@ -45,9 +45,9 @@
                   <p class="mb-0 text-secondary">{{ entry.tier }}</p>
                 </div>
 
-                <span class="badge rounded-pill" [class]="statusClass">
+                <span class="badge rounded-pill" [class]="statusClass()">
                   <i class="bi bi-check-circle me-1" aria-hidden="true"></i>
-                  {{ statusText }}
+                  {{ statusText() }}
                 </span>
 
                 <i class="bi bi-chevron-right text-secondary" aria-hidden="true"></i>

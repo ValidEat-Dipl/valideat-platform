@@ -1,5 +1,5 @@
 import { formatDate, Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { EmployeeHeader } from '../../components/employee-header/employee-header';
 import { EmployeeFoodTicketRequest } from '../../models/employee-food-ticket.model';
@@ -14,8 +14,8 @@ import { EmployeeTicketService } from '../../services/employee-ticket.service';
 })
 export class ReviewEntryPage implements OnInit {
   ticket?: EmployeeFoodTicketRequest;
-  isSaving = false;
-  errorMessage = '';
+  isSaving = signal(false);
+  errorMessage = signal('');
 
   constructor(
     private employeeEntryState: EmployeeEntryState,
@@ -39,8 +39,8 @@ export class ReviewEntryPage implements OnInit {
       return;
     }
 
-    this.isSaving = true;
-    this.errorMessage = '';
+    this.isSaving.set(true);
+    this.errorMessage.set('');
 
     this.employeeTicketService.addTicketEntry(this.ticket).subscribe({
       next: () => {
@@ -48,8 +48,8 @@ export class ReviewEntryPage implements OnInit {
         this.router.navigate(['/employee/success']);
       },
       error: () => {
-        this.isSaving = false;
-        this.errorMessage = 'Die Erfassung konnte nicht gespeichert werden.';
+        this.isSaving.set(false);
+        this.errorMessage.set('Die Erfassung konnte nicht gespeichert werden.');
       },
     });
   }

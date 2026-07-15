@@ -1,5 +1,5 @@
 import { formatDate } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EmployeeHeader } from '../../components/employee-header/employee-header';
@@ -19,9 +19,9 @@ import { EmployeeTicketService } from '../../services/employee-ticket.service';
 export class CreateEntryPage implements OnInit {
   employeeId = 1; // TODO: später vom Login
 
-  tiers: Tier[] = [];
-  costOrders: CostOrder[] = [];
-  restaurants: Restaurant[] = [];
+  tiers = signal<Tier[]>([]);
+  costOrders = signal<CostOrder[]>([]);
+  restaurants = signal<Restaurant[]>([]);
 
   ticketForm = new FormGroup({
     date: new FormControl(formatDate(new Date(), 'yyyy-MM-dd', 'en'), Validators.required),
@@ -36,6 +36,7 @@ export class CreateEntryPage implements OnInit {
     private employeeTicketService: EmployeeTicketService,
     private employeeEntryState: EmployeeEntryState,
     private router: Router,
+    private changeDetectorRef: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -51,22 +52,20 @@ export class CreateEntryPage implements OnInit {
         this.ticketForm.patchValue({
           employeeName: `${tickets[0].firstName} ${tickets[0].lastName}`,
         });
+        this.changeDetectorRef.markForCheck();
       }
     });
 
     this.employeeTicketService.getRestaurants().subscribe((restaurants) => {
-      console.log(restaurants);
-      this.restaurants = restaurants;
+      this.restaurants.set(restaurants);
     });
 
     this.employeeTicketService.getTiers().subscribe((tiers) => {
-      console.log(tiers);
-      this.tiers = tiers;
+      this.tiers.set(tiers);
     });
 
     this.employeeTicketService.getCostOrders().subscribe((costOrders) => {
-      console.log(costOrders);
-      this.costOrders = costOrders;
+      this.costOrders.set(costOrders);
     });
   }
 

@@ -1,5 +1,5 @@
 import { formatDate } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { EmployeeHeader } from '../../components/employee-header/employee-header';
 import { EmployeeNavigation } from '../../components/employee-navigation/employee-navigation';
@@ -14,17 +14,16 @@ import { EmployeeTicketService } from '../../services/employee-ticket.service';
 })
 export class EntriesPage implements OnInit {
   employeeId = 1; // TODO: später vom Login
-  tickets: EmployeeFoodTicket[] = [];
-
-  isLoading = true;
+  tickets = signal<EmployeeFoodTicket[]>([]);
+  isLoading = signal(true);
 
   constructor(private employeeTicketService: EmployeeTicketService) {}
 
   ngOnInit(): void {
     this.employeeTicketService.findByEmployee(this.employeeId).subscribe((data) => {
       // Neueste Erfassung zuerst anzeigen
-      this.tickets = data.sort((a, b) => b.useDate.localeCompare(a.useDate));
-      this.isLoading = false;
+      this.tickets.set(data.sort((a, b) => b.useDate.localeCompare(a.useDate)));
+      this.isLoading.set(false);
     });
   }
 

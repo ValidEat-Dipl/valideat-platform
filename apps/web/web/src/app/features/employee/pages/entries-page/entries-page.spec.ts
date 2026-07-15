@@ -54,7 +54,7 @@ describe('EntriesPage', () => {
 
     component.ngOnInit();
 
-    expect(component.tickets[0].id).toBe(2);
-    expect(component.tickets[1].id).toBe(1);
+    expect(component.tickets()[0].id).toBe(2);
+    expect(component.tickets()[1].id).toBe(1);
   });
 });

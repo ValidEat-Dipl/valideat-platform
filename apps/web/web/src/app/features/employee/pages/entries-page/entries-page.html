@@ -6,14 +6,14 @@
       <main class="col-12 col-sm-10 col-md-8 col-lg-7 col-xl-6">
         <h1 class="h4 mb-4 fw-semibold">Meine Erfassungen</h1>
 
-        @if (isLoading) {
+        @if (isLoading()) {
           <p class="text-secondary">Erfassungen werden geladen...</p>
-        } @else if (tickets.length === 0) {
+        } @else if (tickets().length === 0) {
           <p class="text-secondary">Keine Erfassungen gefunden.</p>
         } @else {
           <div class="card">
             <div class="list-group list-group-flush">
-              @for (ticket of tickets; track ticket.id) {
+              @for (ticket of tickets(); track ticket.id) {
                 <div class="list-group-item px-3 py-3">
                   <div class="d-flex align-items-center gap-3">
                     <div class="me-auto">

@@ -6,45 +6,42 @@
       <main class="col-12 col-sm-10 col-md-8 col-lg-7 col-xl-6">
         <h1 class="h4 mb-4 fw-semibold">Erfassungsdetails</h1>
 
-        @if (isLoading) {
+        @if (isLoading()) {
           <p class="text-secondary">Erfassung wird geladen...</p>
 
-        } @else if (!ticket) {
-          <div class="alert alert-danger">Die Erfassung wurde nicht gefunden.</div>
-
-        } @else {
+        } @else if (ticket(); as entry) {
           <div class="card mb-3">
             <dl class="list-group list-group-flush mb-0">
               <div class="list-group-item d-flex justify-content-between gap-3 px-4 py-3">
                 <dt class="text-secondary fw-normal">DATUM</dt>
                 <dd class="mb-0 fw-semibold text-end">
 
-                  {{ formatTicketDate(ticket.useDate) }}
+                  {{ formatTicketDate(entry.useDate) }}
 
                 </dd>
               </div>
 
               <div class="list-group-item d-flex justify-content-between gap-3 px-4 py-3">
                 <dt class="text-secondary fw-normal">MARKERLSTUFE</dt>
-                <dd class="mb-0 fw-semibold text-end">{{ ticket.tier }}</dd>
+                <dd class="mb-0 fw-semibold text-end">{{ entry.tier }}</dd>
               </div>
 
               <div class="list-group-item d-flex justify-content-between gap-3 px-4 py-3">
                 <dt class="text-secondary fw-normal">KOSTENSTELLE</dt>
-                <dd class="mb-0 fw-semibold text-end">{{ ticket.costOrder }}</dd>
+                <dd class="mb-0 fw-semibold text-end">{{ entry.costOrder }}</dd>
               </div>
 
               <div class="list-group-item d-flex justify-content-between gap-3 px-4 py-3">
                 <dt class="text-secondary fw-normal">RESTAURANT</dt>
-                <dd class="mb-0 fw-semibold text-end">{{ ticket.restaurantName }}</dd>
+                <dd class="mb-0 fw-semibold text-end">{{ entry.restaurantName }}</dd>
               </div>
 
-              @if (ticket.checkDate) {
+              @if (entry.checkDate) {
                 <div class="list-group-item d-flex justify-content-between gap-3 px-4 py-3">
                   <dt class="text-secondary fw-normal">GEPRÜFT AM</dt>
 
                   <dd class="mb-0 fw-semibold text-end">
-                    {{ formatTicketDate(ticket.checkDate) }}
+                    {{ formatTicketDate(entry.checkDate) }}
 
                   </dd>
                 </div>
@@ -65,7 +62,7 @@
             </dl>
           </div>
 
-          @if (ticket.status === 'CONFLICT') {
+          @if (entry.status === 'CONFLICT') {
 
             <div class="alert alert-danger">
               <i class="bi bi-exclamation-triangle me-2" aria-hidden="true"></i>
@@ -77,6 +74,8 @@
           <a class="btn btn-outline-secondary btn-lg w-100" routerLink="/employee/entries">
             Zurück zur Übersicht
           </a>
+        } @else {
+          <div class="alert alert-danger">Die Erfassung wurde nicht gefunden.</div>
         }
       </main>
     </div>

@@ -32,22 +32,22 @@
             </dl>
           </div>
 
-          @if (errorMessage) {
-            <div class="alert alert-danger">{{ errorMessage }}</div>
+          @if (errorMessage()) {
+            <div class="alert alert-danger">{{ errorMessage() }}</div>
           }
 
           <button
             class="btn btn-primary btn-lg w-100 mb-2"
             type="button"
-            [disabled]="isSaving"
+            [disabled]="isSaving()"
             (click)="confirmEntry()"
           >
-            {{ isSaving ? 'Wird gespeichert...' : 'Erfassung bestätigen' }}
+            {{ isSaving() ? 'Wird gespeichert...' : 'Erfassung bestätigen' }}
           </button>
           <button
             class="btn btn-outline-secondary btn-lg w-100 mb-3"
             type="button"
-            [disabled]="isSaving"
+            [disabled]="isSaving()"
             (click)="goBack()"
           >
             Zurück
@@ -55,7 +55,7 @@
           <button
             class="btn btn-link w-100 text-decoration-none"
             type="button"
-            [disabled]="isSaving"
+            [disabled]="isSaving()"
             (click)="cancel()"
           >
             Abbrechen
