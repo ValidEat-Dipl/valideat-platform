@@ -111,6 +111,26 @@ public class FoodTicketResource {
         return foodTicketRepository.createClearingDTO(ticket);
     }
 
+    @GET
+    @Path("/clearing-info-box")
+    public Map<String, Integer> getClearingInfoBox(
+            @QueryParam("employeeName") String employeeName,
+            @QueryParam("startDate") LocalDateTime startDate,
+            @QueryParam("endDate") LocalDateTime endDate,
+            @QueryParam("status") Status status,
+            @QueryParam("conflict") String conflict,
+            @QueryParam("costOrder") String costOrder) {
+
+        return foodTicketRepository.getClearingInfoBox(
+                employeeName,
+                startDate,
+                endDate,
+                status,
+                conflict,
+                costOrder
+        );
+    }
+
     @POST
     @Path("/empAddTicketEntry")
     @Transactional

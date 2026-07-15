@@ -333,4 +333,140 @@ public class FoodTicketRepository {
                 adminTicket != null ? adminTicket.getConflict() : null
         );
     }
+
+    public Map<String, Integer> getClearingInfoBox(
+            String employeeName,
+            LocalDateTime startDate,
+            LocalDateTime endDate,
+            Status status,
+            String conflict,
+            String costOrder) {
+
+
+        List<FoodTicket> tickets = findClearingTickets(
+                employeeName,
+                startDate,
+                endDate,
+                status,
+                conflict,
+                costOrder
+        );
+
+
+        Set<Long> processed = new HashSet<>();
+
+        int total = 0;
+        int conflicts = 0;
+
+
+        for (FoodTicket ticket : tickets) {
+
+            if (processed.contains(ticket.getId())) {
+                continue;
+            }
+
+            total++;
+
+
+            boolean hasConflict = ticket.getStatus() == Status.CONFLICT || ticket.getStatus() == Status.NEEDS_FIXING;
+
+
+            if (ticket.getMatchingTicket() != null) {
+
+                processed.add(ticket.getMatchingTicket().getId());
+
+                hasConflict |= ticket.getMatchingTicket().getStatus() == Status.CONFLICT || ticket.getMatchingTicket().getStatus() == Status.NEEDS_FIXING;
+            }
+
+
+            if (hasConflict) {
+                conflicts++;
+            }
+
+
+            processed.add(ticket.getId());
+        }
+
+        Map<String, Integer> result = new LinkedHashMap<>();
+
+        result.put("Gesamt", total);
+        result.put("Offene Konflikte", conflicts);
+
+        return result;
+    }
+
+    public List<FoodTicket> findClearingTickets(
+            String employeeName,
+            LocalDateTime startDate,
+            LocalDateTime endDate,
+            Status status,
+            String conflict,
+            String costOrder) {
+
+        StringBuilder query = new StringBuilder("""
+            select f
+            from FoodTicket f
+            where 1=1
+            """);
+
+
+        if (employeeName != null) {
+            query.append("""
+                and lower(concat(f.employee.firstName, ' ', f.employee.lastName))
+                like lower(:employeeName)
+                """);
+        }
+
+        if (startDate != null) {
+            query.append(" and f.useDate >= :startDate ");
+        }
+
+        if (endDate != null) {
+            query.append(" and f.useDate <= :endDate ");
+        }
+
+        if (status != null) {
+            query.append(" and f.status = :status ");
+        }
+
+        if (conflict != null) {
+            query.append(" and lower(f.conflict) like lower(:conflict) ");
+        }
+
+        if (costOrder != null) {
+            query.append(" and f.costOrder.name = :costOrder ");
+        }
+
+
+        TypedQuery<FoodTicket> q = entityManager
+                .createQuery(query.toString(), FoodTicket.class);
+
+
+        if (employeeName != null) {
+            q.setParameter("employeeName", "%" + employeeName + "%");
+        }
+
+        if (startDate != null) {
+            q.setParameter("startDate", startDate);
+        }
+
+        if (endDate != null) {
+            q.setParameter("endDate", endDate);
+        }
+
+        if (status != null) {
+            q.setParameter("status", status);
+        }
+
+        if (conflict != null) {
+            q.setParameter("conflict", "%" + conflict + "%");
+        }
+
+        if (costOrder != null) {
+            q.setParameter("costOrder", costOrder);
+        }
+
+
+        return q.getResultList();
+    }
 }

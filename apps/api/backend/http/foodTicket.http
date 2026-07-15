@@ -27,3 +27,6 @@ GET http://localhost:8080/foodticket/table-clearing
 
 ###
 GET http://localhost:8080/foodticket/table-clearing/4
+
+###
+GET http://localhost:8080/foodticket/clearing-info-box
