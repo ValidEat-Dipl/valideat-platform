@@ -10,7 +10,6 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -78,8 +77,8 @@ public class FoodTicketResource {
     @GET
     @Path("/listAdminTickets")
     public List<AdminFoodTicketDTO> findAdminTickets(@QueryParam("employeeName") String employeeName,
-                                                     @QueryParam("startDate") LocalDateTime startDate,
-                                                     @QueryParam("endDate") LocalDateTime endDate,
+                                                     @QueryParam("startDate") LocalDate startDate,
+                                                     @QueryParam("endDate") LocalDate endDate,
                                                      @QueryParam("status") Status status) {
         return foodTicketRepository.findAdminTickets(employeeName, startDate, endDate, status);
     }
@@ -87,8 +86,8 @@ public class FoodTicketResource {
     @GET
     @Path("/table-clearing")
     public List<AdminClearingDTO> createClearingTable(@QueryParam("employeeName") String employeeName,
-                                                      @QueryParam("startDate") LocalDateTime startDate,
-                                                      @QueryParam("endDate") LocalDateTime endDate,
+                                                      @QueryParam("startDate") LocalDate startDate,
+                                                      @QueryParam("endDate") LocalDate endDate,
                                                       @QueryParam("status") Status status,
                                                       @QueryParam("conflict") String conflict,
                                                       @QueryParam("costOrder") String costOrder) {
@@ -112,8 +111,8 @@ public class FoodTicketResource {
     @Path("/clearing-info-box")
     public Map<String, Integer> getClearingInfoBox(
             @QueryParam("employeeName") String employeeName,
-            @QueryParam("startDate") LocalDateTime startDate,
-            @QueryParam("endDate") LocalDateTime endDate,
+            @QueryParam("startDate") LocalDate startDate,
+            @QueryParam("endDate") LocalDate endDate,
             @QueryParam("status") Status status,
             @QueryParam("conflict") String conflict,
             @QueryParam("costOrder") String costOrder) {

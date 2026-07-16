@@ -13,7 +13,7 @@ import jakarta.persistence.TypedQuery;
 import jakarta.ws.rs.core.Response;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 import java.util.*;
 
 @ApplicationScoped
@@ -121,7 +121,7 @@ public class FoodTicketRepository {
     }
 
 
-    public List<AdminFoodTicketDTO> findAdminTickets(String employeeName, LocalDateTime startDate, LocalDateTime endDate, Status status) {
+    public List<AdminFoodTicketDTO> findAdminTickets(String employeeName, LocalDate startDate, LocalDate endDate, Status status) {
         StringBuilder query = new StringBuilder("""
                 select new at.htl.boundary.dto.AdminFoodTicketDTO(
                 f.id,
@@ -181,8 +181,8 @@ public class FoodTicketRepository {
 
     public List<AdminClearingDTO> createClearingTable(
             String employeeName,
-            LocalDateTime startDate,
-            LocalDateTime endDate,
+            LocalDate startDate,
+            LocalDate endDate,
             Status status,
             String conflict,
             String costOrder) {
@@ -340,8 +340,8 @@ public class FoodTicketRepository {
 
     public Map<String, Integer> getClearingInfoBox(
             String employeeName,
-            LocalDateTime startDate,
-            LocalDateTime endDate,
+            LocalDate startDate,
+            LocalDate endDate,
             Status status,
             String conflict,
             String costOrder) {
@@ -401,8 +401,8 @@ public class FoodTicketRepository {
 
     public List<FoodTicket> findClearingTickets(
             String employeeName,
-            LocalDateTime startDate,
-            LocalDateTime endDate,
+            LocalDate startDate,
+            LocalDate endDate,
             Status status,
             String conflict,
             String costOrder) {
