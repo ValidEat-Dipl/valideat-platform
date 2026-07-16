@@ -37,8 +37,8 @@ export class ClearingTicketsComp implements OnInit {
 
   form = inject(FormBuilder).nonNullable.group({
     person: '',
-    toDate: '',
     fromDate: '',
+    toDate: '',
     status: 'ALL',
   });
 
@@ -50,8 +50,8 @@ export class ClearingTicketsComp implements OnInit {
     this.infoContainerService
       .getInfoContainerMap(
         this.form.value.person,
-        this.form.value.toDate,
         this.form.value.fromDate,
+        this.form.value.toDate,
         this.form.value.status,
       )
       .subscribe((data) => {
@@ -62,8 +62,8 @@ export class ClearingTicketsComp implements OnInit {
     this.tableService
       .getTableData(
         this.form.value.person,
-        this.form.value.toDate,
         this.form.value.fromDate,
+        this.form.value.toDate,
         this.form.value.status,
       )
       .subscribe((data) => {
@@ -81,7 +81,9 @@ export class ClearingTicketsComp implements OnInit {
             datum: ticket.empTicketUseDate ?? ticket.adminTicketUseDate,
             conflictType: ticket.empTicketConflict ?? ticket.adminTicketConflict,
             status: ticket.empTicketStatus ? new Status(ticket.empTicketStatus) : new Status(ticket.adminTicketStatus),
-            lastChange: ticket.empTicketLog ?? ticket.adminTicketLog,
+            lastChange: ticket.empTicketLog ? ticket.empTicketLog.changeDate
+              : ticket.adminTicketLog ? ticket.adminTicketLog.changeDate
+                : '--.--.----',
             actionOpenCase: 'Fall öffnen',
           })),
         });

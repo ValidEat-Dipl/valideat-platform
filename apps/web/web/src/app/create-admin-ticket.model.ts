@@ -5,5 +5,4 @@ export interface CreateAdminTicket {
   tier: string;
   restaurantName: string;
   adminName: string;
-  checkDate: string;
 }

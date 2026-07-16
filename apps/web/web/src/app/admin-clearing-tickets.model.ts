@@ -1,10 +1,12 @@
+import { ChangeLog } from './change-log.model';
+
 export interface AdminClearingTickets {
   empTicketId: number;
   empTicketEmpName: string;
   empTicketTier: string;
   empTicketCostOrder: string;
   empTicketRestaurant: string;
-  empTicketLog: string;
+  empTicketLog: ChangeLog;
   empTicketUseDate: string;
   empTicketCheckDate: string;
   empTicketStatus: string;
@@ -14,7 +16,7 @@ export interface AdminClearingTickets {
   adminTicketTier: string;
   adminTicketCostOrder: string;
   adminTicketRestaurant: string;
-  adminTicketLog: string;
+  adminTicketLog: ChangeLog;
   adminTicketUseDate: string;
   adminTicketCheckDate: string;
   adminTicketStatus: string;

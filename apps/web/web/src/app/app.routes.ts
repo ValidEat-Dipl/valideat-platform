@@ -10,13 +10,13 @@ import { MostRecentTicketsComp } from './most-recent-tickets-comp/most-recent-ti
 
 export const routes: Routes = [
   { path: 'admin-overview', component: AdminOverviewComp }, // fertig
-  { path: 'most-recent-created', component: MostRecentTicketsComp }, // datum filter geht nicht, bei neu erstellten wird prüfdatum ned angezeigt
-  { path: 'create-ticket', component: CreateTicketComp }, // noch keine datalist, checkDate wird mit null gespeichert, automatische hr erkennung fehlt (weil noch kein user system da ist), speichern und nächstes geht, nur speichern button erstellt nix und geht ins nix
-  { path: 'clearing-tickets', component: ClearingTicketsComp }, // fast fertig, datum filter geht nicht
+  { path: 'most-recent-created', component: MostRecentTicketsComp }, // fertig
+  { path: 'create-ticket', component: CreateTicketComp }, // noch keine datalist, automatische hr erkennung fehlt (weil noch kein user system da ist), speichern button fehlerhaft
+  { path: 'clearing-tickets', component: ClearingTicketsComp }, // fertig
   { path: 'clearing-tickets/check-conflict', component: CheckConflictComp }, // backend noch nicht fertig, fehlt noch viel frontend
   { path: 'open-conflicts', component: OpenConflictsComp }, // wenig gemacht, ka ob backend route da ist
   { path: 'export', component: ExportComp }, // fast nichts, für woche 3 geplant
-  { path: 'ticket-details/:id', component: TicketDetailsComp }, // noch nichts, id route fehlt
+  { path: 'ticket-details/:id', component: TicketDetailsComp }, // in bearbeitung
   {
     path: 'employee',
     loadChildren: () =>

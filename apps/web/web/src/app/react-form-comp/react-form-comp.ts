@@ -26,8 +26,7 @@ export class ReactFormComp {
       useDate: ['', Validators.required],
       costDepartment: ['', Validators.required],
       costRank: ['', Validators.required],
-      restaurant: ['', Validators.required],
-      checkDate: ['', Validators.required]
+      restaurant: ['', Validators.required]
   })
 
   onSubmit() {
@@ -42,7 +41,6 @@ export class ReactFormComp {
         costOrder: this.form.value.costDepartment!,
         tier: this.form.value.costRank!,
         restaurantName: this.form.value.restaurant!,
-        checkDate: this.form.value.checkDate!,
         adminName: 'David Leitner',
       })
       .subscribe({

@@ -23,10 +23,6 @@
       <input type="text" class="form-control" id="restaurant" formControlName="restaurant">
     </div>
   </div>
-  <div class="">
-    <label for="dateUsage" class="form-label">6. Eingangsdatum</label>
-    <input type="date" class="form-control" id="dateUsage" formControlName="checkDate">
-  </div>
   <div class="d-flex gap-1 mt-3">
     <app-button-comp buttonType="submit" (click)="anotherTicket = true" disabledExpression="form.invalid || form.pending" buttonDesignType="primary" text="Speichern und nächstes"></app-button-comp>
     <app-button-comp buttonType="submit" (click)="anotherTicket = false" buttonDesignType="secondary" text="Speichern"></app-button-comp>
