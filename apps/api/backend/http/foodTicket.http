@@ -33,3 +33,9 @@ GET http://localhost:8080/foodticket/table-clearing/4
 
 ###
 GET http://localhost:8080/foodticket/clearing-info-box
+
+###
+DELETE http://localhost:8080/foodticket/1
+
+###
+PUT http://localhost:8080/foodticket/changeStatus/1/CONFLICT

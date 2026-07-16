@@ -303,6 +303,21 @@ public class FoodTicketResource {
         return Response.noContent().build();
     }
 
+    @PUT
+    @Transactional
+    @Path("/changeStatus/{ticketId}/{status}")
+    public Response changeTicketStatus(@PathParam("ticketId") Long id, @PathParam("status") Status status) {
+        FoodTicket ticket = foodTicketRepository.findById(id);
+
+        if (ticket == null) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+
+        ticket.setStatus(status);
+
+        return Response.ok(ticket).build();
+    }
+
     @GET
     @Path("/getAllValidTickets")
     public List<FoodTicket> getAllValidTickets() {
