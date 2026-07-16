@@ -28,8 +28,8 @@ export class MostRecentTicketsComp implements OnInit {
 
   form = inject(FormBuilder).nonNullable.group({
     person: '',
-    toDate: '',
     fromDate: '',
+    toDate: '',
     status: 'ALL',
   });
 
@@ -41,8 +41,8 @@ export class MostRecentTicketsComp implements OnInit {
     this.tableService
       .getTableData(
         this.form.value.person,
-        this.form.value.toDate,
         this.form.value.fromDate,
+        this.form.value.toDate,
         this.form.value.status,
       )
       .subscribe((data) => {

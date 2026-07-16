@@ -8,7 +8,6 @@ import { InfoFlexServiceClearing } from '../info-flex-service-clearing';
 import { TableDataClearingService } from '../table-data-clearing-service';
 import { TableData } from '../table.model';
 import { Status } from '../status.model';
-import { DateRangePickerComp } from '../date-range-picker-comp/date-range-picker-comp';
 
 @Component({
   selector: 'app-clearing-tickets-comp',
@@ -57,6 +56,7 @@ export class ClearingTicketsComp implements OnInit {
       )
       .subscribe((data) => {
         this.infoContainer.set({ ...data });
+        console.log(data);
       });
 
     this.tableService
@@ -72,15 +72,17 @@ export class ClearingTicketsComp implements OnInit {
             { key: 'person', label: 'Person' },
             { key: 'datum', label: 'Datum' },
             { key: 'status', label: 'Status' },
+            { key: 'conflictType', label: 'Konfliktart' },
             { key: 'lastChange', label: 'Letzte Änderung' },
             { key: 'actionOpenCase', label: 'Aktion' },
           ],
           rows: data.map((ticket) => ({
-            person: ticket.employee.firstName + ' ' + ticket.employee.lastName,
-            datum: ticket.useDate,
-            status: new Status(ticket.status),
-            lastChange: ticket.changeLog,
-            action: 'Fall öffnen',
+            person: ticket.empTicketEmpName ?? ticket.adminTicketEmpName,
+            datum: ticket.empTicketUseDate ?? ticket.adminTicketUseDate,
+            status: ticket.empTicketStatus ? new Status(ticket.empTicketStatus) : new Status(ticket.adminTicketStatus),
+            conflictType: ticket.empTicketConflict ?? ticket.adminTicketConflict,
+            lastChange: ticket.empTicketLog ?? ticket.adminTicketLog,
+            actionOpenCase: 'Fall öffnen',
           })),
         });
       });

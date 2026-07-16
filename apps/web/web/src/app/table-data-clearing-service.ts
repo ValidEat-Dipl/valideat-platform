@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { FoodTicket } from './food-ticket.model';
+import { AdminClearingTickets } from './admin-clearing-tickets.model';
 
 
 @Injectable({
@@ -15,25 +15,12 @@ export class TableDataClearingService {
                status?: string) {
 
     const params: any = {};
-    if (person && person.length > 0) params.person = person;
+    if (person && person.length > 0) params.employeeName = person;
     if (fromDate) params.startDate = fromDate;
     if (toDate) params.endDate = toDate;
     if (status && status != 'ALL') params.status = status;
 
-    return this.http.get<FoodTicket[]>('http://localhost:8080/foodticket/table-clearing',
+    return this.http.get<AdminClearingTickets[]>('http://localhost:8080/foodticket/table-clearing',
       { params });
   }
-
-  /*/ ChatGpt #1 Anfang
-  currentRoute: string = '';
-  constructor(private router: Router) {
-    console.log(router.url);
-
-    router.events
-      .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
-      .subscribe((event) => {
-        this.currentRoute = event.url;
-      });
-  }
-  // ChatGpt #1 Ende*/
 }

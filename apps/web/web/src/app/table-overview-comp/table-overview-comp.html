@@ -22,6 +22,8 @@
                 [bgColor]="asStatus(row[header.key])?.color ?? ''">
               </app-badge-comp>
             </td>
+          } @else if (header.key == 'conflictType' && row[header.key] == null) {
+            <td>---</td>
           } @else if (header.key == 'lastChange' && row[header.key] == null) {
             <td>--.--.----</td>
           } @else if (header.key == 'actionOpenCase') {

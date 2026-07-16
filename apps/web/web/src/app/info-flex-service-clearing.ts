@@ -14,7 +14,7 @@ export class InfoFlexServiceClearing {
     status?: string,
   ) {
     const params: any = {};
-    if (person && person.length > 0) params.person = person;
+    if (person && person.length > 0) params.employeeName = person;
     if (fromDate) params.costRank = fromDate;
     if (toDate) params.costDepartment = toDate;
     if (status && status != 'ALL') params.status = status;

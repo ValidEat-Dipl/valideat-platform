@@ -4,7 +4,7 @@
 
   <h1>Clearing</h1>
 
-  <app-info-flex-comp></app-info-flex-comp>
+  <app-info-flex-comp [data]="infoContainer()"></app-info-flex-comp>
 
   <div class="d-grid gap-4 statistics">
     <form [formGroup]="form" (ngSubmit)="onSubmit()"  class="d-flex gap-3 w-75">
@@ -34,6 +34,7 @@
           <option value="CHECKED">Abgeglichen</option>
           <option value="CONFLICT">Konflikt</option>
           <option value="NEEDS_FIXING">Korrektur erforderlich</option>
+          <option value="OPEN">Offen</option>
         </select>
       </div>
 
