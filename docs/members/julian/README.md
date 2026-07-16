@@ -38,3 +38,8 @@ Hr Seite: HR tickets seite call mit optionalen filtermöglichkeiten implementier
 Mittwoch 15.7 Wollen: An den HR routen arbeiten (clearing seite)
 
 Geschafft: clearing seite alle rest calls implementiert und bug fix, das findById ein dto zurückgibt beim foodticket
+
+
+Donnerstag: 16.7 Wollen: Hr routen fertig machen
+
+Geschafft: Hr routen fertig geschafft, es hat eh nurmehr conflict gefehlt, dazu einige bugfixes z.B. sachen auf dtos umändern und die Beziehung zwischen ChangeLog, Employee und FoodTicket gefixt. Da sie zuerst falsch herum war.

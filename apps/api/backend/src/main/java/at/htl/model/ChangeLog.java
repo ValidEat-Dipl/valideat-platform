@@ -18,18 +18,18 @@ public class ChangeLog {
 
     private LocalDate changeDate;
 
-    @OneToMany(mappedBy = "changeLog")
+    @ManyToOne
     @JsonIgnore
-    private List<FoodTicket> foodTicket = new LinkedList<>();
+    private FoodTicket foodTicket;
 
-    @OneToMany(mappedBy = "changeLog")
+    @ManyToOne
     @JsonIgnore
-    private List<Employee> employee = new LinkedList<>();
+    private Employee employee;
 
     public ChangeLog() {
     }
 
-    public ChangeLog(String description, LocalDate changeDate, List<FoodTicket> foodTicket, List<Employee> employee) {
+    public ChangeLog(String description, LocalDate changeDate, FoodTicket foodTicket, Employee employee) {
         this.description = description;
         this.changeDate = changeDate;
         this.foodTicket = foodTicket;
@@ -52,19 +52,19 @@ public class ChangeLog {
         this.description = description;
     }
 
-    public List<FoodTicket> getFoodTicket() {
+    public FoodTicket getFoodTicket() {
         return foodTicket;
     }
 
-    public void setFoodTicket(List<FoodTicket> foodTicket) {
+    public void setFoodTicket(FoodTicket foodTicket) {
         this.foodTicket = foodTicket;
     }
 
-    public List<Employee> getEmployee() {
+    public Employee getEmployee() {
         return employee;
     }
 
-    public void setEmployee(List<Employee> employee) {
+    public void setEmployee(Employee employee) {
         this.employee = employee;
     }
 

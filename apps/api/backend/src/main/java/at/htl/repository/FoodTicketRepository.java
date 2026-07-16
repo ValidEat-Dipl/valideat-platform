@@ -309,7 +309,7 @@ public class FoodTicketRepository {
                         ? employeeTicket.getCostOrder().getName() : null,
                 employeeTicket != null && employeeTicket.getRestaurant() != null
                         ? employeeTicket.getRestaurant().getName() : null,
-                employeeTicket != null ? employeeTicket.getChangeLog() : null,
+                employeeTicket != null ? employeeTicket.getChangeLogs() : null,
                 employeeTicket != null ? employeeTicket.getUseDate() : null,
                 employeeTicket != null ? employeeTicket.getCheckDate() : null,
                 employeeTicket != null ? employeeTicket.getStatus() : null,
@@ -327,7 +327,7 @@ public class FoodTicketRepository {
                         ? adminTicket.getCostOrder().getName() : null,
                 adminTicket != null && adminTicket.getRestaurant() != null
                         ? adminTicket.getRestaurant().getName() : null,
-                adminTicket != null ? adminTicket.getChangeLog() : null,
+                adminTicket != null ? adminTicket.getChangeLogs() : null,
                 adminTicket != null ? adminTicket.getUseDate() : null,
                 adminTicket != null ? adminTicket.getCheckDate() : null,
                 adminTicket != null ? adminTicket.getStatus() : null,
@@ -558,7 +558,7 @@ public class FoodTicketRepository {
                     ticket.getAdmin() == null
                             ? null
                             : ticket.getAdmin().getFirstName() + " " + ticket.getAdmin().getLastName(),
-                    ticket.getChangeLog()
+                    ticket.getChangeLogs()
             ));
         }
 

@@ -2,6 +2,8 @@ package at.htl.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class Employee {
 
@@ -24,13 +26,13 @@ public class Employee {
 
     private String passwordHash;
 
-    @ManyToOne
-    private ChangeLog changeLog;
+    @OneToMany(mappedBy = "employee")
+    private List<ChangeLog> changeLogs;
 
     public Employee() {
     }
 
-    public Employee(Long id, String firstName, String lastName, String address, String department, String phoneNumber, String email, String passwordHash, ChangeLog changeLog) {
+    public Employee(Long id, String firstName, String lastName, String address, String department, String phoneNumber, String email, String passwordHash, List<ChangeLog> changeLogs) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -39,7 +41,7 @@ public class Employee {
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.passwordHash = passwordHash;
-        this.changeLog = changeLog;
+        this.changeLogs = changeLogs;
     }
 
     public Long getId() {
@@ -106,11 +108,11 @@ public class Employee {
         this.passwordHash = passwordHash;
     }
 
-    public ChangeLog getChangeLog() {
-        return changeLog;
+    public List<ChangeLog> getChangeLogs() {
+        return changeLogs;
     }
 
-    public void setChangeLog(ChangeLog changeLog) {
-        this.changeLog = changeLog;
+    public void setChangeLogs(List<ChangeLog> changeLogs) {
+        this.changeLogs = changeLogs;
     }
 }

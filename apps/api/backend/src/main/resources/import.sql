@@ -17,20 +17,19 @@ INSERT INTO Employee (
     department,
     phoneNumber,
     email,
-    passwordHash,
-    changeLog_id
+    passwordHash
 ) VALUES
-      ('Max', 'Mustermann', 'Musterstraße 1, Linz', 'IT', '+43 660 1111111', 'max.mustermann@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu', NULL),
+      ('Max', 'Mustermann', 'Musterstraße 1, Linz', 'IT', '+43 660 1111111', 'max.mustermann@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu'),
 
-      ('Anna', 'Huber', 'Hauptplatz 5, Wels', 'HR', '+43 660 2222222', 'anna.huber@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu', NULL),
+      ('Anna', 'Huber', 'Hauptplatz 5, Wels', 'HR', '+43 660 2222222', 'anna.huber@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu'),
 
-      ('Lukas', 'Gruber', 'Bahnhofstraße 12, Steyr', 'Sales', '+43 660 3333333', 'lukas.gruber@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu', NULL),
+      ('Lukas', 'Gruber', 'Bahnhofstraße 12, Steyr', 'Sales', '+43 660 3333333', 'lukas.gruber@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu'),
 
-      ('Julia', 'Bauer', 'Schillerstraße 8, Linz', 'Finance', '+43 660 4444444', 'julia.bauer@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu', NULL),
+      ('Julia', 'Bauer', 'Schillerstraße 8, Linz', 'Finance', '+43 660 4444444', 'julia.bauer@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu'),
 
-      ('David', 'Leitner', 'Kirchengasse 4, Enns', 'Administration', '+43 660 5555555', 'david.leitner@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu', 1),
+      ('David', 'Leitner', 'Kirchengasse 4, Enns', 'Administration', '+43 660 5555555', 'david.leitner@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu'),
 
-      ('Sarah', 'Wagner', 'Mozartstraße 22, Linz', 'Administration', '+43 660 6666666', 'sarah.wagner@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu', 2);
+      ('Sarah', 'Wagner', 'Mozartstraße 22, Linz', 'Administration', '+43 660 6666666', 'sarah.wagner@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu');
 
 
 INSERT INTO CostOrder (name) VALUES
@@ -78,22 +77,21 @@ INSERT INTO FoodTicket (
     restaurant_id,
     admin_id,
     checkDate,
-    changeLog_id,
     conflict
 ) VALUES
 
 -- OPEN
-(1, '2026-07-14', NULL, 'INTERN',      '1000 - Verwaltung', 'OPEN', 'EMPLOYEE', 1, NULL, NULL, NULL, null),
-(2, '2026-07-15', NULL, 'APPRENTICE',  '1100 - Personal',   'OPEN', 'EMPLOYEE', 2, NULL, NULL, NULL, null),
-(3, '2026-07-16', NULL, 'EMPLOYEE',    '1200 - IT',         'CONFLICT', 'ADMIN', 1, 2, '2026-07-10', 5, null),
+(1, '2026-07-14', NULL, 'INTERN',      '1000 - Verwaltung', 'OPEN', 'EMPLOYEE', 1, NULL, NULL, null),
+(2, '2026-07-15', NULL, 'APPRENTICE',  '1100 - Personal',   'OPEN', 'EMPLOYEE', 2, NULL, NULL, null),
+(3, '2026-07-16', NULL, 'EMPLOYEE',    '1200 - IT',         'CONFLICT', 'ADMIN', 1, 2, '2026-07-10', null),
 
 -- CHECKED Paar
-(1, '2024-07-10', NULL, 'APPRENTICE', '1000 - Verwaltung', 'CHECKED', 'EMPLOYEE', 2, 5, '2026-07-10', 4, null),
-(1, '2026-07-10', NULL, 'APPRENTICE', '1000 - Verwaltung', 'CHECKED', 'ADMIN', 2, 5, '2026-07-10', 4, null),
+(1, '2024-07-10', NULL, 'APPRENTICE', '1000 - Verwaltung', 'CHECKED', 'EMPLOYEE', 2, 5, '2026-07-10', null),
+(1, '2026-07-10', NULL, 'APPRENTICE', '1000 - Verwaltung', 'CHECKED', 'ADMIN', 2, 5, '2026-07-10', null),
 
 -- CONFLICT Paar
-(2, '2024-07-09', NULL, 'EMPLOYEE', '1100 - Personal', 'NEEDS_FIXING', 'EMPLOYEE', 3, 5, '2026-07-09', 5, 'Kostenstelle passt nicht zusammen'),
-(2, '2024-07-09', NULL, 'EMPLOYEE', '1000 - Verwaltung', 'NEEDS_FIXING', 'ADMIN', 3, 5, '2026-07-09', 5, 'Kostenstelle passt nicht zusammen');
+(2, '2024-07-09', NULL, 'EMPLOYEE', '1100 - Personal', 'NEEDS_FIXING', 'EMPLOYEE', 3, 5, '2026-07-09', 'Kostenstelle passt nicht zusammen'),
+(2, '2024-07-09', NULL, 'EMPLOYEE', '1000 - Verwaltung', 'NEEDS_FIXING', 'ADMIN', 3, 5, '2026-07-09', 'Kostenstelle passt nicht zusammen');
 
 UPDATE FoodTicket
 SET matching_ticket_id = 5
@@ -111,3 +109,15 @@ WHERE id = 6;
 UPDATE FoodTicket
 SET matching_ticket_id = 6
 WHERE id = 7;
+
+UPDATE ChangeLog
+SET employee_id = 5
+WHERE id = 1;
+
+UPDATE ChangeLog
+SET foodTicket_id = 4
+WHERE id = 4;
+
+UPDATE ChangeLog
+SET foodTicket_id = 3
+WHERE id = 2;

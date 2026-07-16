@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 public class FoodTicket {
@@ -44,13 +45,13 @@ public class FoodTicket {
 
     private String conflict;
 
-    @ManyToOne
-    private ChangeLog changeLog;
+    @OneToMany(mappedBy = "foodTicket")
+    private List<ChangeLog> changeLogs;
 
 
     public FoodTicket() {}
 
-    public FoodTicket(Employee employee, LocalDate useDate, FoodTicket matchingTicket, Tier tier, CostOrder costOrder, Status status, TicketType ticketType, Restaurant restaurant, Employee admin, LocalDate checkDate, ChangeLog changeLog, String conflict) {
+    public FoodTicket(Employee employee, LocalDate useDate, FoodTicket matchingTicket, Tier tier, CostOrder costOrder, Status status, TicketType ticketType, Restaurant restaurant, Employee admin, LocalDate checkDate, List<ChangeLog> changeLogs, String conflict) {
         this.employee = employee;
         this.useDate = useDate;
         this.matchingTicket = matchingTicket;
@@ -61,7 +62,7 @@ public class FoodTicket {
         this.restaurant = restaurant;
         this.admin = admin;
         this.checkDate = checkDate;
-        this.changeLog = changeLog;
+        this.changeLogs = changeLogs;
         this.conflict = conflict;
     }
 
@@ -159,12 +160,12 @@ public class FoodTicket {
         this.checkDate = checkDate;
     }
 
-    public ChangeLog getChangeLog() {
-        return changeLog;
+    public List<ChangeLog> getChangeLogs() {
+        return changeLogs;
     }
 
-    public void setChangeLog(ChangeLog changeLog) {
-        this.changeLog = changeLog;
+    public void setChangeLogs(List<ChangeLog> changeLogs) {
+        this.changeLogs = changeLogs;
     }
 
     public FoodTicket getMatchingTicket() {
