@@ -186,7 +186,8 @@ public class FoodTicketResource {
                 Status.OPEN,
                 restaurant,
                 TicketType.ADMIN,
-                admin);
+                admin,
+                LocalDate.now());
         foodTicketRepository.save(foodTicket);
 
         foodTicketRepository.clearing();

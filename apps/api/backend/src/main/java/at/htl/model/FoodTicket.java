@@ -75,7 +75,7 @@ public class FoodTicket {
         this.ticketType = ticketType;
     }
 
-    public FoodTicket(Employee employee, LocalDate useDate, Tier tier, CostOrder costOrder, Status status, Restaurant restaurant, TicketType ticketType, Employee admin) {
+    public FoodTicket(Employee employee, LocalDate useDate, Tier tier, CostOrder costOrder, Status status, Restaurant restaurant, TicketType ticketType, Employee admin, LocalDate checkDate) {
         this.employee = employee;
         this.useDate = useDate;
         this.tier = tier;
@@ -84,6 +84,7 @@ public class FoodTicket {
         this.restaurant = restaurant;
         this.ticketType = ticketType;
         this.admin = admin;
+        this.checkDate = checkDate;
     }
 
     public Long getId() {
