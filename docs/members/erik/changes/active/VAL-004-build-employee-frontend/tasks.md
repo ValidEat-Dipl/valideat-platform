@@ -7,7 +7,7 @@
 | Change-ID        | `VAL-004`     |
 | Status           | `draft`       |
 | Verantwortlich   | Erik Bergmair |
-| Zuletzt geändert | 2026-07-09    |
+| Zuletzt geändert | 2026-07-15    |
 
 Checkboxen werden nur abgehakt, wenn die Aufgabe wirklich erledigt ist. Nicht benötigte Punkte werden mit einer kurzen Begründung als nicht relevant markiert und nicht einfach als erledigt ausgegeben.
 
@@ -25,6 +25,9 @@ Checkboxen werden nur abgehakt, wenn die Aufgabe wirklich erledigt ist. Nicht be
 - [ ] Vorläufige Zustände einer Mitarbeitererfassung festhalten.
 - [ ] Authentifizierungsstand und Keycloak-Abhängigkeit klären oder als offen markieren.
 - [ ] API-Abhängigkeiten mit Backend-Zuständigkeit abstimmen oder als Mockdaten-Stand dokumentieren.
+- [x] `GET /foodticket/{id}` mit begrenztem Detail-DTO ohne sensible Employee-Daten im Frontend anbinden.
+- [ ] Für `PUT /foodticket/{ticketId}/{empId}` eine Antwort ohne vollständige Employee-Entity mit der Backend-Zuständigkeit abstimmen.
+- [ ] `DELETE /foodticket/{ticketId}` backendseitig auf die betroffene Person und einen erlaubten Status beschränken.
 - [ ] Proposal und Design nach den geklärten Punkten aktualisieren.
 
 ## 3. Implementierung
@@ -34,11 +37,14 @@ Checkboxen werden nur abgehakt, wenn die Aufgabe wirklich erledigt ist. Nicht be
 - [x] Welcome- beziehungsweise Einstiegsscreen umsetzen oder einordnen.
 - [ ] Login/Register-Ansichten als UI, Platzhalter oder Anbindung passend zum Auth-Stand behandeln.
 - [x] Startseite für Mitarbeitende umsetzen.
-- [ ] Ansicht „Verwendung erstellen“ umsetzen.
-- [ ] Ansicht „Angabe prüfen“ umsetzen.
-- [ ] Bestätigungsansicht „Daten erfasst“ umsetzen.
-- [ ] Ansicht „Letzte Erfassungen“ umsetzen.
-- [ ] Ansicht „Erfassungsdetail“ umsetzen.
+- [x] Ansicht „Verwendung erstellen“ als ersten Reactive-Form-Stand umsetzen.
+- [x] Ansicht „Angabe prüfen“ umsetzen.
+- [x] Bestätigungsansicht „Daten erfasst“ umsetzen.
+- [x] Ansicht „Letzte Erfassungen“ umsetzen.
+- [x] Ansicht „Erfassungsdetail“ umsetzen.
+- [x] Offene Erfassungen aus der Detailseite heraus bearbeitbar machen.
+- [x] Offene Erfassungen aus der Detailseite heraus nach Bestätigung löschbar machen.
+- [x] Asynchron geladene Employee-Zustände für Angular 22 zoneless-kompatibel auf Signals umstellen.
 - [x] Vorläufige Mockdaten und die temporäre Employee-ID klar als Entwicklungsdaten kennzeichnen.
 - [ ] Fehler- und Randfälle passend zum ersten Umfang umsetzen.
 - [ ] Datenschutz- und Sicherheitsauswirkungen berücksichtigen.
@@ -49,7 +55,7 @@ Checkboxen werden nur abgehakt, wenn die Aufgabe wirklich erledigt ist. Nicht be
 - [x] Statische Prüfungen ausführen.
 - [x] Automatisierte Tests erstellen oder anpassen, falls sinnvoll und im Projekt eingerichtet.
 - [x] Automatisierte Tests ausführen, falls vorhanden.
-- [ ] Mitarbeiterflow manuell im Browser durchklicken.
+- [ ] Mitarbeiterflow vollständig manuell im Browser durchklicken. Der Teilflow Start → Erfassungen → Start → Detail wurde am 2026-07-15 ohne Reload geprüft.
 - [x] Mobile Darstellung prüfen.
 - [ ] Fehler- und leere Zustände prüfen.
 - [ ] Grobe Accessibility-Prüfung durchführen.
@@ -60,7 +66,7 @@ Checkboxen werden nur abgehakt, wenn die Aufgabe wirklich erledigt ist. Nicht be
 - [x] Aktuelle Abweichungen vom Figma-Prototyp dokumentieren.
 - [ ] Offene FSD-Fragen aus der Umsetzung sammeln.
 - [ ] Betroffene gemeinsame Dokumentation aktualisieren, falls notwendig.
-- [ ] Tatsächlich verwendete Quellen mit Verwendungszweck eintragen.
+- [x] Tatsächlich verwendete Quellen mit Verwendungszweck für den bisherigen Umsetzungsstand eintragen.
 - [ ] Relevante KI-IDs eintragen, falls für diesen Change verwendet.
 - [x] Bekannte Einschränkungen festhalten.
 

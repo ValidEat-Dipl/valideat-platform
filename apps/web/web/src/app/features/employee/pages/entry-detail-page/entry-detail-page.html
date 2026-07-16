@@ -69,6 +69,23 @@
             >
               Erfassung bearbeiten
             </a>
+
+            <button
+              class="btn btn-outline-danger btn-lg w-100 mb-2"
+              type="button"
+              [disabled]="isDeleting()"
+              (click)="deleteEntry()"
+            >
+              @if (isDeleting()) {
+                Wird gelöscht...
+              } @else {
+                Erfassung löschen
+              }              
+            </button>
+          }
+
+          @if (deleteError()) {
+            <div class="alert alert-danger">Die Erfassung konnte nicht gelöscht werden.</div>
           }
 
           <a class="btn btn-outline-secondary btn-lg w-100" routerLink="/employee/entries">

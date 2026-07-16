@@ -21,8 +21,12 @@ export class EntriesPage implements OnInit {
 
   ngOnInit(): void {
     this.employeeTicketService.findByEmployee(this.employeeId).subscribe((data) => {
+
+      console.log('Fetched tickets:', data);
+
       // Neueste Erfassung zuerst anzeigen
       this.tickets.set(data.sort((a, b) => b.useDate.localeCompare(a.useDate)));
+
       this.isLoading.set(false);
     });
   }

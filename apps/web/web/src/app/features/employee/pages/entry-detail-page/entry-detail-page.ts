@@ -1,6 +1,6 @@
 import { formatDate } from '@angular/common';
 import { Component, OnInit, signal } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { EmployeeHeader } from '../../components/employee-header/employee-header';
 import { EmployeeFoodTicket } from '../../models/employee-food-ticket.model';
 import { EmployeeTicketService } from '../../services/employee-ticket.service';
@@ -12,26 +12,55 @@ import { EmployeeTicketService } from '../../services/employee-ticket.service';
   styleUrl: './entry-detail-page.scss',
 })
 export class EntryDetailPage implements OnInit {
-  employeeId = 1; // TODO: später vom Login
+  ticketId = 0;
   ticket = signal<EmployeeFoodTicket | undefined>(undefined);
   isLoading = signal(true);
+  isDeleting = signal(false);
+  deleteError = signal(false);
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private employeeTicketService: EmployeeTicketService,
   ) {}
 
   ngOnInit(): void {
-    let ticketId = Number(this.route.snapshot.paramMap.get('id'));
+    this.ticketId = Number(this.route.snapshot.paramMap.get('id'));
 
-    this.employeeTicketService.findByEmployee(this.employeeId).subscribe((data) => {
-      for (let ticket of data) {
-        if (ticket.id == ticketId) {
-          this.ticket.set(ticket);
-        }
-      }
+    this.employeeTicketService.getTicketById(this.ticketId).subscribe({
+      next: (ticket) => {
+        this.ticket.set(ticket);
+        this.isLoading.set(false);
+        
+      },
 
-      this.isLoading.set(false);
+      error: () => {
+        this.isLoading.set(false);
+      },
+
+    });
+  }
+
+  deleteEntry(): void {
+    const confirmed = window.confirm('Soll diese Erfassung wirklich gelöscht werden?');
+
+    if (!confirmed) return;
+
+
+     this.isDeleting.set(true);
+    this.deleteError.set(false);
+
+    this.employeeTicketService.deleteTicket(this.ticketId).subscribe({
+      next: () => {
+        this.router.navigate(['/employee/entries']);
+      },
+
+      error: () => {
+
+        this.isDeleting.set(false);
+        this.deleteError.set(true);
+
+      },
     });
   }
 

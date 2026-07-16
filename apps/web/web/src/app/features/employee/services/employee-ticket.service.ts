@@ -26,6 +26,10 @@ export class EmployeeTicketService {
     );
   }
 
+  getTicketById(ticketId: number) {
+    return this.http.get<EmployeeFoodTicket>(`${API_BASE}/foodticket/${ticketId}`);
+  }
+
   getRestaurants() {
     return this.http.get<Restaurant[]>(`${API_BASE}/restaurant`);
   }
@@ -44,5 +48,9 @@ export class EmployeeTicketService {
 
   editTicket(ticketId: number, employeeId: number, ticket: EmployeeFoodTicketRequest) {
     return this.http.put<void>(`${API_BASE}/foodticket/${ticketId}/${employeeId}`, ticket);
+  }
+
+  deleteTicket(ticketId: number) {
+    return this.http.delete<void>(`${API_BASE}/foodticket/${ticketId}`);
   }
 }

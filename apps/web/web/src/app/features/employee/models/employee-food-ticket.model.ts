@@ -8,6 +8,8 @@ export interface EmployeeFoodTicket {
   restaurantName: string;
   status: 'OPEN' | 'CONFLICT' | 'CHECKED' | 'NEEDS_FIXING';
   checkDate: string | null;
+  adminFirstName?: string | null;
+  adminLastName?: string | null;
 }
 
 export interface EmployeeFoodTicketRequest {

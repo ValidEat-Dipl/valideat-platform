@@ -44,33 +44,27 @@ export class EditEntryPage implements OnInit {
   ngOnInit(): void {
     this.ticketId = Number(this.route.snapshot.paramMap.get('id'));
 
-    this.employeeTicketService.findByEmployee(this.employeeId).subscribe((tickets) => {
-      let ticketFound = false;
-
-      for (let ticket of tickets) {
-        if (ticket.id === this.ticketId) {
-          ticketFound = true;
-
-          if (ticket.status !== 'OPEN') {
-            this.router.navigate(['/employee/entries', this.ticketId]);
-            return;
-          }
-
-          this.ticketForm.patchValue({
-            date: ticket.useDate,
-            employeeName: `${ticket.firstName} ${ticket.lastName}`,
-            costOrder: ticket.costOrder,
-            tier: ticket.tier,
-            restaurantName: ticket.restaurantName,
-          });
+    this.employeeTicketService.getTicketById(this.ticketId).subscribe({
+      next: (ticket) => {
+        if (ticket.status !== 'OPEN') {
+          this.router.navigate(['/employee/entries', this.ticketId]);
+          return;
         }
-      }
 
-      if (!ticketFound) {
+        this.ticketForm.patchValue({
+          date: ticket.useDate,
+          employeeName: `${ticket.firstName} ${ticket.lastName}`,
+          costOrder: ticket.costOrder,
+          tier: ticket.tier,
+          restaurantName: ticket.restaurantName,
+        });
+
+        this.isLoading.set(false);
+      },
+      error: () => {
         this.loadError.set(true);
-      }
-
-      this.isLoading.set(false);
+        this.isLoading.set(false);
+      },
     });
 
     this.employeeTicketService.getRestaurants().subscribe((restaurants) => {
@@ -108,7 +102,9 @@ export class EditEntryPage implements OnInit {
       next: () => {
         this.router.navigate(['/employee/entries', this.ticketId]);
       },
+
       error: () => {
+
         this.isSaving.set(false);
         this.saveError.set(true);
       },

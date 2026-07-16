@@ -45,6 +45,16 @@ describe('EmployeeTicketService', () => {
     request.flush([]);
   });
 
+  it('loads a single ticket', () => {
+    service.getTicketById(3).subscribe((ticket) => {
+      expect(ticket.id).toBe(3);
+    });
+
+    const request = httpTesting.expectOne('http://localhost:8080/foodticket/3');
+    expect(request.request.method).toBe('GET');
+    request.flush({ id: 3 });
+  });
+
   it('loads restaurants', () => {
     service.getRestaurants().subscribe((restaurants) => {
       expect(restaurants[0].name).toBe('Gasthaus zur Stadt');
@@ -107,5 +117,13 @@ describe('EmployeeTicketService', () => {
     expect(request.request.method).toBe('PUT');
     expect(request.request.body).toEqual(ticket);
     request.flush(null);
+  });
+
+  it('deletes an employee ticket entry', () => {
+    service.deleteTicket(3).subscribe();
+
+    const request = httpTesting.expectOne('http://localhost:8080/foodticket/3');
+    expect(request.request.method).toBe('DELETE');
+    request.flush(null, { status: 204, statusText: 'No Content' });
   });
 });

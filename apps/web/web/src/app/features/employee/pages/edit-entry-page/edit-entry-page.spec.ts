@@ -63,19 +63,19 @@ describe('EditEntryPage', () => {
   });
 
   function answerLoadRequests(status: 'OPEN' | 'CHECKED'): void {
-    httpTesting.expectOne('http://localhost:8080/foodticket/findByEmployee/1').flush([
-      {
-        id: 8,
-        firstName: 'Max',
-        lastName: 'Mustermann',
-        useDate: '2026-07-15',
-        tier: 'INTERN',
-        costOrder: '1000 - Verwaltung',
-        restaurantName: 'Gasthaus zur Stadt',
-        status,
-        checkDate: null,
-      },
-    ]);
+    httpTesting.expectOne('http://localhost:8080/foodticket/8').flush({
+      id: 8,
+      firstName: 'Max',
+      lastName: 'Mustermann',
+      useDate: '2026-07-15',
+      tier: 'INTERN',
+      costOrder: '1000 - Verwaltung',
+      restaurantName: 'Gasthaus zur Stadt',
+      status,
+      checkDate: null,
+      adminFirstName: null,
+      adminLastName: null,
+    });
     httpTesting
       .expectOne('http://localhost:8080/restaurant')
       .flush([{ id: 1, address: 'Landstraße 10, 4020 Linz', name: 'Gasthaus zur Stadt' }]);
