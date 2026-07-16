@@ -46,7 +46,7 @@ export class TicketDetailsComp implements OnInit {
               restaurant: ticket.restaurantName,
               checkDate: ticket.checkDate,
               status: new Status(ticket.status),
-              adminName: ticket.adminName,
+              adminName: ticket.adminFirstName+' '+ ticket.adminLastName,
               id: ticket.id,
             },
           ],

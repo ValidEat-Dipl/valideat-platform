@@ -8,5 +8,6 @@ export interface FoodTicketDetail {
   restaurantName: string;
   status: string;
   checkDate: string;
-  adminName: string;
+  adminFirstName: string;
+  adminLastName: string;
 }
