@@ -1,0 +1,20 @@
+:host {
+  display: block;
+}
+
+.login-page {
+  min-height: 100dvh;
+}
+
+.brand-mark {
+  width: 3.5rem;
+  height: 3.5rem;
+  place-items: center;
+  border-radius: 0.5rem;
+  background: var(--bs-primary);
+}
+
+.brand-name {
+  font-size: 0.8rem;
+  letter-spacing: 0.12rem;
+}

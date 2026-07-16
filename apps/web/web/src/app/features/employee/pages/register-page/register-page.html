@@ -1,0 +1,153 @@
+<section class="register-page px-4 py-4">
+  <div class="row gx-0 justify-content-center">
+    <main class="col-12 col-sm-10 col-md-8 col-lg-7 col-xl-6">
+      <div class="d-flex align-items-center gap-3 mb-4">
+        <a class="btn btn-link p-0 text-secondary" routerLink="/employee/login" aria-label="Zurück">
+          <i class="bi bi-chevron-left fs-4" aria-hidden="true"></i>
+        </a>
+
+        <h1 class="h4 mb-0 fw-semibold">Konto registrieren</h1>
+
+      </div>
+
+
+      <!-- Form for regstre -->
+      <form [formGroup]="registerForm" (ngSubmit)="register()">
+
+        <div class="card p-4 mb-3">
+
+          <h2 class="h5 mb-4 fw-semibold">Konto erstellen</h2>
+
+          <div class="row">
+            <div class="col-12 col-sm-6 mb-3">
+
+              <label class="form-label" for="firstName">Vorname</label>
+              <input id="firstName" class="form-control" type="text" formControlName="firstName" />
+
+            </div>
+
+
+            <div class="col-12 col-sm-6 mb-3">
+
+              <label class="form-label" for="lastName">Nachname</label>
+              <input id="lastName" class="form-control" type="text" formControlName="lastName" />
+
+            </div>
+          </div>
+
+
+          <div class="mb-3">
+            <label class="form-label" for="registerEmail">E-Mail</label>
+
+            <input
+              id="registerEmail" class="form-control"
+              type="email" autocomplete="email"
+              formControlName="email"
+            />
+          </div>
+
+
+          <div class="mb-3">
+
+            <label class="form-label" for="department">Abteilung</label>
+            <input id="department" class="form-control" type="text" formControlName="department" />
+
+          </div>
+
+
+          <div class="mb-3">
+
+            <label class="form-label" for="address"
+              >Adresse <span class="text-secondary">(optional)</span></label
+            >
+            <input id="address" class="form-control" type="text" formControlName="address" />
+
+          </div>
+
+
+          <div class="mb-3">
+
+            <label class="form-label" for="phoneNumber"
+              >Telefonnummer <span class="text-secondary">(optional)</span></label
+            >
+            <input
+              id="phoneNumber"
+              class="form-control"
+              type="tel"
+              autocomplete="tel"
+              formControlName="phoneNumber"
+            />
+
+          </div>
+
+
+          <div class="mb-3">
+            <label class="form-label" for="registerPassword">Passwort</label>
+            <input
+              id="registerPassword"
+              class="form-control"
+              type="password"
+              autocomplete="new-password"
+              formControlName="password"
+            />
+
+          </div>
+
+
+          <div class="mb-3">
+            <label class="form-label" for="passwordConfirmation">Passwort bestätigen</label>
+            <input
+              id="passwordConfirmation"
+              class="form-control"
+              type="password"
+              autocomplete="new-password"
+              formControlName="passwordConfirmation"
+            />
+          </div>
+
+
+          <!-- Error message if passwords are not the same -->
+          @if (passwordsDifferent()) {
+            <div class="alert alert-danger">Die Passwörter stimmen nicht überein.</div>
+          }
+
+
+          <div class="form-check">
+            <input
+              id="consent"
+              class="form-check-input"
+              type="checkbox"
+              formControlName="consent"
+            />
+
+            <!-- Validation message consent given -->
+            <label class="form-check-label" for="consent">
+              Ich stimme der Erfassung und Verarbeitung meiner Daten im Rahmen von ValidEat zu.
+            </label>
+
+          </div>
+        </div>
+
+        <!-- Error message if fail -->
+        @if (registerError()) {
+          <div class="alert alert-danger">Das Konto konnte nicht erstellt werden.</div>
+        }
+
+        <button class="btn btn-primary btn-lg w-100" type="submit" [disabled]="isLoading()">
+          @if (isLoading()) {
+            Konto wird erstellt...
+          } @else {
+            Konto erstellen
+          }
+        </button>
+
+      </form>
+      
+
+      <p class="text-center text-secondary mt-4">
+        Bereits registriert?
+        <a routerLink="/employee/login">Zur Anmeldung</a>
+      </p>
+    </main>
+  </div>
+</section>

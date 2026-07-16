@@ -14,6 +14,18 @@ export const EMPLOYEE_ROUTES: Routes = [
           import('./pages/welcome-page/welcome-page').then((module) => module.WelcomePage),
       },
       {
+        path: 'login',
+        title: 'Anmelden | ValidEat',
+        loadComponent: () =>
+          import('./pages/login-page/login-page').then((module) => module.LoginPage),
+      },
+      {
+        path: 'register',
+        title: 'Registrieren | ValidEat',
+        loadComponent: () =>
+          import('./pages/register-page/register-page').then((module) => module.RegisterPage),
+      },
+      {
         path: 'start',
         title: 'Start | ValidEat',
         loadComponent: () =>

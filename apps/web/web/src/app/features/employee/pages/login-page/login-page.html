@@ -1,0 +1,60 @@
+<section class="login-page d-flex align-items-center px-4 py-5">
+  <div class="row gx-0 w-100 justify-content-center">
+    <main class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 col-xxl-4">
+
+      <div class="text-center mb-4">
+        <div class="brand-mark d-grid mx-auto mb-3 text-white fw-bold" aria-hidden="true">VE</div>
+        <p class="brand-name mb-2 text-uppercase text-secondary">ValidEat</p>
+        <h1 class="h3 fw-semibold">Anmelden</h1>
+      </div>
+
+
+      <form class="card p-4" [formGroup]="loginForm" (ngSubmit)="login()">
+        <div class="mb-3">
+          <label class="form-label" for="loginEmail">E-Mail</label>
+          <input
+            id="loginEmail"
+            class="form-control"
+            type="email"
+            autocomplete="email"
+            placeholder="email@beispiel.at"
+            formControlName="email"
+          />
+        </div>
+
+
+        <div class="mb-3">
+          <label class="form-label" for="loginPassword">Passwort</label>
+          <input
+            id="loginPassword"
+            class="form-control"
+            type="password"
+            autocomplete="current-password"
+            placeholder="Passwort eingeben"
+            formControlName="password"
+          />
+        </div>
+
+
+        @if (loginError()) {
+          <div class="alert alert-danger">E-Mail oder Passwort ist nicht korrekt.</div>
+        }
+
+
+        <button class="btn btn-primary btn-lg w-100" type="submit" [disabled]="isLoading()">
+          @if (isLoading()) {
+            Anmeldung läuft...
+          } @else {
+            Anmelden
+          }
+        </button>
+
+      </form>
+
+      <p class="text-center text-secondary mt-4 mb-0">
+        Noch kein Konto?
+        <a routerLink="/employee/register">Konto registrieren</a>
+      </p>
+    </main>
+  </div>
+</section>
