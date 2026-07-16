@@ -1,9 +1,6 @@
 package at.htl.repository;
 
-import at.htl.boundary.dto.AdminClearingDTO;
-import at.htl.boundary.dto.AdminFoodTicketDTO;
-import at.htl.boundary.dto.EmployeeFoodTicketDTO;
-import at.htl.boundary.dto.EmployeeGetTicketsDTO;
+import at.htl.boundary.dto.*;
 import at.htl.model.*;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -483,6 +480,117 @@ public class FoodTicketRepository {
 
         entityManager.remove(ticket);
         return true;
+    }
+
+    public FoodTicketConflictResponseDTO getConflicts(
+            String employeeName,
+            LocalDate startDate,
+            LocalDate endDate,
+            Status status,
+            String conflict) {
+
+        StringBuilder jpql = new StringBuilder("""
+        select f
+        from FoodTicket f
+        left join fetch f.admin
+        left join fetch f.matchingTicket mt
+        left join fetch mt.tier
+        left join fetch mt.costOrder
+        left join fetch mt.restaurant
+        where (f.status = :conflictStatus or f.status = :needsFixingStatus)
+        """);
+
+        if (employeeName != null) {
+            jpql.append("""
+           and lower(concat(f.employee.firstName, ' ', f.employee.lastName))
+            like lower(:employeeName)
+        """);
+        }
+
+        if (startDate != null) {
+            jpql.append(" and f.useDate >= :startDate ");
+        }
+
+        if (endDate != null) {
+            jpql.append(" and f.useDate <= :endDate ");
+        }
+
+        if (status != null) {
+            jpql.append(" and f.status = :status ");
+        }
+
+        if (conflict != null) {
+            jpql.append(" and lower(f.conflict) like lower(:conflict) ");
+        }
+
+        TypedQuery<FoodTicket> query =
+                entityManager.createQuery(jpql.toString(), FoodTicket.class);
+
+        query.setParameter("conflictStatus", Status.CONFLICT);
+        query.setParameter("needsFixingStatus", Status.NEEDS_FIXING);
+
+        if (employeeName != null) {
+            query.setParameter("employeeName", "%" + employeeName + "%");
+        }
+
+        if (startDate != null) {
+            query.setParameter("startDate", startDate);
+        }
+
+        if (endDate != null) {
+            query.setParameter("endDate", endDate);
+        }
+
+        if (status != null) {
+            query.setParameter("status", status);
+        }
+
+        if (conflict != null) {
+            query.setParameter("conflict", "%" + conflict + "%");
+        }
+
+        List<FoodTicket> tickets = query.getResultList();
+
+        List<FoodTicketConflictDTO> result = new ArrayList<>();
+
+        for (FoodTicket ticket : tickets) {
+            result.add(new FoodTicketConflictDTO(ticket.getId(), ticket.getEmployee().getFirstName() + " " + ticket.getEmployee().getLastName(), ticket.getUseDate(), ticket.getConflict(), determineWrongField(ticket), ticket.getStatus(),
+                    ticket.getAdmin() == null
+                            ? null
+                            : ticket.getAdmin().getFirstName() + " " + ticket.getAdmin().getLastName(),
+                    ticket.getChangeLog()
+            ));
+        }
+
+        return new FoodTicketConflictResponseDTO(result, result.size());
+    }
+
+
+    private String determineWrongField(FoodTicket ticket) {
+
+        FoodTicket matching = ticket.getMatchingTicket();
+
+        if (matching == null) {
+            return "Kein Ticket Gegenstück gefunden";
+        }
+
+        if (!Objects.equals(ticket.getTier(), matching.getTier())) {
+            return "Tier: " + ticket.getTier().getName() + " -> " + matching.getTier().getName();
+        }
+
+        if (!Objects.equals(ticket.getCostOrder(), matching.getCostOrder())) {
+            return "Kostenstelle: " + ticket.getCostOrder().getName() + " -> " + matching.getCostOrder().getName();
+        }
+
+        if (!Objects.equals(ticket.getRestaurant(), matching.getRestaurant())) {
+            return "Restaurant: " + ticket.getRestaurant().getName() + " -> " + matching.getRestaurant().getName();
+        }
+
+        if (!Objects.equals(ticket.getUseDate(), matching.getUseDate())) {
+            return "Datum: " + ticket.getUseDate() + " -> " + matching.getUseDate();
+        }
+
+        return "Unbekannter Unterschied";
     }
 
     public void clearing() { // für später wird aufgerufen nachdem admin ticket erstellt

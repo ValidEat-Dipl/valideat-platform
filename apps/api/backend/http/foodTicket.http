@@ -38,4 +38,10 @@ GET http://localhost:8080/foodticket/clearing-info-box
 DELETE http://localhost:8080/foodticket/1
 
 ###
+GET http://localhost:8080/foodticket/conflicts
+
+###
+GET http://localhost:8080/foodticket/conflicts?status=CONFLICT
+
+###
 PUT http://localhost:8080/foodticket/changeStatus/1/CONFLICT

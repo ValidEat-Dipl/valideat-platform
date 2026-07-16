@@ -127,6 +127,16 @@ public class FoodTicketResource {
         );
     }
 
+    @GET
+    @Path("/conflicts")
+    public FoodTicketConflictResponseDTO getConflicts(@QueryParam("employeeName") String employeeName,
+                                                    @QueryParam("startDate") LocalDate startDate,
+                                                    @QueryParam("endDate") LocalDate endDate,
+                                                    @QueryParam("status") Status status,
+                                                    @QueryParam("conflict") String conflict) {
+        return foodTicketRepository.getConflicts(employeeName, startDate, endDate, status, conflict);
+    }
+
     @POST
     @Path("/empAddTicketEntry")
     @Transactional
