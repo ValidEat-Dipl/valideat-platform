@@ -66,6 +66,7 @@ export class MostRecentTicketsComp implements OnInit {
             checkDate: ticket.checkDate,
             status: new Status(ticket.status),
             actionDetail: 'Details',
+            id: ticket.id
           })),
         });
       });

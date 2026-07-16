@@ -59,6 +59,7 @@ export class AdminOverviewComp implements OnInit {
           typ: ticket.ticketType,
           status: new Status(ticket.status),
           actionDetail: 'Details',
+          id: ticket.id
         })),
       });
     });

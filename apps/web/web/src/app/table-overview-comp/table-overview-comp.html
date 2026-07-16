@@ -29,7 +29,7 @@
           } @else if (header.key == 'actionOpenCase') {
             <td><a class="link-opacity-100" href="/clearing-tickets/check-conflict">{{ row[header.key] }}</a></td>
           } @else if (header.key == 'actionDetail') {
-            <td><a class="link-opacity-100" href="#ticketDetails/id">{{ row[header.key] }}</a></td>
+            <td><a class="link-opacity-100" href="/ticket-details/{{row['id']}}">{{ row[header.key] }}</a></td>
           } @else {
             <td>{{ row[header.key] }}</td>
           }

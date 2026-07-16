@@ -71,16 +71,16 @@ export class ClearingTicketsComp implements OnInit {
           headers: [
             { key: 'person', label: 'Person' },
             { key: 'datum', label: 'Datum' },
-            { key: 'status', label: 'Status' },
             { key: 'conflictType', label: 'Konfliktart' },
+            { key: 'status', label: 'Status' },
             { key: 'lastChange', label: 'Letzte Änderung' },
             { key: 'actionOpenCase', label: 'Aktion' },
           ],
           rows: data.map((ticket) => ({
             person: ticket.empTicketEmpName ?? ticket.adminTicketEmpName,
             datum: ticket.empTicketUseDate ?? ticket.adminTicketUseDate,
-            status: ticket.empTicketStatus ? new Status(ticket.empTicketStatus) : new Status(ticket.adminTicketStatus),
             conflictType: ticket.empTicketConflict ?? ticket.adminTicketConflict,
+            status: ticket.empTicketStatus ? new Status(ticket.empTicketStatus) : new Status(ticket.adminTicketStatus),
             lastChange: ticket.empTicketLog ?? ticket.adminTicketLog,
             actionOpenCase: 'Fall öffnen',
           })),
