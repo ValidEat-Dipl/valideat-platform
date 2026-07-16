@@ -290,6 +290,19 @@ public class FoodTicketResource {
         }
     }
 
+    @DELETE
+    @Transactional
+    @Path("/{ticketId}")
+    public Response deleteTicket(@PathParam("ticketId") Long id) {
+        boolean deleted = foodTicketRepository.deleteTicket(id);
+
+        if (!deleted) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        return Response.noContent().build();
+    }
+
     @GET
     @Path("/getAllValidTickets")
     public List<FoodTicket> getAllValidTickets() {
