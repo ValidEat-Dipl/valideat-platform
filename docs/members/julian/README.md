@@ -33,3 +33,8 @@ Dienstag: 14.7 Wollen an den HR Routen arbeiten.
 Geschafft: Mitarbeiter Seite: mitarbeiter kann eigenes ticket, falls es offen ist bearbeiten und auch ein kleiner fix, dass bei den tickets nicht alle daten mitkommen. Fix das der Tickettype beim erstellen richtig ist und GET calls für costorder, restaurant und tier
 
 Hr Seite: HR tickets seite call mit optionalen filtermöglichkeiten implementiert.
+
+
+Mittwoch 15.7 Wollen: An den HR routen arbeiten (clearing seite)
+
+Geschafft: clearing seite alle rest calls implementiert und bug fix, das findById ein dto zurückgibt beim foodticket
