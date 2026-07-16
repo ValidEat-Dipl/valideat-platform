@@ -1,17 +1,45 @@
 @switch (buttonType()) {
   @case("button") {
-    <button type="{{ buttonType() }}" class="btn btn-{{ buttonDesignType() }}">{{ text() }}</button>
+    <button
+      type="{{ buttonType() }}"
+      class="btn btn-{{ buttonDesignType() }}"
+      [disabled]="disabled()">
+      {{ text() }}
+    </button>
   }
   @case ("link") {
-    <a href="{{ link() }}" role="button" class="btn btn-{{ buttonDesignType() }}">{{ text() }}</a>
+    <a
+      href="{{ link() }}"
+      role="button"
+      class="btn btn-{{ buttonDesignType() }}"
+      [class.disabled]="disabled()"
+      [attr.aria-disabled]="disabled()">
+      {{ text() }}
+    </a>
   }
   @case ("reset") {
-    <input type="reset" value="{{ text() }}" class="btn btn-{{ buttonDesignType() }}">
+    <input
+      type="reset"
+      value="{{ text() }}"
+      class="btn btn-{{ buttonDesignType() }}"
+      [disabled]="disabled()">
   }
   @case("submit") {
-    <button type="{{ buttonType() }}" class="btn btn-{{ buttonDesignType() }}">{{ text() }}</button>
+    <button
+      type="{{ buttonType() }}"
+      class="btn btn-{{ buttonDesignType() }}"
+      [disabled]="disabled()">
+      {{ text() }}
+    </button>
   }
   @case("icon") {
-    <a href="{{ link() }}" role="button" class="btn btn-{{ buttonDesignType() }}"><i class='p-1 bi bi-{{ icon() }}'></i> {{ text() }}</a>
+    <a
+      href="{{ disabled() ? null : link() }}"
+      role="button"
+      class="btn btn-{{ buttonDesignType() }}"
+      [class.disabled]="disabled()"
+      [attr.aria-disabled]="disabled()">
+      <i class="p-1 bi bi-{{ icon() }}"></i> {{ text() }}
+    </a>
   }
 }

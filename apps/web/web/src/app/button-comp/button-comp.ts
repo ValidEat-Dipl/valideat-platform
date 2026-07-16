@@ -6,12 +6,10 @@ import {Component, input, Input,} from '@angular/core';
   styleUrl: './button-comp.css',
 })
 export class ButtonComp {
-
-  buttonDesignType = input<string>("primary");
-  text = input<string>("Button");
-  buttonType = input<string>("button");
-  link = input<string>("");
-  disabledExpression = input<string>("");
-  icon = input<string>("icon");
-
+  buttonDesignType = input<string>('primary');
+  text = input<string>('Button');
+  buttonType = input<string>('button');
+  link = input<string>('');
+  disabled = input<boolean>(false);
+  icon = input<string>('icon');
 }

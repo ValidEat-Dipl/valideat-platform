@@ -1,39 +1,53 @@
-import {Component, inject} from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {ButtonComp} from "../button-comp/button-comp";
 import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
 import { CreateAdminTicketService } from '../create-admin-ticket-service';
 import { Router } from '@angular/router';
+import { EmployeeTicketService } from '../features/employee/services/employee-ticket.service';
+import { Restaurant } from '../features/employee/models/restaurant.model';
+import { Tier } from '../tier.model';
+import { CostOrder } from '../costOrder.model';
 
 @Component({
   selector: 'app-react-form-comp',
-    imports: [
-        ButtonComp,
-        ReactiveFormsModule
-    ],
+  imports: [ButtonComp, ReactiveFormsModule],
   templateUrl: './react-form-comp.html',
   styleUrl: './react-form-comp.css',
 })
-export class ReactFormComp {
-
-  createAdminTicketService = inject(CreateAdminTicketService)
+export class ReactFormComp implements OnInit {
+  createAdminTicketService = inject(CreateAdminTicketService);
   router = inject(Router);
+  dropdownService = inject(EmployeeTicketService);
+  costOrders: CostOrder[] = [];
+  restaurants: Restaurant[] = [];
+  tiers: Tier[] = [];
 
-  anotherTicket: boolean = false;
+  ngOnInit() {
+    this.dropdownService.getCostOrders().subscribe((data) => {
+      this.costOrders = data;
+    });
 
-  form = inject(FormBuilder)
-    .nonNullable.group({
-      username: ['', Validators.required],
-      useDate: ['', Validators.required],
-      costDepartment: ['', Validators.required],
-      costRank: ['', Validators.required],
-      restaurant: ['', Validators.required]
-  })
+    this.dropdownService.getRestaurants().subscribe((data) => {
+      this.restaurants = data;
+    });
+
+    this.dropdownService.getTiers().subscribe((data) => {
+      this.tiers = data;
+    });
+  }
+
+  form = inject(FormBuilder).nonNullable.group({
+    username: ['', Validators.required],
+    useDate: ['', Validators.required],
+    costDepartment: ['', Validators.required],
+    costRank: ['', Validators.required],
+    restaurant: ['', Validators.required],
+  });
 
   onSubmit() {
     if (this.form.invalid) return;
 
     console.log(this.form.getRawValue());
-
     this.createAdminTicketService
       .createAdminTicket({
         useDate: this.form.value.useDate!,
@@ -45,15 +59,8 @@ export class ReactFormComp {
       })
       .subscribe({
         next: () => {
-          if (this.anotherTicket) {
-            this.form.reset();
-            console.log("speichern und nächstes");
-          } else {
-            console.log("speichern");
-            /*this.router.navigate(['/ticketDetails/id']);*/
-          }
+          this.form.reset();
         },
       });
   }
-
 }

@@ -10,22 +10,49 @@
     </div>
     <div class="w-100">
       <label for="costDepartment" class="form-label">3. Kostenstelle</label>
-      <input type="text" class="form-control" id="costDepartment" formControlName="costDepartment">
+      <select class="form-select" id="costDepartment" formControlName="costDepartment">
+        <option value="" disabled>Bitte auswählen</option>
+
+        @for (costOrder of costOrders; track costOrder.name) {
+          <option [value]="costOrder.name">
+            {{ costOrder.name }}
+          </option>
+        }
+      </select>
     </div>
   </div>
   <div class="d-flex gap-3">
     <div class="w-100">
       <label for="costRank" class="form-label">4. Markerlstufe</label>
-      <input type="text" class="form-control" id="costRank" formControlName="costRank">
-    </div>
+      <select class="form-select" id="costRank" formControlName="costRank">
+        <option value="" disabled>Bitte auswählen</option>
+
+        @for (tier of tiers; track tier.name) {
+          <option [value]="tier.name">
+            {{ tier.name }}
+          </option>
+        }
+      </select>    </div>
     <div class="w-100">
       <label for="restaurant" class="form-label">5. Restaurant</label>
-      <input type="text" class="form-control" id="restaurant" formControlName="restaurant">
-    </div>
+      <select class="form-select" id="restaurant" formControlName="restaurant">
+        <option value="" disabled>Bitte auswählen</option>
+
+        @for (restaurant of restaurants; track restaurant.name) {
+          <option [value]="restaurant.name">
+            {{ restaurant.name }}
+          </option>
+        }
+      </select>    </div>
   </div>
   <div class="d-flex gap-1 mt-3">
-    <app-button-comp buttonType="submit" (click)="anotherTicket = true" disabledExpression="form.invalid || form.pending" buttonDesignType="primary" text="Speichern und nächstes"></app-button-comp>
-    <app-button-comp buttonType="submit" (click)="anotherTicket = false" buttonDesignType="secondary" text="Speichern"></app-button-comp>
+    <app-button-comp buttonType="submit" [disabled]="form.invalid || form.pending" buttonDesignType="primary" text="Speichern und nächstes"></app-button-comp>
     <app-button-comp buttonType="reset" buttonDesignType="outline-secondary" text="Formular zurücksetzen"></app-button-comp>
+    <app-button-comp
+      text="Zurück zur Hauptseite"
+      buttonDesignType="secondary"
+      buttonType="link"
+      link="http://localhost:4200/admin-overview">
+    </app-button-comp>
   </div>
 </form>

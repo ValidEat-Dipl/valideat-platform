@@ -27,4 +27,12 @@ export class NavComp {
     "Export & Freigabe"
   ]);
 
+  dataListIcons = signal([
+    "bar-chart-line",
+    "plus",
+    "check-circle",
+    "exclamation-triangle",
+    "download"
+  ])
+
 }

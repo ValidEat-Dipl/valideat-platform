@@ -1,20 +1,19 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import {NavComp} from '../nav-comp/nav-comp';
-import {BadgeComp} from '../badge-comp/badge-comp';
+import { BadgeComp } from '../badge-comp/badge-comp';
+import { ButtonComp } from '../button-comp/button-comp';
+import { NavComp } from '../nav-comp/nav-comp';
 import { ActivatedRoute } from '@angular/router';
 import { TicketDetailService } from '../ticket-detail-service';
-import { FoodTicketDetail } from '../food-ticket-detail.model';
 import { TableData } from '../table.model';
 import { Status } from '../status.model';
-import { ButtonComp } from '../button-comp/button-comp';
 
 @Component({
-  selector: 'app-ticket-details-comp',
-  imports: [NavComp, BadgeComp, ButtonComp],
-  templateUrl: './ticket-details-comp.html',
-  styleUrl: './ticket-details-comp.css',
+  selector: 'app-correct-ticket-comp',
+  imports: [BadgeComp, ButtonComp, NavComp],
+  templateUrl: './correct-ticket-comp.html',
+  styleUrl: './correct-ticket-comp.css',
 })
-export class TicketDetailsComp implements OnInit {
+export class CorrectTicketComp implements OnInit {
   route = inject(ActivatedRoute);
   ticketDetailService = new TicketDetailService();
 
@@ -35,7 +34,6 @@ export class TicketDetailsComp implements OnInit {
             { key: 'kostenstelle', label: 'Kostenstelle' },
             { key: 'restaurant', label: 'Restaurant' },
             { key: 'checkDate', label: 'Prüfdatum' },
-            { key: 'adminName', label: 'Erfasst von' }
           ],
           rows: [
             {
@@ -46,7 +44,6 @@ export class TicketDetailsComp implements OnInit {
               restaurant: ticket.restaurantName,
               checkDate: ticket.checkDate,
               status: new Status(ticket.status),
-              adminName: ticket.adminName,
               id: ticket.id,
             },
           ],

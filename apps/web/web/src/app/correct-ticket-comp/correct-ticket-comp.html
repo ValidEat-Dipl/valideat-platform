@@ -1,18 +1,35 @@
 <app-nav-comp></app-nav-comp>
 
 <div class="m-4 d-grid gap-4">
-  <div class="d-flex gap-3">
-    <h1>Markerldetails</h1>
-    <app-badge-comp
-      class="align-self-center"
-      [text]="asStatus(dataDetail().rows[0]['status'])?.label ?? ''"
-      [bgColor]="asStatus(dataDetail().rows[0]['status'])?.color ?? ''">
-    </app-badge-comp>
+  <div class="d-grid gap-3">
+    <div class="d-flex gap-3">
+      <h1>Markerl korrigieren</h1>
+      <app-badge-comp
+        class="align-self-center"
+        [text]="asStatus(dataDetail().rows[0]['status'])?.label ?? ''"
+        [bgColor]="asStatus(dataDetail().rows[0]['status'])?.color ?? ''">
+      </app-badge-comp>
+    </div>
+    <div class="d-grid gap-3">
+      <div class="bg-danger-subtle rounded-3 d-grid p-4 w-100">
+        <p class="m-0 text-danger">
+          <i class="bi bi-exclamation-triangle pe-2"></i>
+          <span class="text-danger-emphasis fw-bold">Achtung:</span>
+          Diese Korrektur kann das bestehende Clearing-Ergebnis verändern!
+        </p>
+      </div>
+      <div class="bg-info-subtle rounded-3 d-grid p-4 w-100">
+        <p class="m-0 text-info-emphasis">
+          <i class="bi bi-info-circle pe-2"></i>
+          Der ursprüngliche Stand bleibt im Änderungsverlauf erhalten.
+        </p>
+      </div>
+    </div>
   </div>
   <div class="d-grid gap-3">
     <div class="w-100 d-grid rounded-3 border border-dark-subtle bg-{{asStatus(dataDetail().rows[0]['status'])?.color}}-subtle">
       <div class="p-3 rounded-top border-bottom border-dark-subtle gap-4 bg-{{asStatus(dataDetail().rows[0]['status'])?.color}}">
-        <p class="m-0 fw-bold">Erfassungsdaten</p>
+        <p class="m-0 fw-bold">Erfassungsdaten bearbeiten</p>
       </div>
       <div class="d-grid gap-3 p-3">
         <div class="d-grid gap-3">
