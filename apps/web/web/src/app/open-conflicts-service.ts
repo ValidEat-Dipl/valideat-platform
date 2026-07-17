@@ -1,6 +1,5 @@
-import { inject, Injectable, Service } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { AdminClearingTickets } from './admin-clearing-tickets.model';
 import { FoodTicketConflictResponse } from './food-ticket-conflict.model';
 
 @Injectable({
@@ -10,8 +9,6 @@ export class OpenConflictsService {
   http = inject(HttpClient);
 
   getData() {
-    return this.http.get<FoodTicketConflictResponse>(
-      'http://localhost:8080/foodticket/conflicts'
-    );
+    return this.http.get<FoodTicketConflictResponse>('http://localhost:8080/foodticket/conflicts');
   }
 }

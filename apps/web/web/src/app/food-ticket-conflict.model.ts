@@ -13,7 +13,7 @@ interface FoodTicketConflict {
   useDate: string;
   conflict: string;
   wrongField: string;
-  status: Status;
+  status: string;
   adminName: string;
   changeLogs: ChangeLog[];
 }
