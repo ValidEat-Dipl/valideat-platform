@@ -43,23 +43,23 @@ export class AdminOverviewComp implements OnInit {
     this.tableService.getTableData(this.lastYear).subscribe((data) => {
       this.dataTable.set({
         headers: [
+          { key: 'typ', label: 'Tickettyp' },
           { key: 'person', label: 'Person' },
           { key: 'datum', label: 'Datum' },
           { key: 'stufe', label: 'Stufe' },
           { key: 'kostenstelle', label: 'Kostenstelle' },
-          { key: 'typ', label: 'Tickettyp' },
           { key: 'status', label: 'Status' },
-          { key: 'actionDetail', label: 'Aktion' },
+          { key: 'actionDetail', label: 'Aktion' }
         ],
         rows: data.map((ticket) => ({
           person: ticket.employee.firstName + ' ' + ticket.employee.lastName,
           datum: ticket.useDate,
-          stufe: ticket.tier.discount,
+          stufe: ticket.tier.name,
           kostenstelle: ticket.costOrder.name,
           typ: ticket.ticketType,
           status: new Status(ticket.status),
           actionDetail: 'Details',
-          id: ticket.id
+          id: ticket.id,
         })),
       });
     });

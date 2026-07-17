@@ -56,7 +56,6 @@ export class ClearingTicketsComp implements OnInit {
       )
       .subscribe((data) => {
         this.infoContainer.set({ ...data });
-        console.log(data);
       });
 
     this.tableService
@@ -80,13 +79,17 @@ export class ClearingTicketsComp implements OnInit {
             person: ticket.empTicketEmpName ?? ticket.adminTicketEmpName,
             datum: ticket.empTicketUseDate ?? ticket.adminTicketUseDate,
             conflictType: ticket.empTicketConflict ?? ticket.adminTicketConflict,
-            status: ticket.empTicketStatus ? new Status(ticket.empTicketStatus) : new Status(ticket.adminTicketStatus),
-            lastChange: ticket.empTicketLog ? ticket.empTicketLog.changeDate
-              : ticket.adminTicketLog ? ticket.adminTicketLog.changeDate
-                : '--.--.----',
+            status: ticket.empTicketStatus
+              ? new Status(ticket.empTicketStatus)
+              : new Status(ticket.adminTicketStatus),
+            lastChange:
+              ticket.empTicketLogs?.[0]?.changeDate ??
+              ticket.adminTicketLogs?.[0]?.changeDate ??
+              'Noch keine Änderung vorgenommen',
             actionOpenCase: 'Fall öffnen',
           })),
         });
+        console.log(data.at(0)?.empTicketLogs)
       });
   }
 }

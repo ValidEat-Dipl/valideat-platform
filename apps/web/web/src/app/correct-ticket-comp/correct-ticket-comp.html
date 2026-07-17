@@ -26,60 +26,131 @@
       </div>
     </div>
   </div>
-  <div class="d-grid gap-3">
-    <div class="w-100 d-grid rounded-3 border border-dark-subtle bg-{{asStatus(dataDetail().rows[0]['status'])?.color}}-subtle">
-      <div class="p-3 rounded-top border-bottom border-dark-subtle gap-4 bg-{{asStatus(dataDetail().rows[0]['status'])?.color}}">
-        <p class="m-0 fw-bold">Erfassungsdaten bearbeiten</p>
-      </div>
-      <div class="d-grid gap-3 p-3">
-        <div class="d-grid gap-3">
-          @if (dataDetail().rows.length > 0) {
-            <div class="row g-3">
-              @for (header of dataDetail().headers; track header.key) {
-                <div class="col-6">
-                  <div class="d-grid w-100">
-                    <p class="m-0 text-secondary">{{ header.label }}</p>
-                    <p class="m-0">{{ dataDetail().rows[0][header.key] }}</p>
-                  </div>
-                </div>
-              }
-            </div>
+  <div
+    class="w-100 d-grid rounded-3 border border-dark-subtle bg-{{asStatus(dataDetail().rows[0]['status'])?.color}}-subtle">
+    <div
+      class="p-3 rounded-top border-bottom border-dark-subtle bg-{{asStatus(dataDetail().rows[0]['status'])?.color}}">
+      <p class="m-0 fw-bold">Erfassungsdaten bearbeiten</p>
+    </div>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="d-grid gap-3 p-3">
+      <div>
+        <label class="form-label">
+          1. Mitarbeiter
+          @if (form.value.username !== originalValues.username) {
+            <span class="text-danger">(Alter Wert: {{ originalValues.username }})</span>
           }
+        </label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="username">
+      </div>
+      <div class="d-flex gap-3">
+        <div class="w-100">
+          <label class="form-label">
+            2. Datum
+            @if (form.value.useDate !== originalValues.useDate) {
+              <span class="text-danger">
+                (Alter Wert: {{ originalValues.useDate }})
+              </span>
+            }
+          </label>
+          <input
+            type="date"
+            class="form-control"
+            formControlName="useDate">
+        </div>
+        <div class="w-100">
+          <label class="form-label">
+            3. Kostenstelle
+            @if (form.value.costDepartment !== originalValues.costDepartment) {
+              <span class="text-danger">
+                (Alter Wert: {{ originalValues.costDepartment }})
+              </span>
+            }
+          </label> <select class="form-select" formControlName="costDepartment">
+          @for (costOrder of costOrders; track costOrder.name) {
+            <option [value]="costOrder.name">
+              {{ costOrder.name }}
+            </option>
+          }
+        </select>
         </div>
       </div>
-    </div>
-    @if (asStatus(dataDetail().rows[0]['status'])?.value == "NEEDS_FIXING") {
-      <div class="w-100 d-grid rounded-3 border border-dark-subtle bg-{{asStatus(dataDetail().rows[0]['status'])?.color}}-subtle">
-        <div class="p-3 rounded-top border-bottom border-dark-subtle gap-4 bg-{{asStatus(dataDetail().rows[0]['status'])?.color}}">
-          <p class="m-0 fw-bold">Clearing</p>
+      <div class="d-flex gap-3">
+        <div class="w-100">
+          <label class="form-label">
+            4. Markerlstufe
+            @if (form.value.costRank !== originalValues.costRank) {
+              <span class="text-danger">
+                (Alter Wert: {{ originalValues.costRank }})
+              </span>
+            }
+          </label> <select class="form-select" formControlName="costRank">
+          @for (tier of tiers; track tier.name) {
+            <option [value]="tier.name">
+              {{ tier.name }}
+            </option>
+          }
+        </select>
         </div>
-        <div class="d-grid gap-3 p-3">
-          <app-badge-comp
-            class="align-self-center"
-            [text]="asStatus(dataDetail().rows[0]['status'])?.label ?? ''"
-            [bgColor]="asStatus(dataDetail().rows[0]['status'])?.color ?? ''">
-          </app-badge-comp>
-          <a class="link-underline-warning" href="/clearing-tickets/check-conflict">
-            Fall öffnen &rarr;
-          </a>
+        <div class="w-100">
+          <label class="form-label">
+            5. Restaurant
+            @if (form.value.restaurant !== originalValues.restaurant) {
+              <span class="text-danger">
+              (Alter Wert: {{ originalValues.restaurant }})
+            </span>
+            }
+          </label> <select class="form-select" formControlName="restaurant">
+          @for (restaurant of restaurants; track restaurant.name) {
+            <option [value]="restaurant.name">
+              {{ restaurant.name }}
+            </option>
+          }
+        </select>
         </div>
       </div>
-    }
-    <div class="gap-3 d-flex">
-      <app-button-comp
-        icon="pencil-square"
-        text="Korrigieren"
-        buttonDesignType="primary"
-        buttonType="icon"
-        [disabled]="asStatus(dataDetail().rows[0]['status'])?.value == 'CHECKED'"
-        link="http://localhost:4200/ticket-details/correct/{{dataDetail().rows[0]['id']}}">
-      </app-button-comp>
-      <app-button-comp
-        text="Zurück zur Hauptseite"
-        buttonDesignType="outline-secondary"
-        buttonType="link"
-        link="http://localhost:4200/admin-overview">
-      </app-button-comp>
-    </div>
+      <div class="w-100">
+        <label class="form-label">
+          6. Status
+          @if (form.value.status !== originalValues.status) {
+            <span class="text-danger">
+              (Alter Wert: {{ originalValues.status }})
+            </span>
+          }
+          <span class="text-danger-emphasis">DIESER WERT SOLLTE NUR IN NOTFÄLLEN GEÄNDERT WERDEN</span>
+        </label> <select class="form-select" formControlName="status">
+        <option value="CHECKED">Abgeglichen</option>
+        <option value="NEEDS_FIXING">Korrektur erforderlich</option>
+        <option value="CONFLICT">Konflikt</option>
+        <option value="OPEN">Offen</option>
+      </select>
+      </div>
+      <div>
+        <label class="form-label">Grund der Korrektur</label>
+        <textarea class="form-control" rows="4" formControlName="correctionReason"></textarea>
+      </div>
+      <div class="d-flex gap-3">
+        <app-button-comp
+          text="Korrektur speichern"
+          buttonDesignType="primary"
+          buttonType="submit"
+          [disabled]="form.invalid || form.pending">
+        </app-button-comp>
+        <app-button-comp
+          text="Änderungen verwerfen"
+          buttonDesignType="secondary"
+          buttonType="button"
+          (click)="resetForm()">
+        </app-button-comp>
+        <app-button-comp
+          text="Abbrechen"
+          buttonDesignType="outline-secondary"
+          buttonType="link"
+          link="http://localhost:4200/ticket-details/{{dataDetail().rows[0]['id']}}">
+        </app-button-comp>
+      </div>
+    </form>
   </div>
 </div>

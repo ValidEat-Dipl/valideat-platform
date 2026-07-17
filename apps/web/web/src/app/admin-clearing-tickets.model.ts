@@ -6,7 +6,7 @@ export interface AdminClearingTickets {
   empTicketTier: string;
   empTicketCostOrder: string;
   empTicketRestaurant: string;
-  empTicketLog: ChangeLog;
+  empTicketLogs: ChangeLog[];
   empTicketUseDate: string;
   empTicketCheckDate: string;
   empTicketStatus: string;
@@ -16,7 +16,7 @@ export interface AdminClearingTickets {
   adminTicketTier: string;
   adminTicketCostOrder: string;
   adminTicketRestaurant: string;
-  adminTicketLog: ChangeLog;
+  adminTicketLogs: ChangeLog[];
   adminTicketUseDate: string;
   adminTicketCheckDate: string;
   adminTicketStatus: string;

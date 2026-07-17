@@ -6,26 +6,70 @@ import { ActivatedRoute } from '@angular/router';
 import { TicketDetailService } from '../ticket-detail-service';
 import { TableData } from '../table.model';
 import { Status } from '../status.model';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { EmployeeTicketService } from '../features/employee/services/employee-ticket.service';
+import { Restaurant } from '../features/employee/models/restaurant.model';
+import { Tier } from '../tier.model';
+import { CostOrder } from '../costOrder.model';
+import {forkJoin} from 'rxjs';
+import { CorrectTicketService } from '../correct-ticket-service';
 
 @Component({
   selector: 'app-correct-ticket-comp',
-  imports: [BadgeComp, ButtonComp, NavComp],
+  imports: [BadgeComp, NavComp, ReactiveFormsModule, ButtonComp],
   templateUrl: './correct-ticket-comp.html',
   styleUrl: './correct-ticket-comp.css',
 })
 export class CorrectTicketComp implements OnInit {
   route = inject(ActivatedRoute);
   ticketDetailService = new TicketDetailService();
+  dropdownService = inject(EmployeeTicketService);
+  fb = inject(FormBuilder);
+  correctTicketService = new CorrectTicketService();
+
+  costOrders: CostOrder[] = [];
+  restaurants: Restaurant[] = [];
+  tiers: Tier[] = [];
 
   dataDetail = signal<TableData>({
     headers: [],
     rows: [],
   });
 
+  originalValues = {
+    username: '',
+    useDate: '',
+    costDepartment: '',
+    costRank: '',
+    restaurant: '',
+    status: '',
+    correctionReason: '',
+  };
+
+  form = this.fb.nonNullable.group({
+    username: ['', Validators.required],
+    useDate: ['', Validators.required],
+    costDepartment: ['', Validators.required],
+    costRank: ['', Validators.required],
+    restaurant: ['', Validators.required],
+    status: ['', Validators.required],
+    correctionReason: ['', Validators.required],
+  });
+
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {
       const id = Number(params.get('id'));
-      this.ticketDetailService.loadTicketDetails(id).subscribe((ticket) => {
+
+      forkJoin({
+        ticket: this.ticketDetailService.loadTicketDetails(id),
+        costOrders: this.dropdownService.getCostOrders(),
+        restaurants: this.dropdownService.getRestaurants(),
+        tiers: this.dropdownService.getTiers(),
+      }).subscribe(({ ticket, costOrders, restaurants, tiers }) => {
+        this.costOrders = costOrders;
+        this.restaurants = restaurants;
+        this.tiers = tiers;
+
         this.dataDetail.set({
           headers: [
             { key: 'person', label: 'Mitarbeiter' },
@@ -33,6 +77,7 @@ export class CorrectTicketComp implements OnInit {
             { key: 'stufe', label: 'Stufe' },
             { key: 'kostenstelle', label: 'Kostenstelle' },
             { key: 'restaurant', label: 'Restaurant' },
+            { key: 'status', label: 'Status' },
             { key: 'checkDate', label: 'Prüfdatum' },
           ],
           rows: [
@@ -48,12 +93,31 @@ export class CorrectTicketComp implements OnInit {
             },
           ],
         });
-        console.log(this.dataDetail());
+
+        this.form.patchValue({
+          username: ticket.firstName + ' ' + ticket.lastName,
+          useDate: ticket.useDate,
+          costDepartment: ticket.costOrder,
+          costRank: ticket.tier,
+          restaurant: ticket.restaurantName,
+          status: ticket.status,
+        });
+
+        this.originalValues = this.form.getRawValue();
       });
     });
   }
 
+  protected resetForm() {
+    this.form.reset(this.originalValues);
+  }
+
   protected asStatus(value: unknown): Status | null {
     return value instanceof Status ? value : null;
+  }
+
+  protected onSubmit() {
+    console.log(this.originalValues)
+    console.log(this.form.getRawValue())
   }
 }
