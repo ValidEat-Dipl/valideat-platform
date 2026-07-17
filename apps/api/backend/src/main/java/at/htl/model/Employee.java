@@ -29,10 +29,14 @@ public class Employee {
     @OneToMany(mappedBy = "employee")
     private List<ChangeLog> changeLogs;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
+
     public Employee() {
     }
 
-    public Employee(Long id, String firstName, String lastName, String address, String department, String phoneNumber, String email, String passwordHash, List<ChangeLog> changeLogs) {
+    public Employee(Long id, String firstName, String lastName, String address, String department, String phoneNumber, String email, String passwordHash, List<ChangeLog> changeLogs, Role role) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -42,6 +46,7 @@ public class Employee {
         this.email = email;
         this.passwordHash = passwordHash;
         this.changeLogs = changeLogs;
+        this.role = role;
     }
 
     public Long getId() {
@@ -114,5 +119,13 @@ public class Employee {
 
     public void setChangeLogs(List<ChangeLog> changeLogs) {
         this.changeLogs = changeLogs;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

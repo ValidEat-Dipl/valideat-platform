@@ -1,15 +1,19 @@
 package at.htl.repository;
 
+import at.htl.boundary.dto.LoginResponseDTO;
 import at.htl.model.Employee;
 import at.htl.model.FoodTicket;
 import io.quarkus.elytron.security.common.BcryptUtil;
+import io.smallrye.jwt.build.Jwt;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
+import jakarta.ws.rs.core.Response;
 
 import javax.swing.text.html.parser.Entity;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -41,24 +45,30 @@ public class EmployeeRepository {
     }
 
 
-    public String login(String email, String password) {
+    public LoginResponseDTO login(String email, String password) {
         List<Employee> employees = em.createQuery("select e from Employee e where e.email = :email", Employee.class)
                 .setParameter("email", email).getResultList();
 
         if (employees.isEmpty()) {
-            return "No Employee found.";
+            return null;
         }
 
         if (employees.size() > 1) {
-            return "There were more than one Result";
+            return null;
         }
 
         Employee employee = employees.getFirst();
 
         if (BcryptUtil.matches(password, employee.getPasswordHash())) {
-            return "Login was Successful!";
+            String token = Jwt.issuer("ValidEat")
+                    .subject(employee.getEmail())
+                    .claim("id", employee.getId())
+                    .groups(employee.getRole().toString())
+                    .expiresIn(Duration.ofHours(10))
+                    .sign();
+            return new LoginResponseDTO(token, employee.getId(), employee.getFirstName(), employee.getLastName(), employee.getEmail(), employee.getRole());
         } else {
-            return "Wrong password!";
+            return null;
         }
     }
 

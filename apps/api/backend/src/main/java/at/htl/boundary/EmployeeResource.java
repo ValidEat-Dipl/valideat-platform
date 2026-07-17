@@ -1,5 +1,7 @@
 package at.htl.boundary;
 
+import at.htl.boundary.dto.LoginDTO;
+import at.htl.boundary.dto.LoginResponseDTO;
 import at.htl.model.Employee;
 import at.htl.model.FoodTicket;
 import at.htl.repository.EmployeeRepository;
@@ -7,6 +9,7 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -25,9 +28,9 @@ public class EmployeeResource {
     }
 
     @POST
-    @Path("/login/{email}/{password}")
-    public String login(@PathParam("email") String email, @PathParam("password") String password) {
-        return employeeRepository.login(email, password);
+    @Path("/login")
+    public LoginResponseDTO login(LoginDTO loginDTO) {
+        return employeeRepository.login(loginDTO.email(), loginDTO.password());
     }
 
     @POST

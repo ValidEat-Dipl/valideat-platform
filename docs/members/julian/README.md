@@ -43,3 +43,8 @@ Geschafft: clearing seite alle rest calls implementiert und bug fix, das findByI
 Donnerstag: 16.7 Wollen: Hr routen fertig machen
 
 Geschafft: Hr routen fertig geschafft, es hat eh nurmehr conflict gefehlt, dazu einige bugfixes z.B. sachen auf dtos umändern und die Beziehung zwischen ChangeLog, Employee und FoodTicket gefixt. Da sie zuerst falsch herum war.
+
+
+Freitag 17.7: Wollen: Anfangen mit JWT
+
+Geschafft: jwt so gut wie fertig implementiert

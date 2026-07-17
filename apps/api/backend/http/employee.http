@@ -1,2 +1,8 @@
 ###
-POST http://localhost:8080/employee/login/max.mustermann@firma.at/password123
+POST http://localhost:8080/employee/login
+Content-Type: application/json
+
+{
+  "email": "max.mustermann@firma.at",
+  "password": "password123"
+}

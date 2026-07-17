@@ -17,19 +17,20 @@ INSERT INTO Employee (
     department,
     phoneNumber,
     email,
-    passwordHash
+    passwordHash,
+    role
 ) VALUES
-      ('Max', 'Mustermann', 'Musterstraße 1, Linz', 'IT', '+43 660 1111111', 'max.mustermann@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu'),
+      ('Max', 'Mustermann', 'Musterstraße 1, Linz', 'IT', '+43 660 1111111', 'max.mustermann@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu', 'ADMIN'),
 
-      ('Anna', 'Huber', 'Hauptplatz 5, Wels', 'HR', '+43 660 2222222', 'anna.huber@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu'),
+      ('Anna', 'Huber', 'Hauptplatz 5, Wels', 'HR', '+43 660 2222222', 'anna.huber@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu', 'EMPLOYEE'),
 
-      ('Lukas', 'Gruber', 'Bahnhofstraße 12, Steyr', 'Sales', '+43 660 3333333', 'lukas.gruber@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu'),
+      ('Lukas', 'Gruber', 'Bahnhofstraße 12, Steyr', 'Sales', '+43 660 3333333', 'lukas.gruber@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu', 'EMPLOYEE'),
 
-      ('Julia', 'Bauer', 'Schillerstraße 8, Linz', 'Finance', '+43 660 4444444', 'julia.bauer@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu'),
+      ('Julia', 'Bauer', 'Schillerstraße 8, Linz', 'Finance', '+43 660 4444444', 'julia.bauer@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu', 'EMPLOYEE'),
 
-      ('David', 'Leitner', 'Kirchengasse 4, Enns', 'Administration', '+43 660 5555555', 'david.leitner@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu'),
+      ('David', 'Leitner', 'Kirchengasse 4, Enns', 'Administration', '+43 660 5555555', 'david.leitner@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu', 'ADMIN'),
 
-      ('Sarah', 'Wagner', 'Mozartstraße 22, Linz', 'Administration', '+43 660 6666666', 'sarah.wagner@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu');
+      ('Sarah', 'Wagner', 'Mozartstraße 22, Linz', 'Administration', '+43 660 6666666', 'sarah.wagner@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu', 'ADMIN');
 
 
 INSERT INTO CostOrder (name) VALUES

@@ -3,6 +3,8 @@ package at.htl.boundary;
 import at.htl.boundary.dto.*;
 import at.htl.model.*;
 import at.htl.repository.*;
+import io.quarkus.security.Authenticated;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
