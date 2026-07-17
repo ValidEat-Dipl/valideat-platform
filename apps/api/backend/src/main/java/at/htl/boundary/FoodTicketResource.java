@@ -30,6 +30,8 @@ public class FoodTicketResource {
     CostOrderRepository costOrderRepository;
     @Inject
     RestaurantRepository restaurantRepository;
+    @Inject
+    ChangeLogRepository changeLogRepository;
 
     @GET
     public List<FoodTicket> listAll() {
@@ -200,6 +202,9 @@ public class FoodTicketResource {
                 LocalDate.now());
         foodTicketRepository.save(foodTicket);
 
+        ChangeLog newChange = new ChangeLog("Added new Entry.", LocalDate.now(), foodTicket, new Employee());
+        changeLogRepository.save(newChange);
+
         foodTicketRepository.clearing();
         return Response.ok().build();
     }
@@ -276,6 +281,10 @@ public class FoodTicketResource {
         ticket.setTier(tier);
         ticket.setRestaurant(restaurant);
         ticket.setCheckDate(LocalDate.now());
+        ticket.setStatus(adminAddTicketDTO.status());
+
+        ChangeLog newChange = new ChangeLog(adminAddTicketDTO.description(), LocalDate.now(), ticket, new Employee());
+        changeLogRepository.save(newChange);
 
         return Response.ok(ticket).build();
     }
@@ -311,21 +320,6 @@ public class FoodTicketResource {
         }
 
         return Response.noContent().build();
-    }
-
-    @PUT
-    @Transactional
-    @Path("/changeStatus/{ticketId}/{status}")
-    public Response changeTicketStatus(@PathParam("ticketId") Long id, @PathParam("status") Status status) {
-        FoodTicket ticket = foodTicketRepository.findById(id);
-
-        if (ticket == null) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        }
-
-        ticket.setStatus(status);
-
-        return Response.ok(ticket).build();
     }
 
     @GET
