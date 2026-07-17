@@ -51,7 +51,6 @@ export class TicketDetailsComp implements OnInit {
             },
           ],
         });
-        console.log(this.dataDetail());
       });
     });
   }

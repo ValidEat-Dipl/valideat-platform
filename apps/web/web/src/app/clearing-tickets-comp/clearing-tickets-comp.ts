@@ -73,7 +73,7 @@ export class ClearingTicketsComp implements OnInit {
             { key: 'conflictType', label: 'Konfliktart' },
             { key: 'status', label: 'Status' },
             { key: 'lastChange', label: 'Letzte Änderung' },
-            { key: 'actionOpenCase', label: 'Aktion' },
+            { key: 'actionDetail', label: 'Aktion' },
           ],
           rows: data.map((ticket) => ({
             person: ticket.empTicketEmpName ?? ticket.adminTicketEmpName,
@@ -86,10 +86,10 @@ export class ClearingTicketsComp implements OnInit {
               ticket.empTicketLogs?.[0]?.changeDate ??
               ticket.adminTicketLogs?.[0]?.changeDate ??
               'Noch keine Änderung vorgenommen',
-            actionOpenCase: 'Fall öffnen',
+            actionDetail: 'Details',
+            id: ticket.empTicketId ?? ticket.adminTicketId
           })),
         });
-        console.log(data.at(0)?.empTicketLogs)
       });
   }
 }

@@ -42,7 +42,7 @@
             [text]="asStatus(dataDetail().rows[0]['status'])?.label ?? ''"
             [bgColor]="asStatus(dataDetail().rows[0]['status'])?.color ?? ''">
           </app-badge-comp>
-          <a class="link-underline-warning" href="/clearing-tickets/check-conflict">
+          <a class="link-underline-warning" href="http://localhost:4200/clearing-tickets/check-conflict/{{dataDetail().rows[0]['id']}}">
             Fall öffnen &rarr;
           </a>
         </div>

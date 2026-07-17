@@ -6,17 +6,22 @@
     </tr>
     </thead>
     <tbody>
-      @for (row of dataEmp()?.rows; track $index) {
+      @for (header of data()?.headers; track header.key) {
         <tr>
-          @if (conflictFields == "STUFE") {
+          @if (conflictFields == header.key.toUpperCase()) {
             <td class="d-flex gap-2 bg-danger-subtle">
-              <p class="text-secondary text-uppercase">Stufe</p>
-              <span class="text-end fw-bold text-danger">Stufe B <app-badge-comp text="Abweichung" bgColor="danger"></app-badge-comp></span>
+              <p class="text-secondary text-uppercase m-0">{{ header.label }}</p>
+              <span class="text-end fw-bold text-danger ms-auto">
+                {{ data()?.rows?.[0]?.[header.key + 'Emp'] }}
+                <app-badge-comp text="Abweichung" bgColor="danger"></app-badge-comp>
+              </span>
             </td>
           } @else {
             <td class="d-flex gap-2">
-              <p class="text-secondary text-uppercase">Person</p>
-              <span class="text-end fw-bold">Testperson 1</span>
+              <p class="text-secondary text-uppercase m-0">{{ header.label }}</p>
+              <span class="text-end fw-bold ms-auto">
+                {{ data()?.rows?.[0]?.[header.key + 'Emp'] }}
+              </span>
             </td>
           }
         </tr>
@@ -26,21 +31,26 @@
   <table class="w-100 table table-bordered caption-top">
     <thead class="table-light">
     <tr>
-      <th scope="col">Physisches Markerl</th>
+      <th scope="col">Adminerfassung</th>
     </tr>
     </thead>
     <tbody>
-      @for (row of dataTicket()?.rows; track $index) {
+      @for (header of data()?.headers; track header.key) {
         <tr>
-          @if (conflictFields != "STUFE") {
+          @if (conflictFields == header.key.toUpperCase()) {
             <td class="d-flex gap-2 bg-danger-subtle">
-              <p class="text-secondary text-uppercase">Stufe</p>
-              <span class="text-end fw-bold text-danger">Stufe B <app-badge-comp text="Abweichung" bgColor="danger"></app-badge-comp></span>
+              <p class="text-secondary text-uppercase m-0">{{ header.label }}</p>
+              <span class="text-end fw-bold text-danger ms-auto">
+                {{ data()?.rows?.[0]?.[header.key + 'Admin'] }}
+                <app-badge-comp text="Abweichung" bgColor="danger"></app-badge-comp>
+              </span>
             </td>
           } @else {
             <td class="d-flex gap-2">
-              <p class="text-secondary text-uppercase">Person</p>
-              <span class="text-end fw-bold">Testperson 1</span>
+              <p class="text-secondary text-uppercase m-0">{{ header.label }}</p>
+              <span class="text-end fw-bold ms-auto">
+                {{ data()?.rows?.[0]?.[header.key + 'Admin'] }}
+              </span>
             </td>
           }
         </tr>
@@ -48,4 +58,13 @@
     </tbody>
   </table>
 </div>
-
+<div class="d-flex justify-content-between w-100">
+  <app-button-comp
+    text="Fehler bei Mitarbeitererfassung korrigieren"
+    buttonDesignType="warning">
+  </app-button-comp>
+  <app-button-comp
+    text="Fehler bei Adminerfassung korrigieren"
+    buttonDesignType="warning">
+  </app-button-comp>
+</div>

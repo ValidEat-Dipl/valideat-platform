@@ -2,10 +2,19 @@
 
 <div class="m-4 d-grid gap-4">
 
-  <div class="d-flex gap-3">
-    <h1>Konflikt prüfen</h1>
-    <app-badge-comp class="align-self-center" text="Konflikt" bgColor="danger"></app-badge-comp>
-  </div>
+  <header>
+    <div class="d-flex gap-3">
+      <h1>Konflikt prüfen</h1>
+      <app-badge-comp class="align-self-center" text="Korrektur erforderlich" bgColor="warning"></app-badge-comp>
+    </div>
+    <p style="color: var(--gray-400)">Diese Seite ist nur bei Tickets, die bei Mitarbeiter und Datum schon, aber etwas anderem nicht übereinstimmen.
+      Ansonsten muss ein Konflikt über die Korrekturseite gelöst werden.
+      <br> Hier kann nur 1 der beiden Tickets dem anderen zugeordnet werden, danach wird das Ticket als abgeglichen markiert.
+    </p>
+  </header>
 
-  <app-table-check-conflict-comp [dataEmp]="dataTable()" [dataTicket]="dataTable()"></app-table-check-conflict-comp>
+
+  <app-table-check-conflict-comp>
+    [data]="dataTable()"
+  </app-table-check-conflict-comp>
 </div>

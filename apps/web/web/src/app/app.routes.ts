@@ -10,15 +10,15 @@ import { MostRecentTicketsComp } from './most-recent-tickets-comp/most-recent-ti
 import { CorrectTicketComp } from './correct-ticket-comp/correct-ticket-comp';
 
 export const routes: Routes = [
-  { path: 'admin-overview', component: AdminOverviewComp }, // * sortieren nach typ
-  { path: 'most-recent-created', component: MostRecentTicketsComp }, // *
-  { path: 'create-ticket', component: CreateTicketComp }, // * noch keine datalist bei emps, kein hr erkennung weil fehlendes user system
-  { path: 'clearing-tickets', component: ClearingTicketsComp }, // *
-  { path: 'clearing-tickets/check-conflict', component: CheckConflictComp }, // backend noch nicht fertig, fehlt noch viel frontend
-  { path: 'open-conflicts', component: OpenConflictsComp }, // wenig gemacht, ka ob backend route da ist
-  { path: 'export', component: ExportComp }, // fast nichts, für woche 3 geplant
-  { path: 'ticket-details/:id', component: TicketDetailsComp }, // *
-  { path: 'ticket-details/correct/:id', component: CorrectTicketComp }, // * backend routen aufruf fehlt
+  /* fast */ { path: 'admin-overview', component: AdminOverviewComp }, // * sortieren nach typ
+  /* voll */ { path: 'most-recent-created', component: MostRecentTicketsComp },
+  /* fast */ { path: 'create-ticket', component: CreateTicketComp }, // * noch keine datalist bei emps, keine admin erkennung weil fehlendes user system
+  /* voll */ { path: 'clearing-tickets', component: ClearingTicketsComp },
+  /* NEIN */ { path: 'clearing-tickets/check-conflict/:id', component: CheckConflictComp }, // backend aufruf zum speichern fehlt noch
+  /* NEIN */ { path: 'open-conflicts', component: OpenConflictsComp }, // in bearbeitung
+  /* NEIN */ { path: 'export', component: ExportComp }, // fast nichts, für woche 3 geplant
+  /* voll */ { path: 'ticket-details/:id', component: TicketDetailsComp },
+  /* fast */ { path: 'ticket-details/correct/:id', component: CorrectTicketComp }, // * backend routen aufruf fehlt
   {
     path: 'employee',
     loadChildren: () =>
