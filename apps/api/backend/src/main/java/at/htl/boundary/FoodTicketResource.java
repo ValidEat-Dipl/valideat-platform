@@ -167,7 +167,7 @@ public class FoodTicketResource {
                 restaurant,
                 TicketType.EMPLOYEE);
         foodTicketRepository.save(foodTicket);
-        return Response.ok().build();
+        return Response.ok(foodTicket.getId()).build();
     }
 
     @POST
