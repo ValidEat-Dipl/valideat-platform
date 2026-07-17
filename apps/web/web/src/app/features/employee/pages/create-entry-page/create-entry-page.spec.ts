@@ -47,4 +47,41 @@ describe('CreateEntryPage', () => {
     expect(entryState.ticket?.tier).toBe('INTERN');
     httpTesting.expectNone('http://localhost:8080/foodticket/empAddTicketEntry');
   });
+
+  it('uses the latest ticket values as dropdown defaults', () => {
+    fixture.detectChanges();
+
+    httpTesting.expectOne('http://localhost:8080/foodticket/findByEmployee/1').flush([
+      {
+        id: 12,
+        firstName: 'Max',
+        lastName: 'Mustermann',
+        useDate: '2026-07-16',
+        tier: 'EMPLOYEE',
+        costOrder: '1200 - IT',
+        restaurantName: 'Gasthaus zur Stadt',
+        status: 'OPEN',
+        checkDate: null,
+      },
+      {
+        id: 4,
+        firstName: 'Max',
+        lastName: 'Mustermann',
+        useDate: '2026-07-10',
+        tier: 'APPRENTICE',
+        costOrder: '1000 - Verwaltung',
+        restaurantName: 'Restaurant Adler',
+        status: 'CHECKED',
+        checkDate: '2026-07-10',
+      },
+    ]);
+    httpTesting.expectOne('http://localhost:8080/restaurant').flush([]);
+    httpTesting.expectOne('http://localhost:8080/tier').flush([]);
+    httpTesting.expectOne('http://localhost:8080/costOrder').flush([]);
+
+    expect(component.ticketForm.value.tier).toBe('EMPLOYEE');
+    expect(component.ticketForm.value.costOrder).toBe('1200 - IT');
+    expect(component.ticketForm.value.restaurantName).toBe('Gasthaus zur Stadt');
+    expect(component.ticketForm.controls.date.disabled).toBe(false);
+  });
 });

@@ -43,11 +43,16 @@ export class ReviewEntryPage implements OnInit {
     this.errorMessage.set('');
 
     this.employeeTicketService.addTicketEntry(this.ticket).subscribe({
-      next: () => {
+      next: (ticketId) => {
+
+        // id für detailpage speichern
+        this.employeeEntryState.savedTicketId = ticketId;
+
         this.employeeEntryState.saved = true;
         this.router.navigate(['/employee/success']);
       },
       error: () => {
+        
         this.isSaving.set(false);
         this.errorMessage.set('Die Erfassung konnte nicht gespeichert werden.');
       },
@@ -61,6 +66,7 @@ export class ReviewEntryPage implements OnInit {
   cancel(): void {
     this.employeeEntryState.ticket = undefined;
     this.employeeEntryState.saved = false;
+    this.employeeEntryState.savedTicketId = undefined;
     this.router.navigate(['/employee/start']);
   }
 

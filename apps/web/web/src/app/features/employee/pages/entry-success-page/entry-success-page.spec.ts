@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
+import { provideRouter, Router } from '@angular/router';
+import { vi } from 'vitest';
 import { EmployeeEntryState } from '../../services/employee-entry-state';
 import { EntrySuccessPage } from './entry-success-page';
 
@@ -22,6 +23,7 @@ describe('EntrySuccessPage', () => {
       restaurantName: 'Gasthaus zur Stadt',
     };
     entryState.saved = true;
+    entryState.savedTicketId = 12;
 
     fixture = TestBed.createComponent(EntrySuccessPage);
     component = fixture.componentInstance;
@@ -30,5 +32,13 @@ describe('EntrySuccessPage', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('opens the saved ticket', () => {
+    const navigate = vi.spyOn(TestBed.inject(Router), 'navigate').mockResolvedValue(true);
+
+    component.goToEntry();
+
+    expect(navigate).toHaveBeenCalledWith(['/employee/entries', 12]);
   });
 });

@@ -5,4 +5,5 @@ import { EmployeeFoodTicketRequest } from '../models/employee-food-ticket.model'
 export class EmployeeEntryState {
   ticket?: EmployeeFoodTicketRequest;
   saved = false;
+  savedTicketId?: number;
 }

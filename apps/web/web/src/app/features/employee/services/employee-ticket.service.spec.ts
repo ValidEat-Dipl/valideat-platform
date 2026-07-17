@@ -94,12 +94,14 @@ describe('EmployeeTicketService', () => {
       restaurantName: 'Restaurant Adler',
     };
 
-    service.addTicketEntry(ticket).subscribe();
+    service.addTicketEntry(ticket).subscribe((ticketId) => {
+      expect(ticketId).toBe(12);
+    });
 
     const request = httpTesting.expectOne('http://localhost:8080/foodticket/empAddTicketEntry');
     expect(request.request.method).toBe('POST');
     expect(request.request.body).toEqual(ticket);
-    request.flush(null);
+    request.flush(12);
   });
 
   it('edits an employee ticket entry', () => {

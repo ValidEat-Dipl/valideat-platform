@@ -44,9 +44,10 @@ describe('ReviewEntryPage', () => {
 
     const request = httpTesting.expectOne('http://localhost:8080/foodticket/empAddTicketEntry');
     expect(request.request.method).toBe('POST');
-    request.flush(null);
+    request.flush(12);
 
     expect(TestBed.inject(EmployeeEntryState).saved).toBe(true);
+    expect(TestBed.inject(EmployeeEntryState).savedTicketId).toBe(12);
     expect(navigate).toHaveBeenCalledWith(['/employee/success']);
   });
 });

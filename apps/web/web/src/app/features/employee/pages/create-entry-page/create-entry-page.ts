@@ -40,18 +40,37 @@ export class CreateEntryPage implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (this.employeeEntryState.ticket) {
+    const draft = this.employeeEntryState.ticket;
+
+    // wenn von nächster seite zurück kommt, dass daten wieder da
+    if (draft) {
       this.ticketForm.patchValue({
-        ...this.employeeEntryState.ticket,
+        ...draft,
         confirmed: true,
       });
     }
 
     this.employeeTicketService.findByEmployee(this.employeeId).subscribe((tickets) => {
       if (tickets.length > 0) {
+
+        // so0rt id, neuester oben
+        tickets.sort((a, b) => b.id - a.id);
+        const latestTicket = tickets[0];
+
         this.ticketForm.patchValue({
-          employeeName: `${tickets[0].firstName} ${tickets[0].lastName}`,
+          employeeName: `${latestTicket.firstName} ${latestTicket.lastName}`,
         });
+
+        // wenn kein draft, neues formular mit daten vom letzten ticket 
+        if (draft == undefined) {
+          this.ticketForm.patchValue({
+            costOrder: latestTicket.costOrder,
+            tier: latestTicket.tier,
+            restaurantName: latestTicket.restaurantName,
+          });
+        }
+
+        // Aktualisiert das Formular nach dem asynchronen Backendaufruf.
         this.changeDetectorRef.markForCheck();
       }
     });
@@ -86,12 +105,16 @@ export class CreateEntryPage implements OnInit {
 
     this.employeeEntryState.ticket = ticket;
     this.employeeEntryState.saved = false;
+    this.employeeEntryState.savedTicketId = undefined;
+
     this.router.navigate(['/employee/review']);
   }
 
   cancel(): void {
     this.employeeEntryState.ticket = undefined;
     this.employeeEntryState.saved = false;
+    this.employeeEntryState.savedTicketId = undefined;
+
     this.router.navigate(['/employee/start']);
   }
 }
