@@ -5,7 +5,21 @@
   <thead class="table-light">
   <tr>
     @for (header of data()?.headers; track $index) {
-      <th scope="col">{{ header.label.toUpperCase() }}</th>
+      @if (header.key == 'typ') {
+        <th scope="col">
+          <div class="d-flex align-items-center gap-2">
+            {{ header.label.toUpperCase() }}
+            <button class="btn p-0 d-flex flex-column" style="line-height: 8px;" (click)="changeSort()" k>
+              <i class="bi bi-caret-up-fill" [class.opacity-50]="sortDirection() !== 'asc'"></i>
+              <i class="bi bi-caret-down-fill" [class.opacity-50]="sortDirection() !== 'desc'"></i>
+            </button>
+          </div>
+        </th>
+      } @else {
+        <th scope="col">
+          {{ header.label.toUpperCase() }}
+        </th>
+      }
     }
   </tr>
   </thead>

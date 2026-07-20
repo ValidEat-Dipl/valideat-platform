@@ -1,4 +1,14 @@
-import {Component, computed, inject, input, InputSignal, OnInit, signal, Signal} from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  input,
+  InputSignal,
+  OnInit,
+  output,
+  signal,
+  Signal,
+} from '@angular/core';
 import {TableData} from '../table.model';
 import {DatePipe} from '@angular/common';
 import {Status} from '../status.model';
@@ -15,10 +25,24 @@ export class TableOverviewComp {
   caption = input<string>('');
   data = input<TableData>();
 
+  sortChange = output<'asc' | 'desc' | null>();
   length = computed(() => this.data()?.rows.length ?? 0);
 
   initRow = signal(0);
-  maxRows = 5;
+  maxRows = 20;
+
+  sortDirection = signal<'asc' | 'desc' | null>(null);
+  protected changeSort() {
+    if (this.sortDirection() === null) {
+      this.sortDirection.set('asc');
+    } else if (this.sortDirection() === 'asc') {
+      this.sortDirection.set('desc');
+    } else {
+      this.sortDirection.set(null);
+    }
+
+    this.sortChange.emit(this.sortDirection());
+  }
 
   // Copilot #1 Anfang
   visibleRows = computed(() => {

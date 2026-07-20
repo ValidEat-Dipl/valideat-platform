@@ -4,7 +4,7 @@
 
   <h1>Offene Konflikte</h1>
 
-  <app-info-flex-comp></app-info-flex-comp>
+  <app-info-flex-comp [data]="infoContainer()"></app-info-flex-comp>
 
   @if (dataResponse().count < 1) {
     <div class="bg-success-subtle rounded-3 d-grid p-5 justify-content-center">

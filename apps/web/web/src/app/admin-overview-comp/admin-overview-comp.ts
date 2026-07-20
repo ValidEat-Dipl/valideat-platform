@@ -19,6 +19,7 @@ export class AdminOverviewComp implements OnInit {
   tableService = inject(TableDataOverviewService);
   infoContainerService = inject(InfoFlexServiceAdminOverview);
 
+  sortBy: 'asc' | 'desc' | null = null;
   lastYear: boolean = false;
 
   infoContainer = signal<Record<string, number>>({});
@@ -34,13 +35,17 @@ export class AdminOverviewComp implements OnInit {
   onToggleLastYear() {
     this.loadData();
   }
+  protected onSortChange(direction: 'asc' | 'desc' | null) {
+    this.sortBy = direction;
+    this.loadData();
+  }
 
   protected loadData() {
     this.infoContainerService.getInfoContainerMap(this.lastYear).subscribe((data) => {
       this.infoContainer.set({ ...data });
     });
 
-    this.tableService.getTableData(this.lastYear).subscribe((data) => {
+    this.tableService.getTableData(this.lastYear, this.sortBy ?? undefined).subscribe((data) => {
       this.dataTable.set({
         headers: [
           { key: 'typ', label: 'Tickettyp' },
@@ -49,7 +54,7 @@ export class AdminOverviewComp implements OnInit {
           { key: 'stufe', label: 'Stufe' },
           { key: 'kostenstelle', label: 'Kostenstelle' },
           { key: 'status', label: 'Status' },
-          { key: 'actionDetail', label: 'Aktion' }
+          { key: 'actionDetail', label: 'Aktion' },
         ],
         rows: data.map((ticket) => ({
           person: ticket.employee.firstName + ' ' + ticket.employee.lastName,
