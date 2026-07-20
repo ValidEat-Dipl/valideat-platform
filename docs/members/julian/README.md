@@ -16,17 +16,13 @@ Donnerstag: 9.7. Wollen: An den Rest Routen weiterarbeiten.
 
 Geschafft: Die Backend Entities an den Stand vom ER-Diagramm angepasst aber nicht viele REST-Routen geschafft.
 
-
 Freitag: 10.7 Wollen: An REST Routen weiterarbeiten.
 
 Geschafft: Login und Registrieren geht jetzt mit Password Hash. Employee kann Markerl erfassen wegen neuer REST Route
 
-
-
 Montag: 13.7 Wollen: Testdaten durch insert.sql und hr rest routen
 
 Geschafft: Testdaten hinzugefügt, hr rest routen die erste seite fertig und langes meeting von uns 3 wo wir schonmal den clearing algorithmus durchgeplant haben
-
 
 Dienstag: 14.7 Wollen an den HR Routen arbeiten.
 
@@ -34,16 +30,13 @@ Geschafft: Mitarbeiter Seite: mitarbeiter kann eigenes ticket, falls es offen is
 
 Hr Seite: HR tickets seite call mit optionalen filtermöglichkeiten implementiert.
 
-
 Mittwoch 15.7 Wollen: An den HR routen arbeiten (clearing seite)
 
-Geschafft: clearing seite alle rest calls implementiert und bug fix, das findById ein dto zurückgibt beim foodticket
-
+Geschafft: clearing seite alle rest calls implementiert und bug fix, das findById ein dto zurückgibt beim foodticketx
 
 Donnerstag: 16.7 Wollen: Hr routen fertig machen
 
 Geschafft: Hr routen fertig geschafft, es hat eh nurmehr conflict gefehlt, dazu einige bugfixes z.B. sachen auf dtos umändern und die Beziehung zwischen ChangeLog, Employee und FoodTicket gefixt. Da sie zuerst falsch herum war.
-
 
 Freitag 17.7: Wollen: Anfangen mit JWT
 

@@ -553,8 +553,25 @@ public class FoodTicketRepository {
 
         List<FoodTicketConflictDTO> result = new ArrayList<>();
 
+        int open = 0;
+        int needsFixing = 0;
+        int conflictCount = 0;
+
         for (FoodTicket ticket : tickets) {
-            result.add(new FoodTicketConflictDTO(ticket.getId(), ticket.getEmployee().getFirstName() + " " + ticket.getEmployee().getLastName(), ticket.getUseDate(), ticket.getConflict(), determineWrongField(ticket), ticket.getStatus(),
+
+            switch (ticket.getStatus()) {
+                case OPEN -> open++;
+                case NEEDS_FIXING -> needsFixing++;
+                case CONFLICT -> conflictCount++;
+            }
+
+            result.add(new FoodTicketConflictDTO(
+                    ticket.getId(),
+                    ticket.getEmployee().getFirstName() + " " + ticket.getEmployee().getLastName(),
+                    ticket.getUseDate(),
+                    ticket.getConflict(),
+                    determineWrongField(ticket),
+                    ticket.getStatus(),
                     ticket.getAdmin() == null
                             ? null
                             : ticket.getAdmin().getFirstName() + " " + ticket.getAdmin().getLastName(),
@@ -562,7 +579,14 @@ public class FoodTicketRepository {
             ));
         }
 
-        return new FoodTicketConflictResponseDTO(result, result.size());
+        Map<String, Integer> infoBox = new LinkedHashMap<>();
+
+        infoBox.put("Gesamt", result.size());
+        infoBox.put("Offen", open);
+        infoBox.put("Nachbesserung", needsFixing);
+        infoBox.put("Konflikte", conflictCount);
+
+        return new FoodTicketConflictResponseDTO(result, infoBox);
     }
 
 
