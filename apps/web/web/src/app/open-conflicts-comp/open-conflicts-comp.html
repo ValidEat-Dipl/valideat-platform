@@ -6,7 +6,7 @@
 
   <app-info-flex-comp [data]="infoContainer()"></app-info-flex-comp>
 
-  @if (dataResponse().count < 1) {
+  @if (conflictCount < 1) {
     <div class="bg-success-subtle rounded-3 d-grid p-5 justify-content-center">
       <i class="p-3 bg-light bi bi-check2-circle text-center text-success m-auto mb-3 rounded-circle"></i>
       <p class="text-center m-0 text-success-emphasis fw-bold">

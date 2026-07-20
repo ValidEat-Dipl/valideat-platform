@@ -15,15 +15,11 @@ import { Status } from '../status.model';
 })
 export class OpenConflictsComp implements OnInit {
   dataService = inject(OpenConflictsService);
-
-  dataResponse = signal<FoodTicketConflictResponse>({
-    conflicts: [],
-    count: 0,
-  });
-  infoContainer = computed(() => ({
+  /*infoContainer = computed(() => ({
     "Offene Konflikte": this.dataResponse().count,
-  }));
-  /*infoContainer = signal<Record<string, number>>({});*/
+  }));*/
+  infoContainer = signal<Record<string, number>>({});
+  conflictCount = 1
 
   dataTable = signal<TableData>({
     headers: [],
@@ -36,9 +32,9 @@ export class OpenConflictsComp implements OnInit {
 
   protected loadData() {
     this.dataService.getData().subscribe((data) => {
-      this.dataResponse.set(data);
 
-      /*this.infoContainer.set(data.count);*/
+      this.infoContainer.set(data.infoBox);
+      this.conflictCount = data.tickets.length;
 
       this.dataTable.set({
         headers: [
@@ -51,7 +47,7 @@ export class OpenConflictsComp implements OnInit {
           { key: 'actionDetail', label: 'Aktion' },
         ],
 
-        rows: data.conflicts.map((ticket) => ({
+        rows: data.tickets.map((ticket) => ({
           person: ticket.empName,
           datum: ticket.useDate,
           conflict: ticket.conflict ?? 'Kein Gegenstück gefunden',

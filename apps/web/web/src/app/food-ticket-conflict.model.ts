@@ -3,8 +3,8 @@ import { Status } from './status.model';
 
 
 export interface FoodTicketConflictResponse {
-  conflicts: FoodTicketConflict[];
-  count: number;
+  tickets: FoodTicketConflict[];
+  infoBox: Record<string, number>;
 }
 
 interface FoodTicketConflict {

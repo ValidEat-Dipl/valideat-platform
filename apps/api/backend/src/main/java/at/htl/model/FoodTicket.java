@@ -45,7 +45,7 @@ public class FoodTicket {
 
     private String conflict;
 
-    @OneToMany(mappedBy = "foodTicket")
+    @OneToMany(mappedBy = "foodTicket", cascade = CascadeType.REMOVE)
     private List<ChangeLog> changeLogs;
 
 
