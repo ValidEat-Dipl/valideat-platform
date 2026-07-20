@@ -204,7 +204,7 @@ public class FoodTicketResource {
                 LocalDate.now());
         foodTicketRepository.save(foodTicket);
 
-        ChangeLog newChange = new ChangeLog("Added new Entry.", LocalDate.now(), foodTicket, new Employee());
+        ChangeLog newChange = new ChangeLog("Added new Entry.", LocalDate.now(), foodTicket, admin);
         changeLogRepository.save(newChange);
 
         foodTicketRepository.clearing();
@@ -264,12 +264,14 @@ public class FoodTicketResource {
         CostOrder costOrder;
         Restaurant restaurant;
         Employee employee;
+        Employee admin;
 
         try {
             tier = tierRepository.findByName(adminAddTicketDTO.tier());
             employee = employeeRepository.findByName(adminAddTicketDTO.employeeName());
             costOrder = costOrderRepository.findByName(adminAddTicketDTO.costOrder());
             restaurant = restaurantRepository.findByName(adminAddTicketDTO.restaurantName());
+            admin = employeeRepository.findByName(adminAddTicketDTO.adminName());
 
             if (tier == null || costOrder == null || restaurant == null || employee == null) {
                 return Response.status(Response.Status.BAD_REQUEST).build();
@@ -285,10 +287,10 @@ public class FoodTicketResource {
         ticket.setCheckDate(LocalDate.now());
         ticket.setStatus(adminAddTicketDTO.status());
 
-        ChangeLog newChange = new ChangeLog(adminAddTicketDTO.description(), LocalDate.now(), ticket, new Employee());
+        ChangeLog newChange = new ChangeLog(adminAddTicketDTO.description(), LocalDate.now(), ticket, admin);
         changeLogRepository.save(newChange);
 
-        return Response.ok(ticket).build();
+        return Response.ok().build();
     }
 
     @PUT

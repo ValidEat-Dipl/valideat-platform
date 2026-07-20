@@ -23,7 +23,6 @@ export class MostRecentTicketsComp implements OnInit {
 
   ngOnInit() {
     this.load();
-    console.log(this.dataTable());
   }
 
   form = inject(FormBuilder).nonNullable.group({

@@ -1,5 +1,17 @@
 <app-nav-comp></app-nav-comp>
 
+@if (showSuccessToast()) {
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div class="toast show text-bg-success border-0" role="alert">
+      <div class="d-flex">
+        <div class="toast-body">
+          Korrektur erfolgreich gespeichert.
+        </div>
+      </div>
+    </div>
+  </div>
+}
+
 <div class="m-4 d-grid gap-4">
   <div class="d-grid gap-3">
     <div class="d-flex gap-3">

@@ -15,10 +15,10 @@ export const routes: Routes = [
   /* fast */ { path: 'create-ticket', component: CreateTicketComp }, // * noch keine datalist bei emps, keine admin erkennung weil fehlendes user system
   /* voll */ { path: 'clearing-tickets', component: ClearingTicketsComp },
   /* NEIN */ { path: 'clearing-tickets/check-conflict/:id', component: CheckConflictComp }, // backend aufruf zum speichern fehlt noch
-  /* NEIN */ { path: 'open-conflicts', component: OpenConflictsComp }, // in bearbeitung
+  /* fast */ { path: 'open-conflicts', component: OpenConflictsComp }, // *
   /* NEIN */ { path: 'export', component: ExportComp }, // fast nichts, für woche 3 geplant
   /* voll */ { path: 'ticket-details/:id', component: TicketDetailsComp },
-  /* fast */ { path: 'ticket-details/correct/:id', component: CorrectTicketComp }, // * backend routen aufruf fehlt
+  /* voll */ { path: 'ticket-details/correct/:id', component: CorrectTicketComp },
   {
     path: 'employee',
     loadChildren: () =>

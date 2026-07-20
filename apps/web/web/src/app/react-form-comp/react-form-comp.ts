@@ -47,7 +47,6 @@ export class ReactFormComp implements OnInit {
   onSubmit() {
     if (this.form.invalid) return;
 
-    console.log(this.form.getRawValue());
     this.createAdminTicketService
       .createAdminTicket({
         useDate: this.form.value.useDate!,
@@ -55,7 +54,7 @@ export class ReactFormComp implements OnInit {
         costOrder: this.form.value.costDepartment!,
         tier: this.form.value.costRank!,
         restaurantName: this.form.value.restaurant!,
-        adminName: 'David Leitner',
+        adminName: 'David Leitner'
       })
       .subscribe({
         next: () => {

@@ -5,4 +5,6 @@ export interface CreateAdminTicket {
   tier: string;
   restaurantName: string;
   adminName: string;
+  status?: string;
+  description?: string;
 }

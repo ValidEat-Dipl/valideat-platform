@@ -2,7 +2,7 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { BadgeComp } from '../badge-comp/badge-comp';
 import { ButtonComp } from '../button-comp/button-comp';
 import { NavComp } from '../nav-comp/nav-comp';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TicketDetailService } from '../ticket-detail-service';
 import { TableData } from '../table.model';
 import { Status } from '../status.model';
@@ -11,7 +11,7 @@ import { EmployeeTicketService } from '../features/employee/services/employee-ti
 import { Restaurant } from '../features/employee/models/restaurant.model';
 import { Tier } from '../tier.model';
 import { CostOrder } from '../costOrder.model';
-import {forkJoin} from 'rxjs';
+import { forkJoin } from 'rxjs';
 import { CorrectTicketService } from '../correct-ticket-service';
 
 @Component({
@@ -26,6 +26,9 @@ export class CorrectTicketComp implements OnInit {
   dropdownService = inject(EmployeeTicketService);
   fb = inject(FormBuilder);
   correctTicketService = new CorrectTicketService();
+  router = inject(Router);
+
+  showSuccessToast = signal(false);
 
   costOrders: CostOrder[] = [];
   restaurants: Restaurant[] = [];
@@ -116,8 +119,39 @@ export class CorrectTicketComp implements OnInit {
     return value instanceof Status ? value : null;
   }
 
+  protected showToast() {
+    this.showSuccessToast.set(true);
+
+    setTimeout(() => {
+      this.showSuccessToast.set(false);
+    }, 2000);
+  }
+
   protected onSubmit() {
-    console.log(this.originalValues)
-    console.log(this.form.getRawValue())
+    if (this.form.invalid) return;
+
+    this.route.paramMap.subscribe((params) => {
+      const id = Number(params.get('id'));
+
+      this.correctTicketService
+        .correctAdminTicket(id, {
+          useDate: this.form.value.useDate!,
+          employeeName: this.form.value.username!,
+          costOrder: this.form.value.costDepartment!,
+          tier: this.form.value.costRank!,
+          restaurantName: this.form.value.restaurant!,
+          status: this.form.value.status!,
+          adminName: 'David Leitner',
+        })
+        .subscribe({
+          next: () => {
+            this.showToast();
+
+            setTimeout(() => {
+              this.router.navigate(['/clearing-tickets']);
+            }, 2000);
+          },
+        });
+    });
   }
 }
