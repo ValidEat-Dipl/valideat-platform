@@ -12,4 +12,6 @@ export class ButtonComp {
   link = input<string>('');
   disabled = input<boolean>(false);
   icon = input<string>('icon');
+
+
 }

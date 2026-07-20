@@ -7,6 +7,7 @@ import jakarta.inject.Inject;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.core.Response;
 
 import java.time.LocalDate;
@@ -100,10 +101,11 @@ public class FoodTicketRepository {
     }
 
     public void save(FoodTicket foodTicket) {
+        //TODO Automatic Clearing
         entityManager.persist(foodTicket);
     }
 
-    public boolean checkIfAmountOfTicketsOnSpecificDayFromOnePersonIsValid (LocalDate date, Employee emp) /* checkIfOnePersonTookMoreThanOneTicketOnOneDay */ {
+    public boolean checkIfAmountOfTicketsOnSpecificDayFromOnePersonIsValid (LocalDate date, Employee emp) {
         List<FoodTicket> ticketsList = entityManager.createQuery("""
                                                       select f
                                                       from FoodTicket f
@@ -472,6 +474,7 @@ public class FoodTicketRepository {
     }
 
     public boolean deleteTicket(Long ticketId) {
+        // TODO Automatic Clearing
         FoodTicket ticket = entityManager.find(FoodTicket.class, ticketId);
 
         if (ticket == null) {
@@ -617,6 +620,55 @@ public class FoodTicketRepository {
         return "Unbekannter Unterschied";
     }
 
-    public void clearing() { // für später wird aufgerufen nachdem admin ticket erstellt
+    @Transactional
+    public void clearing(FoodTicket ticket) {
+
+        TicketType ticketType = ticket.getTicketType();
+
+        List<FoodTicket> possibleMatches = List.of();
+
+        if (ticketType.equals(TicketType.EMPLOYEE)) {
+            possibleMatches = getAllTickets(TicketType.ADMIN);
+        } else if (ticketType.equals(TicketType.ADMIN)) {
+            possibleMatches = getAllTickets(TicketType.EMPLOYEE);
+        }
+
+        for (FoodTicket possibleMatch : possibleMatches) {
+            if (ticket.getEmployee().equals(possibleMatch.getEmployee())
+                && ticket.getUseDate().equals(possibleMatch.getUseDate())) {
+                if (ticket.getRestaurant().equals(possibleMatch.getRestaurant())
+                    && ticket.getCostOrder().equals(possibleMatch.getCostOrder())
+                    && ticket.getTier().equals(possibleMatch.getTier())
+                ) {
+                    // Tickets stimmen genau überein - Beide CHECKED
+                    ticket.setStatus(Status.CHECKED);
+                    possibleMatch.setStatus(Status.CHECKED);
+                    // TODO assignTicket(ticket, possiblePartner)
+                } else {
+                    // Tickets stimmen nur in EmpName und Datum überein - Beide NEEDS_FIXING
+                    ticket.setStatus(Status.NEEDS_FIXING);
+                    possibleMatch.setStatus(Status.NEEDS_FIXING);
+                    // TODO assignTicket(ticket, possiblePartner)
+                }
+                break;
+            }
+            return;
+        }
+        // Kein passendes Ticket wurde gefunden - EMP Ticket bleibt OPEN | ADMIN Ticket wird CONFLICT
+        if (ticketType.equals(TicketType.EMPLOYEE)) {
+            ticket.setStatus(Status.OPEN);
+        } else if (ticketType.equals(TicketType.ADMIN)) {
+            ticket.setStatus(Status.CONFLICT);
+        }
+    }
+
+    private List<FoodTicket> getAllTickets(TicketType ticketType) {
+        return entityManager.createQuery("""
+                                                select f
+                                                from FoodTicket f
+                                                where f.ticketType = :ticketType
+                                                """, FoodTicket.class)
+                .setParameter("ticketType", ticketType)
+                .getResultList();
     }
 }

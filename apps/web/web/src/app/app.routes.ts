@@ -16,7 +16,7 @@ export const routes: Routes = [
   /* voll */ { path: 'clearing-tickets', component: ClearingTicketsComp },
   /* voll */ { path: 'clearing-tickets/check-conflict/:id', component: CheckConflictComp },
   /* voll */ { path: 'open-conflicts', component: OpenConflictsComp },
-  /* NEIN */ { path: 'export', component: ExportComp }, // fast nichts, für woche 3 geplant
+  /* bisl */ { path: 'export', component: ExportComp }, // in bearbeitung
   /* voll */ { path: 'ticket-details/:id', component: TicketDetailsComp },
   /* voll */ { path: 'ticket-details/correct/:id', component: CorrectTicketComp },
   {

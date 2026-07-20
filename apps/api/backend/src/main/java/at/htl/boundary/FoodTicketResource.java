@@ -207,7 +207,7 @@ public class FoodTicketResource {
         ChangeLog newChange = new ChangeLog("Added new Entry.", LocalDate.now(), foodTicket, admin);
         changeLogRepository.save(newChange);
 
-        foodTicketRepository.clearing();
+        foodTicketRepository.clearing(foodTicket);
         return Response.ok().build();
     }
 
@@ -245,6 +245,8 @@ public class FoodTicketResource {
         ticket.setCostOrder(costOrder);
         ticket.setTier(tier);
         ticket.setRestaurant(restaurant);
+
+        foodTicketRepository.clearing(ticket);
 
         return Response.ok(ticket).build();
     }
@@ -290,6 +292,8 @@ public class FoodTicketResource {
         ChangeLog newChange = new ChangeLog(adminAddTicketDTO.description(), LocalDate.now(), ticket, admin);
         changeLogRepository.save(newChange);
 
+        foodTicketRepository.clearing(ticket);
+
         return Response.ok().build();
     }
 
@@ -297,6 +301,7 @@ public class FoodTicketResource {
     @Path("/assignTickets/{empTicketId}/{adminTicketId}")
     @Transactional
     public Response assignTickets(@PathParam("empTicketId") Long empTicketId, @PathParam("adminTicketId") Long adminTicketId) {
+        // TODO Automatic Clearing
         FoodTicket empTicket = foodTicketRepository.findById(empTicketId);
         FoodTicket adminTicket = foodTicketRepository.findById(adminTicketId);
 
@@ -317,6 +322,7 @@ public class FoodTicketResource {
     @Transactional
     @Path("/{ticketId}")
     public Response deleteTicket(@PathParam("ticketId") Long id) {
+        // TODO Automatic Clearing
         boolean deleted = foodTicketRepository.deleteTicket(id);
 
         if (!deleted) {

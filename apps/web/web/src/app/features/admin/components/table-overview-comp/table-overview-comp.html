@@ -9,7 +9,7 @@
         <th scope="col">
           <div class="d-flex align-items-center gap-2">
             {{ header.label.toUpperCase() }}
-            <button class="btn p-0 d-flex flex-column" style="line-height: 8px;" (click)="changeSort()" k>
+            <button class="btn p-0 d-flex flex-column" style="line-height: 8px;" (click)="changeSort()">
               <i class="bi bi-caret-up-fill" [class.opacity-50]="sortDirection() !== 'asc'"></i>
               <i class="bi bi-caret-down-fill" [class.opacity-50]="sortDirection() !== 'desc'"></i>
             </button>

@@ -12,7 +12,7 @@
     @if (openConflictsCount > 0) {
       <div class="bg-danger-subtle rounded-3 d-grid p-4">
         <p class="m-0 text-danger-emphasis fw-bold">Es sind noch {{ openConflictsCount }} @if (openConflictsCount > 1) {Konflikte} @else {Konflikt} offen</p>
-        <p class="m-0 text-danger">Bitte klären Sie alle Konflikte vor dem Export. <a href="http://localhost:4200/clearing-tickets" class="text-danger-emphasis link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Zum Clearing</a></p>
+        <p class="m-0 text-danger">Bitte klären Sie alle Konflikte vor dem Export. <a href="http://localhost:4200/open-conflicts" class="text-danger-emphasis link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Zu offene Konfikte</a></p>
       </div>
     }
 
@@ -25,8 +25,7 @@
           <p class="m-0 text-secondary">Format und Inhalt sind noch nicht fachlich bestätigt.</p>
         }
         <div class="d-flex gap-3">
-          <app-button-comp buttonDesignType="outline-secondary" text="Exportvorschau öffnen"></app-button-comp>
-          <app-button-comp buttonDesignType="outline-secondary" text="Export herunterladen"></app-button-comp>
+          <app-button-comp [disabled]="openConflictsCount > 0" buttonType="icon" icon="download" buttonDesignType="outline-secondary" text="Export herunterladen"></app-button-comp>
         </div>
       </div>
     </div>
