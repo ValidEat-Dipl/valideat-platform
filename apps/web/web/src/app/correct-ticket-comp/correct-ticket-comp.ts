@@ -13,6 +13,7 @@ import { Tier } from '../tier.model';
 import { CostOrder } from '../costOrder.model';
 import { forkJoin } from 'rxjs';
 import { CorrectTicketService } from '../correct-ticket-service';
+import { DeleteTicketService } from '../delete-ticket-service';
 
 @Component({
   selector: 'app-correct-ticket-comp',
@@ -22,11 +23,14 @@ import { CorrectTicketService } from '../correct-ticket-service';
 })
 export class CorrectTicketComp implements OnInit {
   route = inject(ActivatedRoute);
-  ticketDetailService = new TicketDetailService();
+  ticketDetailService = inject(TicketDetailService);
   dropdownService = inject(EmployeeTicketService);
+  deleteTicketService = inject(DeleteTicketService);
   fb = inject(FormBuilder);
-  correctTicketService = new CorrectTicketService();
+  correctTicketService = inject(CorrectTicketService);
   router = inject(Router);
+
+  id = signal<number>(0);
 
   showSuccessToast = signal(false);
 
@@ -106,6 +110,7 @@ export class CorrectTicketComp implements OnInit {
           status: ticket.status,
         });
 
+        this.id.set(ticket.id);
         this.originalValues = this.form.getRawValue();
       });
     });
@@ -152,6 +157,14 @@ export class CorrectTicketComp implements OnInit {
             }, 2000);
           },
         });
+    });
+  }
+
+  protected deleteTicket(id: number) {
+    this.deleteTicketService.deleteTicket(id).subscribe({
+      next: () => {
+        this.router.navigate(['/most-recent-created']);
+      },
     });
   }
 }

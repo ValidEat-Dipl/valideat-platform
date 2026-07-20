@@ -1,5 +1,17 @@
 <app-nav-comp></app-nav-comp>
 
+@if (showSuccessToast()) {
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div class="toast show text-bg-success border-0" role="alert">
+      <div class="d-flex">
+        <div class="toast-body">
+          Fall erfolgreich gelöst.
+        </div>
+      </div>
+    </div>
+  </div>
+}
+
 <div class="m-4 d-grid gap-4">
 
   <header>
@@ -14,7 +26,9 @@
   </header>
 
 
-  <app-table-check-conflict-comp>
+  <app-table-check-conflict-comp
     [data]="dataTable()"
+    (correctEmployee)="correctEmployee()"
+    (correctAdmin)="correctAdmin()">
   </app-table-check-conflict-comp>
 </div>

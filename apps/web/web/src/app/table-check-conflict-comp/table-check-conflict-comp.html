@@ -60,11 +60,15 @@
 </div>
 <div class="d-flex justify-content-between w-100">
   <app-button-comp
+    buttonType="button"
     text="Fehler bei Mitarbeitererfassung korrigieren"
-    buttonDesignType="warning">
+    buttonDesignType="warning"
+    (click)="onCorrectEmployee()">
   </app-button-comp>
   <app-button-comp
+    buttonType="button"
     text="Fehler bei Adminerfassung korrigieren"
-    buttonDesignType="warning">
+    buttonDesignType="warning"
+    (click)="onCorrectAdmin()">
   </app-button-comp>
 </div>

@@ -12,9 +12,9 @@ import { CorrectTicketComp } from './correct-ticket-comp/correct-ticket-comp';
 export const routes: Routes = [
   /* voll */ { path: 'admin-overview', component: AdminOverviewComp },
   /* voll */ { path: 'most-recent-created', component: MostRecentTicketsComp },
-  /* fast */ { path: 'create-ticket', component: CreateTicketComp }, // * noch keine datalist bei emps, keine admin erkennung weil fehlendes user system
+  /* fast */ { path: 'create-ticket', component: CreateTicketComp }, // * keine admin erkennung weil fehlendes user system
   /* voll */ { path: 'clearing-tickets', component: ClearingTicketsComp },
-  /* NEIN */ { path: 'clearing-tickets/check-conflict/:id', component: CheckConflictComp }, // backend aufruf zum speichern fehlt noch
+  /* voll */ { path: 'clearing-tickets/check-conflict/:id', component: CheckConflictComp },
   /* voll */ { path: 'open-conflicts', component: OpenConflictsComp },
   /* NEIN */ { path: 'export', component: ExportComp }, // fast nichts, für woche 3 geplant
   /* voll */ { path: 'ticket-details/:id', component: TicketDetailsComp },

@@ -1,12 +1,13 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import {NavComp} from '../nav-comp/nav-comp';
 import {BadgeComp} from '../badge-comp/badge-comp';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TicketDetailService } from '../ticket-detail-service';
 import { FoodTicketDetail } from '../food-ticket-detail.model';
 import { TableData } from '../table.model';
 import { Status } from '../status.model';
 import { ButtonComp } from '../button-comp/button-comp';
+import { delay } from 'rxjs';
 
 @Component({
   selector: 'app-ticket-details-comp',
@@ -16,7 +17,7 @@ import { ButtonComp } from '../button-comp/button-comp';
 })
 export class TicketDetailsComp implements OnInit {
   route = inject(ActivatedRoute);
-  ticketDetailService = new TicketDetailService();
+  ticketDetailService = inject(TicketDetailService);
 
   dataDetail = signal<TableData>({
     headers: [],
