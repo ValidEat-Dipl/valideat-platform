@@ -2,13 +2,13 @@
 
 ## Metadaten
 
-| Feld | Wert |
-|---|---|
-| Change-ID | `VAL-004` |
-| Status | `draft` |
-| Verantwortlich | Erik Bergmair |
-| Proposal | [proposal.md](proposal.md) |
-| Zuletzt geändert | 2026-07-09 |
+| Feld             | Wert                       |
+| ---------------- | -------------------------- |
+| Change-ID        | `VAL-004`                  |
+| Status           | `implemented`              |
+| Verantwortlich   | Erik Bergmair              |
+| Proposal         | [proposal.md](proposal.md) |
+| Zuletzt geändert | 2026-07-21                 |
 
 ## Technische Lösung
 
@@ -18,15 +18,15 @@ Die Oberfläche orientiert sich am Figma-Prototyp aus `VAL-003` und an der bishe
 
 ## Betroffene Komponenten
 
-| Komponente | Geplante Änderung | Verantwortungsbereich |
-|---|---|---|
-| Angular-Webanwendung `apps/web/web` | Mitarbeiterbereich prüfen, planen und umsetzen | Erik |
-| Routing / Navigation | Routen für mobile Mitarbeiteransichten vorbereiten | Erik |
-| Mitarbeiter-Screens | Welcome, Login/Register, Start, Verwendung, Prüfung, Bestätigung, Verlauf und Detail aus Figma ableiten | Erik |
-| Styles / SCSS | Bootstrap-nahe mobile-first Gestaltung verwenden | Erik |
-| Authentifizierung | nur UI/Platzhalter oder vorbereitete Integration, solange Keycloak nicht geklärt ist | Team, technische Umsetzung später gemeinsam |
-| API-Integration | zunächst Mockdaten oder Schnittstellenannahmen; echte Integration erst nach Abstimmung | Erik / Julian / Team |
-| HR-/Adminbereich | keine Umsetzung in diesem Change | nicht Erik in diesem Change |
+| Komponente                          | Geplante Änderung                                                                                       | Verantwortungsbereich                       |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
+| Angular-Webanwendung `apps/web/web` | Mitarbeiterbereich prüfen, planen und umsetzen                                                          | Erik                                        |
+| Routing / Navigation                | Routen für mobile Mitarbeiteransichten vorbereiten                                                      | Erik                                        |
+| Mitarbeiter-Screens                 | Welcome, Login/Register, Start, Verwendung, Prüfung, Bestätigung, Verlauf und Detail aus Figma ableiten | Erik                                        |
+| Styles / SCSS                       | Bootstrap-nahe mobile-first Gestaltung verwenden                                                        | Erik                                        |
+| Authentifizierung                   | nur UI/Platzhalter oder vorbereitete Integration, solange Keycloak nicht geklärt ist                    | Team, technische Umsetzung später gemeinsam |
+| API-Integration                     | zunächst Mockdaten oder Schnittstellenannahmen; echte Integration erst nach Abstimmung                  | Erik / Julian / Team                        |
+| HR-/Adminbereich                    | keine Umsetzung in diesem Change                                                                        | nicht Erik in diesem Change                 |
 
 ## Datenfluss
 
@@ -35,10 +35,10 @@ Die Oberfläche orientiert sich am Figma-Prototyp aus `VAL-003` und an der bishe
 3. Die Person startet eine neue Markerlverwendung.
 4. Die Person gibt die notwendigen Angaben ein oder bestätigt vorausgefüllte Werte.
 5. Die Anwendung zeigt eine Prüfansicht.
-6. Nach Bestätigung wird die Erfassung vorläufig gespeichert oder als Mock-Erfassung dargestellt.
+6. Nach Bestätigung wird die Erfassung über den vorhandenen Backend-Endpunkt gespeichert.
 7. Die Person sieht eine Bestätigung und kann letzte Erfassungen oder Details öffnen.
 
-Solange keine echte API angebunden ist, ist der Datenfluss als UI- und Mockdatenfluss zu verstehen.
+Die aktuell angebundenen Endpunkte bilden einen vorläufigen Integrationsstand. Sie sind noch kein final abgestimmter Authentifizierungs- oder Porsche-API-Vertrag.
 
 ## Benutzerablauf
 
@@ -57,33 +57,33 @@ Der Ablauf ist aus dem Figma-Prototyp übernommen, aber fachlich noch nicht als 
 
 ## API-Nutzung und Daten
 
-- Endpunkte: noch nicht abgestimmt
+- Endpunkte: vorhandene Employee-, FoodTicket-, Restaurant-, Tier- und CostOrder-Endpunkte für den aktuellen UI-Stand angebunden; finaler Vertrag noch nicht abgestimmt
 - Eingabedaten: vorläufig Name, Datum, Kostenstelle, Markerlstufe und mögliche Zusatzinformationen; genaue Felder offen
 - Ausgabedaten: vorläufig Erfassungs-ID, Datum, Status und Übersichtsdaten; genaue Felder offen
 - Validierung: Pflichtfelder, Datum und Markerlstufe als Annahme; endgültige Regeln offen
-- Abhängigkeit vom Backend: für echte Speicherung und Historie notwendig, für ersten UI-Stand mit Mockdaten ersetzbar
+- Abhängigkeit vom Backend: Speicherung, Historie, Detailansicht und Dropdownwerte verwenden das lokale Backend
 
 Noch nicht abgestimmte Schnittstellen werden als Vorschlag oder Annahme gekennzeichnet.
 
 ## Zustände
 
-| Zustand | Anzeige oder Verhalten | Übergang |
-|---|---|---|
-| Laden | einfache Ladeanzeige oder Skeleton, falls Daten geladen werden | Öffnen von Start, Verlauf oder Detail |
-| Erfolgreich | Bestätigung nach gespeicherter oder gemockter Erfassung | nach Absenden der Prüfansicht |
-| Leer | Hinweis, wenn noch keine Erfassungen vorhanden sind | Verlauf ohne Daten |
-| Fehler | verständliche Fehlermeldung mit erneuter Aktion | Validierung oder technischer Fehler |
-| Offline | zunächst sichtbar als offener Punkt oder einfacher Hinweis; keine fertige Synchronisation | Verbindung fehlt oder PWA-Konzept später |
+| Zustand     | Anzeige oder Verhalten                                                                    | Übergang                                 |
+| ----------- | ----------------------------------------------------------------------------------------- | ---------------------------------------- |
+| Laden       | einfache Ladeanzeige oder Skeleton, falls Daten geladen werden                            | Öffnen von Start, Verlauf oder Detail    |
+| Erfolgreich | Bestätigung nach gespeicherter oder gemockter Erfassung                                   | nach Absenden der Prüfansicht            |
+| Leer        | Hinweis, wenn noch keine Erfassungen vorhanden sind                                       | Verlauf ohne Daten                       |
+| Fehler      | verständliche Fehlermeldung mit erneuter Aktion                                           | Validierung oder technischer Fehler      |
+| Offline     | zunächst sichtbar als offener Punkt oder einfacher Hinweis; keine fertige Synchronisation | Verbindung fehlt oder PWA-Konzept später |
 
 ## Fehlerbehandlung
 
-| Fehlerfall | Reaktion des Systems | Information für die nutzende Person |
-|---|---|---|
-| Pflichtfeld fehlt | Absenden verhindern und Feld markieren | verständlicher Hinweis beim Feld |
-| ungültige oder offene Markerlstufe | Auswahl verhindern oder als offene Regel markieren | Hinweis, dass die Regel noch geklärt werden muss |
-| API nicht verfügbar | bei Mockstand nicht betroffen; bei Integration Fehlerzustand zeigen | später: „Erfassung konnte nicht gespeichert werden“ |
-| keine Verbindung | vorerst nicht als fertige Offline-Funktion behandeln | Hinweis, dass Offline-Verhalten noch nicht final umgesetzt ist |
-| nicht angemeldet | Login oder Platzhalter anzeigen | Hinweis, dass Anmeldung erforderlich ist |
+| Fehlerfall                         | Reaktion des Systems                                                | Information für die nutzende Person                            |
+| ---------------------------------- | ------------------------------------------------------------------- | -------------------------------------------------------------- |
+| Pflichtfeld fehlt                  | Absenden verhindern und Feld markieren                              | verständlicher Hinweis beim Feld                               |
+| ungültige oder offene Markerlstufe | Auswahl verhindern oder als offene Regel markieren                  | Hinweis, dass die Regel noch geklärt werden muss               |
+| API nicht verfügbar                | bei Mockstand nicht betroffen; bei Integration Fehlerzustand zeigen | später: „Erfassung konnte nicht gespeichert werden“            |
+| keine Verbindung                   | vorerst nicht als fertige Offline-Funktion behandeln                | Hinweis, dass Offline-Verhalten noch nicht final umgesetzt ist |
+| nicht angemeldet                   | Login oder Platzhalter anzeigen                                     | Hinweis, dass Anmeldung erforderlich ist                       |
 
 ## Sicherheit und Datenschutz
 
@@ -122,22 +122,22 @@ Offline ist Teil von Eriks Verantwortungsbereich, aber nicht automatisch Umfang 
 
 ## Risiken
 
-| Risiko | Wahrscheinlichkeit | Auswirkung | Gegenmaßnahme |
-|---|---|---|---|
-| Offene FSD-Regeln werden versehentlich als fix umgesetzt. | mittel | spätere fachliche Korrekturen nötig | Annahmen sichtbar dokumentieren und Mocklogik trennen |
-| Mitarbeiterfrontend überschneidet sich mit HR/Admin-Arbeit. | mittel | doppelte oder widersprüchliche UI-Strukturen | Scope klar auf Mitarbeiterbereich beschränken |
-| Authentifizierung wird falsch vorweggenommen. | mittel | spätere Umstellung auf Keycloak wird aufwendig | Login zunächst als Platzhalter oder klar isolierter Bereich |
-| Mockdaten wirken wie echte Backendintegration. | mittel | falscher Projektstand in Doku | Mockdaten und fehlende API in Evidence markieren |
-| Mobile Umsetzung passt nicht zu echten Zielgeräten. | unbekannt | Bedienprobleme | responsive Prüfung und spätere Geräteklärung |
+| Risiko                                                      | Wahrscheinlichkeit | Auswirkung                                     | Gegenmaßnahme                                               |
+| ----------------------------------------------------------- | ------------------ | ---------------------------------------------- | ----------------------------------------------------------- |
+| Offene FSD-Regeln werden versehentlich als fix umgesetzt.   | mittel             | spätere fachliche Korrekturen nötig            | Annahmen sichtbar dokumentieren und Mocklogik trennen       |
+| Mitarbeiterfrontend überschneidet sich mit HR/Admin-Arbeit. | mittel             | doppelte oder widersprüchliche UI-Strukturen   | Scope klar auf Mitarbeiterbereich beschränken               |
+| Authentifizierung wird falsch vorweggenommen.               | mittel             | spätere Umstellung auf Keycloak wird aufwendig | Login zunächst als Platzhalter oder klar isolierter Bereich |
+| Mockdaten wirken wie echte Backendintegration.              | mittel             | falscher Projektstand in Doku                  | Mockdaten und fehlende API in Evidence markieren            |
+| Mobile Umsetzung passt nicht zu echten Zielgeräten.         | unbekannt          | Bedienprobleme                                 | responsive Prüfung und spätere Geräteklärung                |
 
 ## Teststrategie
 
-| Ebene | Geplante Prüfung | Erwartetes Ergebnis |
-|---|---|---|
-| Statisch | Angular Lint/Typecheck oder vorhandene Projektprüfung ausführen, falls eingerichtet | keine Fehler oder dokumentierte Fehler |
-| Automatisiert | vorhandene Angular-Tests ausführen oder Testbarkeit prüfen | Ergebnis ehrlich dokumentiert |
-| Manuell | Mitarbeiterflow im Browser durchklicken | Hauptscreens erreichbar, keine offensichtlichen Sackgassen |
-| Usability | eigene Sichtprüfung gegen Figma und einfache Bedienbarkeit | grobe Verständlichkeit nachgewiesen, kein formaler Test |
-| Barrierefreiheit | grobe Prüfung von Labels, Kontrast, Fokus und Statusdarstellung | Auffälligkeiten dokumentiert |
+| Ebene            | Geplante Prüfung                                                                    | Erwartetes Ergebnis                                        |
+| ---------------- | ----------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| Statisch         | Angular Lint/Typecheck oder vorhandene Projektprüfung ausführen, falls eingerichtet | keine Fehler oder dokumentierte Fehler                     |
+| Automatisiert    | vorhandene Angular-Tests ausführen oder Testbarkeit prüfen                          | Ergebnis ehrlich dokumentiert                              |
+| Manuell          | Mitarbeiterflow im Browser durchklicken                                             | Hauptscreens erreichbar, keine offensichtlichen Sackgassen |
+| Usability        | eigene Sichtprüfung gegen Figma und einfache Bedienbarkeit                          | grobe Verständlichkeit nachgewiesen, kein formaler Test    |
+| Barrierefreiheit | grobe Prüfung von Labels, Kontrast, Fokus und Statusdarstellung                     | Auffälligkeiten dokumentiert                               |
 
 Geplante Tests werden erst nach ihrer tatsächlichen Ausführung im Nachweis als bestanden oder fehlgeschlagen eingetragen.

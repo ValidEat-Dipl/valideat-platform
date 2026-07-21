@@ -5,9 +5,9 @@
 | Feld             | Wert          |
 | ---------------- | ------------- |
 | Change-ID        | `VAL-004`     |
-| Status           | `draft`       |
+| Status           | `implemented` |
 | Verantwortlich   | Erik Bergmair |
-| Zuletzt geändert | 2026-07-15    |
+| Zuletzt geändert | 2026-07-21    |
 
 Checkboxen werden nur abgehakt, wenn die Aufgabe wirklich erledigt ist. Nicht benötigte Punkte werden mit einer kurzen Begründung als nicht relevant markiert und nicht einfach als erledigt ausgegeben.
 
@@ -21,25 +21,28 @@ Checkboxen werden nur abgehakt, wenn die Aufgabe wirklich erledigt ist. Nicht be
 
 ## 2. Klärung
 
-- [ ] Minimal nötige Datenfelder für die erste Mitarbeitererfassung als Annahme oder offene Frage dokumentieren.
-- [ ] Vorläufige Zustände einer Mitarbeitererfassung festhalten.
-- [ ] Authentifizierungsstand und Keycloak-Abhängigkeit klären oder als offen markieren.
-- [ ] API-Abhängigkeiten mit Backend-Zuständigkeit abstimmen oder als Mockdaten-Stand dokumentieren.
+- [x] Minimal nötige Datenfelder für die erste Mitarbeitererfassung als Annahme oder offene Frage dokumentieren.
+- [x] Vorläufige Zustände einer Mitarbeitererfassung festhalten.
+- [x] Authentifizierungsstand und Keycloak-Abhängigkeit als offen markieren.
+- [x] Vorläufig angebundene API-Abhängigkeiten und verbleibende Einschränkungen dokumentieren.
+- [x] Die von `POST /foodticket/empAddTicketEntry` zurückgegebene Ticket-ID im Frontend anbinden.
 - [x] `GET /foodticket/{id}` mit begrenztem Detail-DTO ohne sensible Employee-Daten im Frontend anbinden.
 - [ ] Für `PUT /foodticket/{ticketId}/{empId}` eine Antwort ohne vollständige Employee-Entity mit der Backend-Zuständigkeit abstimmen.
 - [ ] `DELETE /foodticket/{ticketId}` backendseitig auf die betroffene Person und einen erlaubten Status beschränken.
-- [ ] Proposal und Design nach den geklärten Punkten aktualisieren.
+- [x] Proposal und Design nach dem aktuellen Implementierungsstand aktualisieren.
 
 ## 3. Implementierung
 
 - [x] Mitarbeiterbereich in der vorhandenen Angular-Struktur einordnen.
 - [x] Routing oder Navigation für den Mitarbeiterflow vorbereiten.
 - [x] Welcome- beziehungsweise Einstiegsscreen umsetzen oder einordnen.
-- [ ] Login/Register-Ansichten als UI, Platzhalter oder Anbindung passend zum Auth-Stand behandeln.
+- [x] Login/Register-Ansichten mit den vorläufigen Backend-Endpunkten umsetzen und als nicht finale Authentifizierung kennzeichnen.
 - [x] Startseite für Mitarbeitende umsetzen.
 - [x] Ansicht „Verwendung erstellen“ als ersten Reactive-Form-Stand umsetzen.
 - [x] Ansicht „Angabe prüfen“ umsetzen.
 - [x] Bestätigungsansicht „Daten erfasst“ umsetzen.
+- [x] Aktion „Erfassung ansehen“ nach erfolgreicher Speicherung mit der Detailseite verbinden.
+- [x] Aktuelles, änderbares Datum und letzte verwendete Dropdownwerte als Formularstandard setzen.
 - [x] Ansicht „Letzte Erfassungen“ umsetzen.
 - [x] Ansicht „Erfassungsdetail“ umsetzen.
 - [x] Offene Erfassungen aus der Detailseite heraus bearbeitbar machen.
@@ -47,8 +50,8 @@ Checkboxen werden nur abgehakt, wenn die Aufgabe wirklich erledigt ist. Nicht be
 - [x] Asynchron geladene Employee-Zustände für Angular 22 zoneless-kompatibel auf Signals umstellen.
 - [x] Vorläufige Mockdaten und die temporäre Employee-ID klar als Entwicklungsdaten kennzeichnen.
 - [ ] Fehler- und Randfälle passend zum ersten Umfang umsetzen.
-- [ ] Datenschutz- und Sicherheitsauswirkungen berücksichtigen.
-- [ ] Offline-Verhalten umsetzen oder begründet als späteren eigenen Change festhalten.
+- [x] Datenschutz- und Sicherheitsauswirkungen des aktuellen API- und Auth-Stands dokumentieren.
+- [x] Offline-Verhalten begründet als späteren eigenen Umfang festhalten.
 
 ## 4. Tests
 
@@ -79,9 +82,9 @@ Checkboxen werden nur abgehakt, wenn die Aufgabe wirklich erledigt ist. Nicht be
 
 ## 7. Abschluss
 
-- [ ] Tatsächliche Umsetzung und betroffene Dateien in `evidence.md` eintragen.
-- [ ] Issue, Branch, Pull Request und Commits verlinken, soweit vorhanden.
-- [ ] Status passend zum echten Prüfstand setzen.
+- [x] Tatsächliche Umsetzung und betroffene Dateien in `evidence.md` eintragen.
+- [x] Issue, Branch, Pull Request und Commits verlinken, soweit vorhanden.
+- [x] Status passend zum echten Prüfstand setzen.
 - [ ] Alle offenen Checkboxen erklären oder erledigen.
 - [ ] Abschlussdatum festhalten.
 - [ ] Change mit Datumspräfix nach `completed/` verschieben.
