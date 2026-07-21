@@ -290,9 +290,7 @@ public class FoodTicketResource {
         ChangeLog newChange = new ChangeLog(adminAddTicketDTO.description(), LocalDate.now(), ticket, admin);
         changeLogRepository.save(newChange);
 
-        if (adminAddTicketDTO.status() == null) {
-            foodTicketRepository.clearing(ticket);
-        }
+        foodTicketRepository.clearing(ticket);
 
         return Response.ok().build();
     }
