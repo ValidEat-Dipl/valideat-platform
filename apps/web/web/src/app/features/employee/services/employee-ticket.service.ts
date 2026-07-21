@@ -7,7 +7,7 @@ import {
 import { CostOrder } from '../models/cost-order.model';
 import { Restaurant } from '../models/restaurant.model';
 import { Tier } from '../models/tier.model';
-import { Employee } from '../../../employee.model';
+import { Employee } from '../models/employee.model';
 
 const API_BASE = 'http://localhost:8080';
 
