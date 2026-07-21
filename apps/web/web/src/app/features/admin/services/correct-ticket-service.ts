@@ -3,11 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { CreateAdminTicket } from '../models/create-admin-ticket.model';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class CorrectTicketService {
-
-  http = inject(HttpClient)
+  http = inject(HttpClient);
 
   correctAdminTicket(id: number, ticket: CreateAdminTicket) {
     return this.http.put(`http://localhost:8080/foodticket/adminEditTicket/${id}`, ticket);

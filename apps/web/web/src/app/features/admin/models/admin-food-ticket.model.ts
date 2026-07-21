@@ -5,6 +5,7 @@ export interface AdminFoodTicket {
   tier: string;
   costOrder: string;
   status: string;
+  restaurantName: string;
   adminName: string;
   checkDate: Date;
 }

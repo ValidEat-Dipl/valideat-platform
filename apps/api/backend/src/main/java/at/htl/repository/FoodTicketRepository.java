@@ -101,7 +101,6 @@ public class FoodTicketRepository {
     }
 
     public void save(FoodTicket foodTicket) {
-        //TODO Automatic Clearing
         entityManager.persist(foodTicket);
     }
 
@@ -474,7 +473,6 @@ public class FoodTicketRepository {
     }
 
     public boolean deleteTicket(Long ticketId) {
-        // TODO Automatic Clearing
         FoodTicket ticket = entityManager.find(FoodTicket.class, ticketId);
 
         if (ticket == null) {
@@ -500,7 +498,7 @@ public class FoodTicketRepository {
         left join fetch mt.tier
         left join fetch mt.costOrder
         left join fetch mt.restaurant
-        where (f.status = :conflictStatus or f.status = :needsFixingStatus)
+        where (f.status = :conflictStatus or f.status = :needsFixingStatus or f.status =:openStatus)
         """);
 
         if (employeeName != null) {
@@ -531,6 +529,7 @@ public class FoodTicketRepository {
 
         query.setParameter("conflictStatus", Status.CONFLICT);
         query.setParameter("needsFixingStatus", Status.NEEDS_FIXING);
+        query.setParameter("openStatus", Status.OPEN);
 
         if (employeeName != null) {
             query.setParameter("employeeName", "%" + employeeName + "%");
@@ -624,7 +623,7 @@ public class FoodTicketRepository {
     public void clearing(FoodTicket ticket) {
 
         TicketType ticketType = ticket.getTicketType();
-
+        boolean ticketFound = false;
         List<FoodTicket> possibleMatches = List.of();
 
         if (ticketType.equals(TicketType.EMPLOYEE)) {
@@ -643,22 +642,24 @@ public class FoodTicketRepository {
                     // Tickets stimmen genau überein - Beide CHECKED
                     ticket.setStatus(Status.CHECKED);
                     possibleMatch.setStatus(Status.CHECKED);
-                    // TODO assignTicket(ticket, possiblePartner)
+                    assignTickets(ticket, possibleMatch);
                 } else {
                     // Tickets stimmen nur in EmpName und Datum überein - Beide NEEDS_FIXING
                     ticket.setStatus(Status.NEEDS_FIXING);
                     possibleMatch.setStatus(Status.NEEDS_FIXING);
-                    // TODO assignTicket(ticket, possiblePartner)
+                    assignTickets(ticket, possibleMatch);
                 }
+                ticketFound = true;
                 break;
             }
-            return;
         }
-        // Kein passendes Ticket wurde gefunden - EMP Ticket bleibt OPEN | ADMIN Ticket wird CONFLICT
-        if (ticketType.equals(TicketType.EMPLOYEE)) {
-            ticket.setStatus(Status.OPEN);
-        } else if (ticketType.equals(TicketType.ADMIN)) {
-            ticket.setStatus(Status.CONFLICT);
+        if (!ticketFound) {
+            // Kein passendes Ticket wurde gefunden - EMP Ticket bleibt OPEN
+            if (ticketType.equals(TicketType.EMPLOYEE)) {
+                ticket.setStatus(Status.OPEN);
+            } else if (ticketType.equals(TicketType.ADMIN)) { // ADMIN Ticket wird CONFLICT
+                ticket.setStatus(Status.CONFLICT);
+            }
         }
     }
 
@@ -670,5 +671,10 @@ public class FoodTicketRepository {
                                                 """, FoodTicket.class)
                 .setParameter("ticketType", ticketType)
                 .getResultList();
+    }
+
+    public void assignTickets(FoodTicket ticketA, FoodTicket ticketB) {
+        ticketA.setMatchingTicket(ticketB);
+        ticketB.setMatchingTicket(ticketA);
     }
 }

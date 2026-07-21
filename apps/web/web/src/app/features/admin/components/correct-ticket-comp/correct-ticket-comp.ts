@@ -134,6 +134,16 @@ export class CorrectTicketComp implements OnInit {
 
   protected onSubmit() {
     if (this.form.invalid) return;
+    const logging = {
+      useDate: this.form.value.useDate!,
+      employeeName: this.form.value.username!,
+      costOrder: this.form.value.costDepartment!,
+      tier: this.form.value.costRank!,
+      restaurantName: this.form.value.restaurant!,
+      status: this.form.value.status!,
+      adminName: 'David Leitner',
+    };
+    console.log(logging)
 
     this.route.paramMap.subscribe((params) => {
       const id = Number(params.get('id'));

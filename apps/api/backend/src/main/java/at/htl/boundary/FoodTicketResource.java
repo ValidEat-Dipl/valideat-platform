@@ -246,8 +246,6 @@ public class FoodTicketResource {
         ticket.setTier(tier);
         ticket.setRestaurant(restaurant);
 
-        foodTicketRepository.clearing(ticket);
-
         return Response.ok(ticket).build();
     }
 
@@ -292,7 +290,9 @@ public class FoodTicketResource {
         ChangeLog newChange = new ChangeLog(adminAddTicketDTO.description(), LocalDate.now(), ticket, admin);
         changeLogRepository.save(newChange);
 
-        foodTicketRepository.clearing(ticket);
+        if (adminAddTicketDTO.status() == null) {
+            foodTicketRepository.clearing(ticket);
+        }
 
         return Response.ok().build();
     }
