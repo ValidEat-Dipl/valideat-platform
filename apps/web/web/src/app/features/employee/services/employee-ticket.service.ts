@@ -7,6 +7,7 @@ import {
 import { CostOrder } from '../models/cost-order.model';
 import { Restaurant } from '../models/restaurant.model';
 import { Tier } from '../models/tier.model';
+import { Employee } from '../../../employee.model';
 
 const API_BASE = 'http://localhost:8080';
 
@@ -52,5 +53,9 @@ export class EmployeeTicketService {
 
   deleteTicket(ticketId: number) {
     return this.http.delete<void>(`${API_BASE}/foodticket/${ticketId}`);
+  }
+
+  getEmployees(){
+    return this.http.get<Employee[]>(`${API_BASE}/employee`)
   }
 }
