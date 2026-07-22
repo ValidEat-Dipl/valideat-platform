@@ -46,6 +46,7 @@ public class FoodTicketRepository {
             select f
             from FoodTicket f
             where f.useDate >= :date
+            order by f.useDate desc
             """, FoodTicket.class)
                     .setParameter("date", LocalDate.now().minusYears(1))
                     .getResultList();
@@ -54,6 +55,7 @@ public class FoodTicketRepository {
         return entityManager.createQuery("""
         select f
         from FoodTicket f
+        order by f.useDate desc
         """, FoodTicket.class)
                 .getResultList();
     }
@@ -151,6 +153,8 @@ public class FoodTicketRepository {
             query.append(" and f.status = :status ");
         }
 
+        query.append(" order by f.useDate desc ");
+
 
         TypedQuery<AdminFoodTicketDTO> q = entityManager
                 .createQuery(query.toString(), AdminFoodTicketDTO.class)
@@ -218,6 +222,8 @@ public class FoodTicketRepository {
         if (costOrder != null) {
             jpql.append(" and f.costOrder.name = :costOrder ");
         }
+
+        jpql.append(" order by f.useDate desc ");
 
 
         TypedQuery<FoodTicket> query =
@@ -523,6 +529,9 @@ public class FoodTicketRepository {
         if (conflict != null) {
             jpql.append(" and lower(f.conflict) like lower(:conflict) ");
         }
+
+        jpql.append(" order by f.useDate desc ");
+
 
         TypedQuery<FoodTicket> query =
                 entityManager.createQuery(jpql.toString(), FoodTicket.class);

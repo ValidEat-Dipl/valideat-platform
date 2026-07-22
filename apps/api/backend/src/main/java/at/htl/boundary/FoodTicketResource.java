@@ -280,6 +280,7 @@ public class FoodTicketResource {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
 
+        ticket.setEmployee(employee);
         ticket.setUseDate(adminAddTicketDTO.useDate());
         ticket.setCostOrder(costOrder);
         ticket.setTier(tier);
