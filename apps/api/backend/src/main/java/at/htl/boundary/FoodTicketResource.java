@@ -42,8 +42,8 @@ public class FoodTicketResource {
 
     @GET
     @Path("/overview")
-    public List<FoodTicket> overViewWithLast12Months(@QueryParam("last12Months") boolean last12Months) {
-        return foodTicketRepository.findAll(last12Months);
+    public List<FoodTicket> overViewWithLast12Months(@QueryParam("last12Months") boolean last12Months, @QueryParam("orderBy") String orderBy) {
+        return foodTicketRepository.findAll(last12Months, orderBy);
     }
 
     @GET

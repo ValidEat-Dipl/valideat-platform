@@ -39,25 +39,47 @@ public class FoodTicketRepository {
     }
 
 
-    public List<FoodTicket> findAll(boolean last12Months) {
+    public List<FoodTicket> findAll(boolean last12Months, String filterBy) {
 
-        if (last12Months) {
-            return entityManager.createQuery("""
-            select f
-            from FoodTicket f
-            where f.useDate >= :date
-            order by f.useDate desc
-            """, FoodTicket.class)
-                    .setParameter("date", LocalDate.now().minusYears(1))
-                    .getResultList();
-        }
-
-        return entityManager.createQuery("""
+        StringBuilder jpql = new StringBuilder("""
         select f
         from FoodTicket f
-        order by f.useDate desc
-        """, FoodTicket.class)
-                .getResultList();
+        """);
+
+        if (last12Months) {
+            jpql.append("""
+            where f.useDate >= :date
+            """);
+        }
+
+
+        if ("date".equals(filterBy)) {
+            jpql.append(" order by f.useDate desc ");
+        }
+        else if ("status".equals(filterBy)) {
+            jpql.append(" order by f.status ");
+        }
+        else if ("employee".equals(filterBy)) {
+            jpql.append(" order by f.employee.lastName ");
+        }
+        else {
+            // Default Sortierung
+            jpql.append(" order by f.useDate desc ");
+        }
+
+
+        TypedQuery<FoodTicket> query = entityManager.createQuery(
+                jpql.toString(),
+                FoodTicket.class
+        );
+
+
+        if (last12Months) {
+            query.setParameter("date", LocalDate.now().minusYears(1));
+        }
+
+
+        return query.getResultList();
     }
 
     public int countByTicketType(String type, boolean last12Months) {
