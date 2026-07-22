@@ -10,13 +10,10 @@ export class InfoFlexServiceAdminOverview {
   getInfoContainerMap(lastYear?: boolean) {
     const params: any = {};
 
-    if (lastYear) {
-      params.last12months = lastYear;
-    }
+    if (lastYear) params.last12months = lastYear;
+
 
     return this.http.get<Record<string, number>>(
-      'http://localhost:8080/foodticket/admin-overview-info-box',
-      { params }
-    );
+      'http://localhost:8080/foodticket/admin-overview-info-box', { params });
   }
 }

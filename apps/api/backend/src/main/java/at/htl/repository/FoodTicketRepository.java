@@ -24,6 +24,13 @@ public class FoodTicketRepository {
         return entityManager.createQuery("select f from FoodTicket f", FoodTicket.class).getResultList();
     }
 
+    public long countAll() {
+        return entityManager.createQuery("""
+                                                 select count(f)
+                                                 from FoodTicket f
+                                                 """, Long.class).getSingleResult();
+    }
+
     public FoodTicket findById(Long id) {
         return entityManager.find(FoodTicket.class, id);
     }
@@ -39,7 +46,7 @@ public class FoodTicketRepository {
     }
 
 
-    public List<FoodTicket> findAll(boolean last12Months, String filterBy) {
+    public List<FoodTicket> findAll(boolean last12Months, String orderBy) {
 
         StringBuilder jpql = new StringBuilder("""
         select f
@@ -53,14 +60,11 @@ public class FoodTicketRepository {
         }
 
 
-        if ("date".equals(filterBy)) {
-            jpql.append(" order by f.useDate desc ");
+        if ("asc".equals(orderBy)) {
+            jpql.append(" order by f.ticketType asc ");
         }
-        else if ("status".equals(filterBy)) {
-            jpql.append(" order by f.status ");
-        }
-        else if ("employee".equals(filterBy)) {
-            jpql.append(" order by f.employee.lastName ");
+        else if ("desc".equals(orderBy)) {
+            jpql.append(" order by f.ticketType desc ");
         }
         else {
             // Default Sortierung
@@ -398,14 +402,14 @@ public class FoodTicketRepository {
             total++;
 
 
-            boolean hasConflict = ticket.getStatus() == Status.CONFLICT || ticket.getStatus() == Status.NEEDS_FIXING;
+            boolean hasConflict = ticket.getStatus() == Status.CONFLICT || ticket.getStatus() == Status.NEEDS_FIXING || ticket.getStatus() == Status.OPEN;
 
 
             if (ticket.getMatchingTicket() != null) {
 
                 processed.add(ticket.getMatchingTicket().getId());
 
-                hasConflict |= ticket.getMatchingTicket().getStatus() == Status.CONFLICT || ticket.getMatchingTicket().getStatus() == Status.NEEDS_FIXING;
+                hasConflict |= ticket.getMatchingTicket().getStatus() == Status.CONFLICT || ticket.getMatchingTicket().getStatus() == Status.NEEDS_FIXING || ticket.getStatus() == Status.OPEN;
             }
 
 

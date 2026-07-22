@@ -123,6 +123,27 @@ public class FoodTicketResource {
     }
 
     @GET
+    @Path("/export-info-box")
+    public Map<String, Integer> getExportInfoBox() {
+
+        long allTickets = foodTicketRepository.countAll();
+        int checkedTickets = foodTicketRepository.countByStatus(String.valueOf(Status.CHECKED), false);
+        int conflictsSum =
+                foodTicketRepository.countByStatus(String.valueOf(Status.CONFLICT), false) +
+                foodTicketRepository.countByStatus(String.valueOf(Status.NEEDS_FIXING), false) +
+                foodTicketRepository.countByStatus(String.valueOf(Status.OPEN), false);
+
+
+        Map<String, Integer> result = new LinkedHashMap<>();
+
+        result.put("Gesamt", (int) allTickets);
+        result.put("Abgeglichene Tickets", checkedTickets);
+        result.put("Offene Konflikte", conflictsSum);
+
+        return result;
+    }
+
+    @GET
     @Path("/clearing-info-box")
     public Map<String, Integer> getClearingInfoBox(
             @QueryParam("employeeName") String employeeName,

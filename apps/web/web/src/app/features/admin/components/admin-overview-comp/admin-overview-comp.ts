@@ -45,7 +45,7 @@ export class AdminOverviewComp implements OnInit {
       this.infoContainer.set({ ...data });
     });
 
-    this.tableService.getTableData(this.lastYear, this.sortBy ?? undefined).subscribe((data) => {
+    this.tableService.getTableData(this.lastYear, this.sortBy).subscribe((data) => {
       this.dataTable.set({
         headers: [
           { key: 'typ', label: 'Tickettyp' },

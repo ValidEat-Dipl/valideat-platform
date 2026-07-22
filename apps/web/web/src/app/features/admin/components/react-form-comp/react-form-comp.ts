@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import {ButtonComp} from "../button-comp/button-comp";
 import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
 import { CreateAdminTicketService } from '../../services/create-admin-ticket-service';
@@ -23,6 +23,9 @@ export class ReactFormComp implements OnInit {
   restaurants: Restaurant[] = [];
   tiers: Tier[] = [];
   employees: Employee[] = [];
+  today = new Date().toISOString().substring(0, 10); // dadurch keine Zeit, sondern nur YYYY-MM-DD
+
+  showSuccessToast = signal(false);
 
   ngOnInit() {
     this.dropdownService.getCostOrders().subscribe((data) => {
@@ -39,7 +42,9 @@ export class ReactFormComp implements OnInit {
 
     this.dropdownService.getEmployees().subscribe((data) => {
       this.employees = data;
-    })
+    });
+
+    this.form.get('useDate')?.setValue(this.today);
   }
 
   form = inject(FormBuilder).nonNullable.group({
@@ -60,12 +65,21 @@ export class ReactFormComp implements OnInit {
         costOrder: this.form.value.costDepartment!,
         tier: this.form.value.costRank!,
         restaurantName: this.form.value.restaurant!,
-        adminName: 'David Leitner'
+        adminName: 'David Leitner',
       })
       .subscribe({
         next: () => {
           this.form.reset();
+          this.showToast();
         },
       });
+  }
+
+  protected showToast() {
+    this.showSuccessToast.set(true);
+
+    setTimeout(() => {
+      this.showSuccessToast.set(false);
+    }, 2000);
   }
 }

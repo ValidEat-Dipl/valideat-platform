@@ -5,11 +5,7 @@ import {ReactFormComp} from '../react-form-comp/react-form-comp';
 
 @Component({
   selector: 'app-create-ticket-comp',
-  imports: [
-    NavComp,
-    ReactiveFormsModule,
-    ReactFormComp
-  ],
+  imports: [NavComp, ReactiveFormsModule, ReactFormComp],
   templateUrl: './create-ticket-comp.html',
   styleUrl: './create-ticket-comp.css',
 })

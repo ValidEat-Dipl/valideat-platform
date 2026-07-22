@@ -8,11 +8,11 @@ import { FoodTicket } from '../models/food-ticket.model';
 export class TableDataOverviewService {
   http = inject(HttpClient);
 
-  getTableData(lastYear = false, sortBy?: string) {
+  getTableData(lastYear = false, sortBy?: string | null) {
     const params: any = {};
 
     if (lastYear) params.last12months = true;
-    if (sortBy) params.sortBy = sortBy;
+    if (sortBy) params.orderBy = sortBy;
 
     return this.http.get<FoodTicket[]>('http://localhost:8080/foodticket/overview', { params });
   }
