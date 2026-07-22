@@ -65,15 +65,21 @@ public class FoodTicketResource {
         int employeeTickets = foodTicketRepository.countByTicketType(TicketType.EMPLOYEE.toString(), last12Months);
         int restaurantTickets = foodTicketRepository.countByTicketType(TicketType.ADMIN.toString(), last12Months);
 
+        int openTickets = foodTicketRepository.countByStatus(Status.OPEN.toString(), last12Months);
         int checkedTickets = foodTicketRepository.countByStatus(Status.CHECKED.toString(), last12Months);
+        int fixingTickets = foodTicketRepository.countByStatus(Status.NEEDS_FIXING.toString(), last12Months);
         int conflictTickets = foodTicketRepository.countByStatus(Status.CONFLICT.toString(), last12Months);
+        int expiredTickets = foodTicketRepository.countByStatus(Status.EXPIRED.toString(), last12Months);
 
         Map<String, Integer> result = new LinkedHashMap<>();
 
         result.put("Mitarbeitereinträge", employeeTickets);
         result.put("Physische Markerl erfasst", restaurantTickets);
+        result.put("Offen", openTickets);
+        result.put("Änderung notwenig", fixingTickets);
         result.put("Abgeglichen", checkedTickets);
         result.put("Konflikte", conflictTickets);
+        result.put("Abgelaufen", expiredTickets);
 
         return result;
     }

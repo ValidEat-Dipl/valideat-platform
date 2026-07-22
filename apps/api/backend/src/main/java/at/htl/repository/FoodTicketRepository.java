@@ -29,12 +29,12 @@ public class FoodTicketRepository {
     }
 
     public EmployeeGetTicketsDTO findEmployeeTicketDTOById(Long id) {
-        return entityManager.createQuery("select new at.htl.boundary.dto.EmployeeGetTicketsDTO(f.id, f.employee.firstName, f.employee.lastName, f.useDate, f.tier.name, f.costOrder.name, f.restaurant.name, f.status, f.checkDate, admin.firstName, admin.lastName) from FoodTicket f left join f.admin admin where f.id = :id ", EmployeeGetTicketsDTO.class).setParameter("id", id).getSingleResult();
+        return entityManager.createQuery("select new at.htl.boundary.dto.EmployeeGetTicketsDTO(f.id, f.employee.firstName, f.employee.lastName, f.useDate, f.tier.name, f.costOrder.name, f.restaurant.name, f.status, f.checkDate, admin.firstName, admin.lastName, f.ticketType) from FoodTicket f left join f.admin admin where f.id = :id ", EmployeeGetTicketsDTO.class).setParameter("id", id).getSingleResult();
     }
 
     public List<EmployeeGetTicketsDTO> findByEmployee(Long id) {
         return entityManager.createQuery("""
-                select new at.htl.boundary.dto.EmployeeGetTicketsDTO(f.id, f.employee.firstName, f.employee.lastName, f.useDate, f.tier.name, f.costOrder.name, f.restaurant.name, f.status, f.checkDate, admin.firstName, admin.lastName) from FoodTicket f left join f.admin admin where f.employee.id = :id""", EmployeeGetTicketsDTO.class)
+                select new at.htl.boundary.dto.EmployeeGetTicketsDTO(f.id, f.employee.firstName, f.employee.lastName, f.useDate, f.tier.name, f.costOrder.name, f.restaurant.name, f.status, f.checkDate, admin.firstName, admin.lastName, f.ticketType) from FoodTicket f left join f.admin admin where f.employee.id = :id""", EmployeeGetTicketsDTO.class)
                 .setParameter("id", id).getResultList();
     }
 
