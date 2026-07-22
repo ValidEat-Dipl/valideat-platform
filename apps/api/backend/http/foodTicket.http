@@ -49,3 +49,19 @@ GET http://localhost:8080/foodticket/conflicts?status=CONFLICT
 
 ###
 PUT http://localhost:8080/foodticket/changeStatus/1/CONFLICT
+
+
+###
+PUT http://localhost:8080/foodticket/adminEditTicket/1
+Content-Type: application/json
+
+{
+  "employeeName": "Max Mustermann",
+  "useDate": "2026-07-18",
+  "tier": "EMPLOYEE",
+  "costOrder": "IT",
+  "restaurantName": "Pizzeria Bella Italia",
+  "adminName": "Anna Admin",
+  "status": "CHECKED",
+  "description": "Kostenstelle und Restaurant korrigiert. Ticket erfolgreich abgeglichen."
+}

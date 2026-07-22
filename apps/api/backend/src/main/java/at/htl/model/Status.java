@@ -4,5 +4,6 @@ public enum Status {
     OPEN,
     CONFLICT,
     CHECKED,
-    NEEDS_FIXING
+    NEEDS_FIXING,
+    EXPIRED
 }

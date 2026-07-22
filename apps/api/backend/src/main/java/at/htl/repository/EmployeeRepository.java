@@ -9,6 +9,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.NotAuthorizedException;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.core.Response;
 
@@ -50,11 +51,11 @@ public class EmployeeRepository {
                 .setParameter("email", email).getResultList();
 
         if (employees.isEmpty()) {
-            return null;
+            throw new NotAuthorizedException("Invalid email or password");
         }
 
         if (employees.size() > 1) {
-            return null;
+            throw new NotAuthorizedException("Invalid email or password");
         }
 
         Employee employee = employees.getFirst();

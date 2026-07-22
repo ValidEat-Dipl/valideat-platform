@@ -29,33 +29,57 @@ public class FoodTicketRepository {
     }
 
     public EmployeeGetTicketsDTO findEmployeeTicketDTOById(Long id) {
-        return entityManager.createQuery("select new at.htl.boundary.dto.EmployeeGetTicketsDTO(f.id, f.employee.firstName, f.employee.lastName, f.useDate, f.tier.name, f.costOrder.name, f.restaurant.name, f.status, f.checkDate, admin.firstName, admin.lastName) from FoodTicket f left join f.admin admin where f.id = :id ", EmployeeGetTicketsDTO.class).setParameter("id", id).getSingleResult();
+        return entityManager.createQuery("select new at.htl.boundary.dto.EmployeeGetTicketsDTO(f.id, f.employee.firstName, f.employee.lastName, f.useDate, f.tier.name, f.costOrder.name, f.restaurant.name, f.status, f.checkDate, admin.firstName, admin.lastName, f.ticketType) from FoodTicket f left join f.admin admin where f.id = :id ", EmployeeGetTicketsDTO.class).setParameter("id", id).getSingleResult();
     }
 
     public List<EmployeeGetTicketsDTO> findByEmployee(Long id) {
         return entityManager.createQuery("""
-                select new at.htl.boundary.dto.EmployeeGetTicketsDTO(f.id, f.employee.firstName, f.employee.lastName, f.useDate, f.tier.name, f.costOrder.name, f.restaurant.name, f.status, f.checkDate, admin.firstName, admin.lastName) from FoodTicket f left join f.admin admin where f.employee.id = :id""", EmployeeGetTicketsDTO.class)
+                select new at.htl.boundary.dto.EmployeeGetTicketsDTO(f.id, f.employee.firstName, f.employee.lastName, f.useDate, f.tier.name, f.costOrder.name, f.restaurant.name, f.status, f.checkDate, admin.firstName, admin.lastName, f.ticketType) from FoodTicket f left join f.admin admin where f.employee.id = :id""", EmployeeGetTicketsDTO.class)
                 .setParameter("id", id).getResultList();
     }
 
 
-    public List<FoodTicket> findAll(boolean last12Months) {
+    public List<FoodTicket> findAll(boolean last12Months, String filterBy) {
 
-        if (last12Months) {
-            return entityManager.createQuery("""
-            select f
-            from FoodTicket f
-            where f.useDate >= :date
-            """, FoodTicket.class)
-                    .setParameter("date", LocalDate.now().minusYears(1))
-                    .getResultList();
-        }
-
-        return entityManager.createQuery("""
+        StringBuilder jpql = new StringBuilder("""
         select f
         from FoodTicket f
-        """, FoodTicket.class)
-                .getResultList();
+        """);
+
+        if (last12Months) {
+            jpql.append("""
+            where f.useDate >= :date
+            """);
+        }
+
+
+        if ("date".equals(filterBy)) {
+            jpql.append(" order by f.useDate desc ");
+        }
+        else if ("status".equals(filterBy)) {
+            jpql.append(" order by f.status ");
+        }
+        else if ("employee".equals(filterBy)) {
+            jpql.append(" order by f.employee.lastName ");
+        }
+        else {
+            // Default Sortierung
+            jpql.append(" order by f.useDate desc ");
+        }
+
+
+        TypedQuery<FoodTicket> query = entityManager.createQuery(
+                jpql.toString(),
+                FoodTicket.class
+        );
+
+
+        if (last12Months) {
+            query.setParameter("date", LocalDate.now().minusYears(1));
+        }
+
+
+        return query.getResultList();
     }
 
     public int countByTicketType(String type, boolean last12Months) {
@@ -151,6 +175,8 @@ public class FoodTicketRepository {
             query.append(" and f.status = :status ");
         }
 
+        query.append(" order by f.useDate desc ");
+
 
         TypedQuery<AdminFoodTicketDTO> q = entityManager
                 .createQuery(query.toString(), AdminFoodTicketDTO.class)
@@ -218,6 +244,8 @@ public class FoodTicketRepository {
         if (costOrder != null) {
             jpql.append(" and f.costOrder.name = :costOrder ");
         }
+
+        jpql.append(" order by f.useDate desc ");
 
 
         TypedQuery<FoodTicket> query =
@@ -523,6 +551,9 @@ public class FoodTicketRepository {
         if (conflict != null) {
             jpql.append(" and lower(f.conflict) like lower(:conflict) ");
         }
+
+        jpql.append(" order by f.useDate desc ");
+
 
         TypedQuery<FoodTicket> query =
                 entityManager.createQuery(jpql.toString(), FoodTicket.class);
