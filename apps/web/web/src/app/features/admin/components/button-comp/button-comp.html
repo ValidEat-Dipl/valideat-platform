@@ -42,4 +42,12 @@
       <i class="p-1 bi bi-{{ icon() }}"></i> {{ text() }}
     </a>
   }
+  @case("iconDownload") {
+    <button
+      type="{{ buttonType() }}"
+      class="btn btn-{{ buttonDesignType() }}"
+      [disabled]="disabled()">
+      <i class="p-1 bi bi-{{ icon() }}"></i> {{ text() }}
+    </button>
+  }
 }

@@ -7,37 +7,47 @@
   <app-info-flex-comp [data]="infoContainer()"></app-info-flex-comp>
 
   <div class="d-grid gap-4 statistics">
-    <form [formGroup]="form" (ngSubmit)="onSubmit()"  class="d-flex gap-3 w-75">
-
-      <div class="input-group mb-3">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="d-flex flex-column flex-lg-row gap-3 w-100 w-lg-75">
+      <div class="input-group mb-3 mb-lg-0">
         <span class="input-group-text" id="basic-addon1">Person</span>
-        <input type="text" class="form-control" placeholder="Filtere nach einer Person..." formControlName="person" aria-describedby="basic-addon1">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Filtere nach einer Person..."
+          formControlName="person"
+          aria-describedby="basic-addon1">
       </div>
-
-      <div class="input-group mb-3">
+      <div class="input-group mb-3 mb-lg-0">
         <span class="input-group-text">Von</span>
         <input formControlName="fromDate" type="date" class="form-control">
       </div>
-
-      <div class="input-group mb-3">
+      <div class="input-group mb-3 mb-lg-0">
         <span class="input-group-text">Bis</span>
         <input formControlName="toDate" type="date" class="form-control">
       </div>
-
-      <div class="input-group mb-3">
+      <div class="input-group mb-3 mb-lg-0">
         <label class="input-group-text" for="inputGroupSelect01">Status</label>
         <select formControlName="status" class="form-select" id="inputGroupSelect01">
-          <option value="ALL" selected>Alle</option>
+          <option value="ALL">Alle</option>
           <option value="CHECKED">Abgeglichen</option>
           <option value="CONFLICT">Konflikt</option>
           <option value="NEEDS_FIXING">Korrektur erforderlich</option>
           <option value="OPEN">Offen</option>
         </select>
       </div>
-
-      <app-button-comp buttonType="reset" buttonDesignType="outline-secondary" text="Filter zurücksetzen"></app-button-comp>
-      <app-button-comp buttonType="submit" buttonDesignType="primary" text="Suchen"></app-button-comp>
+      <app-button-comp
+        buttonType="reset"
+        buttonDesignType="outline-secondary"
+        text="Filter zurücksetzen">
+      </app-button-comp>
+      <app-button-comp
+        buttonType="submit"
+        buttonDesignType="primary"
+        text="Suchen">
+      </app-button-comp>
     </form>
-    <app-table-overview-comp caption="Hier siehst du Zusammengfügte Markerl" [data]="dataTable()"></app-table-overview-comp>
+    <div class="table-responsive-md">
+      <app-table-overview-comp caption="Hier siehst du Zusammengefügte Markerl" [data]="dataTable()"></app-table-overview-comp>
+    </div>
   </div>
 </div>

@@ -11,11 +11,16 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Path("/foodticket")
 @Produces(MediaType.APPLICATION_JSON)
@@ -348,5 +353,59 @@ public class FoodTicketResource {
 
     private boolean checkIfDailyTicketUsageIsNotExceeded(LocalDate date, Employee emp) {
         return foodTicketRepository.checkIfAmountOfTicketsOnSpecificDayFromOnePersonIsValid(date, emp);
+    }
+
+    @GET
+    @Path("/export-csv")
+    @Produces("text/csv")
+    public Response exportCSV() {
+        List<FoodTicket> tickets = foodTicketRepository.listAll();
+        String csv = tickets.stream()
+                .map(this::convertFoodTicketToCSV)
+                .collect(Collectors.joining("\n"));
+        return Response.ok(
+                "ID;Mitarbeiter;Datum;Stufe;Kostenstelle;Status;Tickettyp;Restaurant;Admin;Kontrolldatum\n"
+                        + csv)
+                .header("Content-Disposition", "attachment; filename=foodtickets.csv")
+                .build();
+    }
+
+    private String convertFoodTicketToCSV(FoodTicket ticket) {
+        String[] data = {
+                ticket.getId().toString(),
+                ticket.getEmployee().getFirstName()
+                        + " "
+                        + ticket.getEmployee().getLastName(),
+                ticket.getUseDate().toString(),
+                ticket.getTier().getName(),
+                ticket.getCostOrder().getName(),
+                ticket.getStatus().toString(),
+                ticket.getTicketType().toString(),
+                ticket.getRestaurant().getName(),
+                ticket.getAdmin() != null
+                        ? ticket.getAdmin().getFirstName()
+                          + " "
+                          + ticket.getAdmin().getLastName()
+                        : "",
+                ticket.getCheckDate() != null
+                        ? ticket.getCheckDate().toString()
+                        : ""
+        };
+        return Stream.of(data)
+                .map(this::escapeSpecialCharacters)
+                .collect(Collectors.joining(";"));
+    }
+
+    private String escapeSpecialCharacters(String data) {
+
+        if (data == null) return "";
+        String escapedData = data.replaceAll("\\R", " ");
+        if (escapedData.contains(";")
+            || escapedData.contains("\"")
+            || escapedData.contains("'")) {
+            escapedData = "\"" + escapedData + "\"";
+        }
+
+        return escapedData;
     }
 }

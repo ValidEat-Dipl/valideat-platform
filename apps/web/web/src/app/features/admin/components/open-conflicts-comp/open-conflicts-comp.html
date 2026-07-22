@@ -17,9 +17,8 @@
       </p>
     </div>
   } @else {
-    <div class="d-grid gap-4 statistics">
-      <app-table-overview-comp
-        [data]="dataTable()">
+    <div class="table-responsive-md">
+      <app-table-overview-comp [data]="dataTable()" caption="Hier siehst du nur Tickets, die noch nicht abgeglichen sind.">
       </app-table-overview-comp>
     </div>
   }

@@ -58,10 +58,10 @@
         link="http://localhost:4200/ticket-details/correct/{{dataDetail().rows[0]['id']}}">
       </app-button-comp>
       <app-button-comp
-        text="Zurück zur Hauptseite"
+        text="Abbrechen"
         buttonDesignType="outline-secondary"
-        buttonType="link"
-        link="http://localhost:4200/admin-overview">
+        buttonType="button"
+        (click)="goBack()">
       </app-button-comp>
     </div>
   </div>

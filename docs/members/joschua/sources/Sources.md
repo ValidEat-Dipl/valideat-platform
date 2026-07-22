@@ -40,3 +40,7 @@ https://thehaseebahmed.medium.com/how-to-implement-autosearch-in-angular-6e562c1
 [medium.com/@isthatmejs1/a-guide-to-effects-in-angular-how-they-work-a366263e4bb3](https://medium.com/@isthatmejs1/a-guide-to-effects-in-angular-how-they-work-a366263e4bb3)
 
 21.07.2026
+
+[www.baeldung.com/java-csv](https://www.baeldung.com/java-csv)
+
+22.07.2026Respo

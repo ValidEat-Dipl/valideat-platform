@@ -16,7 +16,7 @@ export const routes: Routes = [
   /* voll */ { path: 'clearing-tickets', component: ClearingTicketsComp },
   /* voll */ { path: 'clearing-tickets/check-conflict/:id', component: CheckConflictComp },
   /* voll */ { path: 'open-conflicts', component: OpenConflictsComp },
-  /* bisl */ { path: 'export', component: ExportComp }, // in bearbeitung
+  /* bisl */ { path: 'export', component: ExportComp }, // backend routen fehlen, kein csv export möglich
   /* voll */ { path: 'ticket-details/:id', component: TicketDetailsComp },
   /* voll */ { path: 'ticket-details/correct/:id', component: CorrectTicketComp },
   {

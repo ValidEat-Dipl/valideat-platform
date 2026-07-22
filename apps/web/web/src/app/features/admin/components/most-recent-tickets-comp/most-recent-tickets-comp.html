@@ -7,36 +7,57 @@
   <app-button-comp icon="plus-circle" text="Markerl erfassen" buttonDesignType="primary" buttonType="icon" link="http://localhost:4200/create-ticket"></app-button-comp>
 
   <div class="d-grid gap-4 statistics">
-    <form [formGroup]="form" (ngSubmit)="onSubmit()"  class="d-flex gap-3 w-75">
-
-      <div class="input-group mb-3">
-        <span class="input-group-text" id="basic-addon1">Person</span>
-        <input type="text" class="form-control" placeholder="Filtere nach einer Person..." formControlName="person" aria-describedby="basic-addon1">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="row g-3">
+      <div class="col-12 col-md-6 col-lg">
+        <div class="input-group">
+          <span class="input-group-text">Person</span>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Filtere nach einer Person..."
+            formControlName="person">
+        </div>
       </div>
-
-      <div class="input-group mb-3">
-        <span class="input-group-text">Von</span>
-        <input formControlName="fromDate" type="date" class="form-control">
+      <div class="col-12 col-md-6 col-lg">
+        <div class="input-group">
+          <span class="input-group-text">Von</span>
+          <input formControlName="fromDate" type="date" class="form-control">
+        </div>
       </div>
-
-      <div class="input-group mb-3">
-        <span class="input-group-text">Bis</span>
-        <input formControlName="toDate" type="date" class="form-control">
+      <div class="col-12 col-md-6 col-lg">
+        <div class="input-group">
+          <span class="input-group-text">Bis</span>
+          <input formControlName="toDate" type="date" class="form-control">
+        </div>
       </div>
-
-      <div class="input-group mb-3">
-        <label class="input-group-text" for="inputGroupSelect01">Status</label>
-        <select formControlName="status" class="form-select" id="inputGroupSelect01">
-          <option value="ALL" selected>Alle</option>
-          <option value="CHECKED">Abgeglichen</option>
-          <option value="CONFLICT">Konflikt</option>
-          <option value="NEEDS_FIXING">Korrektur erforderlich</option>
-        </select>
+      <div class="col-12 col-md-6 col-lg">
+        <div class="input-group">
+          <label class="input-group-text" for="inputGroupSelect01">Status</label>
+          <select formControlName="status" class="form-select" id="inputGroupSelect01">
+            <option value="ALL">Alle</option>
+            <option value="CHECKED">Abgeglichen</option>
+            <option value="CONFLICT">Konflikt</option>
+            <option value="NEEDS_FIXING">Korrektur erforderlich</option>
+          </select>
+        </div>
       </div>
-
-      <app-button-comp (click)="onReset()" buttonType="reset" buttonDesignType="outline-secondary" text="Filter zurücksetzen"></app-button-comp>
-      <app-button-comp buttonType="submit" buttonDesignType="primary" text="Suchen"></app-button-comp>
+      <div class="col-12 col-md-auto">
+        <app-button-comp
+          buttonType="reset"
+          buttonDesignType="outline-secondary"
+          text="Filter zurücksetzen">
+        </app-button-comp>
+      </div>
+      <div class="col-12 col-md-auto">
+        <app-button-comp
+          buttonType="submit"
+          buttonDesignType="primary"
+          text="Suchen">
+        </app-button-comp>
+      </div>
     </form>
-    <app-table-overview-comp caption="Hier sind nur von dir erfasste Markerl" [data]="dataTable()"></app-table-overview-comp>
+    <div class="table-responsive-md">
+      <app-table-overview-comp caption="Hier sind nur von dir erfasste Markerl" [data]="dataTable()"></app-table-overview-comp>
+    </div>
   </div>
 </div>

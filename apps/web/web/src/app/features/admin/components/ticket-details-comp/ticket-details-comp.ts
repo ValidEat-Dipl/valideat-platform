@@ -1,13 +1,13 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import {NavComp} from '../nav-comp/nav-comp';
 import {BadgeComp} from '../badge-comp/badge-comp';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { TicketDetailService } from '../../services/ticket-detail-service';
-import { FoodTicketDetail } from '../../models/food-ticket-detail.model';
 import { TableData } from '../../models/table.model';
 import { Status } from '../../models/status.model';
 import { ButtonComp } from '../button-comp/button-comp';
-import { delay } from 'rxjs';
+import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'app-ticket-details-comp',
@@ -18,6 +18,7 @@ import { delay } from 'rxjs';
 export class TicketDetailsComp implements OnInit {
   route = inject(ActivatedRoute);
   ticketDetailService = inject(TicketDetailService);
+  location = inject(Location)
 
   dataDetail = signal<TableData>({
     headers: [],
@@ -35,6 +36,7 @@ export class TicketDetailsComp implements OnInit {
             { key: 'stufe', label: 'Stufe' },
             { key: 'kostenstelle', label: 'Kostenstelle' },
             { key: 'restaurant', label: 'Restaurant' },
+            { key: 'ticketTyp', label: 'Tickettyp' },
             { key: 'checkDate', label: 'Prüfdatum' },
             { key: 'adminName', label: 'Erfasst von' }
           ],
@@ -47,8 +49,11 @@ export class TicketDetailsComp implements OnInit {
               restaurant: ticket.restaurantName,
               checkDate: ticket.checkDate,
               status: new Status(ticket.status),
-              adminName: ticket.adminFirstName+' '+ ticket.adminLastName,
-              id: ticket.id,
+              adminName: ticket.adminFirstName != null && ticket.adminLastName != null
+                 ? ticket.adminFirstName+' '+ ticket.adminLastName
+                 : "",
+              ticketTyp: null,
+              id: ticket.id
             },
           ],
         });
@@ -58,5 +63,9 @@ export class TicketDetailsComp implements OnInit {
 
   protected asStatus(value: unknown): Status | null {
     return value instanceof Status ? value : null;
+  }
+
+  protected goBack() {
+    this.location.back();
   }
 }
