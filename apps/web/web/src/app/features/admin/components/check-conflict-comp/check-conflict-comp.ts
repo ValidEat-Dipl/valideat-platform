@@ -42,6 +42,7 @@ export class CheckConflictComp implements OnInit {
       const id = Number(params.get('id'));
 
       this.checkConflictService.getClearingCase(id).subscribe((ticket) => {
+        console.log(ticket);
         this.dataTable.set({
           headers: [
             { key: 'person', label: 'Mitarbeiter' },

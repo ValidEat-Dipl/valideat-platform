@@ -7,6 +7,7 @@ import { EmployeeTicketService } from '../../../employee/services/employee-ticke
 import { Restaurant } from '../../../employee/models/restaurant.model';
 import { Tier } from '../../models/tier.model';
 import { CostOrder } from '../../models/costOrder.model';
+import { Employee } from '../../models/employee.model';
 
 @Component({
   selector: 'app-react-form-comp',
@@ -21,6 +22,7 @@ export class ReactFormComp implements OnInit {
   costOrders: CostOrder[] = [];
   restaurants: Restaurant[] = [];
   tiers: Tier[] = [];
+  employees: Employee[] = [];
 
   ngOnInit() {
     this.dropdownService.getCostOrders().subscribe((data) => {
@@ -34,6 +36,10 @@ export class ReactFormComp implements OnInit {
     this.dropdownService.getTiers().subscribe((data) => {
       this.tiers = data;
     });
+
+    this.dropdownService.getEmployees().subscribe((data) => {
+      this.employees = data;
+    })
   }
 
   form = inject(FormBuilder).nonNullable.group({

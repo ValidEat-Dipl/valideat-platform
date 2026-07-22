@@ -36,3 +36,7 @@ https://thehaseebahmed.medium.com/how-to-implement-autosearch-in-angular-6e562c1
 [medium.com/@surajk236789/daterange-picker-in-angular-4e5e6c3cedfe](https://medium.com/@surajk236789/daterange-picker-in-angular-4e5e6c3cedfe)[medium.com/@surajk236789/daterange-picker-in-angular-4e5e6c3cedfe](https://medium.com/@surajk236789/daterange-picker-in-angular-4e5e6c3cedfe)
 
 14.07.2026
+
+[medium.com/@isthatmejs1/a-guide-to-effects-in-angular-how-they-work-a366263e4bb3](https://medium.com/@isthatmejs1/a-guide-to-effects-in-angular-how-they-work-a366263e4bb3)
+
+21.07.2026

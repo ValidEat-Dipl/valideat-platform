@@ -1,7 +1,15 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()" class="d-grid gap-3 w-50">
   <div class="">
     <label for="username" class="form-label">1. Mitarbeiter</label>
-    <input type="text" class="form-control" id="username" formControlName="username" placeholder="Vorname Nachname">
+    <select class="form-select" id="username" formControlName="username">
+      <option value="" disabled>Bitte auswählen</option>
+
+      @for (employee of employees; track $index) {
+        <option [value]="employee.firstName+' '+employee.lastName">
+          {{ employee.firstName + " " + employee.lastName }}
+        </option>
+      }
+    </select>
   </div>
   <div class="d-flex gap-3">
     <div class="w-100">

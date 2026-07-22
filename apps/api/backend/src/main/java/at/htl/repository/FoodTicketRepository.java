@@ -585,7 +585,7 @@ public class FoodTicketRepository {
 
         infoBox.put("Gesamt", result.size());
         infoBox.put("Offen", open);
-        infoBox.put("Nachbesserung", needsFixing);
+        infoBox.put("Korrektur erforderlich", needsFixing);
         infoBox.put("Konflikte", conflictCount);
 
         return new FoodTicketConflictResponseDTO(result, infoBox);

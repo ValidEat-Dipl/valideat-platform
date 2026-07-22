@@ -299,7 +299,6 @@ public class FoodTicketResource {
     @Path("/assignTickets/{empTicketId}/{adminTicketId}")
     @Transactional
     public Response assignTickets(@PathParam("empTicketId") Long empTicketId, @PathParam("adminTicketId") Long adminTicketId) {
-        // TODO Automatic Clearing
         FoodTicket empTicket = foodTicketRepository.findById(empTicketId);
         FoodTicket adminTicket = foodTicketRepository.findById(adminTicketId);
 

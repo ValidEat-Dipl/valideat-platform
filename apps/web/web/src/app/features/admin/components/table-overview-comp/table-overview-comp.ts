@@ -1,6 +1,7 @@
 import {
   Component,
   computed,
+  effect,
   inject,
   input,
   InputSignal,
@@ -42,6 +43,14 @@ export class TableOverviewComp {
     }
 
     this.sortChange.emit(this.sortDirection());
+  }
+
+  constructor() {
+    effect(() => {
+      if (this.initRow() >= this.length()) {
+        this.initRow.set(0);
+      }
+    });
   }
 
   // Copilot #1 Anfang

@@ -3,8 +3,7 @@
 <div class="m-4 d-grid gap-4">
 
   <div class="d-flex gap-3">
-    <h1>Export & Freigabe</h1>
-    <app-badge-comp class="align-self-center" bgColor="info" text="In Bearbeitung" ></app-badge-comp>
+    <h1>Export</h1>
   </div>
 
   <div class="d-grid gap-4">
@@ -22,7 +21,7 @@
       </div>
       <div class="d-grid gap-3 p-3">
         @if (openConflictsCount > 0) {
-          <p class="m-0 text-secondary">Format und Inhalt sind noch nicht fachlich bestätigt.</p>
+          <p class="m-0 text-secondary">Exportiere alle Daten als CSV-File.</p>
         }
         <div class="d-flex gap-3">
           <app-button-comp [disabled]="openConflictsCount > 0" buttonType="icon" icon="download" buttonDesignType="outline-secondary" text="Export herunterladen"></app-button-comp>

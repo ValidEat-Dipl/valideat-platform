@@ -52,10 +52,13 @@
             <span class="text-danger">(Alter Wert: {{ originalValues.username }})</span>
           }
         </label>
-        <input
-          type="text"
-          class="form-control"
-          formControlName="username">
+        <select class="form-select" formControlName="username">
+          @for (employee of employees; track $index) {
+            <option [value]="employee.firstName+' '+employee.lastName">
+              {{ employee.firstName+' '+employee.lastName }}
+            </option>
+          }
+        </select>
       </div>
       <div class="d-flex gap-3">
         <div class="w-100">
@@ -80,7 +83,8 @@
                 (Alter Wert: {{ originalValues.costDepartment }})
               </span>
             }
-          </label> <select class="form-select" formControlName="costDepartment">
+          </label>
+          <select class="form-select" formControlName="costDepartment">
           @for (costOrder of costOrders; track costOrder.name) {
             <option [value]="costOrder.name">
               {{ costOrder.name }}
@@ -98,7 +102,8 @@
                 (Alter Wert: {{ originalValues.costRank }})
               </span>
             }
-          </label> <select class="form-select" formControlName="costRank">
+          </label>
+          <select class="form-select" formControlName="costRank">
           @for (tier of tiers; track tier.name) {
             <option [value]="tier.name">
               {{ tier.name }}
@@ -114,7 +119,8 @@
               (Alter Wert: {{ originalValues.restaurant }})
             </span>
             }
-          </label> <select class="form-select" formControlName="restaurant">
+          </label>
+          <select class="form-select" formControlName="restaurant">
           @for (restaurant of restaurants; track restaurant.name) {
             <option [value]="restaurant.name">
               {{ restaurant.name }}

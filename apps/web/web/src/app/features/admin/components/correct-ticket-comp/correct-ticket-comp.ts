@@ -14,6 +14,7 @@ import { CostOrder } from '../../models/costOrder.model';
 import { forkJoin } from 'rxjs';
 import { CorrectTicketService } from '../../services/correct-ticket-service';
 import { DeleteTicketService } from '../../services/delete-ticket-service';
+import {Employee} from '../../models/employee.model';
 
 @Component({
   selector: 'app-correct-ticket-comp',
@@ -37,6 +38,7 @@ export class CorrectTicketComp implements OnInit {
   costOrders: CostOrder[] = [];
   restaurants: Restaurant[] = [];
   tiers: Tier[] = [];
+  employees: Employee[] = [];
 
   dataDetail = signal<TableData>({
     headers: [],
@@ -72,10 +74,12 @@ export class CorrectTicketComp implements OnInit {
         costOrders: this.dropdownService.getCostOrders(),
         restaurants: this.dropdownService.getRestaurants(),
         tiers: this.dropdownService.getTiers(),
-      }).subscribe(({ ticket, costOrders, restaurants, tiers }) => {
+        employees: this.dropdownService.getEmployees()
+      }).subscribe(({ ticket, costOrders, restaurants, tiers, employees }) => {
         this.costOrders = costOrders;
         this.restaurants = restaurants;
         this.tiers = tiers;
+        this.employees = employees
 
         this.dataDetail.set({
           headers: [
