@@ -246,7 +246,7 @@ public class FoodTicketResource {
         ticket.setTier(tier);
         ticket.setRestaurant(restaurant);
 
-        return Response.ok(ticket).build();
+        return Response.noContent().build();
     }
 
     @PUT

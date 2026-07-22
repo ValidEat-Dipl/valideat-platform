@@ -2,15 +2,15 @@
 
 ## Metadaten
 
-| Feld | Wert |
-|---|---|
-| Change-ID | `VAL-004` |
-| Status | `draft` |
-| Verantwortlich | Erik Bergmair |
-| Erstellt am | 2026-07-09 |
-| Zuletzt geändert | 2026-07-09 |
-| FSD-Referenz | `docs/FSD.md`, derzeit noch nicht ausgearbeitet |
-| GitHub Issue | nicht vorhanden |
+| Feld             | Wert                                            |
+| ---------------- | ----------------------------------------------- |
+| Change-ID        | `VAL-004`                                       |
+| Status           | `implemented`                                   |
+| Verantwortlich   | Erik Bergmair                                   |
+| Erstellt am      | 2026-07-09                                      |
+| Zuletzt geändert | 2026-07-21                                      |
+| FSD-Referenz     | `docs/FSD.md`, derzeit noch nicht ausgearbeitet |
+| GitHub Issue     | `#10`                                           |
 
 ## Herkunft und Sicherheit
 
@@ -71,29 +71,29 @@ Der Fokus liegt auf dem Mitarbeiterbereich:
 
 ## Akzeptanzkriterien
 
-- [ ] Der tatsächliche Angular-Ausgangsstand wurde geprüft und in `evidence.md` dokumentiert.
-- [ ] Der Mitarbeiterbereich ist klar von HR-/Admin-Funktionen abgegrenzt.
-- [ ] Die umzusetzenden Figma-Screens sind im Design referenziert.
-- [ ] Offene fachliche Regeln sind als Annahmen oder offene Fragen dokumentiert.
-- [ ] Die Hauptnavigation des Mitarbeiterflows ist geplant oder umgesetzt.
-- [ ] Die Erfassung einer Markerlverwendung ist als UI-Flow umgesetzt oder als nächster konkreter Umsetzungsschritt vorbereitet.
-- [ ] Vorläufige Daten und Mockdaten sind klar als nicht produktiv gekennzeichnet.
-- [ ] Bootstrap 5.3 und SCSS werden konsistent zur bisherigen Designentscheidung verwendet.
-- [ ] Nicht umgesetzte API-, Auth-, Offline- oder Porsche-Details werden nicht als erledigt dargestellt.
-- [ ] Ausgeführte Prüfungen sind mit tatsächlichem Ergebnis in `evidence.md` dokumentiert.
+- [x] Der tatsächliche Angular-Ausgangsstand wurde geprüft und in `evidence.md` dokumentiert.
+- [x] Der Mitarbeiterbereich ist klar von HR-/Admin-Funktionen abgegrenzt.
+- [x] Die umzusetzenden Figma-Screens sind im Design referenziert.
+- [x] Offene fachliche Regeln sind als Annahmen oder offene Fragen dokumentiert.
+- [x] Die Hauptnavigation des Mitarbeiterflows ist geplant oder umgesetzt.
+- [x] Die Erfassung einer Markerlverwendung ist als UI-Flow umgesetzt oder als nächster konkreter Umsetzungsschritt vorbereitet.
+- [x] Vorläufige Daten und Mockdaten sind klar als nicht produktiv gekennzeichnet.
+- [x] Bootstrap 5.3 und SCSS werden konsistent zur bisherigen Designentscheidung verwendet.
+- [x] Nicht umgesetzte API-, Auth-, Offline- oder Porsche-Details werden nicht als erledigt dargestellt.
+- [x] Ausgeführte Prüfungen sind mit tatsächlichem Ergebnis in `evidence.md` dokumentiert.
 
 ## Offene Fragen
 
-| Frage | Entscheidet durch | Zwingend vor Umsetzung? | Status |
-|---|---|---|---|
-| Welche Daten muss eine Mitarbeitererfassung in der Porsche-Version exakt enthalten? | Porsche / Team | Ja, vor produktiver Umsetzung | offen |
-| Welche Markerlstufen gibt es und wie werden sie benannt? | Porsche | Ja, vor produktiver Umsetzung | offen |
-| Sind Nachträge oder Korrekturen durch Mitarbeitende erlaubt? | Porsche / Team | Ja, vor finalem Flow | offen |
-| Wie sieht der echte Login aus und wann wird Keycloak integriert? | Team, vor allem Backend/Auth | Nein für UI-Prototyp, ja für echte Integration | offen |
-| Welche API-Endpunkte liefert das Backend für Mitarbeitererfassungen? | Julian / Team | Nein für Mock-UI, ja für Integration | offen |
-| Welche Zustände kann eine Mitarbeitererfassung haben? | Porsche / Team | Ja, vor finaler Umsetzung | offen |
-| Welche Offline-Funktionalität ist für den Porsche-Startumfang wirklich nötig? | Porsche / Team | Nein für erste UI, ja vor PWA-Umsetzung | offen |
-| Welche Geräte und Browser sollen vorrangig unterstützt werden? | Porsche / Team | Nein für ersten Stand, ja für finale Prüfung | offen |
+| Frage                                                                               | Entscheidet durch            | Zwingend vor Umsetzung?                        | Status                                                                  |
+| ----------------------------------------------------------------------------------- | ---------------------------- | ---------------------------------------------- | ----------------------------------------------------------------------- |
+| Welche Daten muss eine Mitarbeitererfassung in der Porsche-Version exakt enthalten? | Porsche / Team               | Ja, vor produktiver Umsetzung                  | offen                                                                   |
+| Welche Markerlstufen gibt es und wie werden sie benannt?                            | Porsche                      | Ja, vor produktiver Umsetzung                  | offen                                                                   |
+| Sind Nachträge oder Korrekturen durch Mitarbeitende erlaubt?                        | Porsche / Team               | Ja, vor finalem Flow                           | offen                                                                   |
+| Wie sieht der echte Login aus und wann wird Keycloak integriert?                    | Team, vor allem Backend/Auth | Nein für UI-Prototyp, ja für echte Integration | offen                                                                   |
+| Welche API-Endpunkte liefert das Backend für Mitarbeitererfassungen?                | Julian / Team                | Nein für Mock-UI, ja für Integration           | für den aktuellen UI-Stand vorläufig beantwortet; finaler Vertrag offen |
+| Welche Zustände kann eine Mitarbeitererfassung haben?                               | Porsche / Team               | Ja, vor finaler Umsetzung                      | offen                                                                   |
+| Welche Offline-Funktionalität ist für den Porsche-Startumfang wirklich nötig?       | Porsche / Team               | Nein für erste UI, ja vor PWA-Umsetzung        | offen                                                                   |
+| Welche Geräte und Browser sollen vorrangig unterstützt werden?                      | Porsche / Team               | Nein für ersten Stand, ja für finale Prüfung   | offen                                                                   |
 
 ## Annahmen
 
@@ -106,7 +106,7 @@ Der Fokus liegt auf dem Mitarbeiterbereich:
 ## Auswirkungen
 
 - Benutzeroberfläche: erster technischer Aufbau des mobilen Mitarbeiterbereichs.
-- API und Backend: zunächst keine verbindliche API-Festlegung; spätere Integration muss mit Backend abgestimmt werden.
+- API und Backend: vorhandene Endpunkte sind für den aktuellen UI-Stand angebunden; der endgültige Vertrag und Authentifizierung bleiben abzustimmen.
 - Daten und Datenschutz: keine echten personenbezogenen Testdaten verwenden; mögliche lokale Speicherung gesondert prüfen.
 - Offline-Verhalten: vorerst nur planen oder klar abgrenzen, nicht als vollständige PWA-Synchronisation behaupten.
 - Dokumentation: Change, Evidence und ggf. Thesis Writing Notes aktualisieren.
@@ -114,12 +114,12 @@ Der Fokus liegt auf dem Mitarbeiterbereich:
 
 ## Abstimmungen und Freigabestatus
 
-| Gegenstand | Zuständige Stelle | Status | Nachweis |
-|---|---|---|---|
-| Mitarbeiterfrontend als Eriks nächster Schwerpunkt | Erik / Team | offen | aktuelle Planung im Change |
-| Fachliche Mitarbeiterdaten und Markerlregeln | Porsche / Team | offen | nicht vorhanden |
-| Authentifizierung und Keycloak-Anbindung | Team | offen | nicht vorhanden |
-| API für Mitarbeitererfassungen | Backend / Team | offen | nicht vorhanden |
-| Abgleich mit Figma-Prototyp | Erik | offen | [VAL-003](../../completed/2026-07-09-VAL-003-design-figma-prototype/proposal.md) |
+| Gegenstand                                         | Zuständige Stelle | Status | Nachweis                                                                         |
+| -------------------------------------------------- | ----------------- | ------ | -------------------------------------------------------------------------------- |
+| Mitarbeiterfrontend als Eriks nächster Schwerpunkt | Erik / Team       | offen  | aktuelle Planung im Change                                                       |
+| Fachliche Mitarbeiterdaten und Markerlregeln       | Porsche / Team    | offen  | nicht vorhanden                                                                  |
+| Authentifizierung und Keycloak-Anbindung           | Team              | offen  | nicht vorhanden                                                                  |
+| API für Mitarbeitererfassungen                     | Backend / Team    | offen  | nicht vorhanden                                                                  |
+| Abgleich mit Figma-Prototyp                        | Erik              | offen  | [VAL-003](../../completed/2026-07-09-VAL-003-design-figma-prototype/proposal.md) |
 
 Eine persönliche Freigabe durch Erik ist keine automatische Team-, Porsche- oder Schulfreigabe.
