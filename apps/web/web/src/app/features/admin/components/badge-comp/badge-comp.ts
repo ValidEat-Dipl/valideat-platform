@@ -1,5 +1,4 @@
-import {Component, computed, input, OnInit} from '@angular/core';
-import { Status } from '../../models/status.model';
+import {Component, computed, input} from '@angular/core';
 
 @Component({
   selector: 'app-badge-comp',
@@ -18,6 +17,7 @@ export class BadgeComp {
       case "info": return "clock";
       case "danger": return "exclamation-triangle";
       case "warning": return "exclamation-circle";
+      case "secondary": return "archive";
       default: return "";
     }
   })

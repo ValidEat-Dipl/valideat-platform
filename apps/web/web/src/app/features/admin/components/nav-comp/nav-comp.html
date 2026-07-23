@@ -13,7 +13,7 @@
         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
           @for (entry of datalistLabels(); track $index) {
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{{ datalistHrefs().at($index) }}"><i class="bi bi-{{ dataListIcons().at($index) }} p-2"></i> {{ entry }}</a>
+              <a class="nav-link active" aria-current="page" [href]="datalistHrefs().at($index)"><i class="bi bi-{{ dataListIcons().at($index) }} p-2"></i> {{ entry }}</a>
             </li>
           }
         </ul>

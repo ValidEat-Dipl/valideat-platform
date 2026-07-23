@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import {NavComp} from '../nav-comp/nav-comp';
 import {BadgeComp} from '../badge-comp/badge-comp';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TicketDetailService } from '../../services/ticket-detail-service';
 import { TableData } from '../../models/table.model';
 import { Status } from '../../models/status.model';
@@ -18,7 +18,7 @@ import { Location } from '@angular/common';
 export class TicketDetailsComp implements OnInit {
   route = inject(ActivatedRoute);
   ticketDetailService = inject(TicketDetailService);
-  location = inject(Location)
+  router = inject(Router);
 
   dataDetail = signal<TableData>({
     headers: [],
@@ -38,7 +38,7 @@ export class TicketDetailsComp implements OnInit {
             { key: 'restaurant', label: 'Restaurant' },
             { key: 'ticketTyp', label: 'Tickettyp' },
             { key: 'checkDate', label: 'Prüfdatum' },
-            { key: 'adminName', label: 'Erfasst von' }
+            { key: 'adminName', label: 'Erfasst von' },
           ],
           rows: [
             {
@@ -49,11 +49,12 @@ export class TicketDetailsComp implements OnInit {
               restaurant: ticket.restaurantName,
               checkDate: ticket.checkDate,
               status: new Status(ticket.status),
-              adminName: ticket.adminFirstName != null && ticket.adminLastName != null
-                 ? ticket.adminFirstName+' '+ ticket.adminLastName
-                 : "",
-              ticketTyp: null,
-              id: ticket.id
+              adminName:
+                ticket.adminFirstName != null && ticket.adminLastName != null
+                  ? ticket.adminFirstName + ' ' + ticket.adminLastName
+                  : '',
+              ticketTyp: ticket.ticketType,
+              id: ticket.id,
             },
           ],
         });
@@ -66,6 +67,6 @@ export class TicketDetailsComp implements OnInit {
   }
 
   protected goBack() {
-    this.location.back();
+    this.router.navigate(['/admin-overview']);
   }
 }

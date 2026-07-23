@@ -16,25 +16,34 @@ export class Status {
       case 'CHECKED':
         this.color = 'success';
         break;
+      case 'EXPIRED':
+        this.color = 'secondary';
+        break;
       default:
         this.color = 'primary';
     }
 
+    this.label = this.getLabel(value)
+  }
+
+  getAllLabelsForDropDown(): string[] {
+    return ["ALL", "OPEN", "CONFLICT", "NEEDS_FIXING", "CHECKED", "EXPIRED"];
+  }
+
+  getLabel(value: string) {
     switch (value) {
       case 'OPEN':
-        this.label = 'Offen';
-        break;
+        return 'Offen';
       case 'CONFLICT':
-        this.label = 'Konflikt';
-        break;
+        return 'Konflikt';
       case 'NEEDS_FIXING':
-        this.label = 'Korrektur erforderlich';
-        break;
+        return 'Korrektur erforderlich';
       case 'CHECKED':
-        this.label = 'Abgeglichen';
-        break;
+        return 'Abgeglichen';
+      case 'EXPIRED':
+        return 'Verjährt';
       default:
-        this.label = '---';
+        return '---';
     }
   }
 }

@@ -1,53 +1,65 @@
 @switch (buttonType()) {
   @case("button") {
-    <button
-      type="{{ buttonType() }}"
-      class="btn btn-{{ buttonDesignType() }}"
-      [disabled]="disabled()">
-      {{ text() }}
-    </button>
+    <span class="button-wrapper" [class.disabled-wrapper]="disabled()">
+      <button
+        type="button"
+        class="btn btn-{{ buttonDesignType() }}"
+        [disabled]="disabled()">
+        {{ text() }}
+      </button>
+    </span>
   }
   @case ("link") {
-    <a
-      href="{{ link() }}"
-      role="button"
-      class="btn btn-{{ buttonDesignType() }}"
-      [class.disabled]="disabled()"
-      [attr.aria-disabled]="disabled()">
-      {{ text() }}
-    </a>
+    <span class="button-wrapper" [class.disabled-wrapper]="disabled()">
+      <a
+        [href]="[disabled() ? null : link()]"
+        role="button"
+        class="btn btn-{{ buttonDesignType() }}"
+        [class.disabled]="disabled()"
+        [attr.aria-disabled]="disabled()">
+        {{ text() }}
+      </a>
+    </span>
   }
   @case ("reset") {
-    <input
-      type="reset"
-      value="{{ text() }}"
-      class="btn btn-{{ buttonDesignType() }}"
-      [disabled]="disabled()">
+    <span class="button-wrapper" [class.disabled-wrapper]="disabled()">
+      <input
+        type="reset"
+        value="{{ text() }}"
+        class="btn btn-{{ buttonDesignType() }}"
+        [disabled]="disabled()">
+    </span>
   }
   @case("submit") {
-    <button
-      type="{{ buttonType() }}"
-      class="btn btn-{{ buttonDesignType() }}"
-      [disabled]="disabled()">
-      {{ text() }}
-    </button>
+    <span class="button-wrapper" [class.disabled-wrapper]="disabled()">
+      <button
+        type="submit"
+        class="btn btn-{{ buttonDesignType() }}"
+        [disabled]="disabled()">
+        {{ text() }}
+      </button>
+    </span>
   }
   @case("icon") {
-    <a
-      href="{{ disabled() ? null : link() }}"
-      role="button"
-      class="btn btn-{{ buttonDesignType() }}"
-      [class.disabled]="disabled()"
-      [attr.aria-disabled]="disabled()">
-      <i class="p-1 bi bi-{{ icon() }}"></i> {{ text() }}
-    </a>
+    <span class="button-wrapper" [class.disabled-wrapper]="disabled()">
+      <a
+        [href]="[disabled() ? null : link()]"
+        role="button"
+        class="btn btn-{{ buttonDesignType() }}"
+        [class.disabled]="disabled()"
+        [attr.aria-disabled]="disabled()">
+        <i class="p-1 bi bi-{{ icon() }}"></i> {{ text() }}
+      </a>
+    </span>
   }
   @case("iconDownload") {
-    <button
-      type="{{ buttonType() }}"
-      class="btn btn-{{ buttonDesignType() }}"
-      [disabled]="disabled()">
-      <i class="p-1 bi bi-{{ icon() }}"></i> {{ text() }}
-    </button>
+    <span class="button-wrapper" [class.disabled-wrapper]="disabled()">
+      <button
+        type="{{ buttonType() }}"
+        class="btn btn-{{ buttonDesignType() }}"
+        [disabled]="disabled()">
+        <i class="p-1 bi bi-{{ icon() }}"></i> {{ text() }}
+      </button>
+    </span>
   }
 }

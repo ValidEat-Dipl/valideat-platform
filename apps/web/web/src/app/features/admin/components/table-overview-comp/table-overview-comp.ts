@@ -14,6 +14,7 @@ import {TableData} from '../../models/table.model';
 import {DatePipe} from '@angular/common';
 import {Status} from '../../models/status.model';
 import {BadgeComp} from '../badge-comp/badge-comp';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-table-overview-comp',

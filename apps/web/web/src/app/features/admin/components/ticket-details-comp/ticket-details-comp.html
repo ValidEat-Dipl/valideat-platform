@@ -1,5 +1,6 @@
 <app-nav-comp></app-nav-comp>
 
+@if (dataDetail().rows.length > 0 && dataDetail().rows[0] != undefined) {
 <div class="m-4 d-grid gap-4">
   <div class="d-flex gap-3">
     <h1>Markerldetails</h1>
@@ -42,7 +43,7 @@
             [text]="asStatus(dataDetail().rows[0]['status'])?.label ?? ''"
             [bgColor]="asStatus(dataDetail().rows[0]['status'])?.color ?? ''">
           </app-badge-comp>
-          <a class="link-underline-warning" href="http://localhost:4200/clearing-tickets/check-conflict/{{dataDetail().rows[0]['id']}}">
+          <a class="link-underline-warning" [href]="['/clearing-tickets/check-conflict/' + dataDetail().rows[0]['id']]">
             Fall öffnen &rarr;
           </a>
         </div>
@@ -55,7 +56,7 @@
         buttonDesignType="primary"
         buttonType="icon"
         [disabled]="asStatus(dataDetail().rows[0]['status'])?.value == 'CHECKED'"
-        link="http://localhost:4200/ticket-details/correct/{{dataDetail().rows[0]['id']}}">
+        link="/ticket-details/correct/{{dataDetail().rows[0]['id']}}">
       </app-button-comp>
       <app-button-comp
         text="Abbrechen"
@@ -66,3 +67,4 @@
     </div>
   </div>
 </div>
+}

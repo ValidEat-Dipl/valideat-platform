@@ -1,7 +1,7 @@
-import {Component, input, Input,} from '@angular/core';
+import { Component, HostBinding, input, Input } from '@angular/core';
+import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-button-comp',
-  imports: [],
   templateUrl: './button-comp.html',
   styleUrl: './button-comp.css',
 })
@@ -13,5 +13,8 @@ export class ButtonComp {
   disabled = input<boolean>(false);
   icon = input<string>('icon');
 
-
+  @HostBinding('class.disabled-button')
+  get isDisabled() {
+    return this.disabled();
+  }
 }

@@ -41,7 +41,7 @@
           } @else if (header.key == 'lastChange' && row[header.key] == null) {
             <td>--.--.----</td>
           } @else if (header.key == 'actionDetail') {
-            <td><a class="link-opacity-100" href="/ticket-details/{{row['id']}}">{{ row[header.key] }}</a></td>
+            <td><a class="link-opacity-100" [href]="['/ticket-details/' + row['id']]">{{ row[header.key] }}</a></td>
           } @else {
             <td>{{ row[header.key] }}</td>
           }

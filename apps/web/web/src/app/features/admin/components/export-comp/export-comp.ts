@@ -6,6 +6,7 @@ import {InfoFlexComp} from '../info-flex-comp/info-flex-comp';
 import {InfoFlexServiceAdminOverview} from '../../services/info-flex-service-admin-overview';
 import { ExportService } from '../../services/export-service';
 import { InfoFlexServiceExport } from '../../services/info-flex-service-export';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-export-comp',
@@ -25,25 +26,24 @@ export class ExportComp implements OnInit {
   }
 
   protected load() {
-    this.infoContainerService
-      .getInfoContainerMap()
-      .subscribe((data) => {
-        this.infoContainer.set({ ...data });
-        this.openConflictsCount.set(data["Offene Konflikte"]);
-      });
-
+    this.infoContainerService.getInfoContainerMap().subscribe((data) => {
+      this.infoContainer.set({ ...data });
+      this.openConflictsCount.set(data['Offene Konflikte']);
+    });
   }
 
   protected downloadCsvFile() {
-    this.downloadCsvService.downloadCsvFile().subscribe((blob) => {
-      const url = window.URL.createObjectURL(blob);
+    if (this.openConflictsCount() < 0) {
+      this.downloadCsvService.downloadCsvFile().subscribe((blob) => {
+        const url = window.URL.createObjectURL(blob);
 
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = 'foodtickets.csv';
-      link.click();
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'foodtickets.csv';
+        link.click();
 
-      window.URL.revokeObjectURL(url);
-    });
+        window.URL.revokeObjectURL(url);
+      });
+    }
   }
 }

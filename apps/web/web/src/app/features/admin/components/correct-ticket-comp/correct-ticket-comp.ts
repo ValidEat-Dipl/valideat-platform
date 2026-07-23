@@ -35,10 +35,12 @@ export class CorrectTicketComp implements OnInit {
 
   showSuccessToast = signal(false);
 
-  costOrders: CostOrder[] = [];
-  restaurants: Restaurant[] = [];
-  tiers: Tier[] = [];
-  employees: Employee[] = [];
+  costOrders = signal<CostOrder[]>([]);
+  restaurants = signal<Restaurant[]>([]);
+  tiers = signal<Tier[]>([]);
+  employees = signal<Employee[]>([]);
+  ticketStatus = signal<string>('');
+  ticketType = signal<string>('');
 
   dataDetail = signal<TableData>({
     headers: [],
@@ -62,6 +64,7 @@ export class CorrectTicketComp implements OnInit {
     costRank: ['', Validators.required],
     restaurant: ['', Validators.required],
     status: ['', Validators.required],
+    type: ['', Validators.required],
     correctionReason: ['', Validators.required],
   });
 
@@ -74,12 +77,19 @@ export class CorrectTicketComp implements OnInit {
         costOrders: this.dropdownService.getCostOrders(),
         restaurants: this.dropdownService.getRestaurants(),
         tiers: this.dropdownService.getTiers(),
-        employees: this.dropdownService.getEmployees()
+        employees: this.dropdownService.getEmployees(),
       }).subscribe(({ ticket, costOrders, restaurants, tiers, employees }) => {
-        this.costOrders = costOrders;
-        this.restaurants = restaurants;
-        this.tiers = tiers;
-        this.employees = employees
+        this.costOrders.set(costOrders);
+        this.restaurants.set(restaurants);
+        this.tiers.set(tiers);
+        this.employees.set(employees);
+        this.ticketStatus.set(ticket.status);
+        this.ticketType.set(ticket.ticketType);
+
+        if (ticket.status === 'CHECKED') {
+          this.router.navigate(['/ticket-details', id]);
+          return;
+        }
 
         this.dataDetail.set({
           headers: [
@@ -136,8 +146,13 @@ export class CorrectTicketComp implements OnInit {
     }, 2000);
   }
 
+  protected cancel() {
+    this.router.navigate(['/ticket-details', this.id()]);
+  }
+
   protected onSubmit() {
     if (this.form.invalid) return;
+    if (this.ticketStatus() == 'CHECKED') return;
     const logging = {
       useDate: this.form.value.useDate!,
       employeeName: this.form.value.username!,
@@ -147,7 +162,7 @@ export class CorrectTicketComp implements OnInit {
       status: this.form.value.status!,
       adminName: 'David Leitner',
     };
-    console.log(logging)
+    console.log(logging);
 
     this.route.paramMap.subscribe((params) => {
       const id = Number(params.get('id'));

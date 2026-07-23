@@ -8,8 +8,8 @@
 
   <div class="d-grid gap-4">
     <div class="d-flex gap-3">
-      <app-button-comp text="Markerl erfassen" buttonDesignType="primary" buttonType="link" link="http://localhost:4200/create-ticket"></app-button-comp>
-      <app-button-comp text="Clearing öffnen" buttonDesignType="outline-secondary" buttonType="link" link="http://localhost:4200/clearing-tickets"></app-button-comp>
+      <app-button-comp text="Markerl erfassen" buttonDesignType="primary" buttonType="link" link="/create-ticket"></app-button-comp>
+      <app-button-comp text="Clearing öffnen" buttonDesignType="outline-secondary" buttonType="link" link="/clearing-tickets"></app-button-comp>
       <div class="align-self-center form-check">
         <input class="form-check-input" type="checkbox" [(ngModel)]="lastYear" (ngModelChange)="onToggleLastYear()" id="checkLastYearActive">
         <label class="form-check-label" for="checkLastYearActive">Nur letzte 12 Monate</label>

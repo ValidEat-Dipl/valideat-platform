@@ -20,7 +20,7 @@ export class TableDataMostRecentService {
     if (fromDate) params.startDate = fromDate;
     if (toDate) params.endDate = toDate;
     if (status && status != 'ALL') params.status = status;
-console.log(params);
+
     return this.http.get<AdminFoodTicket[]>('http://localhost:8080/foodticket/listAdminTickets', {
       params,
     });

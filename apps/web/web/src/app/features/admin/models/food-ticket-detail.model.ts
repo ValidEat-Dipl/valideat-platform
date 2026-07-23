@@ -10,4 +10,5 @@ export interface FoodTicketDetail {
   checkDate: string;
   adminFirstName: string;
   adminLastName: string;
+  ticketType: string;
 }
