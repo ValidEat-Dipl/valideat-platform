@@ -47,7 +47,7 @@ export class CorrectTicketComp implements OnInit {
     rows: [],
   });
 
-  originalValues = {
+  originalValues: TicketFormValues = {
     username: '',
     useDate: '',
     costDepartment: '',
@@ -64,7 +64,6 @@ export class CorrectTicketComp implements OnInit {
     costRank: ['', Validators.required],
     restaurant: ['', Validators.required],
     status: ['', Validators.required],
-    type: ['', Validators.required],
     correctionReason: ['', Validators.required],
   });
 
@@ -150,9 +149,22 @@ export class CorrectTicketComp implements OnInit {
     this.router.navigate(['/ticket-details', this.id()]);
   }
 
+  checkIfValuesAreSame(originalValues: TicketFormValues, formValues: TicketFormValues) {
+    return (
+      originalValues.username == formValues.username &&
+      originalValues.useDate == formValues.useDate &&
+      originalValues.costDepartment == formValues.costDepartment &&
+      originalValues.costRank == formValues.costRank &&
+      originalValues.restaurant == formValues.restaurant &&
+      originalValues.status == formValues.status
+    );
+  }
+
   protected onSubmit() {
     if (this.form.invalid) return;
     if (this.ticketStatus() == 'CHECKED') return;
+    if (this.checkIfValuesAreSame(this.originalValues, this.form.getRawValue())) return;
+
     const logging = {
       useDate: this.form.value.useDate!,
       employeeName: this.form.value.username!,
@@ -197,3 +209,13 @@ export class CorrectTicketComp implements OnInit {
     });
   }
 }
+
+type TicketFormValues = {
+  username: string;
+  useDate: string;
+  costDepartment: string;
+  costRank: string;
+  restaurant: string;
+  status: string;
+  correctionReason: string;
+};

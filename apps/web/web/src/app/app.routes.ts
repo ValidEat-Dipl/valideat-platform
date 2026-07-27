@@ -8,6 +8,7 @@ import {CheckConflictComp} from './features/admin/components/check-conflict-comp
 import {TicketDetailsComp} from './features/admin/components/ticket-details-comp/ticket-details-comp';
 import { MostRecentTicketsComp } from './features/admin/components/most-recent-tickets-comp/most-recent-tickets-comp';
 import { CorrectTicketComp } from './features/admin/components/correct-ticket-comp/correct-ticket-comp';
+import { RegisterComp } from './features/admin/components/register-comp/register-comp';
 
 export const routes: Routes = [
   /* voll */ { path: 'admin-overview', component: AdminOverviewComp },
@@ -19,6 +20,7 @@ export const routes: Routes = [
   /* voll */ { path: 'export', component: ExportComp },
   /* voll */ { path: 'ticket-details/:id', component: TicketDetailsComp },
   /* voll */ { path: 'ticket-details/correct/:id', component: CorrectTicketComp },
+  { path: 'register', component: RegisterComp },
   {
     path: 'employee',
     loadChildren: () =>

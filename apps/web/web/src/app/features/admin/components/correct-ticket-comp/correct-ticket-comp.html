@@ -161,7 +161,7 @@
           </div>
         </div>
         <div class="w-100">
-          <label class="form-label">Grund der Korrektur</label>
+          <label class="form-label">Grund der Korrektur @if (form.controls.correctionReason.invalid && form.controls.correctionReason.touched) {<span class="text-danger">*</span>}</label>
               <textarea class="form-control" rows="4" formControlName="correctionReason"></textarea>
         </div>
       </div>
@@ -170,7 +170,7 @@
           text="Korrektur speichern"
           buttonDesignType="primary"
           buttonType="submit"
-          [disabled]="form.invalid || form.pending">
+          [disabled]="(form.invalid || form.pending) || checkIfValuesAreSame(originalValues, form.getRawValue())">
         </app-button-comp>
         <app-button-comp
           text="Änderungen verwerfen"

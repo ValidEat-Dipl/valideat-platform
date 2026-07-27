@@ -1,0 +1,149 @@
+@if (showSuccessToast()) {
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div class="toast show text-bg-success border-0">
+      <div class="toast-body">
+        Admin erfolgreich erstellt.
+      </div>
+    </div>
+  </div>
+}
+
+<div class="d-flex justify-content-center align-items-center p-4" style="min-height: calc(100vh - 80px);">
+
+  <div class="border rounded-4 p-4 w-100" style="max-width: 700px;">
+
+    <h1 class="mb-4 text-center">Admin registrieren</h1>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="d-grid gap-3">
+
+      <div class="d-flex gap-3">
+        <div class="w-100">
+          <label for="firstName" class="form-label">
+            Vorname
+          </label>
+          <input
+            id="firstName"
+            class="form-control"
+            formControlName="firstName">
+        </div>
+
+        <div class="w-100">
+          <label for="lastName" class="form-label">
+            Nachname
+          </label>
+          <input
+            id="lastName"
+            class="form-control"
+            formControlName="lastName">
+        </div>
+      </div>
+
+
+      <div>
+        <label for="email" class="form-label">
+          E-Mail
+        </label>
+        <input
+          id="email"
+          type="email"
+          class="form-control"
+          formControlName="email">
+      </div>
+
+
+      <div>
+        <label for="department" class="form-label">
+          Abteilung
+        </label>
+        <input
+          id="department"
+          class="form-control"
+          formControlName="department">
+      </div>
+
+
+      <div class="d-flex gap-3">
+        <div class="w-100">
+          <label for="address" class="form-label">
+            Adresse
+          </label>
+          <input
+            id="address"
+            class="form-control"
+            formControlName="address">
+        </div>
+
+        <div class="w-100">
+          <label for="phoneNumber" class="form-label">
+            Telefonnummer
+          </label>
+          <input
+            id="phoneNumber"
+            class="form-control"
+            formControlName="phoneNumber">
+        </div>
+      </div>
+
+
+      <div class="d-flex gap-3">
+        <div class="w-100">
+          <label for="password" class="form-label">
+            Passwort
+          </label>
+          <input
+            id="password"
+            type="password"
+            class="form-control"
+            formControlName="password">
+        </div>
+
+        <div class="w-100">
+          <label for="passwordConfirmation" class="form-label">
+            Passwort bestätigen
+          </label>
+          <input
+            id="passwordConfirmation"
+            type="password"
+            class="form-control"
+            formControlName="passwordConfirmation">
+        </div>
+      </div>
+
+
+      @if (passwordsDifferent()) {
+        <div class="alert alert-danger m-0">
+          Die Passwörter stimmen nicht überein.
+        </div>
+      }
+
+
+      @if (registerError()) {
+        <div class="alert alert-danger m-0">
+          Registrierung fehlgeschlagen.
+        </div>
+      }
+
+
+      <div class="d-flex gap-3 mt-3">
+
+        <app-button-comp
+          buttonType="submit"
+          buttonDesignType="primary"
+          text="Admin erstellen"
+          [disabled]="form.invalid || form.pending || isLoading()">
+        </app-button-comp>
+
+        <app-button-comp
+          buttonType="link"
+          buttonDesignType="secondary"
+          text="Zurück"
+          link="/employee/login">
+        </app-button-comp>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</div>
