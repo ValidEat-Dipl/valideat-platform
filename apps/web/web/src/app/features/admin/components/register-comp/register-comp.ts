@@ -70,7 +70,7 @@ export class RegisterComp {
           this.showSuccessToast.set(true);
 
           setTimeout(() => {
-            this.router.navigate(['/employee/login']);
+            this.router.navigate(['/login']);
           }, 1500);
         } else {
           this.registerError.set(true);

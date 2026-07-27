@@ -8,6 +8,7 @@ import { Restaurant } from '../../../employee/models/restaurant.model';
 import { Tier } from '../../models/tier.model';
 import { CostOrder } from '../../models/costOrder.model';
 import { Employee } from '../../models/employee.model';
+import { CurrentUserService } from '../../services/current-user-service';
 
 @Component({
   selector: 'app-react-form-comp',
@@ -19,6 +20,8 @@ export class ReactFormComp implements OnInit {
   createAdminTicketService = inject(CreateAdminTicketService);
   router = inject(Router);
   dropdownService = inject(EmployeeTicketService);
+  currentUserService = inject(CurrentUserService);
+
   costOrders: CostOrder[] = [];
   restaurants: Restaurant[] = [];
   tiers: Tier[] = [];
@@ -58,6 +61,17 @@ export class ReactFormComp implements OnInit {
   onSubmit() {
     if (this.form.invalid) return;
 
+    const ticket = {
+      useDate: this.form.value.useDate!,
+      employeeName: this.form.value.username!,
+      costOrder: this.form.value.costDepartment!,
+      tier: this.form.value.costRank!,
+      restaurantName: this.form.value.restaurant!,
+      adminName: this.currentUserService.getFullName(),
+    };
+
+    console.log(ticket);
+
     this.createAdminTicketService
       .createAdminTicket({
         useDate: this.form.value.useDate!,
@@ -65,10 +79,11 @@ export class ReactFormComp implements OnInit {
         costOrder: this.form.value.costDepartment!,
         tier: this.form.value.costRank!,
         restaurantName: this.form.value.restaurant!,
-        adminName: 'David Leitner',
+        adminName: this.currentUserService.getFullName(),
       })
       .subscribe({
         next: () => {
+          console.log('erfolgreich')
           this.form.reset();
           this.showToast();
         },

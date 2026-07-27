@@ -2,9 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AdminLogin } from '../models/admin-login.model';
 import { AdminRegister } from '../models/admin-register.model';
-
-class LoginResponseDTO {}
-
+import { LoginResponseDTO } from '../models/LoginResponseDTO';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +15,6 @@ export class AuthService {
   }
 
   register(dto: AdminRegister) {
-    return this.http.post<string>('http://localhost:8080/employee/register', dto);
+    return this.http.post('http://localhost:8080/employee/register', dto, { responseType: 'text' });
   }
 }
