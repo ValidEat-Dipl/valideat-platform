@@ -662,9 +662,9 @@ public class FoodTicketRepository {
         List<FoodTicket> possibleMatches = List.of();
 
         if (ticketType.equals(TicketType.EMPLOYEE)) {
-            possibleMatches = getAllTickets(TicketType.ADMIN);
+            possibleMatches = getClearableTickets(TicketType.ADMIN);
         } else if (ticketType.equals(TicketType.ADMIN)) {
-            possibleMatches = getAllTickets(TicketType.EMPLOYEE);
+            possibleMatches = getClearableTickets(TicketType.EMPLOYEE);
         }
 
         for (FoodTicket possibleMatch : possibleMatches) {
@@ -698,13 +698,15 @@ public class FoodTicketRepository {
         }
     }
 
-    private List<FoodTicket> getAllTickets(TicketType ticketType) {
+    private List<FoodTicket> getClearableTickets(TicketType ticketType) {
         return entityManager.createQuery("""
-                                                select f
-                                                from FoodTicket f
-                                                where f.ticketType = :ticketType
-                                                """, FoodTicket.class)
+        select f
+        from FoodTicket f
+        where f.ticketType = :ticketType
+        and f.status <> :expired
+        """, FoodTicket.class)
                 .setParameter("ticketType", ticketType)
+                .setParameter("expired", Status.EXPIRED)
                 .getResultList();
     }
 

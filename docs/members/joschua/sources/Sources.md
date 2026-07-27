@@ -48,3 +48,7 @@ https://thehaseebahmed.medium.com/how-to-implement-autosearch-in-angular-6e562c1
 [angular.dev/api/core/HostBinding](https://angular.dev/api/core/HostBinding)
 
 23.07.2026
+
+[hardhat.org/docs/getting-started](https://hardhat.org/docs/getting-started)
+
+27.07.2026
