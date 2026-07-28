@@ -1,6 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { CurrentUserService } from '../../../admin/services/current-user-service';
 import { EmployeeAuthService } from '../../services/employee-auth.service';
 
 @Component({
@@ -25,6 +26,7 @@ export class LoginPage {
 
   constructor(
     private employeeAuthService: EmployeeAuthService,
+    private currentUserService: CurrentUserService,
     private router: Router,
   ) {}
 
@@ -46,24 +48,29 @@ export class LoginPage {
 
 
     this.employeeAuthService.login(email, password).subscribe({
-
       next: (response) => {
+        this.isLoading.set(false);
 
-        if (response.trim() == 'Login was Successful!') {
-          this.router.navigate(['/employee/start']);
+        if (!response) {
+          this.loginError.set(true);
           return;
         }
 
+        this.currentUserService.setUser({
+          id: response.id,
+          firstName: response.firstName,
+          lastName: response.lastName,
+          email: response.email,
+          role: response.role,
+          token: response.token,
+        });
 
-        this.isLoading.set(false);
-        this.loginError.set(true);
-
+        this.router.navigate(['/employee/start']);
       },
       error: () => {
         this.isLoading.set(false);
         this.loginError.set(true);
       },
-      
     });
   }
 }

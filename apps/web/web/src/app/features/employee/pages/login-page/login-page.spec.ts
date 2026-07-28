@@ -21,7 +21,10 @@ describe('LoginPage', () => {
     httpTesting = TestBed.inject(HttpTestingController);
   });
 
-  afterEach(() => httpTesting.verify());
+  afterEach(() => {
+    localStorage.removeItem('currentUser');
+    httpTesting.verify();
+  });
 
   it('navigates to the start page after a successful login', () => {
     const navigate = vi.spyOn(TestBed.inject(Router), 'navigate').mockResolvedValue(true);
@@ -32,10 +35,21 @@ describe('LoginPage', () => {
     });
     component.login();
 
-    httpTesting
-      .expectOne('http://localhost:8080/employee/login/max.mustermann%40firma.at/password123')
-      .flush('Login was Successful!');
+    const request = httpTesting.expectOne('http://localhost:8080/employee/login');
+    expect(request.request.body).toEqual({
+      email: 'max.mustermann@firma.at',
+      password: 'password123',
+    });
+    request.flush({
+      token: 'test-token',
+      id: 7,
+      firstName: 'Max',
+      lastName: 'Mustermann',
+      email: 'max.mustermann@firma.at',
+      role: 'EMPLOYEE',
+    });
 
     expect(navigate).toHaveBeenCalledWith(['/employee/start']);
+    expect(JSON.parse(localStorage.getItem('currentUser')!).id).toBe(7);
   });
 });

@@ -2,6 +2,7 @@ import { formatDate } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CurrentUserService } from '../../../admin/services/current-user-service';
 import { EmployeeHeader } from '../../components/employee-header/employee-header';
 import { CostOrder } from '../../models/cost-order.model';
 import { EmployeeFoodTicketRequest } from '../../models/employee-food-ticket.model';
@@ -17,7 +18,7 @@ import { EmployeeTicketService } from '../../services/employee-ticket.service';
   styleUrl: './create-entry-page.scss',
 })
 export class CreateEntryPage implements OnInit {
-  employeeId = 1; // TODO: später vom Login
+  employeeId = 0;
 
   tiers = signal<Tier[]>([]);
   costOrders = signal<CostOrder[]>([]);
@@ -35,11 +36,21 @@ export class CreateEntryPage implements OnInit {
   constructor(
     private employeeTicketService: EmployeeTicketService,
     private employeeEntryState: EmployeeEntryState,
+    private currentUserService: CurrentUserService,
     private router: Router,
     private changeDetectorRef: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
+    const currentUser = this.currentUserService.getUser();
+
+    if (!currentUser) {
+      this.router.navigate(['/employee/login']);
+      return;
+    }
+
+    this.employeeId = currentUser.id;
+
     const draft = this.employeeEntryState.ticket;
 
     // wenn von nächster seite zurück kommt, dass daten wieder da
@@ -50,16 +61,16 @@ export class CreateEntryPage implements OnInit {
       });
     }
 
+    this.ticketForm.patchValue({
+      employeeName: `${currentUser.firstName} ${currentUser.lastName}`,
+    });
+
     this.employeeTicketService.findByEmployee(this.employeeId).subscribe((tickets) => {
       if (tickets.length > 0) {
 
         // so0rt id, neuester oben
         tickets.sort((a, b) => b.id - a.id);
         const latestTicket = tickets[0];
-
-        this.ticketForm.patchValue({
-          employeeName: `${latestTicket.firstName} ${latestTicket.lastName}`,
-        });
 
         // wenn kein draft, neues formular mit daten vom letzten ticket 
         if (draft == undefined) {

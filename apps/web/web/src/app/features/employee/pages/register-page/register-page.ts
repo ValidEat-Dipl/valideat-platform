@@ -1,4 +1,5 @@
 import { Component, signal } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { EmployeeRegisterRequest } from '../../models/employee-register-request.model';
@@ -13,7 +14,7 @@ import { EmployeeAuthService } from '../../services/employee-auth.service';
 export class RegisterPage {
   isLoading = signal(false);
 
-  registerError = signal(false);
+  registerError = signal('');
   passwordsDifferent = signal(false);
 
 
@@ -68,13 +69,15 @@ export class RegisterPage {
         department: formValues.department!,
         address: formValues.address!,
         phoneNumber: formValues.phoneNumber!,
-        passwordHash: formValues.password!
+        passwordHash: formValues.password!,
+        // TODO rolle sollte später iwan mal von server gesetzt werdn nd von client wegen json manipulation
+        role: 'EMPLOYEE',
 
       };
-      
+
 
     this.isLoading.set(true);
-    this.registerError.set(false);
+    this.registerError.set('');
     this.passwordsDifferent.set(false);
 
 
@@ -88,17 +91,24 @@ export class RegisterPage {
         }
 
         this.isLoading.set(false);
-        this.registerError.set(true);
+        this.registerError.set(`Backend-Antwort: ${response}`);
 
       },
 
-      error: () => {
+      error: (error: HttpErrorResponse) => {
         this.isLoading.set(false);
-        this.registerError.set(true);
+
+        let message = `HTTP ${error.status}: ${error.statusText}`;
+
+        if (typeof error.error === 'string' && error.error) {
+          message += ` – ${error.error}`;
+        }
+
+        this.registerError.set(message);
 
       },
 
-      
+
     });
   }
 }

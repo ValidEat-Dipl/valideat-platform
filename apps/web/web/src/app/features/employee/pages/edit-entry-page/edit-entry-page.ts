@@ -1,6 +1,7 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CurrentUserService } from '../../../admin/services/current-user-service';
 import { EmployeeHeader } from '../../components/employee-header/employee-header';
 import { CostOrder } from '../../models/cost-order.model';
 import { EmployeeFoodTicketRequest } from '../../models/employee-food-ticket.model';
@@ -15,7 +16,7 @@ import { EmployeeTicketService } from '../../services/employee-ticket.service';
   styleUrl: './edit-entry-page.scss',
 })
 export class EditEntryPage implements OnInit {
-  employeeId = 1; // TODO: später vom Login
+  employeeId = 0;
   ticketId = 0;
 
   tiers = signal<Tier[]>([]);
@@ -39,9 +40,19 @@ export class EditEntryPage implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private employeeTicketService: EmployeeTicketService,
+    private currentUserService: CurrentUserService,
   ) {}
 
   ngOnInit(): void {
+    const currentUser = this.currentUserService.getUser();
+
+    if (!currentUser) {
+      this.router.navigate(['/employee/login']);
+      return;
+    }
+
+    this.employeeId = currentUser.id;
+
     this.ticketId = Number(this.route.snapshot.paramMap.get('id'));
 
     this.employeeTicketService.getTicketById(this.ticketId).subscribe({

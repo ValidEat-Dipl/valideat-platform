@@ -1,6 +1,7 @@
 import { formatDate } from '@angular/common';
 import { Component, OnInit, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { CurrentUserService } from '../../../admin/services/current-user-service';
 import { EmployeeHeader } from '../../components/employee-header/employee-header';
 import { EmployeeNavigation } from '../../components/employee-navigation/employee-navigation';
 import { EmployeeFoodTicket } from '../../models/employee-food-ticket.model';
@@ -13,17 +14,27 @@ import { EmployeeTicketService } from '../../services/employee-ticket.service';
   styleUrl: './entries-page.scss',
 })
 export class EntriesPage implements OnInit {
-  employeeId = 1; // TODO: später vom Login
+  employeeId = 0;
   tickets = signal<EmployeeFoodTicket[]>([]);
   isLoading = signal(true);
 
-  constructor(private employeeTicketService: EmployeeTicketService) {}
+  constructor(
+    private employeeTicketService: EmployeeTicketService,
+    private currentUserService: CurrentUserService,
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
+    const currentUser = this.currentUserService.getUser();
+
+    if (!currentUser) {
+      this.router.navigate(['/employee/login']);
+      return;
+    }
+
+    this.employeeId = currentUser.id;
+
     this.employeeTicketService.findByEmployee(this.employeeId).subscribe((data) => {
-
-      console.log('Fetched tickets:', data);
-
       // Neueste Erfassung zuerst anzeigen
       this.tickets.set(data.sort((a, b) => b.useDate.localeCompare(a.useDate)));
 

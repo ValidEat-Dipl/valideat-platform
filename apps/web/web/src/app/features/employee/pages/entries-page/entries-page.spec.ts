@@ -11,6 +11,18 @@ describe('EntriesPage', () => {
   let fixture: ComponentFixture<EntriesPage>;
 
   beforeEach(async () => {
+    localStorage.setItem(
+      'currentUser',
+      JSON.stringify({
+        id: 7,
+        firstName: 'Max',
+        lastName: 'Mustermann',
+        email: 'max.mustermann@firma.at',
+        role: 'EMPLOYEE',
+        token: 'test-token',
+      }),
+    );
+
     await TestBed.configureTestingModule({
       imports: [EntriesPage],
       providers: [provideRouter([]), provideHttpClient(), provideHttpClientTesting()],
@@ -20,6 +32,8 @@ describe('EntriesPage', () => {
     component = fixture.componentInstance;
   });
 
+  afterEach(() => localStorage.removeItem('currentUser'));
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
@@ -27,7 +41,7 @@ describe('EntriesPage', () => {
   it('shows the newest entry first', () => {
     const employeeTicketService = TestBed.inject(EmployeeTicketService);
 
-    vi.spyOn(employeeTicketService, 'findByEmployee').mockReturnValue(of([
+    const findTickets = vi.spyOn(employeeTicketService, 'findByEmployee').mockReturnValue(of([
       {
         id: 1,
         firstName: 'Max',
@@ -54,6 +68,7 @@ describe('EntriesPage', () => {
 
     component.ngOnInit();
 
+    expect(findTickets).toHaveBeenCalledWith(7);
     expect(component.tickets()[0].id).toBe(2);
     expect(component.tickets()[1].id).toBe(1);
   });

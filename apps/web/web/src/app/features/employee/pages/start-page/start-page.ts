@@ -1,6 +1,7 @@
 import { formatDate } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { CurrentUserService } from '../../../admin/services/current-user-service';
 import { EmployeeHeader } from '../../components/employee-header/employee-header';
 import { EmployeeNavigation } from '../../components/employee-navigation/employee-navigation';
 import { EmployeeFoodTicket } from '../../models/employee-food-ticket.model';
@@ -13,7 +14,7 @@ import { EmployeeTicketService } from '../../services/employee-ticket.service';
   styleUrl: './start-page.scss',
 })
 export class StartPage implements OnInit {
-  employeeId = 1; // TODO: später von Login
+  employeeId = 0;
   employeeName = signal('Mitarbeiter:in');
 
   today = new Date();
@@ -30,8 +31,20 @@ export class StartPage implements OnInit {
   statusClass = signal('text-bg-primary');
 
   private employeeTicketService = inject(EmployeeTicketService);
+  private currentUserService = inject(CurrentUserService);
+  private router = inject(Router);
 
   ngOnInit(): void {
+    const currentUser = this.currentUserService.getUser();
+
+    if (!currentUser) {
+      this.router.navigate(['/employee/login']);
+      return;
+    }
+
+    this.employeeId = currentUser.id;
+    this.employeeName.set(`${currentUser.firstName} ${currentUser.lastName}`);
+
     let date = formatDate(this.today, 'yyyy-MM-dd', 'en');
 
     this.employeeTicketService
@@ -44,8 +57,6 @@ export class StartPage implements OnInit {
       if (tickets.length === 0) {
         return;
       }
-
-      this.employeeName.set(`${tickets[0].firstName} ${tickets[0].lastName}`);
 
       let latestEntry = tickets
         .filter((ticket) => ticket.useDate <= date)

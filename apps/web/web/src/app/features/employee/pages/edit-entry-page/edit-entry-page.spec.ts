@@ -11,6 +11,18 @@ describe('EditEntryPage', () => {
   let httpTesting: HttpTestingController;
 
   beforeEach(async () => {
+    localStorage.setItem(
+      'currentUser',
+      JSON.stringify({
+        id: 7,
+        firstName: 'Max',
+        lastName: 'Mustermann',
+        email: 'max.mustermann@firma.at',
+        role: 'EMPLOYEE',
+        token: 'test-token',
+      }),
+    );
+
     await TestBed.configureTestingModule({
       imports: [EditEntryPage],
       providers: [
@@ -33,7 +45,10 @@ describe('EditEntryPage', () => {
     httpTesting = TestBed.inject(HttpTestingController);
   });
 
-  afterEach(() => httpTesting.verify());
+  afterEach(() => {
+    localStorage.removeItem('currentUser');
+    httpTesting.verify();
+  });
 
   it('loads an open ticket into the form', () => {
     fixture.detectChanges();
@@ -56,7 +71,7 @@ describe('EditEntryPage', () => {
     });
     component.save();
 
-    const request = httpTesting.expectOne('http://localhost:8080/foodticket/8/1');
+    const request = httpTesting.expectOne('http://localhost:8080/foodticket/8/7');
     expect(request.request.method).toBe('PUT');
     expect(request.request.body.tier).toBe('EMPLOYEE');
     request.flush(null);

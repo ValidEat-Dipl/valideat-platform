@@ -41,6 +41,7 @@ describe('RegisterPage', () => {
 
     const request = httpTesting.expectOne('http://localhost:8080/employee/register');
     expect(request.request.body.passwordHash).toBe('test-password');
+    expect(request.request.body.role).toBe('EMPLOYEE');
     request.flush('New Employee Registered');
 
     expect(navigate).toHaveBeenCalledWith(['/employee/login']);

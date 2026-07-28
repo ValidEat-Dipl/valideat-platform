@@ -130,7 +130,10 @@
 
         <!-- Error message if fail -->
         @if (registerError()) {
-          <div class="alert alert-danger">Das Konto konnte nicht erstellt werden.</div>
+          <div class="alert alert-danger">
+            <strong>Das Konto konnte nicht erstellt werden.</strong>
+            <div class="small mt-2">{{ registerError() }}</div>
+          </div>
         }
 
         <button class="btn btn-primary btn-lg w-100" type="submit" [disabled]="isLoading()">

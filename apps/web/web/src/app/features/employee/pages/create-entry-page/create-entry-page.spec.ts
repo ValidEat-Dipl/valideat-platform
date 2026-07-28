@@ -13,6 +13,18 @@ describe('CreateEntryPage', () => {
   let entryState: EmployeeEntryState;
 
   beforeEach(async () => {
+    localStorage.setItem(
+      'currentUser',
+      JSON.stringify({
+        id: 7,
+        firstName: 'Max',
+        lastName: 'Mustermann',
+        email: 'max.mustermann@firma.at',
+        role: 'EMPLOYEE',
+        token: 'test-token',
+      }),
+    );
+
     await TestBed.configureTestingModule({
       imports: [CreateEntryPage],
       providers: [provideRouter([]), provideHttpClient(), provideHttpClientTesting()],
@@ -24,7 +36,10 @@ describe('CreateEntryPage', () => {
     entryState = TestBed.inject(EmployeeEntryState);
   });
 
-  afterEach(() => httpTesting.verify());
+  afterEach(() => {
+    localStorage.removeItem('currentUser');
+    httpTesting.verify();
+  });
 
   it('should create', () => {
     expect(component).toBeTruthy();
@@ -51,7 +66,7 @@ describe('CreateEntryPage', () => {
   it('uses the latest ticket values as dropdown defaults', () => {
     fixture.detectChanges();
 
-    httpTesting.expectOne('http://localhost:8080/foodticket/findByEmployee/1').flush([
+    httpTesting.expectOne('http://localhost:8080/foodticket/findByEmployee/7').flush([
       {
         id: 12,
         firstName: 'Max',

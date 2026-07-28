@@ -8,10 +8,18 @@ export class CurrentUserService {
   private readonly storageKey = 'currentUser';
 
   setUser(user: CurrentUser) {
+    if (typeof localStorage === 'undefined') {
+      return;
+    }
+
     localStorage.setItem(this.storageKey, JSON.stringify(user));
   }
 
   getUser(): CurrentUser | null {
+    if (typeof localStorage === 'undefined') {
+      return null;
+    }
+
     const user = localStorage.getItem(this.storageKey);
     if (!user) {
       return null;
@@ -28,6 +36,10 @@ export class CurrentUserService {
   }
 
   clearUser() {
+    if (typeof localStorage === 'undefined') {
+      return;
+    }
+
     localStorage.removeItem(this.storageKey);
   }
 }

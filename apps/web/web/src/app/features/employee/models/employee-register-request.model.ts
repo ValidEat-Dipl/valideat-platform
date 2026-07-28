@@ -6,4 +6,5 @@ export interface EmployeeRegisterRequest {
   phoneNumber: string;
   email: string;
   passwordHash: string;
+  role: 'EMPLOYEE';
 }

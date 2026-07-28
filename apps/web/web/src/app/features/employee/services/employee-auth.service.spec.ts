@@ -19,14 +19,23 @@ describe('EmployeeAuthService', () => {
 
   afterEach(() => httpTesting.verify());
 
-  it('sends the login data to the temporary login route', () => {
+  it('sends the login data to the JWT login route', () => {
     service.login('max.mustermann@firma.at', 'password123').subscribe();
 
-    const request = httpTesting.expectOne(
-      'http://localhost:8080/employee/login/max.mustermann%40firma.at/password123',
-    );
+    const request = httpTesting.expectOne('http://localhost:8080/employee/login');
     expect(request.request.method).toBe('POST');
-    request.flush('Login was Successful!');
+    expect(request.request.body).toEqual({
+      email: 'max.mustermann@firma.at',
+      password: 'password123',
+    });
+    request.flush({
+      token: 'test-token',
+      id: 1,
+      firstName: 'Max',
+      lastName: 'Mustermann',
+      email: 'max.mustermann@firma.at',
+      role: 'EMPLOYEE',
+    });
   });
 
   it('sends the employee data to the register route', () => {
@@ -38,6 +47,7 @@ describe('EmployeeAuthService', () => {
       phoneNumber: '+43 660 0000000',
       email: 'test.person@example.invalid',
       passwordHash: 'test-password',
+      role: 'EMPLOYEE',
     };
 
     service.register(employee).subscribe();
