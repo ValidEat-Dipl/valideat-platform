@@ -52,3 +52,7 @@ https://thehaseebahmed.medium.com/how-to-implement-autosearch-in-angular-6e562c1
 [hardhat.org/docs/getting-started](https://hardhat.org/docs/getting-started)
 
 27.07.2026
+
+[ethereum.org/developers/tutorials/hello-world-smart-contract](https://ethereum.org/developers/tutorials/hello-world-smart-contract)
+
+28.07.2026

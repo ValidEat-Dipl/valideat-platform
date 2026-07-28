@@ -1,0 +1,49 @@
+{
+  "_format": "hh3-sol-build-info-1",
+  "id": "solc-0_8_28-474321f98e66b023e821d9cbf67518e3f74f1083",
+  "solcVersion": "0.8.28",
+  "solcLongVersion": "0.8.28+commit.7893614a",
+  "compilerType": "solc",
+  "toolVersions": {
+    "hardhat": "3.11.1"
+  },
+  "userSourceNameMap": {
+    "contracts/ValidEatLog.sol": "project/contracts/ValidEatLog.sol"
+  },
+  "input": {
+    "language": "Solidity",
+    "settings": {
+      "evmVersion": "cancun",
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "outputSelection": {
+        "*": {
+          "": [
+            "ast"
+          ],
+          "*": [
+            "abi",
+            "evm.bytecode.linkReferences",
+            "evm.bytecode.object",
+            "evm.bytecode.opcodes",
+            "evm.bytecode.sourceMap",
+            "evm.deployedBytecode.immutableReferences",
+            "evm.deployedBytecode.linkReferences",
+            "evm.deployedBytecode.object",
+            "evm.deployedBytecode.opcodes",
+            "evm.deployedBytecode.sourceMap",
+            "evm.methodIdentifiers"
+          ]
+        }
+      },
+      "remappings": []
+    },
+    "sources": {
+      "project/contracts/ValidEatLog.sol": {
+        "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.20;\n\n\ncontract ValidEatLog {\n\n    struct Log {\n        string message;\n        uint256 timestamp;\n    }\n\n    Log[] private logs;\n\n    function addLog(string memory message) public {\n\n        logs.push(\n            Log(\n                message,\n                block.timestamp\n            )\n        );\n\n    }\n\n    function getLogs() public view returns(Log[] memory){\n        return logs;\n    }\n\n}"
+      }
+    }
+  }
+}
