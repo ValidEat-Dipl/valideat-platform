@@ -13,6 +13,11 @@
         <p class="m-0 text-danger-emphasis fw-bold">Es @if (openConflictsCount() > 1) {sind} @else {ist} noch {{ openConflictsCount() }} @if (openConflictsCount() > 1) {Konflikte} @else {Konflikt} offen!</p>
         <p class="m-0 text-danger">Bitte klären Sie alle Konflikte vor dem Export. <a [href]="['/open-conflicts']" href="/open-conflicts" class="text-danger-emphasis link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Zu offene Konfikte</a></p>
       </div>
+    } @else {
+      <div class="bg-warning-subtle rounded-3 d-grid p-4">
+        <p class="m-0">Folgende Tickets wurden als archiviert markiert, da sie nicht vom jeweiligen Restaurant retourniert wurden. Bitte prüfen Sie die Angaben vor dem Export und bestätigen Sie anschließend die Richtigkeit.</p>
+      </div>
+      <app-table-overview-comp [data]="dataTable()"></app-table-overview-comp>
     }
 
     <div class="d-grid rounded-3 border border-dark-subtle">

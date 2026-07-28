@@ -12,15 +12,15 @@ import { RegisterComp } from './features/admin/components/register-comp/register
 import { LoginComp } from './features/admin/components/login-comp/login-comp';
 
 export const routes: Routes = [
-  /* voll */ { path: 'admin-overview', component: AdminOverviewComp },
-  /* voll */ { path: 'most-recent-created', component: MostRecentTicketsComp },
-  /* fast */ { path: 'create-ticket', component: CreateTicketComp }, // * keine admin erkennung weil fehlendes user system
-  /* voll */ { path: 'clearing-tickets', component: ClearingTicketsComp },
-  /* voll */ { path: 'clearing-tickets/check-conflict/:id', component: CheckConflictComp },
-  /* voll */ { path: 'open-conflicts', component: OpenConflictsComp },
-  /* voll */ { path: 'export', component: ExportComp },
-  /* voll */ { path: 'ticket-details/:id', component: TicketDetailsComp },
-  /* voll */ { path: 'ticket-details/correct/:id', component: CorrectTicketComp },
+  { path: 'admin-overview', component: AdminOverviewComp },
+  { path: 'most-recent-created', component: MostRecentTicketsComp },
+  { path: 'create-ticket', component: CreateTicketComp },
+  { path: 'clearing-tickets', component: ClearingTicketsComp },
+  { path: 'clearing-tickets/check-conflict/:id', component: CheckConflictComp },
+  { path: 'open-conflicts', component: OpenConflictsComp },
+  { path: 'export', component: ExportComp },
+  { path: 'ticket-details/:id', component: TicketDetailsComp },
+  { path: 'ticket-details/correct/:id', component: CorrectTicketComp },
   { path: 'register', component: RegisterComp },
   { path: 'login', component: LoginComp },
   {

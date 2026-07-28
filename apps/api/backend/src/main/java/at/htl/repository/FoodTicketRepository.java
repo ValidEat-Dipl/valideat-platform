@@ -714,4 +714,14 @@ public class FoodTicketRepository {
         ticketA.setMatchingTicket(ticketB);
         ticketB.setMatchingTicket(ticketA);
     }
+
+    public List<FoodTicket> getExpiredTickets() {
+        return entityManager.createQuery("""
+        select f
+        from FoodTicket f
+        where f.status = :status
+        """, FoodTicket.class)
+                .setParameter("status", Status.EXPIRED)
+                .getResultList();
+    }
 }

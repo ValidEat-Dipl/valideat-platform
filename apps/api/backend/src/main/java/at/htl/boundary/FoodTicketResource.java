@@ -84,7 +84,7 @@ public class FoodTicketResource {
         result.put("Änderung notwenig", fixingTickets);
         result.put("Abgeglichen", checkedTickets);
         result.put("Konflikte", conflictTickets);
-        result.put("Abgelaufen", expiredTickets);
+        result.put("Archiviert", expiredTickets);
 
         return result;
     }
@@ -139,7 +139,7 @@ public class FoodTicketResource {
         Map<String, Integer> result = new LinkedHashMap<>();
 
         result.put("Gesamt", (int) allTickets);
-        result.put("Abgeglichene/ Abgelaufene Tickets", checkedTickets);
+        result.put("Abgeglichene/ Archivierte Tickets", checkedTickets);
         result.put("Offene Konflikte", conflictsSum);
 
         return result;
@@ -223,6 +223,7 @@ public class FoodTicketResource {
             restaurant = restaurantRepository.findByName(adminAddTicketDTO.restaurantName());
             admin = employeeRepository.findByName(adminAddTicketDTO.adminName());
         } catch (Exception e) {
+            e.printStackTrace();
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
 
@@ -365,6 +366,12 @@ public class FoodTicketResource {
     }
 
     @GET
+    @Path("/expired")
+    public List<FoodTicket> getExpiredTickets() {
+        return foodTicketRepository.getExpiredTickets();
+    }
+
+    @GET
     @Path("/getAllValidTickets")
     public List<FoodTicket> getAllValidTickets() {
         List<FoodTicket> list = foodTicketRepository.listAll();
@@ -394,7 +401,7 @@ public class FoodTicketResource {
                 .map(this::convertFoodTicketToCSV)
                 .collect(Collectors.joining("\n"));
         return Response.ok(
-                "ID;Mitarbeiter;Datum;Stufe;Kostenstelle;Status;Tickettyp;Restaurant;Admin;Kontrolldatum\n"
+                "ID;Mitarbeiter;Datum;Stufe;Kostenstelle;Status;Tickettyp;Restaurant;Admin;Kontrolldatum;Status\n"
                         + csv)
                 .header("Content-Disposition", "attachment; filename=foodtickets.csv")
                 .build();
@@ -419,7 +426,8 @@ public class FoodTicketResource {
                         : "",
                 ticket.getCheckDate() != null
                         ? ticket.getCheckDate().toString()
-                        : ""
+                        : "",
+                ticket.getStatus().toString()
         };
         return Stream.of(data)
                 .map(this::escapeSpecialCharacters)

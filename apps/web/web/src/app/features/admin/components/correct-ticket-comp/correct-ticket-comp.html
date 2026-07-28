@@ -139,12 +139,12 @@
             </span>
           }
           <span class="text-danger-emphasis">
-            DER STATUS SOLLTE NUR WENN DIE TICKETS VOM RESTAURANT FÜR EINE LANGE ZEIT NICHT RETOURNIERT WERDEN AUF "VERJÄHRT" GEÄNDERT WERDEN
-            <br>WEITERS KANN DER STATUS NUR BEI VON MITARBEITERN ERFASSTEN TICKETS MIT STATUS "OFFEN" AUF "VERJÄHRT" GESETZT WERDEN
+            DER STATUS SOLLTE NUR WENN DIE TICKETS VOM RESTAURANT FÜR EINE LANGE ZEIT NICHT RETOURNIERT WERDEN AUF "ARCHIVIERT" GEÄNDERT WERDEN
+            <br>WEITERS KANN DER STATUS NUR BEI VON MITARBEITERN ERFASSTEN TICKETS MIT STATUS "OFFEN" AUF "ARCHIVIERT" GESETZT WERDEN
           </span>
         </label>
         <select class="form-select" formControlName="status">
-          <option [disabled]="ticketStatus() != 'OPEN'" value="EXPIRED">Verjährt</option>
+          <option [disabled]="ticketStatus() != 'OPEN'" value="EXPIRED">Archiviert</option>
           <option disabled value="OPEN">Offen</option>
           <option disabled value="CONFLICT">Konflikt</option>
           <option disabled value="CHECKED">Abgeglichen</option>
@@ -178,12 +178,14 @@
           buttonType="button"
           (click)="resetForm()">
         </app-button-comp>
-        <!--<app-button-comp
-          text="Ticket löschen"
-          buttonDesignType="danger"
-          buttonType="button"
-          (click)="deleteTicket(id())">
-        </app-button-comp>-->
+        @if (asStatus(dataDetail().rows[0]['status'])?.value == "CONFLICT") {
+          <app-button-comp
+            text="Ticket löschen"
+            buttonDesignType="danger"
+            buttonType="button"
+            (click)="deleteTicket(id())">
+          </app-button-comp>
+        }
         <app-button-comp
           text="Abbrechen"
           buttonDesignType="outline-secondary"

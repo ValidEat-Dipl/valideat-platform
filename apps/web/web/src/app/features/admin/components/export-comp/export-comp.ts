@@ -7,19 +7,29 @@ import {InfoFlexServiceAdminOverview} from '../../services/info-flex-service-adm
 import { ExportService } from '../../services/export-service';
 import { InfoFlexServiceExport } from '../../services/info-flex-service-export';
 import { RouterLink } from '@angular/router';
+import { TableOverviewComp } from '../table-overview-comp/table-overview-comp';
+import { FoodTicket } from '../../models/food-ticket.model';
+import { TableData } from '../../models/table.model';
+import { TableDataExpiredService } from '../../services/table-data-expired-service';
+import { Status } from '../../models/status.model';
 
 @Component({
   selector: 'app-export-comp',
-  imports: [NavComp, ButtonComp, InfoFlexComp],
+  imports: [NavComp, ButtonComp, InfoFlexComp, TableOverviewComp],
   templateUrl: './export-comp.html',
   styleUrl: './export-comp.css',
 })
 export class ExportComp implements OnInit {
   infoContainerService = inject(InfoFlexServiceExport);
   downloadCsvService = inject(ExportService);
+  tableDataExpiredService = inject(TableDataExpiredService);
 
   infoContainer = signal<Record<string, number>>({});
   openConflictsCount = signal<number>(0);
+  dataTable = signal<TableData>({
+    headers: [],
+    rows: [],
+  });
 
   ngOnInit() {
     this.load();
@@ -30,6 +40,28 @@ export class ExportComp implements OnInit {
       this.infoContainer.set({ ...data });
       this.openConflictsCount.set(data['Offene Konflikte']);
     });
+
+    this.tableDataExpiredService.getExpiredTickets().subscribe((data) => {
+      this.dataTable.set({
+        headers: [
+          { key: 'person', label: 'Person' },
+          { key: 'datum', label: 'Datum' },
+          { key: 'stufe', label: 'Stufe' },
+          { key: 'kostenstelle', label: 'Kostenstelle' },
+          { key: 'status', label: 'Status' },
+          { key: 'actionDetail', label: 'Aktion' },
+        ],
+        rows: data.map((ticket) => ({
+          person: ticket.employee.firstName + ' ' + ticket.employee.lastName,
+          datum: ticket.useDate,
+          stufe: ticket.tier.name,
+          kostenstelle: ticket.costOrder.name,
+          status: new Status(ticket.status),
+          actionDetail: 'Details',
+          id: ticket.id,
+        })),
+      });
+    })
   }
 
   protected downloadCsvFile() {

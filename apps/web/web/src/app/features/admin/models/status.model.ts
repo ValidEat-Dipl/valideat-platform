@@ -41,7 +41,7 @@ export class Status {
       case 'CHECKED':
         return 'Abgeglichen';
       case 'EXPIRED':
-        return 'Verjährt';
+        return 'Archiviert';
       default:
         return '---';
     }
