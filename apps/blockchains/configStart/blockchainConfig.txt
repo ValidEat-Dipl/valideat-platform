@@ -1,0 +1,11 @@
+Network:
+Hardhat localhost
+
+RPC:
+http://127.0.0.1:8545
+
+Contract:
+deployment output
+
+Private Key:
+Hardhat Account 0

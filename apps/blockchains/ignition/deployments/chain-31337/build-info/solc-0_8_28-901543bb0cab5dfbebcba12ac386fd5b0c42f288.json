@@ -1,6 +1,6 @@
 {
   "_format": "hh3-sol-build-info-1",
-  "id": "solc-0_8_28-474321f98e66b023e821d9cbf67518e3f74f1083",
+  "id": "solc-0_8_28-901543bb0cab5dfbebcba12ac386fd5b0c42f288",
   "solcVersion": "0.8.28",
   "solcLongVersion": "0.8.28+commit.7893614a",
   "compilerType": "solc",
@@ -42,7 +42,7 @@
     },
     "sources": {
       "project/contracts/ValidEatLog.sol": {
-        "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.20;\n\n\ncontract ValidEatLog {\n\n    struct Log {\n        string message;\n        uint256 timestamp;\n    }\n\n    Log[] private logs;\n\n    function addLog(string memory message) public {\n\n        logs.push(\n            Log(\n                message,\n                block.timestamp\n            )\n        );\n\n    }\n\n    function getLogs() public view returns(Log[] memory){\n        return logs;\n    }\n\n}"
+        "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.20;\n\n\ncontract ValidEatLog {\n\n    struct Log {\n        string message;\n        uint256 timestamp;\n    }\n\n    Log[] private logs;\n\n    function addLog(string memory message) public {\n\n        logs.push(\n            Log(\n                message,\n                block.timestamp\n            )\n        );\n\n    }\n\n    function getLogs() public view returns(\n        string[] memory messages,\n        uint256[] memory timestamps\n    ) {\n        messages = new string[](logs.length);\n        timestamps = new uint256[](logs.length);\n\n        for(uint i = 0; i < logs.length; i++) {\n\n            messages[i] = logs[i].message;\n            timestamps[i] = logs[i].timestamp;\n\n        }\n    }\n\n}"
       }
     }
   }

@@ -19,7 +19,13 @@ async function main() {
     contractAddress
   );
 
-  await contract.addLog("Ticket 123 erstellt");
+  const message = process.argv[2];
+
+  if (!message) {
+    throw new Error("Bitte eine Nachricht angeben.");
+  }
+
+  await contract.addLog(message);
 
   console.log(await contract.getLogs());
 }

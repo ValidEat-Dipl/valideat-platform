@@ -22,8 +22,19 @@ contract ValidEatLog {
 
     }
 
-    function getLogs() public view returns(Log[] memory){
-        return logs;
+    function getLogs() public view returns(
+        string[] memory messages,
+        uint256[] memory timestamps
+    ) {
+        messages = new string[](logs.length);
+        timestamps = new uint256[](logs.length);
+
+        for(uint i = 0; i < logs.length; i++) {
+
+            messages[i] = logs[i].message;
+            timestamps[i] = logs[i].timestamp;
+
+        }
     }
 
 }
