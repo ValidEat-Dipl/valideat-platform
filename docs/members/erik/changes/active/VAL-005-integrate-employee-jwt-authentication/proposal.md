@@ -5,12 +5,12 @@
 | Feld | Wert |
 |---|---|
 | Change-ID | `VAL-005` |
-| Status | `draft` |
+| Status | `implemented` |
 | Verantwortlich | Erik Bergmair |
 | Erstellt am | 2026-07-21 |
-| Zuletzt geändert | 2026-07-21 |
+| Zuletzt geändert | 2026-07-28 |
 | FSD-Referenz | `docs/FSD.md`, Authentifizierung derzeit noch nicht ausgearbeitet |
-| GitHub Issue | nicht festgestellt |
+| GitHub Issue | `#17` |
 
 ## Herkunft und Sicherheit
 
@@ -56,14 +56,14 @@ Ziel ist eine einfache, nachvollziehbare Frontendintegration des aktuellen JWT-L
 
 ## Akzeptanzkriterien
 
-- [ ] Der Login sendet E-Mail-Adresse und Passwort als JSON-Body an `POST /employee/login` und nicht im URL-Pfad.
-- [ ] Die erfolgreiche Login-Antwort wird durch ein begrenztes Frontendmodel abgebildet.
-- [ ] Nach erfolgreicher Anmeldung sind JWT und Mitarbeiter-ID für nachfolgende Frontendanfragen verfügbar.
-- [ ] Mitarbeiterseiten verwenden die ID der angemeldeten Person statt der hart codierten ID `1`.
-- [ ] Ungültige oder fehlgeschlagene Anmeldungen zeigen eine verständliche Fehlermeldung und speichern keine Anmeldung.
+- [x] Der Login sendet E-Mail-Adresse und Passwort als JSON-Body an `POST /employee/login` und nicht im URL-Pfad.
+- [x] Die erfolgreiche Login-Antwort wird durch ein begrenztes Frontendmodel abgebildet.
+- [x] Nach erfolgreicher Anmeldung sind JWT und Mitarbeiter-ID für nachfolgende Frontendanfragen verfügbar.
+- [x] Mitarbeiterseiten verwenden die ID der angemeldeten Person statt der hart codierten ID `1`.
+- [x] Ungültige oder fehlgeschlagene Anmeldungen zeigen eine verständliche Fehlermeldung und speichern keine Anmeldung.
 - [ ] Logout entfernt die lokal gespeicherten Anmeldedaten.
-- [ ] Es werden keine Passwörter im Local Storage, in URLs oder in eigenen Frontend-Logs gespeichert.
-- [ ] Die bestehenden Employee-Tests sind an den neuen Loginvertrag angepasst und die tatsächlich ausgeführten Ergebnisse sind in `evidence.md` dokumentiert.
+- [x] Es werden keine Passwörter im Local Storage, in URLs oder in eigenen Frontend-Logs gespeichert.
+- [x] Die bestehenden Employee-Tests sind an den neuen Loginvertrag angepasst und die tatsächlich ausgeführten Ergebnisse sind in `evidence.md` dokumentiert.
 - [ ] Der zentrale Mitarbeiterflow wurde mit einem lokal angemeldeten Entwicklungsbenutzer manuell geprüft.
 - [ ] Noch nicht backendseitig abgesicherte Endpunkte werden nicht als vollständig geschützt dargestellt.
 
@@ -98,7 +98,7 @@ Ziel ist eine einfache, nachvollziehbare Frontendintegration des aktuellen JWT-L
 
 | Gegenstand | Zuständige Stelle | Status | Nachweis |
 |---|---|---|---|
-| Aktueller JSON-Vertrag des Login-Endpunkts | Backend-Teammitglied / Team | technisch im Repository vorhanden | `EmployeeResource`, `LoginDTO`, `LoginResponseDTO` |
+| Aktueller JSON-Vertrag des Login-Endpunkts | Backend-Teammitglied / Team | technisch im Repository vorhanden | `EmployeeResource`, `LoginDTO`, `LoginResponseDTO`, Commit `d50250f` |
 | Serverseitige Vergabe der Rolle bei Registrierung | Backend-Teammitglied / Team | offen | nicht vorhanden |
 | Endgültige Token-Speicherung und Endpoint-Absicherung | Team | offen | nicht vorhanden |
 | Fachliche Zulässigkeit einer Selbstregistrierung | Porsche / Team | offen | nicht vorhanden |

@@ -5,10 +5,10 @@
 | Feld | Wert |
 |---|---|
 | Change-ID | `VAL-005` |
-| Status | `draft` |
+| Status | `implemented` |
 | Verantwortlich | Erik Bergmair |
 | Proposal | [proposal.md](proposal.md) |
-| Zuletzt geändert | 2026-07-21 |
+| Zuletzt geändert | 2026-08-10 |
 
 ## Technische Lösung
 
