@@ -1,5 +1,6 @@
 package at.htl.boundary;
 
+import at.htl.blockchain.ValidEatBlockchainService;
 import at.htl.boundary.dto.*;
 import at.htl.model.*;
 import at.htl.repository.*;
@@ -15,6 +16,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +42,9 @@ public class FoodTicketResource {
     RestaurantRepository restaurantRepository;
     @Inject
     ChangeLogRepository changeLogRepository;
+
+    @Inject
+    ValidEatBlockchainService blockchainService;
 
     @GET
     public List<FoodTicket> listAll() {
@@ -281,6 +287,17 @@ public class FoodTicketResource {
         ticket.setTier(tier);
         ticket.setRestaurant(restaurant);
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
+        try {
+            blockchainService.addLog(
+                    "Ticket " + ticketId
+                            + " changed at: "
+                            + LocalDateTime.now().format(formatter)
+            );
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
         return Response.noContent().build();
     }
 
@@ -327,6 +344,17 @@ public class FoodTicketResource {
         changeLogRepository.save(newChange);
 
         foodTicketRepository.clearing(ticket);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
+        try {
+            blockchainService.addLog(
+                    "Ticket " + ticketId
+                            + " changed at: "
+                            + LocalDateTime.now().format(formatter)
+            );
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
         return Response.ok().build();
     }

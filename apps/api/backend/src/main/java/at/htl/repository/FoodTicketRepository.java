@@ -1,5 +1,6 @@
 package at.htl.repository;
 
+import at.htl.blockchain.ValidEatBlockchainService;
 import at.htl.boundary.dto.*;
 import at.htl.model.*;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -12,6 +13,8 @@ import jakarta.ws.rs.core.Response;
 
 import java.time.LocalDate;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @ApplicationScoped
@@ -19,6 +22,9 @@ public class FoodTicketRepository {
 
     @Inject
     EntityManager entityManager;
+
+    @Inject
+    ValidEatBlockchainService blockchainService;
 
     public List<FoodTicket> listAll() {
         return entityManager.createQuery("select f from FoodTicket f", FoodTicket.class).getResultList();
@@ -130,6 +136,18 @@ public class FoodTicketRepository {
 
     public void save(FoodTicket foodTicket) {
         entityManager.persist(foodTicket);
+        entityManager.flush();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
+        try {
+            blockchainService.addLog(
+                    "Ticket " + foodTicket.getId()
+                            + " created at: "
+                            + LocalDateTime.now().format(formatter)
+            );
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public boolean checkIfAmountOfTicketsOnSpecificDayFromOnePersonIsValid (LocalDate date, Employee emp) {
@@ -512,6 +530,17 @@ public class FoodTicketRepository {
         }
 
         entityManager.remove(ticket);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
+        try {
+            blockchainService.addLog(
+                    "Ticket " + ticketId
+                            + " removed at: "
+                            + LocalDateTime.now().format(formatter)
+            );
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         return true;
     }
 
