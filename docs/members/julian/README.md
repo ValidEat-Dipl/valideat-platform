@@ -41,3 +41,15 @@ Geschafft: Hr routen fertig geschafft, es hat eh nurmehr conflict gefehlt, dazu 
 Freitag 17.7: Wollen: Anfangen mit JWT
 
 Geschafft: jwt so gut wie fertig implementiert
+
+
+Montag 3. August Über das Multi-Tenants Model recherchieren
+
+Geschafft: Multi-Tenants Model recherchiert
+
+
+Samstag 15. August Wollen: DB-Model auf SaaS Mandantenfähigkeit umstellen
+
+Geschafft: DB ist Mandantenfähig und ersten SaaS Admin RestCalls
+
+Samstag

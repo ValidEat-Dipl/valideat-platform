@@ -1,0 +1,14 @@
+###
+GET http://localhost:8080/saas-admin/tenants
+
+###
+POST http://localhost:8080/saas-admin/tenant
+Content-Type: application/json
+
+{
+  "name": "BMW2",
+  "manager": "Max Mustermann",
+  "email": "max.mustermann@bmw.at",
+  "country": "Austria",
+  "companySize": "Large"
+}
