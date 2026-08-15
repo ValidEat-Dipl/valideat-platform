@@ -1,5 +1,6 @@
 package at.htl.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -15,6 +16,7 @@ public class Restaurant {
 
     @ManyToOne
     @JoinColumn(nullable = true, name = "tenant_id")
+    @JsonIgnore
     private Tenant tenant;
 
 

@@ -28,6 +28,7 @@ public class ChangeLog {
 
     @ManyToOne
     @JoinColumn(nullable = true, name = "tenant_id")
+    @JsonIgnore
     private Tenant tenant;
 
     public ChangeLog() {

@@ -1,5 +1,6 @@
 package at.htl.repository;
 
+import at.htl.boundary.TenantService;
 import at.htl.boundary.dto.LoginResponseDTO;
 import at.htl.model.Employee;
 import at.htl.model.FoodTicket;
@@ -24,12 +25,20 @@ public class EmployeeRepository {
     @Inject
     EntityManager em;
 
+    @Inject
+    TenantService tenantService;
+
     public List<Employee> findAll() {
-        return em.createQuery("select e from Employee e", Employee.class).getResultList();
+        return em.createQuery("select e from Employee e where e.tenant.id = :tenantId", Employee.class)
+                .setParameter("tenantId", tenantService.getCurrentTenantId())
+                .getResultList();
     }
 
     public Employee getEmpById(Long id) {
-        return em.find(Employee.class, id);
+        return em.createQuery("select e from Employee e where e.id = :id and e.tenant.id = :tenantId", Employee.class)
+                .setParameter("id", id)
+                .setParameter("tenantId", tenantService.getCurrentTenantId())
+                .getSingleResult();
     }
 
     public Employee findByName(String name) {
@@ -37,11 +46,13 @@ public class EmployeeRepository {
         return em.createQuery(
                         """
             SELECT e FROM Employee e
-            WHERE lower(CONCAT(e.firstName, ' ', e.lastName)) = lower(:name)
-               OR LOWER(CONCAT(e.lastName, ' ', e.firstName)) = lower(:name)
+            WHERE (lower(CONCAT(e.firstName, ' ', e.lastName)) = lower(:name)
+               OR LOWER(CONCAT(e.lastName, ' ', e.firstName)) = lower(:name))
+               AND e.tenant.id = :tenantId
             """,
                         Employee.class)
                 .setParameter("name", name)
+                .setParameter("tenantId", tenantService.getCurrentTenantId())
                 .getSingleResult();
     }
 
@@ -68,7 +79,7 @@ public class EmployeeRepository {
                     .groups(employee.getRole().toString())
                     .expiresIn(Duration.ofHours(10))
                     .sign();
-            return new LoginResponseDTO(token, employee.getId(), employee.getFirstName(), employee.getLastName(), employee.getEmail(), employee.getRole());
+            return new LoginResponseDTO(token, employee.getId(), employee.getFirstName(), employee.getLastName(), employee.getEmail(), employee.getRole(), employee.getTenant());
         } else {
             return null;
         }
@@ -87,8 +98,9 @@ public class EmployeeRepository {
 
 
     public boolean checkIfTodaysTicketUsed(Employee emp, LocalDate date) {
-        Long count = em.createQuery("select count(f) from FoodTicket f where f.useDate = :date and f.employee.id = :id", Long.class)
-                .setParameter("date", date).setParameter("id", emp.getId()).getSingleResult();
+        Long count = em.createQuery("select count(f) from FoodTicket f where f.useDate = :date and f.employee.id = :id and f.employee.tenant.id = :tenantId", Long.class)
+                .setParameter("date", date).setParameter("id", emp.getId())
+                .setParameter("tenantId", tenantService.getCurrentTenantId()).getSingleResult();
 
         return count != 0;
     }

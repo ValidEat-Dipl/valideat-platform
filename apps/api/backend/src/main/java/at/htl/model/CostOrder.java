@@ -1,5 +1,6 @@
 package at.htl.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -13,6 +14,7 @@ public class CostOrder {
 
     @ManyToOne
     @JoinColumn(nullable = true, name = "tenant_id")
+    @JsonIgnore
     private Tenant tenant;
 
     public CostOrder() {

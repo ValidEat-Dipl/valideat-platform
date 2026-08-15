@@ -1,5 +1,6 @@
 package at.htl.repository;
 
+import at.htl.boundary.TenantService;
 import at.htl.model.CostOrder;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -13,12 +14,18 @@ public class CostOrderRepository {
     @Inject
     EntityManager entityManager;
 
+    @Inject
+    TenantService tenantService;
+
     public List<CostOrder> findAll() {
-        return entityManager.createQuery("select c from CostOrder c", CostOrder.class).getResultList();
+        Long tenantId = tenantService.getCurrentTenantId();
+        return entityManager.createQuery("select c from CostOrder c where c.tenant.id = :tenantId", CostOrder.class).setParameter("tenantId", tenantId).getResultList();
     }
 
     public CostOrder findByName(String name) {
-        return entityManager.createQuery("select c from CostOrder c where lower(c.name) = lower(:name)", CostOrder.class)
-                .setParameter("name", name).getSingleResult();
+        Long tenantId = tenantService.getCurrentTenantId();
+        return entityManager.createQuery("select c from CostOrder c where lower(c.name) = lower(:name) and c.tenant.id = :tenantId", CostOrder.class)
+                .setParameter("name", name)
+                .setParameter("tenantId", tenantId).getSingleResult();
     }
 }

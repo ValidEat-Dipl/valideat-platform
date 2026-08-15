@@ -1,6 +1,7 @@
 package at.htl.repository;
 
 import at.htl.blockchain.ValidEatBlockchainService;
+import at.htl.boundary.TenantService;
 import at.htl.boundary.dto.*;
 import at.htl.model.*;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -26,29 +27,52 @@ public class FoodTicketRepository {
     @Inject
     ValidEatBlockchainService blockchainService;
 
+    @Inject
+    TenantService tenantService;
+
     public List<FoodTicket> listAll() {
-        return entityManager.createQuery("select f from FoodTicket f", FoodTicket.class).getResultList();
+        return entityManager.createQuery("select f from FoodTicket f where f.tenant.id = :tenantId", FoodTicket.class)
+                .setParameter("tenantId", tenantService.getCurrentTenantId())
+                .getResultList();
     }
 
     public long countAll() {
         return entityManager.createQuery("""
                                                  select count(f)
                                                  from FoodTicket f
-                                                 """, Long.class).getSingleResult();
+                                                 where f.tenant.id = :tenantId
+                                                 """, Long.class)
+                .setParameter("tenantId", tenantService.getCurrentTenantId())
+                .getSingleResult();
     }
 
     public FoodTicket findById(Long id) {
-        return entityManager.find(FoodTicket.class, id);
+        return entityManager.createQuery("""
+                select f
+                from FoodTicket f
+                where f.id = :id
+                and f.tenant.id = :tenantId
+                """, FoodTicket.class)
+                .setParameter("id", id)
+                .setParameter("tenantId", tenantService.getCurrentTenantId())
+                .getResultStream()
+                .findFirst()
+                .orElse(null);
     }
 
     public EmployeeGetTicketsDTO findEmployeeTicketDTOById(Long id) {
-        return entityManager.createQuery("select new at.htl.boundary.dto.EmployeeGetTicketsDTO(f.id, f.employee.firstName, f.employee.lastName, f.useDate, f.tier.name, f.costOrder.name, f.restaurant.name, f.status, f.checkDate, admin.firstName, admin.lastName, f.ticketType) from FoodTicket f left join f.admin admin where f.id = :id ", EmployeeGetTicketsDTO.class).setParameter("id", id).getSingleResult();
+        return entityManager.createQuery("select new at.htl.boundary.dto.EmployeeGetTicketsDTO(f.id, f.employee.firstName, f.employee.lastName, f.useDate, f.tier.name, f.costOrder.name, f.restaurant.name, f.status, f.checkDate, admin.firstName, admin.lastName, f.ticketType) from FoodTicket f left join f.admin admin where f.id = :id and f.tenant.id = :tenantId ", EmployeeGetTicketsDTO.class)
+                .setParameter("id", id)
+                .setParameter("tenantId", tenantService.getCurrentTenantId())
+                .getSingleResult();
     }
 
     public List<EmployeeGetTicketsDTO> findByEmployee(Long id) {
         return entityManager.createQuery("""
-                select new at.htl.boundary.dto.EmployeeGetTicketsDTO(f.id, f.employee.firstName, f.employee.lastName, f.useDate, f.tier.name, f.costOrder.name, f.restaurant.name, f.status, f.checkDate, admin.firstName, admin.lastName, f.ticketType) from FoodTicket f left join f.admin admin where f.employee.id = :id""", EmployeeGetTicketsDTO.class)
-                .setParameter("id", id).getResultList();
+                select new at.htl.boundary.dto.EmployeeGetTicketsDTO(f.id, f.employee.firstName, f.employee.lastName, f.useDate, f.tier.name, f.costOrder.name, f.restaurant.name, f.status, f.checkDate, admin.firstName, admin.lastName, f.ticketType) from FoodTicket f left join f.admin admin where f.employee.id = :id and f.tenant.id = :tenantId""", EmployeeGetTicketsDTO.class)
+                .setParameter("id", id)
+                .setParameter("tenantId", tenantService.getCurrentTenantId())
+                .getResultList();
     }
 
 
@@ -57,11 +81,12 @@ public class FoodTicketRepository {
         StringBuilder jpql = new StringBuilder("""
         select f
         from FoodTicket f
+        where f.tenant.id = :tenantId
         """);
 
         if (last12Months) {
             jpql.append("""
-            where f.useDate >= :date
+            and f.useDate >= :date
             """);
         }
 
@@ -83,6 +108,8 @@ public class FoodTicketRepository {
                 FoodTicket.class
         );
 
+        query.setParameter("tenantId", tenantService.getCurrentTenantId());
+
 
         if (last12Months) {
             query.setParameter("date", LocalDate.now().minusYears(1));
@@ -97,6 +124,7 @@ public class FoodTicketRepository {
             select count(f)
             from FoodTicket f
             where f.ticketType = :type
+            and f.tenant.id = :tenantId
             """;
 
         if (last12Months) {
@@ -104,7 +132,8 @@ public class FoodTicketRepository {
         }
 
         TypedQuery<Long> query = entityManager.createQuery(jpql, Long.class)
-                .setParameter("type", TicketType.valueOf(type));
+                .setParameter("type", TicketType.valueOf(type))
+                .setParameter("tenantId", tenantService.getCurrentTenantId());
 
         if (last12Months) {
             query.setParameter("date", LocalDate.now().minusYears(1));
@@ -118,6 +147,7 @@ public class FoodTicketRepository {
             select count(f)
             from FoodTicket f
             where f.status = :status
+            and f.tenant.id = :tenantId
             """;
 
         if (last12Months) {
@@ -125,7 +155,8 @@ public class FoodTicketRepository {
         }
 
         TypedQuery<Long> query = entityManager.createQuery(jpql, Long.class)
-                .setParameter("status", Status.valueOf(status));
+                .setParameter("status", Status.valueOf(status))
+                .setParameter("tenantId", tenantService.getCurrentTenantId());
 
         if (last12Months) {
             query.setParameter("date", LocalDate.now().minusYears(1));
@@ -156,9 +187,11 @@ public class FoodTicketRepository {
                                                       from FoodTicket f
                                                       where f.useDate = :date
                                                       and f.employee.id = :empId
+                                                      and f.tenant.id = :tenantId
                                                       """, FoodTicket.class)
                 .setParameter("date", date)
                 .setParameter("empId", emp.getId())
+                .setParameter("tenantId", tenantService.getCurrentTenantId())
                 .getResultList();
 
         return ticketsList.size() <= 1;
@@ -179,7 +212,8 @@ public class FoodTicketRepository {
         )
         from FoodTicket f
         left join f.admin admin
-        where f.ticketType = :type"""); // left join, weil sonst admin null sein könnte also null.firstname und des wirft einen fehler
+        where f.ticketType = :type
+        and f.tenant.id = :tenantId"""); // left join, weil sonst admin null sein könnte also null.firstname und des wirft einen fehler
 
         if (employeeName != null) {
             query.append(" and lower(concat(f.employee.firstName, ' ', f.employee.lastName)) like lower(:employeeName)");
@@ -202,7 +236,8 @@ public class FoodTicketRepository {
 
         TypedQuery<AdminFoodTicketDTO> q = entityManager
                 .createQuery(query.toString(), AdminFoodTicketDTO.class)
-                .setParameter("type", TicketType.ADMIN);
+                .setParameter("type", TicketType.ADMIN)
+                .setParameter("tenantId", tenantService.getCurrentTenantId());
 
 
         if (employeeName != null) {
@@ -237,6 +272,7 @@ public class FoodTicketRepository {
         select f
         from FoodTicket f
         where 1=1
+        and f.tenant.id = :tenantId
     """);
 
 
@@ -272,6 +308,8 @@ public class FoodTicketRepository {
 
         TypedQuery<FoodTicket> query =
                 entityManager.createQuery(jpql.toString(), FoodTicket.class);
+
+        query.setParameter("tenantId", tenantService.getCurrentTenantId());
 
 
         if (employeeName != null) {
@@ -459,6 +497,7 @@ public class FoodTicketRepository {
             select f
             from FoodTicket f
             where 1=1
+            and f.tenant.id = :tenantId
             """);
 
 
@@ -493,6 +532,8 @@ public class FoodTicketRepository {
         TypedQuery<FoodTicket> q = entityManager
                 .createQuery(query.toString(), FoodTicket.class);
 
+        q.setParameter("tenantId", tenantService.getCurrentTenantId());
+
 
         if (employeeName != null) {
             q.setParameter("employeeName", "%" + employeeName + "%");
@@ -523,7 +564,17 @@ public class FoodTicketRepository {
     }
 
     public boolean deleteTicket(Long ticketId) {
-        FoodTicket ticket = entityManager.find(FoodTicket.class, ticketId);
+        FoodTicket ticket = entityManager.createQuery("""
+                select f
+                from FoodTicket f
+                where f.id = :id
+                and f.tenant.id = :tenantId
+                """, FoodTicket.class)
+                .setParameter("id", ticketId)
+                .setParameter("tenantId", tenantService.getCurrentTenantId())
+                .getResultStream()
+                .findFirst()
+                .orElse(null);
 
         if (ticket == null) {
             return false;
@@ -560,6 +611,7 @@ public class FoodTicketRepository {
         left join fetch mt.costOrder
         left join fetch mt.restaurant
         where (f.status = :conflictStatus or f.status = :needsFixingStatus or f.status =:openStatus)
+        and f.tenant.id = :tenantId
         """);
 
         if (employeeName != null) {
@@ -594,6 +646,7 @@ public class FoodTicketRepository {
         query.setParameter("conflictStatus", Status.CONFLICT);
         query.setParameter("needsFixingStatus", Status.NEEDS_FIXING);
         query.setParameter("openStatus", Status.OPEN);
+        query.setParameter("tenantId", tenantService.getCurrentTenantId());
 
         if (employeeName != null) {
             query.setParameter("employeeName", "%" + employeeName + "%");
@@ -698,10 +751,10 @@ public class FoodTicketRepository {
 
         for (FoodTicket possibleMatch : possibleMatches) {
             if (ticket.getEmployee().equals(possibleMatch.getEmployee())
-                && ticket.getUseDate().equals(possibleMatch.getUseDate())) {
+                    && ticket.getUseDate().equals(possibleMatch.getUseDate())) {
                 if (ticket.getRestaurant().equals(possibleMatch.getRestaurant())
-                    && ticket.getCostOrder().equals(possibleMatch.getCostOrder())
-                    && ticket.getTier().equals(possibleMatch.getTier())
+                        && ticket.getCostOrder().equals(possibleMatch.getCostOrder())
+                        && ticket.getTier().equals(possibleMatch.getTier())
                 ) {
                     // Tickets stimmen genau überein - Beide CHECKED
                     ticket.setStatus(Status.CHECKED);
@@ -733,9 +786,11 @@ public class FoodTicketRepository {
         from FoodTicket f
         where f.ticketType = :ticketType
         and f.status <> :expired
+        and f.tenant.id = :tenantId
         """, FoodTicket.class)
                 .setParameter("ticketType", ticketType)
                 .setParameter("expired", Status.EXPIRED)
+                .setParameter("tenantId", tenantService.getCurrentTenantId())
                 .getResultList();
     }
 
@@ -749,8 +804,10 @@ public class FoodTicketRepository {
         select f
         from FoodTicket f
         where f.status = :status
+        and f.tenant.id = :tenantId
         """, FoodTicket.class)
                 .setParameter("status", Status.EXPIRED)
+                .setParameter("tenantId", tenantService.getCurrentTenantId())
                 .getResultList();
     }
 }

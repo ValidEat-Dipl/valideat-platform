@@ -1,5 +1,6 @@
 package at.htl.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -35,6 +36,7 @@ public class Employee {
 
     @ManyToOne
     @JoinColumn(nullable = true, name = "tenant_id")
+    @JsonIgnore
     private Tenant tenant;
 
     public Employee() {
