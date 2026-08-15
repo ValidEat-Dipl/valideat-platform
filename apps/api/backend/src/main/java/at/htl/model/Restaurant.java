@@ -13,6 +13,10 @@ public class Restaurant {
 
     private String name;
 
+    @ManyToOne
+    @JoinColumn(nullable = true, name = "tenant_id")
+    private Tenant tenant;
+
 
     public Restaurant() {}
 
@@ -43,5 +47,13 @@ public class Restaurant {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Tenant getTenant() {
+        return tenant;
+    }
+
+    public void setTenant(Tenant tenant) {
+        this.tenant = tenant;
     }
 }

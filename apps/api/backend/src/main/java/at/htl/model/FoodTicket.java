@@ -48,10 +48,14 @@ public class FoodTicket {
     @OneToMany(mappedBy = "foodTicket", cascade = CascadeType.REMOVE)
     private List<ChangeLog> changeLogs;
 
+    @ManyToOne
+    @JoinColumn(nullable = true, name = "tenant_id")
+    private Tenant tenant;
+
 
     public FoodTicket() {}
 
-    public FoodTicket(Employee employee, LocalDate useDate, FoodTicket matchingTicket, Tier tier, CostOrder costOrder, Status status, TicketType ticketType, Restaurant restaurant, Employee admin, LocalDate checkDate, List<ChangeLog> changeLogs, String conflict) {
+    public FoodTicket(Employee employee, LocalDate useDate, FoodTicket matchingTicket, Tier tier, CostOrder costOrder, Status status, TicketType ticketType, Restaurant restaurant, Employee admin, LocalDate checkDate, List<ChangeLog> changeLogs, String conflict, Tenant tenant) {
         this.employee = employee;
         this.useDate = useDate;
         this.matchingTicket = matchingTicket;
@@ -64,6 +68,7 @@ public class FoodTicket {
         this.checkDate = checkDate;
         this.changeLogs = changeLogs;
         this.conflict = conflict;
+        this.tenant = tenant;
     }
 
     public FoodTicket(Employee employee, LocalDate useDate, Tier tier, CostOrder costOrder, Status status, Restaurant restaurant, TicketType ticketType) {
@@ -190,5 +195,13 @@ public class FoodTicket {
 
     public void setConflict(String conflict) {
         this.conflict = conflict;
+    }
+
+    public Tenant getTenant() {
+        return tenant;
+    }
+
+    public void setTenant(Tenant tenant) {
+        this.tenant = tenant;
     }
 }

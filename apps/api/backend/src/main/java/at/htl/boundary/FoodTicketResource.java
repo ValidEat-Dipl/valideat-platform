@@ -245,7 +245,7 @@ public class FoodTicketResource {
                 LocalDate.now());
         foodTicketRepository.save(foodTicket);
 
-        ChangeLog newChange = new ChangeLog("Added new Entry.", LocalDate.now(), foodTicket, admin);
+        ChangeLog newChange = new ChangeLog("Added new Entry.", LocalDate.now(), foodTicket, admin, admin.getTenant());
         changeLogRepository.save(newChange);
 
         foodTicketRepository.clearing(foodTicket);
@@ -340,7 +340,7 @@ public class FoodTicketResource {
         ticket.setCheckDate(LocalDate.now());
         ticket.setStatus(adminAddTicketDTO.status());
 
-        ChangeLog newChange = new ChangeLog(adminAddTicketDTO.description(), LocalDate.now(), ticket, admin);
+        ChangeLog newChange = new ChangeLog(adminAddTicketDTO.description(), LocalDate.now(), ticket, admin, admin.getTenant());
         changeLogRepository.save(newChange);
 
         foodTicketRepository.clearing(ticket);

@@ -26,14 +26,19 @@ public class ChangeLog {
     @JsonIgnore
     private Employee employee;
 
+    @ManyToOne
+    @JoinColumn(nullable = true, name = "tenant_id")
+    private Tenant tenant;
+
     public ChangeLog() {
     }
 
-    public ChangeLog(String description, LocalDate changeDate, FoodTicket foodTicket, Employee employee) {
+    public ChangeLog(String description, LocalDate changeDate, FoodTicket foodTicket, Employee employee, Tenant tenant) {
         this.description = description;
         this.changeDate = changeDate;
         this.foodTicket = foodTicket;
         this.employee = employee;
+        this.tenant = tenant;
     }
 
     public Long getId() {
@@ -74,5 +79,13 @@ public class ChangeLog {
 
     public void setChangeDate(LocalDate changeDate) {
         this.changeDate = changeDate;
+    }
+
+    public Tenant getTenant() {
+        return tenant;
+    }
+
+    public void setTenant(Tenant tenant) {
+        this.tenant = tenant;
     }
 }

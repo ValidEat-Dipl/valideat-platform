@@ -64,6 +64,7 @@ public class EmployeeRepository {
             String token = Jwt.issuer("ValidEat")
                     .subject(employee.getEmail())
                     .claim("id", employee.getId())
+                    .claim("tenantId", employee.getTenant().getId())
                     .groups(employee.getRole().toString())
                     .expiresIn(Duration.ofHours(10))
                     .sign();

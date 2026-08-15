@@ -1,3 +1,28 @@
+-- Tenant Setup
+INSERT INTO Tenant (
+    name,
+    manager,
+    email,
+    country,
+    companySize
+) VALUES
+      (
+          'Porsche',
+          'Max Mustermann',
+          'max.mustermann@firma.at',
+          'Austria',
+          'Large'
+      ),
+      (
+          'BMW',
+          'Peter Maier',
+          'peter.maier@htl.at',
+          'Austria',
+          'Medium'
+      );
+
+-- Porsche Test Daten
+
 INSERT INTO ChangeLog (
     description,
     changeDate
@@ -122,3 +147,167 @@ WHERE id = 4;
 UPDATE ChangeLog
 SET foodTicket_id = 3
 WHERE id = 2;
+
+UPDATE Employee
+SET tenant_id = (SELECT id FROM Tenant WHERE name = 'Porsche');
+
+UPDATE CostOrder
+SET tenant_id = (SELECT id FROM Tenant WHERE name = 'Porsche');
+
+UPDATE Restaurant
+SET tenant_id = (SELECT id FROM Tenant WHERE name = 'Porsche');
+
+UPDATE Tier
+SET tenant_id = (SELECT id FROM Tenant WHERE name = 'Porsche');
+
+UPDATE FoodTicket
+SET tenant_id = (SELECT id FROM Tenant WHERE name = 'Porsche');
+
+UPDATE ChangeLog
+SET tenant_id = (SELECT id FROM Tenant WHERE name = 'Porsche');
+
+
+
+
+-- BMW Test Daten
+
+INSERT INTO Employee (
+    firstName,
+    lastName,
+    address,
+    department,
+    phoneNumber,
+    email,
+    passwordHash,
+    role,
+    tenant_id
+) VALUES
+      (
+          'Thomas',
+          'Müller',
+          'BMW-Straße 1, München',
+          'IT',
+          '+49 170 1111111',
+          'thomas.mueller@bmw.de',
+          '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu',
+          'ADMIN',
+          2
+      ),
+      (
+          'Laura',
+          'Schmidt',
+          'Hauptstraße 20, München',
+          'HR',
+          '+49 170 2222222',
+          'laura.schmidt@bmw.de',
+          '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu',
+          'EMPLOYEE',
+          2
+      ),
+      (
+          'Felix',
+          'Weber',
+          'BMW-Allee 5, München',
+          'Sales',
+          '+49 170 3333333',
+          'felix.weber@bmw.de',
+          '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu',
+          'EMPLOYEE',
+          2
+      );
+
+
+INSERT INTO ChangeLog (
+    description,
+    changeDate,
+    tenant_id
+) VALUES
+      (
+          'BMW Employee created',
+          '2026-07-15',
+          2
+      ),
+      (
+          'BMW FoodTicket submitted',
+          '2026-07-16',
+          2
+      ),
+      (
+          'BMW FoodTicket checked',
+          '2026-07-17',
+          2
+      );
+
+
+INSERT INTO FoodTicket (
+    employee_id,
+    useDate,
+    matching_ticket_id,
+    tier_name,
+    costOrder_name,
+    status,
+    ticketType,
+    restaurant_id,
+    admin_id,
+    checkDate,
+    conflict,
+    tenant_id
+) VALUES
+
+(
+    8,
+    '2026-07-15',
+    NULL,
+    'EMPLOYEE',
+    '1100 - Personal',
+    'OPEN',
+    'EMPLOYEE',
+    2,
+    NULL,
+    NULL,
+    NULL,
+    2
+),
+
+(
+    9,
+    '2026-07-16',
+    NULL,
+    'APPRENTICE',
+    '3000 - Vertrieb',
+    'OPEN',
+    'EMPLOYEE',
+    1,
+    NULL,
+    NULL,
+    NULL,
+    2
+),
+
+(
+    9,
+    '2026-07-16',
+    NULL,
+    'APPRENTICE',
+    '3000 - Vertrieb',
+    'CHECKED',
+    'ADMIN',
+    1,
+    7,
+    '2026-07-17',
+    NULL,
+    2
+);
+
+INSERT INTO CostOrder (name, tenant_id) VALUES
+                                            ('BMW - Verwaltung', 2),
+                                            ('BMW - Produktion', 2),
+                                            ('BMW - Vertrieb', 2);
+
+INSERT INTO Restaurant (address, name, tenant_id) VALUES
+                                                      ('BMW-Straße 10, München', 'BMW Mitarbeiterrestaurant', 2),
+                                                      ('Parkstraße 5, München', 'BMW Kantine Nord', 2);
+
+INSERT INTO Tier (name, discount, tenant_id) VALUES
+                                                 ('BMW INTERN', 3.00, 2),
+                                                 ('BMW EMPLOYEE', 5.00, 2);

@@ -33,6 +33,10 @@ public class Employee {
     @Column(nullable = false)
     private Role role;
 
+    @ManyToOne
+    @JoinColumn(nullable = true, name = "tenant_id")
+    private Tenant tenant;
+
     public Employee() {
     }
 
@@ -127,5 +131,13 @@ public class Employee {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public Tenant getTenant() {
+        return tenant;
+    }
+
+    public void setTenant(Tenant tenant) {
+        this.tenant = tenant;
     }
 }
