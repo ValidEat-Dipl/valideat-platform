@@ -11,6 +11,7 @@ public class TenantService {
     JsonWebToken jwt;
 
     public Long getCurrentTenantId() {
+        System.out.println("tenantId claim: " + jwt.getClaim("tenantId"));
         return Long.valueOf(jwt.getClaim("tenantId").toString());
     }
 }

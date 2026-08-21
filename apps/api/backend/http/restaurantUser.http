@@ -1,0 +1,11 @@
+###
+POST http://localhost:8080/restaurantUser/register
+Content-Type: application/json
+
+{
+  "firstName": "Max",
+  "lastName": "Mustermann",
+  "email": "max.mustermann@porsche.at",
+  "passwordHash": "password123",
+  "role": "ADMIN"
+}
