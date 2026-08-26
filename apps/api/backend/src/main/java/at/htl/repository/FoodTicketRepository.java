@@ -4,6 +4,10 @@ import at.htl.blockchain.ValidEatBlockchainService;
 import at.htl.boundary.TenantService;
 import at.htl.boundary.dto.*;
 import at.htl.model.*;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
@@ -12,6 +16,7 @@ import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.core.Response;
 
+import java.io.ByteArrayOutputStream;
 import java.time.LocalDate;
 
 import java.time.LocalDateTime;
@@ -809,5 +814,25 @@ public class FoodTicketRepository {
                 .setParameter("status", Status.EXPIRED)
                 .setParameter("tenantId", tenantService.getCurrentTenantId())
                 .getResultList();
+    }
+
+    public byte[] generateQrCode(String token) throws Exception {
+
+        BitMatrix matrix = new MultiFormatWriter().encode(
+                token,
+                BarcodeFormat.QR_CODE,
+                300,
+                300
+        );
+
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+
+        MatrixToImageWriter.writeToStream(
+                matrix,
+                "PNG",
+                output
+        );
+
+        return output.toByteArray();
     }
 }

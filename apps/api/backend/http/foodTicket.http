@@ -66,3 +66,17 @@ Content-Type: application/json
   "status": "CHECKED",
   "description": "Kostenstelle und Restaurant korrigiert. Ticket erfolgreich abgeglichen."
 }
+
+
+###
+POST http://localhost:8080/foodticket/create
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJWYWxpZEVhdCIsInN1YiI6Im1heC5tdXN0ZXJtYW5uQGZpcm1hLmF0IiwiaWQiOjEsInRlbmFudElkIjoxLCJncm91cHMiOlsiQURNSU4iXSwiaWF0IjoxNzg3NzY5MTcwLCJleHAiOjE3ODc4MDUxNzAsImp0aSI6IjE2OTQwYWJkLWFjYjAtNDA4NC1hNWI5LWFlZDE3MWVjMDBmNSJ9.ZsqeOkSOO9Xe26qB14iF7ryeibGh3LcpJxgNTCwzCanQoooqe1UXu9QKMbTvkoVoutQ8hxf1xpkrkC7MtkcA1A0YhkHF1XC6dSOaMittIlmvbAts79LEeMMlekNPc5hapL1rdys73G2_y3asyjJUqLzySgIfNn1FMxOcTXyUMhKL07WMMn9QCVEBZG65Muy6oluc6qhwWW3AXVzrO_2xclS_kYA2yd-zT_yt92EW4T2avNsvpF8YmuQAQEpq-5yfW-jGDJtD68CS1PmXMaLfuq5tqlh306bI4Td0VRxVe3tHQkpwi-_g6ZFZk7r09N0_5pFWOBMn5ZMRef8k98E0Sw
+Content-Type: application/json
+
+{
+"date": "2026-08-26",
+"employeeName": "Max Mustermann",
+"costOrder": "1200 - IT",
+"tier": "EMPLOYEE",
+"restaurantName": "Gasthaus zur Stadt"
+}

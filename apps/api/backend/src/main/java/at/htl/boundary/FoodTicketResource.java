@@ -5,6 +5,7 @@ import at.htl.boundary.dto.*;
 import at.htl.model.*;
 import at.htl.repository.*;
 import io.quarkus.security.Authenticated;
+import io.smallrye.jwt.build.Jwt;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -15,6 +16,7 @@ import jakarta.ws.rs.core.Response;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -473,5 +475,48 @@ public class FoodTicketResource {
         }
 
         return escapedData;
+    }
+
+    @POST
+    @Path("/create")
+    @Transactional
+    public Response createTicket(EmployeeFoodTicketDTO employeeFoodTicketDTO) throws Exception {
+
+        Employee employee;
+        Tier tier;
+        CostOrder costOrder;
+        Restaurant restaurant;
+
+        try {
+            employee = employeeRepository.findByName(employeeFoodTicketDTO.employeeName());
+            tier = tierRepository.findByName(employeeFoodTicketDTO.tier());
+            costOrder = costOrderRepository.findByName(employeeFoodTicketDTO.costOrder());
+            restaurant = restaurantRepository.findByName(employeeFoodTicketDTO.restaurantName());
+        } catch (Exception e) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+
+
+        FoodTicket foodTicket = new FoodTicket(
+                employee,
+                employeeFoodTicketDTO.date(),
+                tier,
+                costOrder,
+                Status.OPEN,
+                restaurant,
+                TicketType.EMPLOYEE);
+        foodTicketRepository.save(foodTicket);
+
+        String qrToken = Jwt.issuer("ValidEat")
+                .subject("FOOD_MARKER")
+                .claim("ticketId", foodTicket.getId())
+                .expiresIn(Duration.ofMinutes(5))
+                .sign();
+
+        byte[] qrCode = foodTicketRepository.generateQrCode(qrToken);
+
+        return Response.ok(qrCode)
+                .type("image/png")
+                .build();
     }
 }
