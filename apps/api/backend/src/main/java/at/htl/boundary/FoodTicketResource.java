@@ -4,6 +4,7 @@ import at.htl.blockchain.ValidEatBlockchainService;
 import at.htl.boundary.dto.*;
 import at.htl.model.*;
 import at.htl.repository.*;
+import io.nayuki.qrcodegen.QrCode;
 import io.quarkus.security.Authenticated;
 import io.smallrye.jwt.build.Jwt;
 import jakarta.annotation.security.RolesAllowed;
@@ -20,10 +21,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -47,6 +45,9 @@ public class FoodTicketResource {
 
     @Inject
     ValidEatBlockchainService blockchainService;
+
+    @Inject
+    QRCodeService qrCodeService;
 
     @GET
     public List<FoodTicket> listAll() {
@@ -478,10 +479,9 @@ public class FoodTicketResource {
     }
 
     @POST
-    @Path("/create")
+    @Path("/empCreateTicketQRCode")
     @Transactional
-    public Response createTicket(EmployeeFoodTicketDTO employeeFoodTicketDTO) throws Exception {
-
+    public Response createTicket(EmployeeFoodTicketDTO employeeFoodTicketDTO) {
         Employee employee;
         Tier tier;
         CostOrder costOrder;
@@ -496,27 +496,22 @@ public class FoodTicketResource {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
 
-
-        FoodTicket foodTicket = new FoodTicket(
-                employee,
-                employeeFoodTicketDTO.date(),
-                tier,
-                costOrder,
-                Status.OPEN,
-                restaurant,
-                TicketType.EMPLOYEE);
-        foodTicketRepository.save(foodTicket);
+        String qrCodeId = UUID.randomUUID().toString();
 
         String qrToken = Jwt.issuer("ValidEat")
-                .subject("FOOD_MARKER")
-                .claim("ticketId", foodTicket.getId())
+                .subject("FOOD_TICKET")
+                .claim("ticketId", qrCodeId)
+                .claim("employeeId", employee.getId())
+                .claim("tier", tier.getName())
+                .claim("costOrder", costOrder.getName())
+                .claim("restaurantId", restaurant.getId())
                 .expiresIn(Duration.ofMinutes(5))
                 .sign();
 
-        byte[] qrCode = foodTicketRepository.generateQrCode(qrToken);
+        String qrCode = QRCodeService.toSvgString(qrCodeService.generateQrCode(qrToken), 4, "#FFFFFF", "#000000", true);
 
         return Response.ok(qrCode)
-                .type("image/png")
+                .type("image/svg")
                 .build();
     }
 }
