@@ -522,7 +522,7 @@ public class FoodTicketResource {
 
         String qrCode = QRCodeService.toSvgString(qrCodeService.generateQrCode(qrToken), 4, "#FFFFFF", "#000000", true);
 
-        return Response.ok(new QRCodeResponse(qrCode, qrToken))
+        return Response.ok(new QRCodeResponse(qrCode, qrToken, qrCodeId))
                 .type(MediaType.APPLICATION_JSON)
                 .build();
     }
@@ -535,19 +535,13 @@ public class FoodTicketResource {
         try {
             JsonWebToken jwt = parser.parse(qrToken);
 
-            System.out.println("employeeId: " + jwt.getClaim("employeeId"));
-            System.out.println("tier: " + jwt.getClaim("tier"));
-            System.out.println("costOrder: " + jwt.getClaim("costOrder"));
-            System.out.println("restaurantId: " + jwt.getClaim("restaurantId"));
-            System.out.println("date: " + jwt.getClaim("date"));
-            System.out.println("ticketId: " + jwt.getClaim("ticketId"));
-
             if (!Objects.equals(jwt.getSubject(), "FOOD_TICKET")) {
                 return Response.status(Response.Status.FORBIDDEN).build();
             }
 
+            String qrCodeId = jwt.getClaim("ticketId").toString();
+
             Long employeeId = Long.valueOf(jwt.getClaim("employeeId").toString());
-            Long tenantId = Long.valueOf(jwt.getClaim("tenantId").toString());
             String tierName = jwt.getClaim("tier").toString();
             String costOrderName = jwt.getClaim("costOrder").toString();
             Long restaurantId = Long.valueOf(jwt.getClaim("restaurantId").toString());
@@ -573,6 +567,8 @@ public class FoodTicketResource {
 
             foodTicketRepository.save(foodTicket);
             foodTicketRepository.save(matchingFoodTicket);
+
+            QRCodeScanWebSocket.notifyScan(qrCodeId);
 
 
             return Response.ok().build();
