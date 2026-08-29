@@ -4,8 +4,11 @@ import at.htl.blockchain.ValidEatBlockchainService;
 import at.htl.boundary.dto.*;
 import at.htl.model.*;
 import at.htl.repository.*;
+import at.htl.websockets.QRCodeScanWebSocket;
 import io.nayuki.qrcodegen.QrCode;
 import io.quarkus.security.Authenticated;
+import io.smallrye.jwt.auth.principal.JWTParser;
+import io.smallrye.jwt.auth.principal.ParseException;
 import io.smallrye.jwt.build.Jwt;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
@@ -13,6 +16,7 @@ import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.eclipse.microprofile.jwt.JsonWebToken;
 
 import java.io.File;
 import java.io.IOException;
@@ -48,6 +52,12 @@ public class FoodTicketResource {
 
     @Inject
     QRCodeService qrCodeService;
+
+    @Inject
+    QRCodeScanWebSocket qrCodeScanWebSocket;
+
+    @Inject
+    JWTParser parser;
 
     @GET
     public List<FoodTicket> listAll() {
@@ -502,16 +512,75 @@ public class FoodTicketResource {
                 .subject("FOOD_TICKET")
                 .claim("ticketId", qrCodeId)
                 .claim("employeeId", employee.getId())
+                .claim("tenantId", employee.getTenant().getId())
                 .claim("tier", tier.getName())
                 .claim("costOrder", costOrder.getName())
                 .claim("restaurantId", restaurant.getId())
+                .claim("date", employeeFoodTicketDTO.date().toString())
                 .expiresIn(Duration.ofMinutes(5))
                 .sign();
 
         String qrCode = QRCodeService.toSvgString(qrCodeService.generateQrCode(qrToken), 4, "#FFFFFF", "#000000", true);
 
-        return Response.ok(qrCode)
-                .type("image/svg")
+        return Response.ok(new QRCodeResponse(qrCode, qrToken))
+                .type(MediaType.APPLICATION_JSON)
                 .build();
+    }
+
+    @POST
+    @Path("/scanQRCode")
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Transactional
+    public Response scanQRCode(String qrToken) {
+        try {
+            JsonWebToken jwt = parser.parse(qrToken);
+
+            System.out.println("employeeId: " + jwt.getClaim("employeeId"));
+            System.out.println("tier: " + jwt.getClaim("tier"));
+            System.out.println("costOrder: " + jwt.getClaim("costOrder"));
+            System.out.println("restaurantId: " + jwt.getClaim("restaurantId"));
+            System.out.println("date: " + jwt.getClaim("date"));
+            System.out.println("ticketId: " + jwt.getClaim("ticketId"));
+
+            if (!Objects.equals(jwt.getSubject(), "FOOD_TICKET")) {
+                return Response.status(Response.Status.FORBIDDEN).build();
+            }
+
+            Long employeeId = Long.valueOf(jwt.getClaim("employeeId").toString());
+            Long tenantId = Long.valueOf(jwt.getClaim("tenantId").toString());
+            String tierName = jwt.getClaim("tier").toString();
+            String costOrderName = jwt.getClaim("costOrder").toString();
+            Long restaurantId = Long.valueOf(jwt.getClaim("restaurantId").toString());
+            LocalDate date = LocalDate.parse(jwt.getClaim("date").toString());
+
+            Employee employee = employeeRepository.getEmpById(employeeId);
+            Tier tier = tierRepository.findByName(tierName);
+            CostOrder costOrder = costOrderRepository.findByName(costOrderName);
+            Restaurant restaurant = restaurantRepository.getRestaurantById(restaurantId);
+
+            if (tier == null || costOrder == null || restaurant == null || employee == null) {
+                return Response.status(Response.Status.BAD_REQUEST).build();
+            }
+
+            FoodTicket foodTicket = new FoodTicket(employee, date, tier, costOrder, Status.CHECKED, restaurant, TicketType.EMPLOYEE);
+            FoodTicket matchingFoodTicket = new FoodTicket(employee, date, tier, costOrder, Status.CHECKED, restaurant, TicketType.RESTAURANT);
+
+            foodTicketRepository.save(foodTicket);
+            foodTicketRepository.save(matchingFoodTicket);
+
+            foodTicket.setMatchingTicket(matchingFoodTicket);
+            matchingFoodTicket.setMatchingTicket(foodTicket);
+
+            foodTicketRepository.save(foodTicket);
+            foodTicketRepository.save(matchingFoodTicket);
+
+
+            return Response.ok().build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(e.getMessage())
+                    .build();
+        }
     }
 }

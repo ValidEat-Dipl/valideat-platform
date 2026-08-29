@@ -8,7 +8,7 @@ import java.util.Objects;
 @ApplicationScoped
 public class QRCodeService {
     public QrCode generateQrCode(String data) {
-        QrCode qr = QrCode.encodeText(data, QrCode.Ecc.LOW);
+        QrCode qr = QrCode.encodeText(data, QrCode.Ecc.HIGH);
         return qr;
     }
 

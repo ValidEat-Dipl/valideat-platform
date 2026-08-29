@@ -1,6 +1,7 @@
 package at.htl.repository;
 
 import at.htl.boundary.TenantService;
+import at.htl.model.Employee;
 import at.htl.model.Restaurant;
 import at.htl.model.Tier;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -27,6 +28,13 @@ public class RestaurantRepository {
     public Restaurant findByName(String restaurantName) {
         return entityManager.createQuery("select r from Restaurant r where lower(r.name) = lower(:name) and r.tenant.id = :tenantId", Restaurant.class)
                 .setParameter("name", restaurantName)
+                .setParameter("tenantId", tenantService.getCurrentTenantId())
+                .getSingleResult();
+    }
+
+    public Restaurant getRestaurantById(Long id) {
+        return entityManager.createQuery("select r from Restaurant r where r.id = :id and r.tenant.id = :tenantId", Restaurant.class)
+                .setParameter("id", id)
                 .setParameter("tenantId", tenantService.getCurrentTenantId())
                 .getSingleResult();
     }

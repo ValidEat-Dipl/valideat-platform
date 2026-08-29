@@ -16,8 +16,8 @@ public class QRCodeScanWebSocket {
         return "Websocket for QRCode Nr. " + connection.pathParam("qrId") + " was opened.";
     }
     @OnClose()
-    public String onClose() {
-        return "Websocket for QRCode Nr. " + connection.pathParam("qrId") + " was closed.";
+    public void onClose() {
+        System.out.println("Websocket for QRCode Nr. " + connection.pathParam("qrId") + " was closed.");
 
     }
 

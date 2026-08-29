@@ -41,6 +41,15 @@ public class EmployeeRepository {
                 .getSingleResult();
     }
 
+    public Employee getEmpById(Long employeeId, Long tenantId) {
+        return em.createQuery("""
+            select e from Employee e where e.id = :employeeId and e.tenant.id = :tenantId
+            """, Employee.class)
+                .setParameter("employeeId", employeeId)
+                .setParameter("tenantId", tenantId)
+                .getSingleResult();
+    }
+
     public Employee findByName(String name) {
 
         return em.createQuery(
@@ -77,7 +86,7 @@ public class EmployeeRepository {
                     .claim("id", employee.getId())
                     .claim("tenantId", employee.getTenant().getId())
                     .groups(employee.getRole().toString())
-                    .expiresIn(Duration.ofHours(10))
+                    .expiresIn(Duration.ofHours(50))
                     .sign();
             return new LoginResponseDTO(token, employee.getId(), employee.getFirstName(), employee.getLastName(), employee.getEmail(), employee.getRole(), employee.getTenant());
         } else {
