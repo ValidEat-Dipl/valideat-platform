@@ -1,5 +1,6 @@
 package at.htl.repository;
 
+import at.htl.boundary.TenantService;
 import at.htl.boundary.dto.LoginResponseDTO;
 import at.htl.model.Employee;
 import at.htl.model.RestaurantUser;
@@ -17,6 +18,9 @@ import java.util.List;
 public class RestaurantUserRepository {
     @Inject
     EntityManager entityManager;
+
+    @Inject
+    TenantService tenantService;
 
     public LoginResponseDTO login(String email, String password) {
         List<RestaurantUser> restaurantUsers = entityManager.createQuery("select ru from RestaurantUser ru where ru.email = :email", RestaurantUser.class)
@@ -56,4 +60,14 @@ public class RestaurantUserRepository {
 
         return "New Employee Registered";
     }
+
+    public RestaurantUser getRestaurantUserById(Long id) {
+        return entityManager.createQuery("select ru from RestaurantUser ru where ru.id = :id and ru.tenant.id = :tenantId", RestaurantUser.class)
+                .setParameter("id", id)
+                .setParameter("tenantId", tenantService.getCurrentTenantId())
+                .getResultStream()
+                .findFirst()
+                .orElse(null);
+    }
+
 }

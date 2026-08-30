@@ -811,4 +811,11 @@ public class FoodTicketRepository {
     }
 
 
+    public List<FoodTicket> findByRestaurantUser(Long id) {
+        return entityManager.createQuery("""
+                select ru.foodTickets from RestaurantUser ru where ru.id = :id and ru.tenant.id = :tenantId""", FoodTicket.class)
+                .setParameter("id", id)
+                .setParameter("tenantId", tenantService.getCurrentTenantId())
+                .getResultList();
+    }
 }

@@ -12,6 +12,7 @@ import io.smallrye.jwt.auth.principal.ParseException;
 import io.smallrye.jwt.build.Jwt;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
+import jakarta.json.Json;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -58,6 +59,11 @@ public class FoodTicketResource {
 
     @Inject
     JWTParser parser;
+
+    @Inject
+    JsonWebToken sessionToken;
+    @Inject
+    RestaurantUserRepository restaurantUserRepository;
 
     @GET
     public List<FoodTicket> listAll() {
@@ -568,6 +574,12 @@ public class FoodTicketResource {
             foodTicketRepository.save(foodTicket);
             foodTicketRepository.save(matchingFoodTicket);
 
+            Long restaurantUserId = Long.valueOf(sessionToken.getClaim("id").toString());
+            RestaurantUser restaurantUser = restaurantUserRepository.getRestaurantUserById(restaurantUserId);
+            List<FoodTicket> ticketList = restaurantUser.getFoodTickets();
+            ticketList.add(matchingFoodTicket);
+            restaurantUser.setFoodTickets(ticketList);
+
             QRCodeScanWebSocket.notifyScan(qrCodeId);
 
 
@@ -578,5 +590,11 @@ public class FoodTicketResource {
                     .entity(e.getMessage())
                     .build();
         }
+    }
+
+    @GET
+    @Path("/restaurantUser/{restaurantUserId}")
+    public List<FoodTicket> findByRestaurantUser(@PathParam("restaurantUserId") Long id) {
+        return foodTicketRepository.findByRestaurantUser(id);
     }
 }

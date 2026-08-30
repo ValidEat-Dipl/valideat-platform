@@ -311,3 +311,15 @@ INSERT INTO Restaurant (address, name, tenant_id) VALUES
 INSERT INTO Tier (name, discount, tenant_id) VALUES
                                                  ('BMW INTERN', 3.00, 2),
                                                  ('BMW EMPLOYEE', 5.00, 2);
+
+
+INSERT INTO restaurantuser
+(firstName, lastName, email, passwordHash, role, tenant_id)
+VALUES
+    ('Stefan', 'Leitner', 'stefan.leitner@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu', 'RESTAURANT_ADMIN', 1),
+    ('Laura', 'Kaufmann', 'laura.kaufmann@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu', 'RESTAURANT_EMPLOYEE', 1),
+    ('Daniel', 'Schmid', 'daniel.schmid@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu', 'RESTAURANT_EMPLOYEE', 1),
+
+    ('Michael', 'Winkler', 'michael.winkler@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu', 'RESTAURANT_ADMIN', 2),
+    ('Sarah', 'Pichler', 'sarah.pichler@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu', 'RESTAURANT_EMPLOYEE', 2),
+    ('Florian', 'Moser', 'florian.moser@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu', 'RESTAURANT_EMPLOYEE', 2);

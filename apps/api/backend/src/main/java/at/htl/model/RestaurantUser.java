@@ -3,6 +3,7 @@ package at.htl.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @Entity
@@ -28,6 +29,9 @@ public class RestaurantUser {
     @JoinColumn(nullable = true, name = "tenant_id")
     @JsonIgnore
     private Tenant tenant;
+
+    @OneToMany
+    private List<FoodTicket> foodTickets = new LinkedList<>();
 
 
     public RestaurantUser() {
@@ -94,5 +98,13 @@ public class RestaurantUser {
 
     public void setTenant(Tenant tenant) {
         this.tenant = tenant;
+    }
+
+    public List<FoodTicket> getFoodTickets() {
+        return foodTickets;
+    }
+
+    public void setFoodTickets(List<FoodTicket> foodTickets) {
+        this.foodTickets = foodTickets;
     }
 }

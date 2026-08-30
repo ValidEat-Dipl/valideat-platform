@@ -36,5 +36,9 @@ public class RestaurantUserResource {
         return restaurantUserRepository.register(restaurantUser);
     }
 
-
+    @GET
+    @Path("{id}")
+    public RestaurantUser findById(@PathParam("id") Long id) {
+        return restaurantUserRepository.getRestaurantUserById(id);
+    }
 }
