@@ -2,11 +2,13 @@ package at.htl.repository;
 
 import at.htl.boundary.dto.CreateTenantDTO;
 import at.htl.boundary.dto.TenantOverviewDTO;
+import at.htl.model.Employee;
 import at.htl.model.Tenant;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.core.Response;
 
 import java.util.List;
 
@@ -103,5 +105,20 @@ public class SaaSAdminRepository {
 
     public Tenant findTenantById(Long id) {
         return entityManager.find(Tenant.class, id);
+    }
+
+    public List<Tenant> findTenantBySaaSAdminId(String name) {
+        System.out.println(name);
+        return entityManager.createQuery("select t from Tenant t where t.manager like :managerName ", Tenant.class).setParameter("managerName", name).getResultList();
+    }
+
+    public Response assignEmpToTenant(Tenant tenant, Employee employee) {
+        if (employee == null || tenant == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        employee.setTenant(tenant);
+
+        return Response.ok().build();
     }
 }
