@@ -28,6 +28,7 @@ public class Employee {
     private String passwordHash;
 
     @OneToMany(mappedBy = "employee")
+    @JsonIgnore
     private List<ChangeLog> changeLogs;
 
     @Enumerated(EnumType.STRING)

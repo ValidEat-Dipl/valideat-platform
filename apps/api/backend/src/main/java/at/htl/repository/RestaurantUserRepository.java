@@ -42,7 +42,7 @@ public class RestaurantUserRepository {
                     .claim("id", restaurantUser.getId())
                     .claim("tenantId", restaurantUser.getTenant().getId())
                     .groups(restaurantUser.getRole().toString())
-                    .expiresIn(Duration.ofHours(10))
+                    .expiresIn(Duration.ofHours(100))
                     .sign();
             return new LoginResponseDTO(token, restaurantUser.getId(), restaurantUser.getFirstName(), restaurantUser.getLastName(), restaurantUser.getEmail(), restaurantUser.getRole(), restaurantUser.getTenant());
         } else {

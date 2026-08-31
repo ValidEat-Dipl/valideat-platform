@@ -64,6 +64,10 @@ public class FoodTicketResource {
     JsonWebToken sessionToken;
     @Inject
     RestaurantUserRepository restaurantUserRepository;
+    @Inject
+    TenantService tenantService;
+    @Inject
+    SaaSAdminRepository saaSAdminRepository;
 
     @GET
     public List<FoodTicket> listAll() {
@@ -552,18 +556,20 @@ public class FoodTicketResource {
             String costOrderName = jwt.getClaim("costOrder").toString();
             Long restaurantId = Long.valueOf(jwt.getClaim("restaurantId").toString());
             LocalDate date = LocalDate.parse(jwt.getClaim("date").toString());
+            Long tenantId = tenantService.getCurrentTenantId();
 
             Employee employee = employeeRepository.getEmpById(employeeId);
             Tier tier = tierRepository.findByName(tierName);
             CostOrder costOrder = costOrderRepository.findByName(costOrderName);
             Restaurant restaurant = restaurantRepository.getRestaurantById(restaurantId);
+            Tenant tenant = saaSAdminRepository.findTenantById(tenantId);
 
-            if (tier == null || costOrder == null || restaurant == null || employee == null) {
+            if (tier == null || costOrder == null || restaurant == null || employee == null || tenant == null) {
                 return Response.status(Response.Status.BAD_REQUEST).build();
             }
 
-            FoodTicket foodTicket = new FoodTicket(employee, date, tier, costOrder, Status.CHECKED, restaurant, TicketType.EMPLOYEE);
-            FoodTicket matchingFoodTicket = new FoodTicket(employee, date, tier, costOrder, Status.CHECKED, restaurant, TicketType.RESTAURANT);
+            FoodTicket foodTicket = new FoodTicket(employee, date, tier, costOrder, Status.CHECKED, restaurant, TicketType.EMPLOYEE, tenant);
+            FoodTicket matchingFoodTicket = new FoodTicket(employee, date, tier, costOrder, Status.CHECKED, restaurant, TicketType.RESTAURANT, tenant);
 
             foodTicketRepository.save(foodTicket);
             foodTicketRepository.save(matchingFoodTicket);
@@ -583,7 +589,7 @@ public class FoodTicketResource {
             QRCodeScanWebSocket.notifyScan(qrCodeId);
 
 
-            return Response.ok().build();
+            return Response.ok(new EmployeeGetTicketsDTO(foodTicket.getId(), foodTicket.getEmployee().getFirstName(), foodTicket.getEmployee().getLastName(), foodTicket.getUseDate(), foodTicket.getTier().getName(), foodTicket.getCostOrder().getName(), foodTicket.getRestaurant().getName(), foodTicket.getStatus(), foodTicket.getCheckDate(), null, null, foodTicket.getTicketType())).build();
         } catch (Exception e) {
             e.printStackTrace();
             return Response.status(Response.Status.BAD_REQUEST)
