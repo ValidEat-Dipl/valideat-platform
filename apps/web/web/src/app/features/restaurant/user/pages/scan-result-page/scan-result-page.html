@@ -1,0 +1,79 @@
+<div class="scan-result-page">
+
+  <app-restaurant-header title="Scan-Ergebnis" [showBackButton]="true" />
+
+  <div class="px-4 py-4">
+
+    <div class="row gx-0 justify-content-center">
+
+      <main class="col-12 col-sm-10 col-md-8 col-lg-7 col-xl-6">
+
+        <div class="text-center mb-4">
+
+          <div class="result-icon mx-auto mb-3" [class]="result().iconClass">
+            <i class="bi" [class]="result().icon" aria-hidden="true"></i>
+          </div>
+
+          <span class="badge rounded-pill mb-3" [class]="result().badgeClass">
+            {{ result.badgeText }}
+          </span>
+
+          <h1 class="h4 fw-semibold mb-2">
+            {{ result.title }}
+          </h1>
+
+          <p class="text-secondary mb-0">
+            {{ result.description }}
+          </p>
+
+        </div>
+
+
+        <section class="card mb-3" aria-labelledby="result-detail-heading">
+
+          <div class="card-body">
+
+            <h2 id="result-detail-heading" class="h6 mb-3">
+              {{ result().detailTitle }}
+            </h2>
+
+            <ul class="list-unstyled mb-0 d-grid gap-2">
+
+              @for (detail of result().details; track detail) {
+
+              <li class="d-flex gap-2">
+                <i class="bi bi-dot text-primary" aria-hidden="true"></i>
+                <span>
+                  {{ detail }}
+                </span>
+              </li>
+
+              }
+
+            </ul>
+
+          </div>
+
+        </section>
+
+
+        <div class="d-grid gap-2">
+
+          <a class="btn btn-primary btn-lg" routerLink="/restaurant/user/scan">
+            Weiteren QR-Code scannen
+          </a>
+
+          <a class="btn btn-outline-secondary btn-lg" routerLink="/restaurant/user/history">
+            Zum Verlauf
+          </a>
+
+        </div>
+
+      </main>
+
+    </div>
+
+
+  </div>
+
+</div>

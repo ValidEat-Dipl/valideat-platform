@@ -1,0 +1,17 @@
+:host {
+  display: block;
+}
+
+.restaurant-history-page {
+  min-height: 100dvh;
+}
+
+.result-dot {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: inline-grid;
+  place-items: center;
+  flex-shrink: 0;
+  border-radius: 50%;
+  font-size: 1.25rem;
+}
