@@ -28,5 +28,10 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./features/employee/employee.routes').then((module) => module.EMPLOYEE_ROUTES),
   },
+  {
+    path: 'restaurant',
+    loadChildren: () =>
+      import('./features/restaurant/restaurant.routes').then((module) => module.RESTAURANT_ROUTES),
+  },
   { path: '**', component: AdminOverviewComp },
 ];

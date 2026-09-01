@@ -1,0 +1,15 @@
+:host {
+  display: block;
+  min-height: 100dvh;
+  background-color: var(--bs-tertiary-bg, #f8f9fa);
+}
+
+.restaurant-layout {
+  min-height: 100dvh;
+  color: var(--bs-body-color, #212529);
+  background-color: var(--bs-tertiary-bg, #f8f9fa);
+}
+
+.restaurant-content {
+  min-height: 100dvh;
+}
