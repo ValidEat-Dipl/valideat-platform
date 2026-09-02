@@ -41,13 +41,8 @@ public class EmployeeRepository {
                 .getSingleResult();
     }
 
-    public Employee getEmpById(Long employeeId, Long tenantId) {
-        return em.createQuery("""
-            select e from Employee e where e.id = :employeeId and e.tenant.id = :tenantId
-            """, Employee.class)
-                .setParameter("employeeId", employeeId)
-                .setParameter("tenantId", tenantId)
-                .getSingleResult();
+    public Employee findById(Long id) {
+        return em.find(Employee.class, id);
     }
 
     public Employee findByName(String name) {

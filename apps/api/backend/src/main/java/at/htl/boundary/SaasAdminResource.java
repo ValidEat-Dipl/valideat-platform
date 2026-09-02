@@ -3,8 +3,12 @@ package at.htl.boundary;
 import at.htl.boundary.dto.CreateTenantDTO;
 import at.htl.boundary.dto.TenantOverviewDTO;
 import at.htl.model.Employee;
+import at.htl.model.Restaurant;
+import at.htl.model.RestaurantUser;
 import at.htl.model.Tenant;
 import at.htl.repository.EmployeeRepository;
+import at.htl.repository.RestaurantRepository;
+import at.htl.repository.RestaurantUserRepository;
 import at.htl.repository.SaaSAdminRepository;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.inject.Inject;
@@ -12,6 +16,7 @@ import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.eclipse.microprofile.jwt.JsonWebToken;
 
 import java.util.List;
 
@@ -24,6 +29,13 @@ public class SaasAdminResource {
     SaaSAdminRepository saasAdminRepository;
     @Inject
     EmployeeRepository employeeRepository;
+
+    @Inject
+    JsonWebToken sessionToken;
+    @Inject
+    RestaurantRepository restaurantRepository;
+    @Inject
+    RestaurantUserRepository restaurantUserRepository;
 
     @POST
     @Path("/tenant")
@@ -40,6 +52,16 @@ public class SaasAdminResource {
     @Path("/tenants")
     public List<TenantOverviewDTO> getTenantOverviews() {
         return saasAdminRepository.getTenantOverviews();
+    }
+
+    @GET
+    @Path("/tenant-overview")
+    public TenantOverviewDTO getTenantOverview() {
+
+        Long tenantId = Long.valueOf(sessionToken.getClaim("tenantId").toString()
+        );
+
+        return saasAdminRepository.getTenantOverview(tenantId);
     }
 
     @GET
@@ -63,11 +85,70 @@ public class SaasAdminResource {
     }
 
     @PUT
-    @Path("/assign/{tenantId}/{empId}")
+    @Path("/assign/{empId}")
     @Transactional
-    public Response assignEmpToTenant(@PathParam("tenantId") Long tenantId, @PathParam("empId") Long empId) {
+    public Response assignEmpToTenant(@PathParam("empId") Long empId) {
+        Long tenantId = Long.valueOf(sessionToken.getClaim("tenantId").toString());
         Tenant tenant = saasAdminRepository.findTenantById(tenantId);
-        Employee employee = employeeRepository.getEmpById(empId);
+        Employee employee = employeeRepository.findById(empId);
         return saasAdminRepository.assignEmpToTenant(tenant, employee);
+    }
+
+    @PUT
+    @Path("/restaurant/{restaurantId}")
+    @Transactional
+    public Response assignRestaurantToTenant(
+            @PathParam("restaurantId") Long restaurantId) {
+
+        Long tenantId = Long.valueOf(sessionToken.getClaim("tenantId").toString());
+        Tenant tenant = saasAdminRepository.findTenantById(tenantId);
+        Restaurant restaurant = restaurantRepository.findById(restaurantId);
+
+        return saasAdminRepository.assignRestaurantToTenant(
+                tenant, restaurant
+        );
+    }
+
+    @PUT
+    @Path("/restaurant/{restaurantId}/user/{userId}")
+    @Transactional
+    public Response assignUserToRestaurant(
+            @PathParam("restaurantId") Long restaurantId,
+            @PathParam("userId") Long userId) {
+
+        Long tenantId = Long.valueOf(sessionToken.getClaim("tenantId").toString());
+        Tenant tenant = saasAdminRepository.findTenantById(tenantId);
+        Restaurant restaurant = restaurantRepository.findById(restaurantId);
+        RestaurantUser restaurantUser = restaurantUserRepository.findById(userId);
+
+        return saasAdminRepository.assignUserToRestaurant(
+                tenant,
+                restaurant,
+                restaurantUser
+        );
+    }
+
+    @POST
+    @Path("/tier")
+    @Transactional
+    @Consumes(MediaType.TEXT_PLAIN)
+    public Response createTier(String name, @QueryParam("discount") double discount) {
+
+        Long tenantId = Long.valueOf(sessionToken.getClaim("tenantId").toString());
+        Tenant tenant = saasAdminRepository.findTenantById(tenantId);
+
+        return saasAdminRepository.createTier(name, discount, tenant);
+    }
+
+    @POST
+    @Path("/costorder")
+    @Transactional
+    @Consumes(MediaType.TEXT_PLAIN)
+    public Response createCostOrder(String name) {
+
+        Long tenantId = Long.valueOf(sessionToken.getClaim("tenantId").toString());
+        Tenant tenant = saasAdminRepository.findTenantById(tenantId);
+
+        return saasAdminRepository.createCostOrder(name, tenant);
     }
 }

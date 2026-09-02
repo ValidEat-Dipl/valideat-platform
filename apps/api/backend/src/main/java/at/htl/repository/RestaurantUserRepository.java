@@ -75,4 +75,8 @@ public class RestaurantUserRepository {
                 .findFirst()
                 .orElse(null);
     }
+
+    public RestaurantUser findById(Long id) {
+        return entityManager.find(RestaurantUser.class, id);
+    }
 }

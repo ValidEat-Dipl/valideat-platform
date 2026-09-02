@@ -38,4 +38,8 @@ public class RestaurantRepository {
                 .setParameter("tenantId", tenantService.getCurrentTenantId())
                 .getSingleResult();
     }
+
+    public Restaurant findById(Long id) {
+        return entityManager.find(Restaurant.class, id);
+    }
 }

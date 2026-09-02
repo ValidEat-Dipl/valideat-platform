@@ -20,16 +20,22 @@ public class Tenant {
 
     private String companySize;
 
+    private String primaryColor;
+
+    private String accentColor;
+
     public Tenant() {
     }
 
-    public Tenant(Long id, String name, String manager, String email, String country, String companySize) {
+    public Tenant(Long id, String name, String manager, String email, String country, String companySize, String primaryColor, String accentColor) {
         this.id = id;
         this.name = name;
         this.manager = manager;
         this.email = email;
         this.country = country;
         this.companySize = companySize;
+        this.primaryColor = primaryColor;
+        this.accentColor = accentColor;
     }
 
     public Long getId() {
@@ -78,5 +84,21 @@ public class Tenant {
 
     public void setCompanySize(String companySize) {
         this.companySize = companySize;
+    }
+
+    public String getPrimaryColor() {
+        return primaryColor;
+    }
+
+    public void setPrimaryColor(String primaryColor) {
+        this.primaryColor = primaryColor;
+    }
+
+    public String getAccentColor() {
+        return accentColor;
+    }
+
+    public void setAccentColor(String accentColor) {
+        this.accentColor = accentColor;
     }
 }
