@@ -810,12 +810,127 @@ public class FoodTicketRepository {
                 .getResultList();
     }
 
+    public List<FoodTicket> findRestaurantScans(Long restaurantId) {
+        return entityManager.createQuery("""
+            select f from FoodTicket f where f.restaurant.id = :restaurantId and f.ticketType = :ticketType order by f.useDate desc
+            """, FoodTicket.class).setParameter("restaurantId", restaurantId).setParameter("ticketType", TicketType.RESTAURANT)
+                .getResultList();
+    }
 
     public List<FoodTicket> findByRestaurantUser(Long id) {
         return entityManager.createQuery("""
-                select ru.foodTickets from RestaurantUser ru where ru.id = :id and ru.tenant.id = :tenantId""", FoodTicket.class)
+                select ru.foodTickets from RestaurantUser ru join ru.foodTickets f where ru.id = :id and ru.tenant.id = :tenantId order by f.useDate desc """, FoodTicket.class)
                 .setParameter("id", id)
                 .setParameter("tenantId", tenantService.getCurrentTenantId())
+                .getResultList();
+    }
+
+    public List<RestaurantTicketDTO> findRestaurantTickets(Long restaurantId, LocalDate fromDate, LocalDate toDate, Status status, String costOrder) {
+
+        return entityManager.createQuery("""
+            select new at.htl.boundary.dto.RestaurantTicketDTO(f.id, f.useDate, f.restaurant.name, f.tier.name, f.status, f.costOrder.name) from FoodTicket f
+            where f.restaurant.id = :restaurantId
+            and f.ticketType = :ticketType
+
+            and (:fromDate is null or f.useDate >= :fromDate)
+            and (:toDate is null or f.useDate <= :toDate)
+            and (:status is null or f.status = :status)
+            and (:costOrder is null or f.costOrder.name = :costOrder)
+
+            order by f.useDate desc
+            """, RestaurantTicketDTO.class)
+                .setParameter("restaurantId", restaurantId)
+                .setParameter("ticketType", TicketType.RESTAURANT)
+                .setParameter("fromDate", fromDate)
+                .setParameter("toDate", toDate)
+                .setParameter("status", status)
+                .setParameter("costOrder", costOrder)
+                .getResultList();
+    }
+
+    public long countSuccessfulTickets(Long restaurantId, LocalDate fromDate, LocalDate toDate) {
+
+        return entityManager.createQuery("""
+            select count(f) from FoodTicket f
+            where f.restaurant.id = :restaurantId
+            and f.ticketType = :ticketType
+            and f.status = :status and f.useDate between :fromDate and :toDate
+            """, Long.class)
+                .setParameter("restaurantId", restaurantId)
+                .setParameter("ticketType", TicketType.RESTAURANT)
+                .setParameter("status", Status.CHECKED)
+                .setParameter("fromDate", fromDate)
+                .setParameter("toDate", toDate)
+                .getSingleResult();
+    }
+
+    public long countFailedTickets(
+            Long restaurantId,
+            LocalDate fromDate,
+            LocalDate toDate) {
+
+        return entityManager.createQuery("""
+            select count(f)
+            from FoodTicket f
+            where f.restaurant.id = :restaurantId
+            and f.ticketType = :ticketType
+            and f.status in (:status1, :status2)
+            and f.useDate between :fromDate and :toDate
+            """, Long.class)
+                .setParameter("restaurantId", restaurantId)
+                .setParameter("ticketType", TicketType.RESTAURANT)
+                .setParameter("status1", Status.CONFLICT)
+                .setParameter("status2", Status.NEEDS_FIXING)
+                .setParameter("fromDate", fromDate)
+                .setParameter("toDate", toDate)
+                .getSingleResult();
+    }
+
+    public Map<String, Long> countCostOrders(
+            Long restaurantId,
+            LocalDate fromDate,
+            LocalDate toDate) {
+
+        List<Object[]> result = entityManager.createQuery("""
+            select f.costOrder.name, count(f)
+            from FoodTicket f
+            where f.restaurant.id = :restaurantId
+            and f.ticketType = :ticketType
+            and f.status = :status
+            and f.useDate between :fromDate and :toDate
+            group by f.costOrder.name
+            """, Object[].class)
+                .setParameter("restaurantId", restaurantId)
+                .setParameter("ticketType", TicketType.RESTAURANT)
+                .setParameter("status", Status.CHECKED)
+                .setParameter("fromDate", fromDate)
+                .setParameter("toDate", toDate)
+                .getResultList();
+
+        Map<String, Long> costOrders = new HashMap<>();
+
+        for (Object[] row : result) {
+            costOrders.put(
+                    (String) row[0],
+                    (Long) row[1]
+            );
+        }
+
+        return costOrders;
+    }
+
+    public List<Object[]> countTicketsPerMonth(Long restaurantId) {
+
+        return entityManager.createQuery("""
+            select year(f.useDate), month(f.useDate), count(f)
+            from FoodTicket f
+            where f.restaurant.id = :restaurantId
+            and f.ticketType = :ticketType
+            group by year(f.useDate), month(f.useDate)
+            order by year(f.useDate) desc, month(f.useDate) desc
+            """, Object[].class)
+                .setParameter("restaurantId", restaurantId)
+                .setParameter("ticketType", TicketType.RESTAURANT)
                 .getResultList();
     }
 }

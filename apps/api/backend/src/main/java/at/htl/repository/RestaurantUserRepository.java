@@ -4,6 +4,8 @@ import at.htl.boundary.TenantService;
 import at.htl.boundary.dto.LoginResponseDTO;
 import at.htl.model.Employee;
 import at.htl.model.RestaurantUser;
+import at.htl.model.Status;
+import at.htl.model.TicketType;
 import io.quarkus.elytron.security.common.BcryptUtil;
 import io.smallrye.jwt.build.Jwt;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -12,7 +14,11 @@ import jakarta.persistence.EntityManager;
 import jakarta.ws.rs.NotAuthorizedException;
 
 import java.time.Duration;
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class RestaurantUserRepository {
@@ -69,5 +75,4 @@ public class RestaurantUserRepository {
                 .findFirst()
                 .orElse(null);
     }
-
 }

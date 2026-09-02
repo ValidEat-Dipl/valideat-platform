@@ -30,6 +30,10 @@ public class RestaurantUser {
     @JsonIgnore
     private Tenant tenant;
 
+    @ManyToOne
+    @JsonIgnore
+    private Restaurant restaurant;
+
     @OneToMany
     private List<FoodTicket> foodTickets = new LinkedList<>();
 
@@ -106,5 +110,13 @@ public class RestaurantUser {
 
     public void setFoodTickets(List<FoodTicket> foodTickets) {
         this.foodTickets = foodTickets;
+    }
+
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
+
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
     }
 }

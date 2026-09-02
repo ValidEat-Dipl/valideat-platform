@@ -312,14 +312,69 @@ INSERT INTO Tier (name, discount, tenant_id) VALUES
                                                  ('BMW INTERN', 3.00, 2),
                                                  ('BMW EMPLOYEE', 5.00, 2);
 
+-- Restaurant User and Admin Test Inserts
 
 INSERT INTO restaurantuser
-(firstName, lastName, email, passwordHash, role, tenant_id)
+(firstName, lastName, email, passwordHash, role, tenant_id, restaurant_id)
 VALUES
-    ('Stefan', 'Leitner', 'stefan.leitner@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu', 'RESTAURANT_ADMIN', 1),
-    ('Laura', 'Kaufmann', 'laura.kaufmann@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu', 'RESTAURANT_EMPLOYEE', 1),
-    ('Daniel', 'Schmid', 'daniel.schmid@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu', 'RESTAURANT_EMPLOYEE', 1),
+    ('Stefan', 'Leitner', 'stefan.leitner@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu', 'RESTAURANT_ADMIN', 1, 1),
+    ('Laura', 'Kaufmann', 'laura.kaufmann@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu', 'RESTAURANT_EMPLOYEE', 1, 1),
+    ('Daniel', 'Schmid', 'daniel.schmid@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu', 'RESTAURANT_EMPLOYEE', 1, 1),
 
-    ('Michael', 'Winkler', 'michael.winkler@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu', 'RESTAURANT_ADMIN', 2),
-    ('Sarah', 'Pichler', 'sarah.pichler@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu', 'RESTAURANT_EMPLOYEE', 2),
-    ('Florian', 'Moser', 'florian.moser@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu', 'RESTAURANT_EMPLOYEE', 2);
+    ('Michael', 'Winkler', 'michael.winkler@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu', 'RESTAURANT_ADMIN', 2, 2),
+    ('Sarah', 'Pichler', 'sarah.pichler@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu', 'RESTAURANT_EMPLOYEE', 2, 2),
+    ('Florian', 'Moser', 'florian.moser@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu', 'RESTAURANT_EMPLOYEE', 2, 2);
+
+INSERT INTO FoodTicket (
+    employee_id,
+    useDate,
+    matching_ticket_id,
+    tier_name,
+    costOrder_name,
+    status,
+    ticketType,
+    restaurant_id,
+    admin_id,
+    checkDate,
+    conflict
+) VALUES
+
+-- Restaurant 1
+(1, '2026-08-30', NULL, 'EMPLOYEE', '1200 - IT',
+ 'CHECKED', 'RESTAURANT', 1, NULL, '2026-08-30', NULL),
+
+(2, '2026-08-29', NULL, 'INTERN', '1000 - Verwaltung',
+ 'CHECKED', 'RESTAURANT', 1, NULL, '2026-08-29', NULL),
+
+(1, '2026-08-28', NULL, 'EMPLOYEE', '1100 - Personal',
+ 'CONFLICT', 'RESTAURANT', 1, NULL, '2026-08-28',
+ 'Kostenstelle passt nicht zusammen'),
+
+(2, '2026-08-27', NULL, 'APPRENTICE', '1200 - IT',
+ 'NEEDS_FIXING', 'RESTAURANT', 1, NULL, '2026-08-27',
+ 'Kostenstelle stimmt nicht'),
+
+(1, '2026-07-26', NULL, 'EMPLOYEE', '1000 - Verwaltung',
+ 'CHECKED', 'RESTAURANT', 1, NULL, '2026-08-26', NULL),
+
+-- Restaurant 2
+(2, '2026-08-30', NULL, 'INTERN', '1100 - Personal',
+ 'CHECKED', 'RESTAURANT', 2, NULL, '2026-08-30', NULL),
+
+(1, '2026-08-25', NULL, 'EMPLOYEE', '1200 - IT',
+ 'CONFLICT', 'RESTAURANT', 2, NULL, '2026-08-25',
+ 'Kostenstelle passt nicht zusammen');
+
+INSERT INTO RestaurantUser_foodTicket (RestaurantUser_id, foodTickets_id)
+VALUES
+    (1, 8),
+    (1, 9),
+    (1, 10),
+    (1, 11),
+    (1, 12);
+
+-- RestaurantUser 2 bekommt Tickets von Restaurant 2
+INSERT INTO RestaurantUser_foodTicket (RestaurantUser_id, foodTickets_id)
+VALUES
+    (2, 13),
+    (2, 14);
