@@ -20,11 +20,8 @@ export const RESTAURANT_ROUTES: Routes = [
       },
       {
         path: 'user/select',
-        title: 'Restaurant wählen | ValidEat',
-        loadComponent: () =>
-          import('./user/pages/select-restaurant-page/select-restaurant-page').then(
-            (module) => module.SelectRestaurantPage,
-          ),
+        redirectTo: 'user/overview',
+        pathMatch: 'full',
       },
       {
         path: 'user/overview',
@@ -92,7 +89,7 @@ export const RESTAURANT_ROUTES: Routes = [
           import('./user/pages/history-page/history-page').then((module) => module.HistoryPage),
       },
       {
-        path: 'user/history/detail',
+        path: 'user/history/detail/:id',
         title: 'Einlösungsdetail | ValidEat',
         loadComponent: () =>
           import('./user/pages/detail-page/detail-page').then((module) => module.DetailPage),

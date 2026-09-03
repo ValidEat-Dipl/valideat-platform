@@ -71,7 +71,7 @@ login(): void {
 
           this.currentUserService.setUser(user)
 
-          this.router.navigate(['/restaurant/user/select'])
+          this.router.navigate(['/restaurant/user/overview'])
 
         } else {
           this.loginError.set(true)

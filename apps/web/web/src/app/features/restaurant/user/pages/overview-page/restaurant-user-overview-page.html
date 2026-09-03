@@ -1,58 +1,124 @@
 <div class="restaurant-overview-page d-flex flex-column">
 
-<app-restaurant-header title="ValidEat Scanner"></app-restaurant-header>
+  <app-restaurant-header title="ValidEat Scanner"
+    [location]="restaurantName()"></app-restaurant-header>
 
-  <div class="flex-grow-1 px-4 py-4">
+<div class="flex-grow-1 px-4 py-4">
     <div class="row gx-0 justify-content-center">
-
       <main class="col-12 col-sm-10 col-md-8 col-lg-7 col-xl-6">
 
         <div class="card mb-3">
-          <div class="card-body">
+            <div class="card-body">
 
-            <div class="d-flex justify-content-between align-items-start gap-3">
+          <div class="d-flex justify-content-between align-items-start gap-3">
+
               <div>
-                <p class="small text-secondary mb-1">Aktiver Standort</p>
-                <h1 class="h5 mb-0">Restaurant Nord</h1>
+            <p class="small text-secondary mb-1">Aktiver Standort</p>
+                <h1 class="h5 mb-0">{{ restaurantName() }}</h1>
               </div>
 
-              <span class="badge text-bg-success rounded-pill">
-                <i class="bi bi-wifi me-1"></i> Online
-              </span>
-            </div>
+            <span class="badge text-bg-success rounded-pill">
+              <i class="bi bi-wifi me-1"></i> Online
+            </span>
 
-            <hr>
+          </div>
 
-            <div>
-              <p class="small text-secondary mb-1">Heute eingelöst</p>
+          <hr>
+
+              <div>
+                <p class="small text-secondary mb-1">Heute eingelöst</p>
+
               <p class="display-6 fw-bold mb-0">
-                24
+                {{ todayCount() }}
               </p>
             </div>
 
+            </div>
+        </div>
+
+
+      @if (loading()) {
+
+        <div class="card mb-3">
+          <div class="card-body text-secondary">
+            Daten werden geladen...
           </div>
         </div>
 
+      }
+
+
+        @if (error()) {
+      <div class="alert alert-danger">
+            Die Restaurantdaten konnten gerade nicht geladen werden.
+      </div>
+        }
+
+
+      @if (overview()) {
+
+        <div class="row g-2 mb-3">
+
+          <div class="col-4">
+              <div class="card text-center h-100">
+            <div class="card-body p-3">
+                <p class="small text-secondary mb-1">Gesamt</p>
+                <strong>{{ overview()!.totalScans }}</strong>
+            </div>
+              </div>
+          </div>
+
+
+            <div class="col-4">
+          <div class="card text-center h-100">
+              <div class="card-body p-3">
+
+              <p class="small text-secondary mb-1">Erfolgreich</p>
+            <strong>{{ overview()!.successfulScans }}</strong>
+
+              </div>
+          </div>
+            </div>
+
+
+          <div class="col-4">
+            <div class="card text-center h-100">
+
+                <div class="card-body p-3">
+                <p class="small text-secondary mb-1">Offen</p>
+                  <strong>{{ overview()!.failedScans }}</strong>
+                </div>
+
+            </div>
+          </div>
+
+        </div>
+      }
+
 
         <a
-          routerLink="/restaurant/user/scan"
+        routerLink="/restaurant/user/scan"
           class="btn btn-primary btn-lg w-100 mb-3">
+
           <i class="bi bi-qr-code-scan me-2"></i>
-          QR-Code scannen
+        QR-Code scannen
+
         </a>
 
-        <div class="alert alert-info d-flex gap-2">
+
+      <div class="alert alert-info d-flex gap-2">
           <i class="bi bi-info-circle"></i>
-          <span>
-            Der QR-Code wird in diesem Entwurf später serverseitig geprüft.
-          </span>
-        </div>
+
+        <span>
+          QR-Code scannen noch Placeholder
+        </span>
+      </div>
 
       </main>
     </div>
+</div>
 
-  </div>
 
-<app-restaurant-navigation></app-restaurant-navigation>
+  <app-restaurant-navigation></app-restaurant-navigation>
 
 </div>
