@@ -13,7 +13,12 @@
       </div>
 
       <!--- Form -->
-      <form class="card p-4" aria-label="Restaurant Login Formular">
+      <form
+        class="card p-4"
+        aria-label="Restaurant Login Formular"
+        [formGroup]="loginForm"
+        (ngSubmit)="login()"
+      >
 
 
         <div class="mb-3">
@@ -23,20 +28,34 @@
             class="form-control"
             id="restaurant-email"
             type="email"
-            value="scanner@example.invalid"
+            autocomplete="email"
+            formControlName="email"
           />
         </div>
 
         <div class="mb-3">
           <label class="form-label" for="restaurant-password">Passwort</label>
           
-          <input class="form-control" id="restaurant-password" type="password" value="password" />
+          <input
+            class="form-control"
+            id="restaurant-password"
+            type="password"
+            autocomplete="current-password"
+            formControlName="password"
+          />
         </div>
 
-        <!--- Alert noch ned funktionsfähig -->
-        <p class="small text-secondary mb-3">Beispieldaten, noch keine echte Anmeldung.</p>
+        @if (loginError()) {
+          <div class="alert alert-danger">E-Mail oder Passwort ist nicht korrekt.</div>
+        }
 
-        <a class="btn btn-primary btn-lg w-100" routerLink="/restaurant/user/select">Anmelden</a>
+        <button class="btn btn-primary btn-lg w-100" type="submit" [disabled]="isLoading()">
+          @if (isLoading()) {
+            Anmeldung läuft...
+          } @else {
+            Anmelden
+          }
+        </button>
 
       </form>
 

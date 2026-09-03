@@ -147,6 +147,18 @@ Die W3C-WAI-Tipps für barrierefreies Design nennen unter anderem ausreichende K
 
 Für spätere Prüfungen kann zusätzlich WCAG herangezogen werden. W3C beschreibt WCAG als internationalen Standard für barrierefreie Webinhalte, mit Prinzipien wie wahrnehmbar, bedienbar, verständlich und robust ([SRC-015](../sources/sources.md#src-015--wcag-2-overview)). Wichtig ist die saubere Formulierung: Der aktuelle Figma-Prototyp ist dadurch nicht automatisch WCAG-konform. Die Quelle hilft nur dabei, spätere Anforderungen und Prüfungen fachlich einzuordnen.
 
+## JWT und zentraler Auth-Interceptor im Frontend
+
+Bei der späteren Anbindung des Mitarbeiterfrontends ist ein typisches Problem sichtbar geworden: Der Login allein reicht nicht aus. Das Backend gibt zwar nach erfolgreicher Anmeldung ein JWT zurück, aber dieses Token muss danach auch bei den weiteren Backend-Anfragen mitgeschickt werden. Sonst kennt das Backend zwar die Route und die Mitarbeiter-ID aus der URL, aber nicht den Tenant aus dem Token.
+
+Bei ValidEat wurde das durch die Mandantenfähigkeit wichtig. Das Backend liest die `tenantId` aus dem JWT aus und filtert damit Daten tenantbezogen. Wenn der Request ohne `Authorization`-Header kommt, ist diese Information nicht vorhanden. Dadurch entstand der Fehler `tenantId claim: null`. Die Ursache lag in diesem Fall nicht daran, dass Anna Huber keinen Tenant hatte, sondern daran, dass das Frontend den bereits erhaltenen Token bei Folge-Requests nicht automatisch mitgesendet hat.
+
+Für die Diplomarbeit kann ich daran gut erklären, warum ein HTTP-Interceptor sinnvoll ist. Ohne Interceptor müsste jeder einzelne Angular-Service selbst den Token aus dem Local Storage holen und den Header setzen. Das wäre fehleranfällig und würde sich ständig wiederholen. Mit einem Interceptor passiert das zentral: Jeder HTTP-Request läuft zuerst durch diese Stelle, und wenn ein eingeloggter User mit Token vorhanden ist, wird der Request mit `Authorization: Bearer ...` weitergeschickt.
+
+Angular beschreibt Interceptors als Middleware für `HttpClient`-Requests und nennt Authentifizierung als einen typischen Anwendungsfall ([SRC-023](../sources/sources.md#src-023--angular-http-interceptors)). Für ValidEat ist daran vor allem wichtig, dass die Komponenten und Services dadurch einfacher bleiben. Die fachliche Sicherheit entsteht aber nicht im Angular-Frontend. Das Frontend hilft nur dabei, den Token korrekt mitzuschicken. Ob der User wirklich berechtigt ist und zu welchem Tenant er gehört, muss weiterhin das Backend prüfen.
+
+Eine Grenze dieser Lösung ist die vorläufige Speicherung im Local Storage. Sie ist für den lokalen Entwicklungsstand einfach umzusetzen, aber kein perfektes Sicherheitskonzept. In der Arbeit sollte deshalb klar formuliert werden, dass der Interceptor die technische Übergabe des JWT löst, aber nicht automatisch alle Sicherheitsfragen wie XSS, Token-Diebstahl, Ablaufzeiten oder produktive Session-Verwaltung beantwortet.
+
 ## Möglicher Textgedanke für die Reflexion
 
 Ich kann später schreiben, dass der Figma-Prototyp zwar als Designstand abgeschlossen wurde, aber bewusst nicht als fachlich freigegebenes Endprodukt gilt. Das ist eigentlich eine Stärke der Dokumentation: Sie trennt zwischen „ich habe den Prototyp erstellt“, „das Team oder Porsche hat ihn fachlich bestätigt“, „er wurde mit Personen getestet“ und „er wurde technisch umgesetzt“. Diese Trennung verhindert, dass der Prototyp mehr beweist, als er tatsächlich beweisen kann.

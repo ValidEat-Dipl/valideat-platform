@@ -10,11 +10,11 @@
 
         <div class="text-center mb-4">
 
-          <div class="result-icon mx-auto mb-3" [class]="result().iconClass">
-            <i class="bi" [class]="result().icon" aria-hidden="true"></i>
+          <div class="result-icon mx-auto mb-3" [class]="result.iconClass">
+            <i class="bi" [class]="result.icon" aria-hidden="true"></i>
           </div>
 
-          <span class="badge rounded-pill mb-3" [class]="result().badgeClass">
+          <span class="badge rounded-pill mb-3" [class]="result.badgeClass">
             {{ result.badgeText }}
           </span>
 
@@ -34,12 +34,12 @@
           <div class="card-body">
 
             <h2 id="result-detail-heading" class="h6 mb-3">
-              {{ result().detailTitle }}
+              {{ result.detailTitle }}
             </h2>
 
             <ul class="list-unstyled mb-0 d-grid gap-2">
 
-              @for (detail of result().details; track detail) {
+              @for (detail of result.details; track detail) {
 
               <li class="d-flex gap-2">
                 <i class="bi bi-dot text-primary" aria-hidden="true"></i>
