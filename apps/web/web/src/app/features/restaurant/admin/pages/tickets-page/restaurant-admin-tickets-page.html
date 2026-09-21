@@ -1,0 +1,126 @@
+<div class="admin-shell">
+  <app-restaurant-admin-sidebar />
+
+  <main class="admin-main">
+    <div class="text-secondary fs-5 mb-4">
+      Restaurant <span class="mx-2">/</span> <span class="text-dark fw-medium">Einlösungen</span>
+    </div>
+
+    <h1 class="mb-4">Einlösungen</h1>
+
+    <div class="filter-line d-flex gap-2 mb-4 flex-wrap">
+      <input class="form-control" type="date" [(ngModel)]="fromDate" (change)="getData()" aria-label="Von Datum">
+      <input class="form-control" type="date" [(ngModel)]="toDate" (change)="getData()" aria-label="Bis Datum">
+
+      <select class="form-select" [(ngModel)]="status" (change)="getData()" aria-label="Status">
+        <option value="">Alle Status</option>
+        <option value="CHECKED">Erfolgreich</option>
+        <option value="CONFLICT">Bereits eingelöst</option>
+        <option value="NEEDS_FIXING">Ungültig</option>
+        <option value="OPEN">Offen</option>
+      </select>
+
+      <input class="form-control" type="text" placeholder="Kostenstelle" [(ngModel)]="costOrder" (keyup.enter)="getData()">
+
+      <button class="btn btn-outline-secondary" type="button" (click)="resetFilter()">
+        Filter zurücksetzen
+      </button>
+    </div>
+
+    @if (loading()) {
+      <div class="alert alert-light border">Einlösungen werden geladen...</div>
+    }
+
+    @if (error()) {
+      <div class="alert alert-danger">
+        Einlösungen konnten nicht geladen werden.
+        <button class="btn btn-link p-0 ms-2" (click)="getData()">Erneut laden</button>
+      </div>
+    }
+
+    <div class="card table-card">
+      <div class="table-responsive">
+        <table class="table align-middle mb-0">
+          <thead>
+            <tr>
+              <th>Zeitpunkt</th>
+              <th>Restaurant</th>
+              <th>Markerlstufe</th>
+              <th>Status</th>
+              <th>Scan-ID</th>
+              <th>Serverentscheidung</th>
+              <th>Aktion</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            @for (ticket of tickets(); track ticket.ticketId) {
+              <tr>
+                <td class="font-monospace">{{ formatTicketDate(ticket.useDate) }}, 12:34</td>
+                <td class="text-secondary">{{ ticket.restaurant || restaurantName() }}</td>
+                <td>{{ ticket.tier }}</td>
+                <td>
+                  <span class="badge rounded-pill" [class]="getStatusClass(ticket.status)">
+                    {{ getStatusText(ticket.status) }}
+                  </span>
+                </td>
+                <td class="text-secondary">Scan-{{ ticket.ticketId }}</td>
+                <td class="text-secondary">{{ serverDecision(ticket.status) }}</td>
+                <td>
+                  <button class="btn btn-link p-0">Details</button>
+                </td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="7" class="py-5">
+                  <div class="empty-box mx-auto text-center">
+                    <div class="empty-icon mx-auto mb-3">
+                      <i class="bi bi-list-ul"></i>
+                    </div>
+                    <p class="text-secondary mb-0">
+                      Für diesen Zeitraum wurden noch keine Einlösungen gefunden.
+                    </p>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="row g-3 empty-examples mt-4">
+      <div class="col-md-4">
+        <div class="card h-100">
+          <div class="card-header bg-white">Empty State – keine Einlösungen</div>
+          <div class="card-body text-center text-secondary">
+            <i class="bi bi-list-ul fs-1 d-block mb-3"></i>
+            Keine Einlösungen gefunden.
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card h-100">
+          <div class="card-header bg-white">Fehlerzustand – Laden fehlgeschlagen</div>
+          <div class="card-body">
+            <div class="alert alert-danger mb-0">
+              Einlösungen konnten nicht geladen werden.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card h-100">
+          <div class="card-header bg-white">Fehlerzustand – Keine Berechtigung</div>
+          <div class="card-body">
+            <div class="alert alert-secondary mb-0">
+              Keine Berechtigung für diesen Restaurantbereich.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

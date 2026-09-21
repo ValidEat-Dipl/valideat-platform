@@ -1,0 +1,46 @@
+:host {
+  display: block;
+}
+
+.restaurant-admin-sidebar {
+  width: 260px;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  inset: 0 auto 0 0;
+}
+
+.brand-box {
+  height: 92px;
+  border-bottom: 1px solid var(--bs-border-color);
+}
+
+.brand-logo {
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  color: white;
+  background: var(--bs-primary);
+}
+
+.side-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--bs-body-color);
+  text-decoration: none;
+  padding: 12px 14px;
+  border-radius: 7px;
+  margin-bottom: 8px;
+  font-size: 1.02rem;
+}
+
+.side-link:hover {
+  background: var(--bs-light);
+}
+
+.side-link.active {
+  background: var(--bs-primary);
+  color: white;
+}

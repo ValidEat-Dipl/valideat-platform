@@ -1,0 +1,145 @@
+<div class="admin-shell">
+  <app-restaurant-admin-sidebar />
+
+  <main class="admin-main">
+    <div class="text-secondary fs-5 mb-4">
+      Restaurant <span class="mx-2">/</span> <span class="text-dark fw-medium">Abrechnung</span>
+    </div>
+
+    <div class="d-flex align-items-center gap-3">
+      <h1 class="mb-0">Abrechnung</h1>
+      <span class="badge rounded-pill text-bg-info">
+        <i class="bi bi-arrow-clockwise me-1"></i>
+        In Bearbeitung
+      </span>
+    </div>
+
+    <p class="text-secondary fs-5 mb-4">Aktueller Abrechnungszeitraum</p>
+
+    <div class="d-flex align-items-end gap-2 mb-4 flex-wrap">
+      <div>
+        <label class="form-label fw-semibold">Von</label>
+        <input class="form-control" type="date" [(ngModel)]="fromDate">
+      </div>
+
+      <div>
+        <label class="form-label fw-semibold">Bis</label>
+        <input class="form-control" type="date" [(ngModel)]="toDate">
+      </div>
+
+      <button class="btn btn-outline-secondary" type="button" (click)="getData()">
+        Zeitraum laden
+      </button>
+    </div>
+
+    @if (loading()) {
+      <div class="alert alert-light border">Abrechnung wird geladen...</div>
+    }
+
+    @if (error()) {
+      <div class="alert alert-warning">
+        Abrechnung konnte nicht geladen werden. Eventuell ist der Backend-Endpunkt gerade nicht fertig.
+      </div>
+    }
+
+    <section class="row g-3 mb-4 stat-row">
+      <div class="col-md-3">
+        <div class="card stat-card border-primary">
+          <div class="card-body">
+            <i class="bi bi-check-circle float-end text-secondary"></i>
+            <div class="stat-number">{{ billing()?.successful ?? 0 }}</div>
+            <div class="text-secondary">Erfolgreiche Einlösungen</div>
+          </div>
+        </div>
+      </div>
+
+      @for (row of costOrderRows().slice(0, 2); track row.name) {
+        <div class="col-md-3">
+          <div class="card stat-card">
+            <div class="card-body">
+              <i class="bi bi-check2 float-end text-secondary"></i>
+              <div class="stat-number">{{ row.count }}</div>
+              <div class="text-secondary">{{ row.name }}</div>
+            </div>
+          </div>
+        </div>
+      }
+
+      <div class="col-md-3">
+        <div class="card stat-card">
+          <div class="card-body">
+            <i class="bi bi-x-circle float-end text-secondary"></i>
+            <div class="stat-number">{{ billing()?.failed ?? 0 }}</div>
+            <div class="text-secondary">Abgelehnte Scans</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="card table-card mb-4">
+      <div class="card-header bg-white fw-semibold">
+        Summen für dieses Restaurant – {{ periodTitle() }}
+      </div>
+
+      <div class="table-responsive">
+        <table class="table align-middle mb-0">
+          <thead>
+            <tr>
+              <th>Kostenstelle</th>
+              <th>Anzahl</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            @for (row of costOrderRows(); track row.name) {
+              <tr>
+                <td>{{ row.name }}</td>
+                <td class="fw-semibold">{{ row.count }}</td>
+                <td>
+                  <span class="badge rounded-pill text-bg-info">In Bearbeitung</span>
+                </td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="3" class="text-center text-secondary py-4">
+                  Für den Zeitraum gibt es noch keine Summen.
+                </td>
+              </tr>
+            }
+
+            <tr class="table-light">
+              <td class="fw-semibold">Gesamt</td>
+              <td class="fw-bold">{{ billing()?.successful ?? 0 }}</td>
+              <td>
+                <span class="badge rounded-pill text-bg-info">In Bearbeitung</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card table-card">
+      <div class="card-header bg-white fw-semibold">
+        Letzte abgeschlossene Perioden
+      </div>
+
+      <div class="list-group list-group-flush">
+        @for (month of months(); track month.month) {
+          <div class="list-group-item d-flex align-items-center justify-content-between py-3">
+            <span>{{ month.month }}</span>
+            <div class="d-flex align-items-center gap-4">
+              <span class="text-secondary">Gesamt: <strong class="text-dark">{{ month.validTickets }}</strong></span>
+              <span class="badge rounded-pill text-bg-secondary">Abgeschlossen</span>
+            </div>
+          </div>
+        } @empty {
+          <div class="list-group-item text-secondary py-4">
+            Noch keine abgeschlossenen Perioden vorhanden.
+          </div>
+        }
+      </div>
+    </div>
+  </main>
+</div>

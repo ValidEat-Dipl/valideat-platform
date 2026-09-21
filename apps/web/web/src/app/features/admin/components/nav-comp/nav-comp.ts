@@ -1,10 +1,7 @@
-import {Component, signal} from '@angular/core';
-import {BreadcrumbComp} from '../breadcrumb-comp/breadcrumb-comp';
-import { RouterLink } from '@angular/router';
+import { Component, signal } from '@angular/core';
 
 @Component({
   selector: 'app-nav-comp',
-  imports: [BreadcrumbComp],
   templateUrl: './nav-comp.html',
   styleUrl: './nav-comp.css',
 })

@@ -1,0 +1,135 @@
+<div class="admin-shell">
+  <app-restaurant-admin-sidebar />
+
+  <main class="admin-main">
+    <div class="text-secondary fs-5 mb-4">
+      Restaurant <span class="mx-2">/</span> <span class="text-dark fw-medium">Übersicht</span>
+    </div>
+
+    <div class="d-flex align-items-center gap-3 mb-1">
+      <h1 class="mb-0">{{ restaurantName() }}</h1>
+
+      <span class="badge rounded-pill text-bg-success-subtle text-success border border-success-subtle px-3 py-2">
+        <i class="bi bi-wifi me-1"></i>
+        Online
+      </span>
+    </div>
+
+    <p class="text-secondary fs-5 mb-4">
+      Übersicht für heute, {{ today() }}
+    </p>
+
+    @if (loading()) {
+      <div class="alert alert-light border">Restaurantdaten werden geladen...</div>
+    }
+
+    @if (error()) {
+      <div class="alert alert-danger">
+        Übersicht konnte gerade nicht geladen werden.
+        <button class="btn btn-link p-0 ms-2" (click)="getData()">Erneut laden</button>
+      </div>
+    }
+
+    <section class="row g-3 mb-5 stat-row">
+      <div class="col-12 col-md-6 col-xl-3">
+        <div class="card stat-card">
+          <div class="card-body">
+            <i class="bi bi-check-circle float-end text-secondary"></i>
+            <div class="stat-number">{{ overview()?.successfulScans ?? 0 }}</div>
+            <div class="text-secondary">Erfolgreiche Einlösungen</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-xl-3">
+        <div class="card stat-card">
+          <div class="card-body">
+            <i class="bi bi-x-circle float-end text-danger"></i>
+            <div class="stat-number text-danger">{{ overview()?.failedScans ?? 0 }}</div>
+            <div class="text-secondary">Abgelehnte Scans</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-xl-3">
+        <div class="card stat-card">
+          <div class="card-body">
+            <i class="bi bi-exclamation-triangle float-end text-secondary"></i>
+            <div class="stat-number">{{ alreadyUsedCount() }}</div>
+            <div class="text-secondary">Bereits eingelöst</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-xl-3">
+        <div class="card stat-card">
+          <div class="card-body">
+            <i class="bi bi-wifi-off float-end text-secondary"></i>
+            <div class="stat-number">{{ notPossibleCount() }}</div>
+            <div class="text-secondary">Prüfung nicht möglich</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="d-flex align-items-center justify-content-between mb-3">
+      <h2 class="h4 mb-0">Letzte Einlösungen</h2>
+
+      <a routerLink="/restaurant/admin/tickets" class="btn btn-outline-secondary">
+        Alle ansehen
+      </a>
+    </div>
+
+    <div class="card table-card mb-4">
+      <div class="table-responsive">
+        <table class="table align-middle mb-0">
+          <thead>
+            <tr>
+              <th>Zeit</th>
+              <th>Stufe</th>
+              <th>Status</th>
+              <th>Scan-ID</th>
+              <th>Aktion</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            @for (ticket of lastTickets(); track ticket.ticketId) {
+              <tr>
+                <td class="font-monospace">{{ formatTicketDate(ticket.useDate) }}, 12:34</td>
+                <td>{{ ticket.tier }}</td>
+                <td>
+                  <span class="badge rounded-pill" [class]="getStatusClass(ticket.status)">
+                    {{ getStatusText(ticket.status) }}
+                  </span>
+                </td>
+                <td class="text-secondary">Scan-{{ ticket.ticketId }}</td>
+                <td>
+                  <a routerLink="/restaurant/admin/tickets" class="text-decoration-none">Details</a>
+                </td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="5" class="text-center text-secondary py-4">
+                  Noch keine Einlösungen vorhanden.
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="d-flex gap-2 flex-wrap">
+      <a routerLink="/restaurant/admin/tickets" class="btn btn-primary px-4">
+        <i class="bi bi-list-ul me-2"></i>
+        Einlösungen ansehen
+      </a>
+
+      <a routerLink="/restaurant/admin/billing" class="btn btn-outline-secondary px-4">
+        <i class="bi bi-file-earmark-text me-2"></i>
+        Abrechnung öffnen
+      </a>
+    </div>
+  </main>
+</div>

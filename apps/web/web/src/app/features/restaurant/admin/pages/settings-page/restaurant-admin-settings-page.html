@@ -1,0 +1,93 @@
+<div class="admin-shell">
+  <app-restaurant-admin-sidebar />
+
+  <main class="admin-main">
+    <div class="text-secondary fs-5 mb-4">
+      Restaurant <span class="mx-2">/</span> <span class="text-dark fw-medium">Einstellungen</span>
+    </div>
+
+    <h1 class="mb-4">Einstellungen</h1>
+
+    <div class="settings-grid">
+      <div class="card">
+        <div class="card-header bg-white fw-semibold">Restaurantdaten</div>
+
+        <div class="card-body">
+          <div class="info-row">
+            <span>Restaurantname</span>
+            <strong>{{ restaurantName() }}</strong>
+          </div>
+
+          <div class="info-row">
+            <span>Status</span>
+            <strong>Aktiv</strong>
+          </div>
+
+          <div class="info-row">
+            <span>Zugeordnete Organisation</span>
+            <strong>Aktueller Mandant</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-white fw-semibold">Scan-Zugriff</div>
+
+        <div class="card-body">
+          <div class="info-row">
+            <span>Aktive Geräte</span>
+            <strong>Gerät 01</strong>
+          </div>
+
+          <div class="info-row">
+            <span>Letzter Scan</span>
+            <strong>{{ lastScan() }}</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-white fw-semibold">Kontakt</div>
+
+        <div class="card-body">
+          <div class="info-row">
+            <span>Kontaktperson</span>
+            <strong>{{ contactName() }}</strong>
+          </div>
+
+          <div class="info-row">
+            <span>E-Mail</span>
+            <strong>{{ contactMail() }}</strong>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="alert alert-info d-flex gap-3">
+          <i class="bi bi-info-circle mt-1"></i>
+          <div>
+            Restaurantdaten können im ersten Stand nicht direkt bearbeitet werden.
+            Änderungsanfragen werden an die Unternehmensverwaltung weitergeleitet.
+          </div>
+        </div>
+
+        <div class="alert alert-warning d-flex gap-3">
+          <i class="bi bi-exclamation-circle mt-1"></i>
+          <div>
+            <strong>Annahme – </strong>
+            Bearbeitbarkeit von Einstellungen durch Restaurantadmins muss fachlich bestätigt werden.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn-outline-secondary mt-4" type="button" disabled>
+      <i class="bi bi-pencil-square me-2"></i>
+      Änderung anfragen
+    </button>
+
+    <p class="text-secondary mt-2">
+      Eine Änderungsanfrage wird später an die zuständige Verwaltung weitergeleitet.
+    </p>
+  </main>
+</div>
