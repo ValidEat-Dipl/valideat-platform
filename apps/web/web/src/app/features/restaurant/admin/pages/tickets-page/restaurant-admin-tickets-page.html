@@ -47,8 +47,8 @@
               <th>Restaurant</th>
               <th>Markerlstufe</th>
               <th>Status</th>
-              <th>Scan-ID</th>
-              <th>Serverentscheidung</th>
+              <th>Ticket-ID</th>
+              <th>Kostenstelle</th>
               <th>Aktion</th>
             </tr>
           </thead>
@@ -56,7 +56,7 @@
           <tbody>
             @for (ticket of tickets(); track ticket.ticketId) {
               <tr>
-                <td class="font-monospace">{{ formatTicketDate(ticket.useDate) }}, 12:34</td>
+                <td class="font-monospace">{{ formatTicketDate(ticket.useDate) }}</td>
                 <td class="text-secondary">{{ ticket.restaurant || restaurantName() }}</td>
                 <td>{{ ticket.tier }}</td>
                 <td>
@@ -64,8 +64,8 @@
                     {{ getStatusText(ticket.status) }}
                   </span>
                 </td>
-                <td class="text-secondary">Scan-{{ ticket.ticketId }}</td>
-                <td class="text-secondary">{{ serverDecision(ticket.status) }}</td>
+                <td class="text-secondary">{{ ticket.ticketId }}</td>
+                <td class="text-secondary">{{ ticket.costOrder }}</td>
                 <td>
                   <button class="btn btn-link p-0">Details</button>
                 </td>
@@ -86,40 +86,6 @@
             }
           </tbody>
         </table>
-      </div>
-    </div>
-
-    <div class="row g-3 empty-examples mt-4">
-      <div class="col-md-4">
-        <div class="card h-100">
-          <div class="card-header bg-white">Empty State – keine Einlösungen</div>
-          <div class="card-body text-center text-secondary">
-            <i class="bi bi-list-ul fs-1 d-block mb-3"></i>
-            Keine Einlösungen gefunden.
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-4">
-        <div class="card h-100">
-          <div class="card-header bg-white">Fehlerzustand – Laden fehlgeschlagen</div>
-          <div class="card-body">
-            <div class="alert alert-danger mb-0">
-              Einlösungen konnten nicht geladen werden.
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-4">
-        <div class="card h-100">
-          <div class="card-header bg-white">Fehlerzustand – Keine Berechtigung</div>
-          <div class="card-body">
-            <div class="alert alert-secondary mb-0">
-              Keine Berechtigung für diesen Restaurantbereich.
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </main>

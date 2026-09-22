@@ -94,6 +94,38 @@ export const RESTAURANT_ROUTES: Routes = [
         loadComponent: () =>
           import('./user/pages/detail-page/detail-page').then((module) => module.DetailPage),
       },
+      {
+        path: 'admin/overview',
+        title: 'Restaurant Admin Übersicht | ValidEat',
+        loadComponent: () =>
+          import('./admin/pages/overview-page/restaurant-admin-overview-page').then(
+            (module) => module.RestaurantAdminOverviewPage,
+          ),
+      },
+      {
+        path: 'admin/tickets',
+        title: 'Restaurant Einlösungen | ValidEat',
+        loadComponent: () =>
+          import('./admin/pages/tickets-page/restaurant-admin-tickets-page').then(
+            (module) => module.RestaurantAdminTicketsPage,
+          ),
+      },
+      {
+        path: 'admin/billing',
+        title: 'Restaurant Abrechnung | ValidEat',
+        loadComponent: () =>
+          import('./admin/pages/billing-page/restaurant-admin-billing-page').then(
+            (module) => module.RestaurantAdminBillingPage,
+          ),
+      },
+      {
+        path: 'admin/settings',
+        title: 'Restaurant Einstellungen | ValidEat',
+        loadComponent: () =>
+          import('./admin/pages/settings-page/restaurant-admin-settings-page').then(
+            (module) => module.RestaurantAdminSettingsPage,
+          ),
+      },
       
     ],
   },

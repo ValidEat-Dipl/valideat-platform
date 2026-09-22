@@ -17,30 +17,15 @@
             <span>Restaurantname</span>
             <strong>{{ restaurantName() }}</strong>
           </div>
-
-          <div class="info-row">
-            <span>Status</span>
-            <strong>Aktiv</strong>
-          </div>
-
-          <div class="info-row">
-            <span>Zugeordnete Organisation</span>
-            <strong>Aktueller Mandant</strong>
-          </div>
         </div>
       </div>
 
       <div class="card">
-        <div class="card-header bg-white fw-semibold">Scan-Zugriff</div>
+        <div class="card-header bg-white fw-semibold">Letzte Einlösung</div>
 
         <div class="card-body">
           <div class="info-row">
-            <span>Aktive Geräte</span>
-            <strong>Gerät 01</strong>
-          </div>
-
-          <div class="info-row">
-            <span>Letzter Scan</span>
+            <span>Datum</span>
             <strong>{{ lastScan() }}</strong>
           </div>
         </div>
@@ -61,33 +46,6 @@
           </div>
         </div>
       </div>
-
-      <div>
-        <div class="alert alert-info d-flex gap-3">
-          <i class="bi bi-info-circle mt-1"></i>
-          <div>
-            Restaurantdaten können im ersten Stand nicht direkt bearbeitet werden.
-            Änderungsanfragen werden an die Unternehmensverwaltung weitergeleitet.
-          </div>
-        </div>
-
-        <div class="alert alert-warning d-flex gap-3">
-          <i class="bi bi-exclamation-circle mt-1"></i>
-          <div>
-            <strong>Annahme – </strong>
-            Bearbeitbarkeit von Einstellungen durch Restaurantadmins muss fachlich bestätigt werden.
-          </div>
-        </div>
-      </div>
     </div>
-
-    <button class="btn btn-outline-secondary mt-4" type="button" disabled>
-      <i class="bi bi-pencil-square me-2"></i>
-      Änderung anfragen
-    </button>
-
-    <p class="text-secondary mt-2">
-      Eine Änderungsanfrage wird später an die zuständige Verwaltung weitergeleitet.
-    </p>
   </main>
 </div>
