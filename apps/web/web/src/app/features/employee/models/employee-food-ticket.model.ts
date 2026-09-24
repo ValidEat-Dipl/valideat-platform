@@ -19,3 +19,9 @@ export interface EmployeeFoodTicketRequest {
   tier: string;
   restaurantName: string;
 }
+
+export interface QRCodeResponse {
+  qrCode: string;
+  token: string;
+  qrCodeId: string;
+}

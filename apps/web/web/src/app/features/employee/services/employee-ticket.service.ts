@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import {
   EmployeeFoodTicket,
   EmployeeFoodTicketRequest,
+  QRCodeResponse,
 } from '../models/employee-food-ticket.model';
 import { CostOrder } from '../models/cost-order.model';
 import { Restaurant } from '../models/restaurant.model';
@@ -45,6 +46,16 @@ export class EmployeeTicketService {
 
   addTicketEntry(ticket: EmployeeFoodTicketRequest) {
     return this.http.post<number>(`${API_BASE}/foodticket/empAddTicketEntry`, ticket);
+  }
+
+  createTicketQRCode(ticket: EmployeeFoodTicketRequest) {
+
+    return this.http.post<QRCodeResponse>(`${API_BASE}/foodticket/empCreateTicketQRCode`, ticket);
+  }
+
+  openScanSocket(qrCodeId: string) {
+    const url = 'ws://localhost:8080/qrCodeScan/' + qrCodeId;
+    return new WebSocket(url);
   }
 
   editTicket(ticketId: number, employeeId: number, ticket: EmployeeFoodTicketRequest) {

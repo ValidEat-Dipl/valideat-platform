@@ -115,16 +115,14 @@ export class CreateEntryPage implements OnInit {
     };
 
     this.employeeEntryState.ticket = ticket;
-    this.employeeEntryState.saved = false;
-    this.employeeEntryState.savedTicketId = undefined;
+    this.employeeEntryState.qrCode = undefined;
 
     this.router.navigate(['/employee/review']);
   }
 
   cancel(): void {
     this.employeeEntryState.ticket = undefined;
-    this.employeeEntryState.saved = false;
-    this.employeeEntryState.savedTicketId = undefined;
+    this.employeeEntryState.qrCode = undefined;
 
     this.router.navigate(['/employee/start']);
   }

@@ -29,7 +29,7 @@ export class ReviewEntryPage implements OnInit {
 
     if (!this.ticket) {
       this.router.navigate(['/employee/create']);
-    } else if (this.employeeEntryState.saved) {
+    } else if (this.employeeEntryState.qrCode) {
       this.router.navigate(['/employee/success']);
     }
   }
@@ -42,19 +42,17 @@ export class ReviewEntryPage implements OnInit {
     this.isSaving.set(true);
     this.errorMessage.set('');
 
-    this.employeeTicketService.addTicketEntry(this.ticket).subscribe({
-      next: (ticketId) => {
+    // Hier wird noch kein Ticket gespeichert. Erst das Restaurant löst den Code ein.
+    this.employeeTicketService.createTicketQRCode(this.ticket).subscribe({
+      next: (qrCode) => {
+        this.employeeEntryState.qrCode = qrCode;
 
-        // id für detailpage speichern
-        this.employeeEntryState.savedTicketId = ticketId;
-
-        this.employeeEntryState.saved = true;
         this.router.navigate(['/employee/success']);
       },
       error: () => {
         
         this.isSaving.set(false);
-        this.errorMessage.set('Die Erfassung konnte nicht gespeichert werden.');
+        this.errorMessage.set('Der QR-Code konnte nicht erstellt werden. Bitte versuchen Sie es erneut.');
       },
     });
   }
@@ -65,8 +63,7 @@ export class ReviewEntryPage implements OnInit {
 
   cancel(): void {
     this.employeeEntryState.ticket = undefined;
-    this.employeeEntryState.saved = false;
-    this.employeeEntryState.savedTicketId = undefined;
+    this.employeeEntryState.qrCode = undefined;
     this.router.navigate(['/employee/start']);
   }
 
