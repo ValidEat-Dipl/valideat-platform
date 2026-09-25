@@ -71,7 +71,11 @@ login(): void {
 
           this.currentUserService.setUser(user)
 
-          this.router.navigate(['/restaurant/user/overview'])
+          if (role == 'RESTAURANT_ADMIN' || role == 'ADMIN') {
+            this.router.navigate(['/restaurant/admin/overview'])
+          } else {
+            this.router.navigate(['/restaurant/user/overview'])
+          }
 
         } else {
           this.loginError.set(true)

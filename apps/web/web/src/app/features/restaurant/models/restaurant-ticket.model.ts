@@ -23,3 +23,16 @@ export interface RestaurantTicket {
   status: 'OPEN' | 'CONFLICT' | 'CHECKED' | 'NEEDS_FIXING'
   costOrder: string
 }
+
+
+export interface RestaurantBilling {
+  successful: number
+  costOrders: Record<string, number>
+  failed: number
+}
+
+
+export interface RestaurantMonthlyBilling {
+  month: string
+  validTickets: number
+}

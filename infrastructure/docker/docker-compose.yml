@@ -1,0 +1,24 @@
+services:
+
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: valideat
+      POSTGRES_USER: valideat
+      POSTGRES_PASSWORD: valideat
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ../../apps/api/backend
+      dockerfile: src/main/docker/Dockerfile.jvm
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:

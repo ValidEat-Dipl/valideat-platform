@@ -14,7 +14,6 @@ export const RESTAURANT_ROUTES: Routes = [
         title: 'Restaurant Login | ValidEat',
         loadComponent: () =>
           import('./user/pages/login-page/restaurant-user-login-page').then(
-
             (module) => module.RestaurantUserLoginPage,
           ),
       },
@@ -38,51 +37,6 @@ export const RESTAURANT_ROUTES: Routes = [
           import('./user/pages/scan-page/scan-page').then((module) => module.ScanPage),
       },
       {
-        path: 'user/result/success',
-        title: 'Einlösung erfolgreich | ValidEat',
-        data: { result: 'success' },
-        loadComponent: () =>
-          import('./user/pages/scan-result-page/scan-result-page').then(
-            (module) => module.ScanResultPage,
-          ),
-      },
-      {
-        path: 'user/result/already-used',
-        title: 'Bereits eingelöst | ValidEat',
-        data: { result: 'already-used' },
-        loadComponent: () =>
-          import('./user/pages/scan-result-page/scan-result-page').then(
-            (module) => module.ScanResultPage,
-          ),
-      },
-      {
-        path: 'user/result/invalid',
-        title: 'Ungültiges Markerl | ValidEat',
-        data: { result: 'invalid' },
-        loadComponent: () =>
-          import('./user/pages/scan-result-page/scan-result-page').then(
-            (module) => module.ScanResultPage,
-          ),
-      },
-      {
-        path: 'user/result/wrong-location',
-        title: 'Falscher Standort | ValidEat',
-        data: { result: 'wrong-location' },
-        loadComponent: () =>
-          import('./user/pages/scan-result-page/scan-result-page').then(
-            (module) => module.ScanResultPage,
-          ),
-      },
-      {
-        path: 'user/result/offline',
-        title: 'Prüfung nicht möglich | ValidEat',
-        data: { result: 'offline' },
-        loadComponent: () =>
-          import('./user/pages/scan-result-page/scan-result-page').then(
-            (module) => module.ScanResultPage,
-          ),
-      },
-      {
         path: 'user/history',
         title: 'Einlösungsverlauf | ValidEat',
         loadComponent: () =>
@@ -94,7 +48,38 @@ export const RESTAURANT_ROUTES: Routes = [
         loadComponent: () =>
           import('./user/pages/detail-page/detail-page').then((module) => module.DetailPage),
       },
-
+      {
+        path: 'admin/overview',
+        title: 'Restaurant Admin Übersicht | ValidEat',
+        loadComponent: () =>
+          import('./admin/pages/overview-page/restaurant-admin-overview-page').then(
+            (module) => module.RestaurantAdminOverviewPage,
+          ),
+      },
+      {
+        path: 'admin/tickets',
+        title: 'Restaurant Einlösungen | ValidEat',
+        loadComponent: () =>
+          import('./admin/pages/tickets-page/restaurant-admin-tickets-page').then(
+            (module) => module.RestaurantAdminTicketsPage,
+          ),
+      },
+      {
+        path: 'admin/billing',
+        title: 'Restaurant Abrechnung | ValidEat',
+        loadComponent: () =>
+          import('./admin/pages/billing-page/restaurant-admin-billing-page').then(
+            (module) => module.RestaurantAdminBillingPage,
+          ),
+      },
+      {
+        path: 'admin/settings',
+        title: 'Restaurant Einstellungen | ValidEat',
+        loadComponent: () =>
+          import('./admin/pages/settings-page/restaurant-admin-settings-page').then(
+            (module) => module.RestaurantAdminSettingsPage,
+          ),
+      },
     ],
   },
 ];
