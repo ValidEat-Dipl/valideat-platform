@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: valideat-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: valideat-backend
+  template:
+    metadata:
+      labels:
+        app: valideat-backend
+    spec:
+      imagePullSecrets:
+        - name: ghcr-secret
+      containers:
+        - name: valideat-backend
+          image: ghcr.io/richterjulian/valideat-backend:latest
+          ports:
+            - containerPort: 8080
