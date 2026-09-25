@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { CurrentUser } from '../models/current-user.model';
 
 @Injectable({
@@ -6,9 +7,14 @@ import { CurrentUser } from '../models/current-user.model';
 })
 export class CurrentUserService {
   private readonly storageKey = 'currentUser';
+  private platformId = inject(PLATFORM_ID);
+
+  private isBrowser() {
+    return isPlatformBrowser(this.platformId);
+  }
 
   setUser(user: CurrentUser) {
-    if (typeof localStorage === 'undefined') {
+    if (!this.isBrowser()) {
       return;
     }
 
@@ -16,7 +22,7 @@ export class CurrentUserService {
   }
 
   getUser(): CurrentUser | null {
-    if (typeof localStorage === 'undefined') {
+    if (!this.isBrowser()) {
       return null;
     }
 
@@ -36,7 +42,7 @@ export class CurrentUserService {
   }
 
   clearUser() {
-    if (typeof localStorage === 'undefined') {
+    if (!this.isBrowser()) {
       return;
     }
 
