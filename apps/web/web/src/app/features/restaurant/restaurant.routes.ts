@@ -94,7 +94,7 @@ export const RESTAURANT_ROUTES: Routes = [
         loadComponent: () =>
           import('./user/pages/detail-page/detail-page').then((module) => module.DetailPage),
       },
-      
+
     ],
   },
 ];
