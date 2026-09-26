@@ -20,6 +20,8 @@
     "@angular/platform-server": "^22.0.0",
     "@angular/router": "^22.0.0",
     "@angular/ssr": "^22.0.5",
+    "@zxing/browser": "0.1.5",
+    "@zxing/library": "0.21.3",
     "bootstrap": "^5.3.8",
     "bootstrap-icons": "^1.13.1",
     "express": "^5.1.0",
