@@ -43,6 +43,11 @@ import { authGuard } from './core/auth.guard.admin';
 export const routes: Routes = [
   {
     path: '',
+    pathMatch: 'full',
+    redirectTo: 'login',
+  },
+  {
+    path: '',
     canActivate: [authGuard],
     children: [
       { path: 'admin-overview', component: AdminOverviewComp },
