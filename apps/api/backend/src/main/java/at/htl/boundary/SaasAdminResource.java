@@ -259,6 +259,7 @@ public class SaasAdminResource {
     @POST
     @Path("tenant/{tenantId}/branding/publish")
     @Transactional
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response publishBranding(
             @PathParam("tenantId") Long tenantId) {
 

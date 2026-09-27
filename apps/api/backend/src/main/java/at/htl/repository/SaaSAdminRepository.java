@@ -7,6 +7,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.core.Response;
 
 import java.util.LinkedList;
@@ -273,6 +274,9 @@ public class SaaSAdminRepository {
     }
 
     public List<TenantModuleDTO> getModulesForTenant(Long tenantId) {
+        if (findTenantById(tenantId) == null) {
+            throw new NotFoundException();
+        }
 
         List<Module> modules = entityManager.createQuery("""
             select m
@@ -395,6 +399,10 @@ public class SaaSAdminRepository {
     }
 
     public TenantBrandingDTO getTenantBranding(Long tenantId) {
+        if (findTenantById(tenantId) == null) {
+            throw new NotFoundException();
+        }
+
 
         TenantBranding branding = entityManager.createQuery("""
             select b
@@ -422,7 +430,6 @@ public class SaaSAdminRepository {
 
         return new TenantBrandingDTO(draft, published);
     }
-
 
     public void updateBranding(Long tenantId, BrandingDTO dto) {
 
