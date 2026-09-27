@@ -1,0 +1,38 @@
+<h1>Module verwalten</h1>
+<p class="subtitle">Wählen und konfigurieren Sie die Funktionen Ihrer Organisation.</p>
+<div class="alert alert-info">
+  Lokale Modulauswahl bis zum Neuladen oder Verlassen der Verwaltung. Es werden keine Module im
+  Backend aktiviert, keine Käufe und keine Zahlungen durchgeführt.
+</div>
+
+@for (group of ['Kernmodule', 'Erweiterungen']; track group) {
+  <h2 class="eyebrow">{{ group }}</h2>
+  <div class="row g-3">
+
+    @for (module of modules; track module.name) {
+
+      @if (module.group === group) {
+        <div class="col-md-6 col-xl-4">
+          <div class="card h-100">
+            <div class="card-body">
+              <h2>{{ module.name }}</h2>
+              <p class="hint">{{ module.text }}</p>
+
+              <label class="form-check form-switch">
+                <input class="form-check-input"
+                  type="checkbox"
+                  [ngModel]="enabled(module.name)"
+                  (ngModelChange)="toggle(module.name, $event)"
+                  [disabled]="!state.selected"
+                />
+                <span class="form-check-label">
+                  {{ enabled(module.name) ? 'Im Entwurf ausgewählt' : 'Nicht ausgewählt' }}
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+      }
+    }
+  </div>
+}

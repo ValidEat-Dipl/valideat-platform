@@ -1,0 +1,56 @@
+<div class="min-vh-100 bg-light">
+  <header class="bg-white border-bottom px-4 py-3">
+    <span class="brand-icon me-2">VE</span>
+    ValidEat
+
+  </header>
+
+  <main class="container py-5">
+    <div class="login-content mx-auto text-center mt-4">
+      <span class="brand-icon mb-3">VE</span>
+      <h1>Bei ValidEat anmelden</h1>
+      <p class="subtitle">Anmeldung für die SaaS-Verwaltung.</p>
+
+      <form [formGroup]="loginForm" (ngSubmit)="login()" class="card text-start">
+        <div class="card-body">
+
+          <label class="form-label" for="email">E-Mail</label>
+          <input id="email"  name="email"
+            class="form-control mb-3"
+            type="email"
+            autocomplete="username"
+            formControlName="email"
+          />
+
+          <label class="form-label" for="password">Passwort</label>
+          <input id="password"  name="password"
+            class="form-control mb-3"
+            type="password"
+            autocomplete="current-password"
+            formControlName="password"
+          />
+
+          @if (loginForm.invalid && loginForm.touched) {
+            <p class="text-danger small" role="alert">
+              Bitte eine gültige E-Mail und ein Passwort eingeben.
+            </p>
+          }
+
+          @if (loginError()) {
+            <div class="alert alert-danger" role="alert">{{ loginError() }}</div>
+          }
+          <button class="btn btn-primary w-100" [disabled]="isLoading()">
+            {{ isLoading() ? 'Anmeldung läuft …' : 'Anmelden' }}
+          </button>
+          <a class="d-block mt-3 small" routerLink="/saas/register">Organisation registrieren</a>
+        </div>
+
+      </form>
+
+      <p class="hint mt-3">
+        Ein bestehendes SaaS-Admin-Konto ist erforderlich. Die Organisationsregistrierung erstellt
+        keinen Benutzerzugang.
+      </p>
+    </div>
+  </main>
+</div>

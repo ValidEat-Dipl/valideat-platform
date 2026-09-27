@@ -1,0 +1,79 @@
+:host {
+  display: block;
+  flex-shrink: 0;
+}
+
+.sidebar {
+  width: 230px;
+  flex-shrink: 0;
+  background: white;
+  border-right: 1px solid #dee2e6;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 1.2rem;
+  border-bottom: 1px solid #e9ecef;
+  color: inherit;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+.logo {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 5px;
+  background: #0d6efd;
+  color: white;
+  font-weight: 600;
+}
+small {
+  display: block;
+  color: #6c757d;
+  font-size: 0.75rem;
+}
+nav {
+  padding: 1rem 0.6rem;
+  display: grid;
+  gap: 0.3rem;
+}
+nav a {
+  padding: 0.65rem 0.7rem;
+  border-radius: 5px;
+  color: #343a40;
+  text-decoration: none;
+  font-size: 0.86rem;
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+nav a:hover {
+  background: #e9ecef;
+}
+nav a.active {
+  background: #0d6efd;
+  color: white;
+}
+.account {
+  margin-top: auto;
+  padding: 1rem;
+  border-top: 1px solid #e9ecef;
+  font-size: 0.8rem;
+}
+@media (max-width: 800px) {
+  .sidebar {
+    position: static;
+    width: auto;
+    height: auto;
+  }
+  nav {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

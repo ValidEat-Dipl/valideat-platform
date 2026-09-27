@@ -1,0 +1,69 @@
+:host {
+  display: block;
+}
+
+h1 {
+  font-size: 1.55rem;
+  font-weight: 650;
+  margin-bottom: 0.4rem;
+}
+
+h2 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.subtitle {
+  color: #6c757d;
+  margin-bottom: 1.5rem;
+}
+
+.card {
+  border-color: #dee2e6;
+  box-shadow: none;
+}
+
+.card-header {
+  background: #f7f7f7;
+  font-weight: 500;
+  padding: 0.8rem 1rem;
+}
+
+.card-body {
+  padding: 1.15rem;
+}
+
+.metric-label,
+.hint {
+  color: #6c757d;
+  font-size: 0.85rem;
+}
+
+.form-label {
+  font-size: 0.9rem;
+}
+
+.alert {
+  font-size: 0.9rem;
+}
+
+.brand-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  background: #0d6efd;
+  color: white;
+  border-radius: 7px;
+  font-weight: 600;
+}
+
+.preview-button {
+  border: 0;
+  border-radius: 4px;
+  padding: 0.5rem 0.8rem;
+}
+
+.initials-input {
+  max-width: 100px;
+}

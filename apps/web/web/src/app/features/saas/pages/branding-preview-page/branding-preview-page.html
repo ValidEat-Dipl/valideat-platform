@@ -1,0 +1,99 @@
+<h1>
+  Branding Vorschau
+  <span class="badge text-bg-info fs-6">Entwurf</span>
+</h1>
+<p class="subtitle">Prüfen Sie, wie ValidEat für Ihre Organisation aussehen könnte.</p>
+<div class="alert alert-warning">
+  Diese Vorschau zeigt nur das Erscheinungsbild. Die dargestellten Aktionen sind nicht ausführbar.
+</div>
+
+@if (state.detailLoading()) {
+  <p role="status">Branding wird geladen …</p>
+} @else if (state.detailError()) {
+  <div class="alert alert-danger" role="alert">{{ state.detailError() }}</div>
+} @else if (state.selected; as tenant) {
+  <div class="row g-3 mb-4">
+
+    @for (view of ['Mitarbeiter-App', 'Restaurant-Scanner', 'Adminbereich']; track view) {
+
+      <section class="col-lg-4">
+        <h2 class="eyebrow mt-0">{{ view }}</h2>
+        <div class="card h-100">
+          <div class="preview-bar text-white" [style.background]="brand.primaryColor">
+            <strong class="me-2">{{ brand.initials }}</strong>
+            {{ brand.appName }}
+          </div>
+          <div class="card-body">
+
+            @if (view === 'Mitarbeiter-App') {
+              <div
+                class="preview-button text-white text-center"
+                [style.background]="brand.primaryColor"
+              >
+                Verwendung erfassen
+              </div>
+            } @else if (view === 'Restaurant-Scanner') {
+              <div
+                class="preview-button text-white text-center"
+                [style.background]="brand.primaryColor"
+              >
+                QR-Code scannen
+              </div>
+            } @else {
+              <p>Dashboard</p>
+              <div class="bg-light border rounded p-2">
+                {{ tenant.employeeCount }}
+                <span class="hint">Mitarbeitende</span>
+              </div>
+              <div
+                class="mt-3 border-start border-4 ps-2"
+                [style.border-left-color]="brand.accentColor + ' !important'"
+              >
+                Module öffnen
+              </div>
+            }
+          </div>
+        </div>
+
+      </section>
+
+    }
+  </div>
+
+  <section class="card mt-5">
+    <div class="card-header">Prüfpunkte</div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">
+        Kurzname statt Logo
+        <span class="badge text-bg-info float-end">{{ brand.initials }}</span>
+      </li>
+      <li class="list-group-item">
+        Weißer Text auf Primärfarbe
+        <span
+          class="badge float-end"
+          [class.text-bg-success]="readable"
+          [class.text-bg-warning]="!readable"
+        >
+          {{ readable ? 'Kontrast ≥ 4,5 : 1' : 'Kontrast anpassen' }}
+        </span>
+      </li>
+      <li class="list-group-item">
+        Logo und vollständige Navigation
+        <span class="badge text-bg-secondary float-end">Manuell prüfen</span>
+      </li>
+    </ul>
+
+  </section>
+
+} @else {
+  <div class="empty card">Bitte eine Organisation auswählen.</div>
+}
+<button class="btn btn-primary btn-sm mt-3" disabled aria-describedby="publish-help">
+  Branding veröffentlichen
+</button>
+<a class="btn btn-outline-secondary btn-sm mt-3 ms-2" routerLink="/saas/branding">
+  Zurück bearbeiten
+</a>
+<p class="hint mt-2" id="publish-help">
+  Veröffentlichen ist noch nicht angebunden. Die Vorschau verändert keine anderen App-Bereiche.
+</p>

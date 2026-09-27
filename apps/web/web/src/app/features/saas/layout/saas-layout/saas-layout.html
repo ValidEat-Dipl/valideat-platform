@@ -1,0 +1,40 @@
+<div class="saas-shell">
+  <app-saas-sidebar />
+  <main>
+    <header class="context-bar">
+      <span>SaaS / Verwaltung</span>
+      <div>
+
+        <label for="tenant" class="me-2">Organisation</label>
+        <select id="tenant"
+          class="form-select form-select-sm"
+          [ngModel]="state.selectedId()"
+          (ngModelChange)="state.selectTenant($event)"
+          [disabled]="state.loading() || !state.tenants().length"
+        >
+          <option [ngValue]="null">Keine Organisation</option>
+
+          @for (tenant of state.tenants(); track tenant.tenantId) {
+            <option [ngValue]="tenant.tenantId">{{ tenant.tenantName }}</option>
+          }
+        </select>
+      </div>
+
+    </header>
+
+    @if (state.loading()) {
+      <div class="alert alert-info" role="status">Organisationen werden geladen …</div>
+    }
+
+    @if (state.error()) {
+      <div class="alert alert-danger" role="alert">
+        {{ state.error() }}
+        <button class="btn btn-sm btn-outline-danger ms-2" (click)="state.loadTenants()">
+          Erneut versuchen
+        </button>
+      </div>
+    }
+
+    <router-outlet />
+  </main>
+</div>

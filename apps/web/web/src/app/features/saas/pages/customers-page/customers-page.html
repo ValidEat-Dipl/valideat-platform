@@ -1,0 +1,76 @@
+<div class="d-flex justify-content-between align-items-start gap-3">
+  <div>
+    <h1>Kundenübersicht</h1>
+    <p class="subtitle">Organisationen auf der ValidEat-Plattform.</p>
+  </div>
+  <a class="btn btn-primary btn-sm" routerLink="/saas/register">Organisation anlegen</a>
+</div>
+<div class="card">
+  <div class="table-responsive">
+    <table class="table mb-0">
+      <caption class="px-3">
+        Bestandsdaten der geladenen Organisationen. Setup- und Aktivitätsstatus sind noch nicht
+        verfügbar.
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col">Organisation</th>
+          <th scope="col">Kontakt</th>
+          <th scope="col">Land / Größe</th>
+          <th scope="col">Mitarbeitende</th>
+          <th scope="col">Restaurants</th>
+          <th scope="col">Aktion</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        @for (tenant of state.tenants(); track tenant.tenantId) {
+          <tr>
+            <td>
+              <strong>{{ tenant.tenantName }}</strong>
+              <div class="hint">#{{ tenant.tenantId }}</div>
+            </td>
+            <td>
+              {{ tenant.manager || '—' }}
+              <div class="hint">{{ tenant.email || '—' }}</div>
+            </td>
+            <td>
+              {{ tenant.country || '—' }}
+              <div class="hint">{{ tenant.companySize || '—' }}</div>
+            </td>
+            <td>{{ tenant.employeeCount }}</td>
+            <td>{{ tenant.restaurantCount }}</td>
+            <td>
+              <a
+                class="btn btn-sm btn-outline-primary"
+                routerLink="/saas/organization"
+                (click)="select(tenant.tenantId)"
+                [attr.aria-label]="tenant.tenantName + ' öffnen'"
+              >
+                Öffnen
+              </a>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="6" class="empty">
+              {{
+                state.loading()
+                  ? 'Organisationen werden geladen …'
+                  : state.error()
+                    ? 'Die Kundenliste ist derzeit nicht verfügbar.'
+                    : 'Noch keine Organisationen vorhanden.'
+              }}
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
+<button class="btn btn-outline-secondary btn-sm mt-3"
+  (click)="state.loadTenants()"
+  [disabled]="state.loading()"
+>
+  Aktualisieren
+</button>
