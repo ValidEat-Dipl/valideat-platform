@@ -1,38 +1,45 @@
 <h1>Module verwalten</h1>
-<p class="subtitle">Wählen und konfigurieren Sie die Funktionen Ihrer Organisation.</p>
-<div class="alert alert-info">
-  Lokale Modulauswahl bis zum Neuladen oder Verlassen der Verwaltung. Es werden keine Module im
-  Backend aktiviert, keine Käufe und keine Zahlungen durchgeführt.
-</div>
+<p class="subtitle">Funktionen für die ausgewählte Organisation konfigurieren.</p>
+<p class="hint">Die Auswahl wird für diese Organisation gespeichert. Es werden keine Käufe oder Zahlungen durchgeführt.</p>
 
-@for (group of ['Kernmodule', 'Erweiterungen']; track group) {
-  <h2 class="eyebrow">{{ group }}</h2>
+@if (!state.selected) {
+  <div class="alert alert-secondary">Bitte eine Organisation auswählen.</div>
+} @else if (loading()) {
+  <p role="status">Module werden geladen …</p>
+} @else if (loadError()) {
+  <div class="alert alert-danger" role="alert">
+    {{ loadError() }}
+    <button class="btn btn-sm btn-outline-danger ms-2" (click)="load()">Erneut versuchen</button>
+  </div>
+} @else {
   <div class="row g-3">
+    @for (module of modules(); track module.id) {
+      <div class="col-md-6 col-xl-4">
+        <div class="card h-100"><div class="card-body">
+          <h2>{{ moduleName(module.name) }}</h2>
+          <p class="hint">{{ module.description }}</p>
 
-    @for (module of modules; track module.name) {
-
-      @if (module.group === group) {
-        <div class="col-md-6 col-xl-4">
-          <div class="card h-100">
-            <div class="card-body">
-              <h2>{{ module.name }}</h2>
-              <p class="hint">{{ module.text }}</p>
-
-              <label class="form-check form-switch">
-                <input class="form-check-input"
-                  type="checkbox"
-                  [ngModel]="enabled(module.name)"
-                  (ngModelChange)="toggle(module.name, $event)"
-                  [disabled]="!state.selected"
-                />
-                <span class="form-check-label">
-                  {{ enabled(module.name) ? 'Im Entwurf ausgewählt' : 'Nicht ausgewählt' }}
-                </span>
-              </label>
-            </div>
-          </div>
-        </div>
-      }
+          <label class="form-check form-switch">
+            <input type="checkbox" class="form-check-input"
+              [(ngModel)]="module.enabled" (ngModelChange)="saved.set(false)" [disabled]="saving()" />
+            <span class="form-check-label">{{ module.enabled ? 'Ausgewählt' : 'Nicht ausgewählt' }}</span>
+          </label>
+        </div></div>
+      </div>
+    } @empty {
+      <p class="empty">Noch keine Module im Katalog vorhanden.</p>
     }
   </div>
+
+  <button class="btn btn-primary mt-3" (click)="save()" [disabled]="saving() || !modules().length">
+    {{ saving() ? 'Wird gespeichert …' : 'Module speichern' }}
+  </button>
 }
+
+@if (saved()) {
+  <p class="text-success mt-3" role="status">Modulauswahl gespeichert.</p>
+}
+@if (saveError()) {
+  <div class="alert alert-danger mt-3" role="alert">{{ saveError() }}</div>
+}
+<p class="hint mt-3">Die Auswahl allein schaltet die vorhandenen App-Bereiche noch nicht um. Die Durchsetzung der Module und die Auswahl zwischen manueller Restaurant-Erfassung und QR fehlen noch.</p>
