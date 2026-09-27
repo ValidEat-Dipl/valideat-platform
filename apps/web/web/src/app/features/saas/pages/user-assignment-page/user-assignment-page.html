@@ -1,88 +1,64 @@
 <h1>Nutzer einem Tenant zuweisen</h1>
-<p class="subtitle">
-  Bereits registrierte Nutzer ohne Organisation auswählen und einem Unternehmen zuordnen.
-</p>
-<div class="alert alert-warning" role="status">
-  <strong>Nutzerliste noch nicht verfügbar.</strong>
-  Das Backend bietet derzeit keine Liste der Nutzer ohne Tenant. Das bedeutet nicht, dass es keine
-  unzugewiesenen Nutzer gibt.
-</div>
-<div class="row g-4">
+<p class="subtitle">Bereits registrierte Nutzer ohne Organisation auswählen und einem Unternehmen zuordnen.</p>
 
+@if (success()) {
+  <div class="alert alert-success" role="status">{{ success() }}</div>
+}
+@if (error()) {
+  <div class="alert alert-danger" role="alert">{{ error() }}</div>
+}
+
+<div class="row g-4">
   <section class="col-lg-8">
     <div class="card">
-      <div class="card-header">Unzugewiesene Nutzer</div>
-      <div class="table-responsive">
-        <table class="table mb-0">
-          <thead>
-            <tr>
-              <th scope="col">Auswahl</th>
-              <th scope="col">Name</th>
-              <th scope="col">E-Mail</th>
-            </tr>
-          </thead>
-          <tbody>
-
-            @for (user of users; track user.id) {
-              <tr>
-                <td>
-                  <input type="radio"
-                    name="user"
-                    [value]="user.id"
-                    [(ngModel)]="selectedUser"
-                    [attr.aria-label]="user.firstName + ' ' + user.lastName + ' auswählen'"
-                  />
-                </td>
-                <td>{{ user.firstName }} {{ user.lastName }}</td>
-                <td>{{ user.email }}</td>
-              </tr>
-            } @empty {
-              <tr>
-                <td colspan="3" class="empty">
-                  <i class="bi bi-person-plus fs-2 d-block mb-2" aria-hidden="true"></i>
-                  Die Nutzerliste kann noch nicht geladen werden.
-                  <div class="hint mt-2">
-                    Die vorhandene Employee-Liste enthält nur Nutzer des aktuellen Tenants.
-                  </div>
-                </td>
-              </tr>
-            }
-          </tbody>
-        </table>
+      <div class="card-header d-flex justify-content-between align-items-center">
+        Unzugewiesene Nutzer
+        <button class="btn btn-sm btn-outline-secondary" (click)="load()" [disabled]="loading() || saving()">Aktualisieren</button>
       </div>
+      @if (loading()) {
+        <p class="p-3" role="status">Nutzer werden geladen …</p>
+      } @else if (loadError()) {
+        <div class="alert alert-danger m-3" role="alert">{{ loadError() }}</div>
+      } @else {
+        <div class="table-responsive">
+          <table class="table mb-0">
+            <thead><tr><th>Auswahl</th><th>Name</th><th>E-Mail</th><th>Rolle</th></tr></thead>
+            <tbody>
+              @for (user of users(); track user.id) {
+                <tr>
+                  <td><input type="radio" name="user" [value]="user.id" [(ngModel)]="selectedUser"
+                    [disabled]="saving()" [attr.aria-label]="user.firstname + ' ' + user.lastname + ' auswählen'" /></td>
+                  <td>{{ user.firstname }} {{ user.lastname }}</td>
+                  <td>{{ user.email }}</td>
+                  <td>{{ user.role }}</td>
+                </tr>
+              } @empty {
+                <tr><td colspan="4" class="empty">Keine unzugewiesenen Nutzer vorhanden.</td></tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
     </div>
-
   </section>
 
   <section class="col-lg-4">
-    <div class="card">
-      <div class="card-header">Tenant auswählen</div>
-      <div class="card-body">
+    <div class="card"><div class="card-body">
+      <label class="form-label" for="assignment-tenant">Zielorganisation</label>
+      <select id="assignment-tenant" class="form-select mb-3"
+        [ngModel]="state.selectedId()" (ngModelChange)="state.selectTenant($event)"
+        [disabled]="state.loading() || saving() || !!state.error()">
+        <option [ngValue]="null">Bitte auswählen</option>
+        @for (tenant of state.tenants(); track tenant.tenantId) {
+          <option [ngValue]="tenant.tenantId">{{ tenant.tenantName }}</option>
+        }
+      </select>
 
-        <label class="form-label" for="assignment-tenant">Zielorganisation</label>
-        <select id="assignment-tenant"
-          class="form-select mb-3"
-          [ngModel]="state.selectedId()"
-          (ngModelChange)="state.selectTenant($event)"
-          [disabled]="state.loading() || !!state.error()"
-        >
-          <option [ngValue]="null">Bitte auswählen</option>
-
-          @for (tenant of state.tenants(); track tenant.tenantId) {
-            <option [ngValue]="tenant.tenantId">{{ tenant.tenantName }}</option>
-          }
-        </select>
-        <button class="btn btn-primary w-100" disabled aria-describedby="assignment-help">
-          Zuweisen
-        </button>
-        <p id="assignment-help" class="hint mt-3 mb-0">
-          Die bestehende Zuweisung verwendet ausschließlich den Tenant der Anmeldung. Für die hier
-          ausgewählte Zielorganisation fehlt die passende Backend-Funktion. Deshalb ist die Aktion
-          noch gesperrt.
-        </p>
-      </div>
-    </div>
-
+      <button class="btn btn-primary w-100" (click)="assign()"
+        [disabled]="selectedUser === null || !state.selected || loading() || saving() || !!loadError() || state.loading() || !!state.error()">
+        {{ saving() ? 'Wird zugewiesen …' : 'Zuweisen' }}
+      </button>
+      <p class="hint mt-3 mb-0">Die Zuordnung gilt für die hier ausgewählte Organisation.</p>
+    </div></div>
   </section>
-
 </div>
