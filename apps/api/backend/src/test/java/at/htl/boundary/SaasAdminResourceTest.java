@@ -1,5 +1,6 @@
 package at.htl.boundary;
 
+import at.htl.AuthenticatedTest;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Test;
@@ -8,7 +9,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
 @QuarkusTest
-class SaasAdminResourceTest {
+class SaasAdminResourceTest extends AuthenticatedTest {
 
     private static final Long TENANT_ID = 1L;
 
@@ -19,6 +20,7 @@ class SaasAdminResourceTest {
     @Test
     void shouldGetTenantModules() {
         given()
+                .auth().oauth2(testToken())
                 .when()
                 .get("/saas-admin/tenant/" + TENANT_ID + "/modules")
                 .then()
@@ -29,6 +31,7 @@ class SaasAdminResourceTest {
     @Test
     void shouldReturnErrorForUnknownTenantModules() {
         given()
+                .auth().oauth2(testToken())
                 .when()
                 .get("/saas-admin/tenant/999999/modules")
                 .then()
@@ -38,6 +41,7 @@ class SaasAdminResourceTest {
     @Test
     void shouldUpdateTenantModules() {
         given()
+                .auth().oauth2(testToken())
                 .contentType("application/json")
                 .body("""
                     {
@@ -57,6 +61,7 @@ class SaasAdminResourceTest {
     @Test
     void shouldGetTenantRules() {
         given()
+                .auth().oauth2(testToken())
                 .when()
                 .get("/saas-admin/tenant/" + TENANT_ID + "/rules")
                 .then()
@@ -67,6 +72,7 @@ class SaasAdminResourceTest {
     @Test
     void shouldUpdateTenantRules() {
         given()
+                .auth().oauth2(testToken())
                 .contentType("application/json")
                 .body("""
                     {
@@ -94,6 +100,7 @@ class SaasAdminResourceTest {
     @Test
     void shouldGetTenantBranding() {
         given()
+                .auth().oauth2(testToken())
                 .when()
                 .get("/saas-admin/tenant/" + TENANT_ID + "/branding")
                 .then()
@@ -104,6 +111,7 @@ class SaasAdminResourceTest {
     @Test
     void shouldUpdateTenantBrandingDraft() {
         given()
+                .auth().oauth2(testToken())
                 .contentType("application/json")
                 .body("""
                     {
@@ -123,6 +131,7 @@ class SaasAdminResourceTest {
     @Test
     void shouldPublishTenantBranding() {
         given()
+                .auth().oauth2(testToken())
                 .contentType(ContentType.JSON)
                 .when()
                 .post("/saas-admin/tenant/" + TENANT_ID + "/branding/publish")
@@ -133,6 +142,7 @@ class SaasAdminResourceTest {
     @Test
     void shouldReturnErrorForUnknownTenantBranding() {
         given()
+                .auth().oauth2(testToken())
                 .when()
                 .get("/saas-admin/tenant/999999/branding")
                 .then()
