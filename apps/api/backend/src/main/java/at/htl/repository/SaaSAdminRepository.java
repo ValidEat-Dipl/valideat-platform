@@ -1,14 +1,15 @@
 package at.htl.repository;
 
-import at.htl.boundary.dto.CreateTenantDTO;
-import at.htl.boundary.dto.TenantOverviewDTO;
+import at.htl.boundary.dto.*;
 import at.htl.model.*;
+import at.htl.model.Module;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.core.Response;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @ApplicationScoped
@@ -247,5 +248,233 @@ public class SaaSAdminRepository {
         entityManager.persist(costOrder);
 
         return Response.ok(costOrder).build();
+    }
+
+    public List<UnassignedEmpDTO> findEmpWithoutTenant() {
+        return entityManager.createQuery("select new at.htl.boundary.dto.UnassignedEmpDTO(e.id, e.firstName, e.lastName, e.email, e.role) from Employee e where e.tenant is null", UnassignedEmpDTO.class).getResultList();
+    }
+
+    public void updateTenant(Long id, EditTenantDTO dto) {
+        Tenant tenant = entityManager.find(Tenant.class, id);
+
+        if (tenant == null) {
+            throw new IllegalArgumentException("Tenant not found");
+        }
+
+        tenant.setName(dto.organisationName());
+        tenant.setManager(dto.contactPerson());
+        tenant.setEmail(dto.email());
+        tenant.setCountry(dto.country());
+        tenant.setPrimaryColor(dto.primaryColor());
+        tenant.setAccentColor(dto.accentColor());
+        tenant.setCompanySize(dto.companySize());
+
+        entityManager.merge(tenant);
+    }
+
+    public List<TenantModuleDTO> getModulesForTenant(Long tenantId) {
+
+        List<Module> modules = entityManager.createQuery("""
+            select m
+            from Module m
+            """, Module.class)
+                .getResultList();
+
+        List<TenantModule> tenantModules = entityManager.createQuery("""
+            select tm
+            from TenantModule tm
+            where tm.tenant.id = :tenantId
+            """, TenantModule.class)
+                .setParameter("tenantId", tenantId)
+                .getResultList();
+
+        List<TenantModuleDTO> result = new LinkedList<>();
+
+        for (Module module : modules) {
+
+            boolean enabled = false;
+
+            for (TenantModule tenantModule : tenantModules) {
+                if (tenantModule.getModule().getId().equals(module.getId())) {
+                    enabled = true;
+                    break;
+                }
+            }
+
+            result.add(new TenantModuleDTO(
+                    module.getId(),
+                    module.getName(),
+                    module.getDescription(),
+                    enabled
+            ));
+        }
+
+        return result;
+    }
+
+
+    public void updateModules(Long tenantId, List<Long> moduleIds) {
+
+        entityManager.createQuery("""
+            delete from TenantModule tm
+            where tm.tenant.id = :tenantId
+            """)
+                .setParameter("tenantId", tenantId)
+                .executeUpdate();
+
+        for (Long moduleId : moduleIds) {
+
+            Tenant tenant = entityManager.find(Tenant.class, tenantId);
+            Module module = entityManager.find(Module.class, moduleId);
+
+            if (tenant == null) {
+                throw new IllegalArgumentException("Tenant not found");
+            }
+
+            if (module == null) {
+                throw new IllegalArgumentException("Module not found: " + moduleId);
+            }
+
+            TenantModule tenantModule = new TenantModule();
+            tenantModule.setTenant(tenant);
+            tenantModule.setModule(module);
+
+            entityManager.persist(tenantModule);
+        }
+    }
+
+    public TenantRulesDTO getTenantRules(Long tenantId) {
+
+        TenantRules rules = entityManager.createQuery("""
+            select r
+            from TenantRules r
+            where r.tenant.id = :tenantId
+            """, TenantRules.class)
+                .setParameter("tenantId", tenantId)
+                .getSingleResult();
+
+        return new TenantRulesDTO(
+                rules.getUsageDays(),
+                rules.isRestaurantRequired(),
+                rules.isCorrectionHints()
+        );
+    }
+
+    public void updateTenantRules(Long tenantId, TenantRulesDTO dto) {
+
+        TenantRules rules;
+
+        List<TenantRules> result = entityManager.createQuery("""
+            select r
+            from TenantRules r
+            where r.tenant.id = :tenantId
+            """, TenantRules.class)
+                .setParameter("tenantId", tenantId)
+                .getResultList();
+
+        if (result.isEmpty()) {
+
+            Tenant tenant = entityManager.find(Tenant.class, tenantId);
+
+            if (tenant == null) {
+                throw new IllegalArgumentException("Tenant not found");
+            }
+
+            rules = new TenantRules();
+            rules.setTenant(tenant);
+
+            entityManager.persist(rules);
+
+        } else {
+            rules = result.getFirst();
+        }
+
+        rules.setUsageDays(dto.usageDays());
+        rules.setRestaurantRequired(dto.restaurantRequired());
+        rules.setCorrectionHints(dto.correctionHints());
+    }
+
+    public TenantBrandingDTO getTenantBranding(Long tenantId) {
+
+        TenantBranding branding = entityManager.createQuery("""
+            select b
+            from TenantBranding b
+            where b.tenant.id = :tenantId
+            """, TenantBranding.class)
+                .setParameter("tenantId", tenantId)
+                .getSingleResult();
+
+        BrandingDTO draft = new BrandingDTO(
+                branding.getDraftAppName(),
+                branding.getDraftShortName(),
+                branding.getDraftPrimaryColor(),
+                branding.getDraftAccentColor(),
+                branding.getDraftLogo()
+        );
+
+        BrandingDTO published = new BrandingDTO(
+                branding.getPublishedAppName(),
+                branding.getPublishedShortName(),
+                branding.getPublishedPrimaryColor(),
+                branding.getPublishedAccentColor(),
+                branding.getPublishedLogo()
+        );
+
+        return new TenantBrandingDTO(draft, published);
+    }
+
+
+    public void updateBranding(Long tenantId, BrandingDTO dto) {
+
+        TenantBranding branding;
+
+        List<TenantBranding> result = entityManager.createQuery("""
+            select b
+            from TenantBranding b
+            where b.tenant.id = :tenantId
+            """, TenantBranding.class)
+                .setParameter("tenantId", tenantId)
+                .getResultList();
+
+        if (result.isEmpty()) {
+
+            Tenant tenant = entityManager.find(Tenant.class, tenantId);
+
+            if (tenant == null) {
+                throw new IllegalArgumentException("Tenant not found");
+            }
+
+            branding = new TenantBranding();
+            branding.setTenant(tenant);
+
+            entityManager.persist(branding);
+
+        } else {
+            branding = result.getFirst();
+        }
+
+        branding.setDraftAppName(dto.appName());
+        branding.setDraftShortName(dto.shortName());
+        branding.setDraftPrimaryColor(dto.primaryColor());
+        branding.setDraftAccentColor(dto.accentColor());
+        branding.setDraftLogo(dto.logo());
+    }
+
+
+    public void publishBranding(Long tenantId) {
+
+        TenantBranding branding = entityManager.createQuery("""
+            select b
+            from TenantBranding b
+            where b.tenant.id = :tenantId
+            """, TenantBranding.class)
+                .setParameter("tenantId", tenantId)
+                .getSingleResult();
+
+        branding.setPublishedAppName(branding.getDraftAppName());
+        branding.setPublishedShortName(branding.getDraftShortName());
+        branding.setPublishedPrimaryColor(branding.getDraftPrimaryColor());
+        branding.setPublishedAccentColor(branding.getDraftAccentColor());
+        branding.setPublishedLogo(branding.getDraftLogo());
     }
 }

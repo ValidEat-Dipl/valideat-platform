@@ -1,7 +1,6 @@
 package at.htl.boundary;
 
-import at.htl.boundary.dto.CreateTenantDTO;
-import at.htl.boundary.dto.TenantOverviewDTO;
+import at.htl.boundary.dto.*;
 import at.htl.model.Employee;
 import at.htl.model.Restaurant;
 import at.htl.model.RestaurantUser;
@@ -151,4 +150,121 @@ public class SaasAdminResource {
 
         return saasAdminRepository.createCostOrder(name, tenant);
     }
+
+    @GET
+    @Path("/unassigned-employees")
+    public List<UnassignedEmpDTO> findEmpWithoutTenant() {
+        return saasAdminRepository.findEmpWithoutTenant();
+    }
+
+    @PUT
+    @Path("/assign/{tenantId}/{empId}")
+    @Transactional
+    public Response assignEmpToFixedTenant(@PathParam("tenantId") Long tenantId, @PathParam("empId") Long empId) {
+        Tenant tenant = saasAdminRepository.findTenantById(tenantId);
+        Employee employee = employeeRepository.findById(empId);
+        if (employee.getTenant() == null) {
+            return saasAdminRepository.assignEmpToTenant(tenant, employee);
+        }
+        return Response.status(Response.Status.BAD_REQUEST).build();
+    }
+
+    @PUT
+    @Path("tenant/{id}")
+    @Transactional
+    public Response editTenant(@PathParam("id") Long tenantId, EditTenantDTO dto) {
+        saasAdminRepository.updateTenant(tenantId, dto);
+
+        return Response.ok().build();
+    }
+
+
+    @GET
+    @Path("tenant/{tenantId}/modules")
+    public List<TenantModuleDTO> getModules(
+            @PathParam("tenantId") Long tenantId) {
+
+        return saasAdminRepository.getModulesForTenant(tenantId);
+    }
+
+
+    @PUT
+    @Path("tenant/{tenantId}/modules")
+    @Transactional
+    public Response updateModules(
+            @PathParam("tenantId") Long tenantId,
+            UpdateModulesDTO dto) {
+
+        saasAdminRepository.updateModules(
+                tenantId,
+                dto.moduleIds()
+        );
+
+        return Response.ok().build();
+    }
+
+
+
+
+    @GET
+    @Path("tenant/{tenantId}/rules")
+    public TenantRulesDTO getRules(
+            @PathParam("tenantId") Long tenantId) {
+
+        return saasAdminRepository.getTenantRules(tenantId);
+    }
+
+
+    @PUT
+    @Path("tenant/{tenantId}/rules")
+    @Transactional
+    public Response updateRules(
+            @PathParam("tenantId") Long tenantId,
+            TenantRulesDTO dto) {
+
+        saasAdminRepository.updateTenantRules(
+                tenantId,
+                dto
+        );
+
+        return Response.ok().build();
+    }
+
+
+    @GET
+    @Path("tenant/{tenantId}/branding")
+    public TenantBrandingDTO getBranding(
+            @PathParam("tenantId") Long tenantId) {
+
+        return saasAdminRepository.getTenantBranding(tenantId);
+    }
+
+
+    @PUT
+    @Path("tenant/{tenantId}/branding")
+    @Transactional
+    public Response updateBranding(
+            @PathParam("tenantId") Long tenantId,
+            BrandingDTO dto) {
+
+        saasAdminRepository.updateBranding(
+                tenantId,
+                dto
+        );
+
+        return Response.ok().build();
+    }
+
+
+    @POST
+    @Path("tenant/{tenantId}/branding/publish")
+    @Transactional
+    public Response publishBranding(
+            @PathParam("tenantId") Long tenantId) {
+
+        saasAdminRepository.publishBranding(tenantId);
+
+        return Response.ok().build();
+    }
+
 }

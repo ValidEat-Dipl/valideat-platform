@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AdminClearingTickets } from '../models/admin-clearing-tickets.model';
-
+import { API_BASE } from '../../../api.config';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +20,7 @@ export class TableDataClearingService {
     if (toDate) params.endDate = toDate;
     if (status && status != 'ALL') params.status = status;
 
-    return this.http.get<AdminClearingTickets[]>('http://localhost:8080/foodticket/table-clearing',
+    return this.http.get<AdminClearingTickets[]>(`${API_BASE}/foodticket/table-clearing`,
       { params });
   }
 }

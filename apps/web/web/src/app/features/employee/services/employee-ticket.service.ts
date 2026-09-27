@@ -10,7 +10,7 @@ import { Restaurant } from '../models/restaurant.model';
 import { Tier } from '../models/tier.model';
 import { Employee } from '../models/employee.model';
 
-const API_BASE = 'http://localhost:8080';
+import { API_BASE } from '../../../api.config';
 
 @Injectable({ providedIn: 'root' })
 export class EmployeeTicketService {
@@ -54,8 +54,9 @@ export class EmployeeTicketService {
   }
 
   openScanSocket(qrCodeId: string) {
-    const url = 'ws://localhost:8080/qrCodeScan/' + qrCodeId;
-    return new WebSocket(url);
+  const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+  const url = `${protocol}//${window.location.host}/api/qrCodeScan/${qrCodeId}`;
+  return new WebSocket(url);
   }
 
   editTicket(ticketId: number, employeeId: number, ticket: EmployeeFoodTicketRequest) {
