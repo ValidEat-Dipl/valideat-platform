@@ -6,7 +6,7 @@ export interface TenantModule {
 }
 
 export interface TenantRules {
-  usageDays: string[];
+  usageDays: string[] | null;
   restaurantRequired: boolean;
   correctionHints: boolean;
 }

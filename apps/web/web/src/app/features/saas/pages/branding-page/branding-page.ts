@@ -25,8 +25,8 @@ export class SaasBrandingPage implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
 
   brandingForm = new FormGroup({
-    appName: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.maxLength(80)] }),
-    shortName: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.maxLength(80)] }),
+    appName: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.maxLength(150)] }),
+    shortName: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.maxLength(150)] }),
     primaryColor: new FormControl('#0d6efd', { nonNullable: true, validators: [Validators.required, Validators.pattern(/^#[0-9a-f]{6}$/i)] }),
     accentColor: new FormControl('#20c997', { nonNullable: true, validators: [Validators.required, Validators.pattern(/^#[0-9a-f]{6}$/i)] }),
     logo: new FormControl('', { nonNullable: true, validators: Validators.maxLength(255) })
@@ -71,8 +71,10 @@ export class SaasBrandingPage implements OnInit, OnDestroy {
         this.loading.set(false);
         if (response.status === 404) {
           this.loadError.set('Die Organisation wurde nicht gefunden. Bitte die Kundenübersicht neu laden.');
-        } else if (response.status === 500) {
-          this.loadError.set('Branding konnte nicht geladen werden. Bei neuen Organisationen muss die Konfiguration derzeit durch die Plattformverwaltung eingerichtet werden.');
+        } else if (response.status === 401) {
+          this.loadError.set('Bitte erneut als SaaS-Admin anmelden.');
+        } else if (response.status === 403) {
+          this.loadError.set('Für diese Aktion fehlt die SaaS-Admin-Berechtigung.');
         } else {
           this.loadError.set('Branding konnte nicht geladen werden. Bitte erneut versuchen.');
         }

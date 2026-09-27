@@ -63,8 +63,10 @@ export class SaasBrandingPreviewPage implements OnInit, OnDestroy {
         this.loading.set(false);
         if (response.status === 404) {
           this.error.set('Die Organisation wurde nicht gefunden. Bitte die Kundenübersicht neu laden.');
-        } else if (response.status === 500) {
-          this.error.set('Branding konnte nicht geladen werden. Bei neuen Organisationen muss die Konfiguration derzeit durch die Plattformverwaltung eingerichtet werden.');
+        } else if (response.status === 401) {
+          this.error.set('Bitte erneut als SaaS-Admin anmelden.');
+        } else if (response.status === 403) {
+          this.error.set('Für diese Aktion fehlt die SaaS-Admin-Berechtigung.');
         } else {
           this.error.set('Branding konnte nicht geladen werden. Bitte erneut versuchen.');
         }
