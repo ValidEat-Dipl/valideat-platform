@@ -47,6 +47,10 @@ jobs:
           distribution: temurin
           java-version: '21'
 
+      - name: Set image namespace
+        if: github.event_name == 'push'
+        run: echo "IMAGE_NAMESPACE=$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
       - name: Build Backend
         working-directory: apps/api/backend
         run: ./mvnw clean verify
@@ -66,12 +70,12 @@ jobs:
           docker build \
             --platform linux/amd64 \
             -f src/main/docker/Dockerfile.jvm \
-            -t ghcr.io/richterjulian/valideat-backend:latest .
+            -t ghcr.io/${{ env.IMAGE_NAMESPACE }}/valideat-backend:latest .
 
       - name: Push Backend Docker Image
         if: github.event_name == 'push'
         run: |
-          docker push ghcr.io/richterjulian/valideat-backend:latest
+          docker push ghcr.io/${{ env.IMAGE_NAMESPACE }}/valideat-backend:latest
 
   frontend:
     name: Frontend Build
@@ -87,6 +91,10 @@ jobs:
           node-version: 22
           cache: npm
           cache-dependency-path: apps/web/web/package-lock.json
+
+      - name: Set image namespace
+        if: github.event_name == 'push'
+        run: echo "IMAGE_NAMESPACE=$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
       - name: Install dependencies
         working-directory: apps/web/web
@@ -110,9 +118,9 @@ jobs:
         run: |
           docker build \
             --platform linux/amd64 \
-            -t ghcr.io/richterjulian/valideat-web:latest .
+            -t ghcr.io/${{ env.IMAGE_NAMESPACE }}/valideat-web:latest .
 
       - name: Push Frontend Docker Image
         if: github.event_name == 'push'
         run: |
-          docker push ghcr.io/richterjulian/valideat-web:latest
+          docker push ghcr.io/${{ env.IMAGE_NAMESPACE }}/valideat-web:latest
