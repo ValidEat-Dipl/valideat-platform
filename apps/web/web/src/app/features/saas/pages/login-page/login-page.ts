@@ -108,13 +108,17 @@ export class SaasLoginPage {
       },
 
 
-      error: () => {
+      error: (response) => {
 
         this.isLoading.set(false);
 
-        this.loginError.set(
-          'Anmeldung nicht möglich. Bitte Zugangsdaten, Tenant-Zuordnung und Backend-Verbindung prüfen.'
-        );
+        if (response.status === 401) {
+          this.loginError.set('Anmeldung fehlgeschlagen. Bitte Zugangsdaten prüfen.');
+        } else if (response.status === 500) {
+          this.loginError.set('Die Anmeldung ist am Server fehlgeschlagen. SaaS-Admin-Konten ohne Organisation können sich derzeit noch nicht anmelden. Bitte die Plattformverwaltung kontaktieren.');
+        } else {
+          this.loginError.set('Anmeldung nicht möglich. Bitte Verbindung und Zugangsdaten prüfen.');
+        }
 
       }
 

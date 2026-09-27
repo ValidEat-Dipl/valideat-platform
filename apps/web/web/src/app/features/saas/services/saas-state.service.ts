@@ -51,9 +51,15 @@ export class SaasState implements OnDestroy {
           }
         }
       },
-      error: () => {
+      error: (response) => {
         this.loading.set(false);
-        this.error.set('Organisationen konnten nicht geladen werden. Bitte Anmeldung und Verbindung prüfen.');
+        if (response.status === 401) {
+          this.error.set('Ihre Anmeldung ist abgelaufen oder ungültig. Bitte erneut als SaaS-Admin anmelden.');
+        } else if (response.status === 403) {
+          this.error.set('Für diesen Bereich fehlt die SaaS-Admin-Berechtigung.');
+        } else {
+          this.error.set('Organisationen konnten nicht geladen werden. Bitte Verbindung prüfen.');
+        }
       }
     });
   }

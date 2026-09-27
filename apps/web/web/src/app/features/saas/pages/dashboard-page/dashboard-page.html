@@ -48,30 +48,7 @@
     <a routerLink="/saas/register">Organisation registrieren</a>
   </div>
 }
-<div class="alert alert-warning">
-  Setup- und Modulstatus werden noch nicht vom Backend geliefert. Ein Produktivstatus lässt sich
-  hier derzeit nicht feststellen.
-</div>
 <div class="row g-4">
-
-  <section class="col-lg-8">
-    <h2>Nächste Schritte</h2>
-    <div class="list-group">
-      <a class="list-group-item list-group-item-action" routerLink="/saas/organization">
-        Organisationsdaten und Regeln prüfen
-        <i class="bi bi-arrow-right float-end" aria-hidden="true"></i>
-      </a>
-      <a class="list-group-item list-group-item-action" routerLink="/saas/user-assignment">
-        Nutzer einem Tenant zuweisen
-        <span class="badge text-bg-warning float-end">Backend offen</span>
-      </a>
-      <a class="list-group-item list-group-item-action" routerLink="/saas/branding">
-        Branding vorbereiten
-        <span class="badge text-bg-info float-end">Lokaler Entwurf</span>
-      </a>
-    </div>
-
-  </section>
 
   <section class="col-lg-4">
     <h2>Plattform</h2>
@@ -84,3 +61,25 @@
   </section>
 
 </div>
+
+@if (state.selected) {
+  <section class="card mt-4"><div class="card-body">
+    <h2>Gespeicherte Modulauswahl</h2>
+    @if (loading()) {
+      <p role="status">Module werden geladen …</p>
+    } @else if (error()) {
+      <p class="text-danger" role="alert">{{ error() }}</p>
+      <button class="btn btn-sm btn-outline-secondary" (click)="loadModules()">Erneut versuchen</button>
+    } @else {
+      <p>{{ modules().length }} Module ausgewählt</p>
+      <div class="d-flex flex-wrap gap-2">
+        @for (module of modules(); track module.id) {
+          <span class="badge text-bg-primary">{{ moduleName(module.name) }}</span>
+        } @empty {
+          <span class="hint">Noch keine Module ausgewählt.</span>
+        }
+      </div>
+    }
+    <a class="d-inline-block mt-3" routerLink="/saas/modules">Module verwalten</a>
+  </div></section>
+}
