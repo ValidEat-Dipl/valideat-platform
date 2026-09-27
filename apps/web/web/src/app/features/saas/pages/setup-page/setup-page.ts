@@ -22,30 +22,30 @@ export class SaasSetupPage {
 
     {
       title: 'Module auswählen',
-      text: 'Gewünschte Funktionen als lokalen Entwurf vorbereiten.',
+      text: 'Gewünschte Funktionen für die Organisation speichern.',
       path: 'modules',
-      status: 'UI-Entwurf',
+      status: 'Konfigurieren',
     },
 
     {
       title: 'Nutzer zuordnen',
       text: 'Registrierte Nutzer einem Unternehmen zuweisen.',
       path: 'user-assignment',
-      status: 'Backend offen',
+      status: 'Zuordnen',
     },
 
     {
       title: 'Regeln vorbereiten',
       text: 'Verwendungstage und Restaurantpflicht festlegen.',
       path: 'organization',
-      status: 'UI-Entwurf',
+      status: 'Konfigurieren',
     },
 
     {
       title: 'Branding prüfen',
       text: 'Farben und Darstellung in der Vorschau ansehen.',
       path: 'branding',
-      status: 'UI-Entwurf',
+      status: 'Konfigurieren',
     },
   ];
 
