@@ -1,4 +1,4 @@
-name: CI
+name: CI/CD
 
 on:
   push:
@@ -7,6 +7,10 @@ on:
   pull_request:
     branches:
       - main
+
+permissions:
+  contents: read
+  packages: write
 
 jobs:
   backend:
@@ -47,6 +51,28 @@ jobs:
         working-directory: apps/api/backend
         run: ./mvnw clean verify
 
+      - name: Log in to GHCR
+        if: github.event_name == 'push'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Backend Docker Image
+        if: github.event_name == 'push'
+        working-directory: apps/api/backend
+        run: |
+          docker build \
+            --platform linux/amd64 \
+            -f src/main/docker/Dockerfile.jvm \
+            -t ghcr.io/richterjulian/valideat-backend:latest .
+
+      - name: Push Backend Docker Image
+        if: github.event_name == 'push'
+        run: |
+          docker push ghcr.io/richterjulian/valideat-backend:latest
+
   frontend:
     name: Frontend Build
     runs-on: ubuntu-latest
@@ -69,3 +95,24 @@ jobs:
       - name: Build Frontend
         working-directory: apps/web/web
         run: npm run build
+
+      - name: Log in to GHCR
+        if: github.event_name == 'push'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Frontend Docker Image
+        if: github.event_name == 'push'
+        working-directory: apps/web/web
+        run: |
+          docker build \
+            --platform linux/amd64 \
+            -t ghcr.io/richterjulian/valideat-web:latest .
+
+      - name: Push Frontend Docker Image
+        if: github.event_name == 'push'
+        run: |
+          docker push ghcr.io/richterjulian/valideat-web:latest
