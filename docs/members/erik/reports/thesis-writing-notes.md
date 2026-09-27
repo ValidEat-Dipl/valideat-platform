@@ -159,6 +159,92 @@ Angular beschreibt Interceptors als Middleware für `HttpClient`-Requests und ne
 
 Eine Grenze dieser Lösung ist die vorläufige Speicherung im Local Storage. Sie ist für den lokalen Entwicklungsstand einfach umzusetzen, aber kein perfektes Sicherheitskonzept. In der Arbeit sollte deshalb klar formuliert werden, dass der Interceptor die technische Übergabe des JWT löst, aber nicht automatisch alle Sicherheitsfragen wie XSS, Token-Diebstahl, Ablaufzeiten oder produktive Session-Verwaltung beantwortet.
 
+## SSR, Browser-Speicher und Client Rendering
+
+Bei der gemeinsamen Nutzung des Frontends ist ein Fehler sichtbar geworden, der bei mir lokal zuerst nicht stark aufgefallen ist: Die App konnte bei anderen Teammitgliedern beim Start mit `localStorage.getItem is not a function` abbrechen. Der Grund war nicht, dass sich diese Personen falsch angemeldet haben, sondern dass Angular im Projekt teilweise serverseitig ausgeführt wurde. In diesem Kontext läuft Code in Node.js und nicht im Browser.
+
+Das ist eine gute Stelle für die Diplomarbeit, weil man daran erklären kann, dass moderne Webanwendungen nicht automatisch nur im Browser laufen. Angular unterstützt serverseitiges Rendering, Prerendering und Client Rendering. Laut Angular können Server-Routen je nach Bedarf mit `RenderMode.Client`, `RenderMode.Server` oder `RenderMode.Prerender` konfiguriert werden ([SRC-024](../sources/sources.md#src-024--angular-server-side-rendering)).
+
+Für ValidEat ist serverseitiges Rendering aber nur eingeschränkt passend. Viele Seiten sind nicht öffentlich, sondern hängen von Login, Rolle und Tenant ab. Wenn solche Seiten serverseitig oder beim Build vorgerendert werden, gibt es noch keinen echten Browser-Kontext und keinen eingeloggten User aus dem Browser-Speicher. Dadurch wurden Backend-Anfragen ohne gültigen JWT ausgelöst, was beim Backend zu `tenantId claim: null` führen konnte.
+
+Die Lösung bestand deshalb aus zwei Teilen. Erstens wird der Zugriff auf `localStorage` nur noch im Browser ausgeführt. Angular stellt dafür `isPlatformBrowser` bereit, womit Code zwischen Browser- und Serverausführung unterscheiden kann ([SRC-025](../sources/sources.md#src-025--angular-isplatformbrowser)). Zweitens wurden die Server-Routen für diese App auf Client Rendering gestellt. Damit lädt ValidEat wie eine normale Angular-Anwendung im Browser und geschützte Requests laufen erst, wenn der Browser den Login-Zustand kennt.
+
+MDN beschreibt `localStorage` als Speicher des `window`-Objekts im Browser ([SRC-026](../sources/sources.md#src-026--mdn-windowlocalstorage)). Genau daraus ergibt sich die Einschränkung: `localStorage` ist praktisch für den Entwicklungsstand, aber kein universell verfügbarer Speicher für jeden Ausführungskontext. In der Arbeit sollte ich deshalb nicht nur schreiben „Bug gefixt“, sondern erklären, dass Browser-APIs in SSR-Code abgesichert werden müssen.
+
+Spannend ist auch, warum der Fehler bei mir nicht sofort sichtbar war. Wahrscheinlich war mein lokaler Browserzustand schon eingeloggt oder mein Ablauf hat den SSR-Fehler nicht gleich getriggert. Bei anderen Personen mit frischer Umgebung fiel der Fehler stärker auf. Daraus kann ich ableiten, dass ein lokaler Erfolg allein nicht ausreicht. Gerade bei Authentifizierung und Mandantenfähigkeit muss auch ein frischer Start ohne gespeicherten Browserzustand geprüft werden.
+
+## Temporäres Testen des QR-Scans am Handy
+
+Für den QR-Code-Flow reicht ein Desktop-Browser nur begrenzt aus, weil der eigentliche Scan über eine Kamera auf einem mobilen Gerät getestet werden soll. Für einen schnellen lokalen Test wurde deshalb ein temporärer Android-Aufbau mit `adb reverse` geplant. Android Debug Bridge dient laut Android-Dokumentation zur Kommunikation zwischen Entwicklungsrechner und Android-Gerät und kann angeschlossene Geräte über `adb devices` prüfen ([SRC-027](../sources/sources.md#src-027--android-debug-bridge)).
+
+Der wichtige Punkt bei ValidEat ist die `localhost`-Problematik. Im Frontend sind aktuell mehrere Backend-URLs noch als `http://localhost:8080` eingetragen. Auf dem Handy würde `localhost` aber das Handy selbst meinen und nicht den Mac. Mit `adb reverse tcp:4200 tcp:4200` und `adb reverse tcp:8080 tcp:8080` wird für den lokalen Test eine Reverse-Verbindung eingerichtet. Die ADB-Manpage beschreibt `adb reverse` genau als Möglichkeit, Reverse-Socket-Verbindungen vom Gerät zum lokalen Rechner einzurichten und aufzulisten ([SRC-028](../sources/sources.md#src-028--adb-manpage-zu-reverse)).
+
+Für die Diplomarbeit ist das keine produktive Architekturentscheidung, sondern ein Entwicklungs- und Testhilfsmittel. Wichtig ist die ehrliche Abgrenzung: Dadurch ist ValidEat nicht deployed und nicht allgemein im Netzwerk verfügbar. Es ist nur eine temporäre Möglichkeit, den mobilen QR-Scan mit lokal laufendem Angular-Frontend und lokal laufendem Quarkus-Backend zu testen.
+
+Darüber kann ich später gut schreiben:
+
+- warum QR- und Kamera-Funktionen auf echter Hardware geprüft werden sollten,
+- warum `localhost` auf Desktop und Smartphone nicht dasselbe bedeutet,
+- warum ein temporärer Port-Forwarding-Test etwas anderes ist als ein Deployment,
+- warum der aktuelle Aufbau für Entwicklung reicht, aber später eine richtige Umgebungs-/API-Konfiguration braucht,
+- warum erfolgreiche Desktop-Tests nicht automatisch beweisen, dass der mobile Scanflow funktioniert.
+
+## QR-Code-Erstellung und Einlösung als getrennte Schritte
+
+Ergänzt am 26.09.2026 auf Grundlage des aktuellen Codes und der Quellen SRC-029 bis SRC-035. Die folgenden Absätze sind Formulierungsvorschläge für den Diplomarbeitsteil; sie beschreiben keine neu ausgeführten Tests. KI-Unterstützung: [AI-002](../ai/conversations/2026-09-26-AI-002-qr-sources.md).
+
+Für den technischen Teil eignet sich der gesamte Weg einer Verwendung: Das Mitarbeiterformular sammelt die Angaben, die Prüfseite fordert einen QR-Code an und die Mitarbeiterseite zeigt ihn an. Das Restaurant liest den enthaltenen Token und sendet ihn zur Einlösung an das Backend. Erst dieser zweite Aufruf legt im bestehenden Backend die miteinander verknüpften Mitarbeiter- und Restaurant-Tickets an. Dadurch lässt sich erklären, warum „QR-Code erstellt“ und „Verwendung gespeichert“ zwei unterschiedliche Zustände sind.
+
+Die Frontend-Anbindung verwendet zwei HTTP-Verträge: JSON für die fünf Formulardaten und reinen Text für den Scan-Token. Angular beschreibt, wie HttpClient Anfragen über Observables bereitstellt und unterschiedliche Body-Typen verarbeitet. Die TypeScript-Angabe `post<QRCodeResponse>` prüft dabei die reale Serverantwort nicht zur Laufzeit ([SRC-034](../sources/sources.md#src-034--angular-making-requests)). Im Projekt müssen `qrCode`, `token` und `qrCodeId` deshalb tatsächlich im Backend-DTO vorhanden sein. Ein erfolgreicher TypeScript-Build allein bestätigt diesen Vertrag noch nicht durch einen echten Request.
+
+Zur Eigenleistung gehört hier die Anbindung und Zustandsdarstellung im Angular-Frontend. Die Backend-Erzeugung, Signatur und Ticketanlage waren bereits vorhanden und stammen aus der Backendarbeit eines Teammitglieds. In der Diplomarbeit sollten beide Beiträge getrennt beschrieben werden.
+
+## Kamera-Erkennung und fachliche Prüfung
+
+ZXing stellt mit `BrowserQRCodeReader` und `decodeFromConstraints` eine Möglichkeit bereit, fortlaufend Kamerabilder auszuwerten und die Erkennung über Controls zu stoppen ([SRC-030](../sources/sources.md#src-030--zxing-browser-v015)). ValidEat lädt die Bibliothek erst beim Klick auf „Kamera starten“. Der erste erkannte Text wird an dieselbe Methode übergeben wie eine manuelle Token-Eingabe. Damit teilen sich beide Eingabewege die HTTP-Anbindung und Fehleranzeige.
+
+Daran lässt sich eine wichtige Aufgabenteilung erklären: Die Scannerbibliothek erkennt ein optisches Muster; die ValidEat-Einlösung muss das Backend entscheiden. Auch ein korrekt lesbarer QR-Code kann einen ungültigen oder abgelaufenen Token enthalten. Die manuelle Eingabe dient als technischer Ersatzweg, wenn der Kamerazugriff scheitert. Sie umgeht die Backend-Prüfung nicht.
+
+Die Bibliothekswahl sollte nicht als Ergebnis eines umfassenden Leistungsvergleichs dargestellt werden. Für den vorhandenen Stand ist ihre API passend; Vergleichsmessungen zu Erkennungsdauer, schwachem Licht und unterschiedlichen Geräten liegen im Change-Nachweis nicht vor.
+
+## Kameraberechtigung und asynchroner Lebenszyklus
+
+Der Kamerazugriff setzt einen sicheren Browserkontext und eine Berechtigung voraus. Eine Berechtigungsanfrage kann auch unbeantwortet bleiben; ihr Promise muss dann nicht sofort abgeschlossen werden ([SRC-029](../sources/sources.md#src-029--mdn-getusermedia)). Für ValidEat erklärt das die Zustände „startet“, „aktiv“ und „Fehler“. Es erklärt außerdem, warum das Schließen der Seite während einer offenen Berechtigungsanfrage berücksichtigt werden muss.
+
+Der Code verwendet dafür `cameraRunId`: Jeder Start erhält eine Nummer, und ein Stoppen macht ältere Starts ungültig. Liefert ein alter Start später Scanner-Controls zurück, werden diese beendet. Das ist eine konkrete Absicherung gegen verspätete asynchrone Ergebnisse. Beim Treffer, manuellen Stoppen und Verlassen der Seite wird ebenfalls `stopCamera()` ausgeführt.
+
+MDN unterscheidet beim Stoppen eines Media-Tracks dessen Ende vom Abschalten der Quelle, die noch von anderen Tracks genutzt werden kann ([SRC-035](../sources/sources.md#src-035--mdn-mediastreamtrack-stop)). Im ValidEat-Seiten-Code wird das Stoppen an ZXing delegiert. Als spätere Prüfung bietet sich deshalb an, Berechtigung erst nach dem Verlassen der Seite zu erteilen und zu kontrollieren, ob dieser Scanner tatsächlich beendet bleibt. Das ist ein Testvorschlag, kein bereits nachgewiesenes Ergebnis.
+
+## WebSocket als Rückmeldung an den Mitarbeiter
+
+WebSocket erlaubt Nachrichten zwischen Browser und Server über eine bestehende Verbindung, ohne wiederholte Statusanfragen ([SRC-031](../sources/sources.md#src-031--mdn-websocket-api)). Im aktuellen ValidEat-Code verbindet sich die Mitarbeiterseite über `qrCodeId`; das Backend sendet beim Einlösen `SCAN_SUCCESS`. Die Anzeige wartet vor dem Einblenden des QR-Codes auf die geöffnete Verbindung.
+
+Für die Diplomarbeit ist vor allem die Fehlergrenze interessant: Fehlt diese Verbindung, kann das Backend dennoch die Tickets anlegen. Eine ausbleibende Nachricht beweist daher keine fehlgeschlagene Einlösung. Der Code hat bislang keine dauerhafte Ereignisspeicherung und keine nachträgliche Statusabfrage für diesen Fall. Eine Verbesserung wäre ein Status-Endpunkt je QR-ID, über den die Seite ihren Zustand nach einem Verbindungsabbruch wieder mit dem Backend abgleichen könnte.
+
+## JWT: Gültigkeitsdauer und Einmaligkeit
+
+RFC 7519 beschreibt signierte bzw. verschlüsselte JWTs und den Ablauf-Claim `exp`. Der registrierte Claim `jti` kann als Kennung für Maßnahmen gegen Wiederverwendung dienen ([SRC-032](../sources/sources.md#src-032--rfc-7519-json-web-token)). Daraus folgt für die Einordnung: Eine Signatur ist keine Verschlüsselung, und eine Ablaufzeit ist noch keine Einmalprüfung.
+
+ValidEat erstellt den Token mit fünf Minuten Gültigkeit und verwendet einen eigenen Claim namens `ticketId`. In der geprüften Scan-Methode ist keine sichtbare Prüfung auf eine bereits verbrauchte ID vorhanden. Die Zeitbegrenzung allein rechtfertigt deshalb nicht die Aussage, dass ein Screenshot nur einmal verwendet werden kann. Als offener Backend-Schritt lässt sich eine atomare Speicherung verbrauchter IDs nennen. Zusätzlich müssen Restaurant- und Tenant-Zuordnung geprüft werden. Diese Punkte sind Grenzen der vorhandenen Integration und keine bereits abgeschlossene Sicherheitslösung.
+
+## SVG-Anzeige und explizites Vertrauen
+
+Die Mitarbeiterseite macht aus dem SVG-Text des Backends eine Daten-URL und verwendet `bypassSecurityTrustUrl`. Laut Angular umgehen solche Vertrauensmarkierungen die entsprechende automatische Bereinigung und müssen sorgfältig geprüft werden ([SRC-033](../sources/sources.md#src-033--angular-security)). Die Formulierung „der Sanitizer macht das SVG sicher“ wäre für diesen Aufruf daher falsch.
+
+Die aktuelle Annahme ist, dass ausschließlich der eigene QR-Generator das SVG liefert. Diese Herkunft ist Teil der technischen Vertrauensgrenze. Wird die Quelle später geändert, muss die Entscheidung erneut geprüft werden. Im Bericht eignet sich das als Beispiel dafür, dass eine funktionierende Bildanzeige und eine geprüfte Sicherheitsentscheidung unterschiedliche Nachweise benötigen.
+
+## Vorschlag für ein Kapitel zur QR-Integration
+
+1. Ausgangslage: statische Restaurant-Demo und vorhandene Backend-Endpunkte.
+2. Ablauf und Schnittstellen: Mitarbeiterformular, QR-Erstellung und spätere Einlösung.
+3. Kamera-Anbindung: ZXing, gemeinsamer Token-Pfad und Berechtigungen.
+4. Zustände und Ressourcen: Start, Treffer, Abbruch, verspätete Ergebnisse und Freigabe.
+5. Rückmeldung: WebSocket, SCAN_SUCCESS und Verhalten bei Verbindungsverlust.
+6. Grenzen: JWT-Wiederverwendung, Tenant-/Restaurant-Prüfung und SVG-Vertrauen.
+7. Prüfung und Reflexion: dokumentierte Build-Ergebnisse und noch offene Gerätetests.
+
+Als Abbildung passt ein Sequenzdiagramm mit Mitarbeiter-Browser, Restaurant-Browser, Backend und Datenbank. Eine Testtabelle sollte für jeden Fall das erwartete und das tatsächlich beobachtete Ergebnis getrennt aufführen. Sinnvolle Fälle sind verweigerte Berechtigung, Navigation während des Kamerastarts, abgelaufener Token, wiederholte Einlösung und verlorene WebSocket-Verbindung. Die Quellen erklären die Mechanismen; erst eigene dokumentierte Versuche liefern Aussagen zur Zuverlässigkeit von ValidEat.
+
 ## Möglicher Textgedanke für die Reflexion
 
 Ich kann später schreiben, dass der Figma-Prototyp zwar als Designstand abgeschlossen wurde, aber bewusst nicht als fachlich freigegebenes Endprodukt gilt. Das ist eigentlich eine Stärke der Dokumentation: Sie trennt zwischen „ich habe den Prototyp erstellt“, „das Team oder Porsche hat ihn fachlich bestätigt“, „er wurde mit Personen getestet“ und „er wurde technisch umgesetzt“. Diese Trennung verhindert, dass der Prototyp mehr beweist, als er tatsächlich beweisen kann.

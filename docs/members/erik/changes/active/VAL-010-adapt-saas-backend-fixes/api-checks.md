@@ -1,0 +1,70 @@
+# Tatsächlich ausgeführte API-Prüfungen
+
+2026-09-27, unveränderte Serverquellen aus Backendcommit f05fd08, isoliertes Backend auf 8081, eigene temporäre PostgreSQL-Datenbank valideat_saas_val010. 64 Requests/Prüfbedingungen stimmen mit dem beobachteten Ist-Verhalten überein. Das sind keine 64 Unit-Tests und keine Behauptung, dass alle Funktionen korrekt oder sicher sind: 500 beim tenantlosen Login und Branding-Publish ohne Zeile, öffentliche Rollenvergabe und Modulupdate unbekannter Tenants sind ausdrücklich Fehlerbefunde.
+
+Prüfung durch temporäres Python-HTTP-Skript außerhalb des Repositorys. SQL nur in der eigenen Wegwerfdatenbank zur Nachbildung eines Alt-Tenants ohne Konfiguration und zum Nachweis der gespeicherten Registrierungsrollen. Keine Serverquelldateien verändert. Gleichzeitige Zuweisungen wurden nicht dynamisch getestet; fehlende atomare Sicherung ist ein Codebefund.
+
+- POST /employee/login: 200
+- Seeded admin login with assigned tenant
+- POST /employee/login: 200
+- GET /saas-admin/tenants: 401
+- GET /saas-admin/tenants: 403
+- GET /saas-admin/unassigned-employees: 401
+- GET /saas-admin/unassigned-employees: 403
+- PUT /saas-admin/tenant/1/modules: 401
+- PUT /saas-admin/tenant/1/modules: 403
+- GET /saas-admin/tenants: 200
+- Seed tenants present
+- POST /saas-admin/tenant: 201
+- GET /saas-admin/tenant/3/rules: 200
+- New tenant rules initialized with empty days
+- GET /saas-admin/tenant/3/branding: 200
+- New branding initialized in draft and published
+- PUT /saas-admin/tenant/3: 200
+- GET /saas-admin/tenant/3: 200
+- Organization edit round trip
+- PUT /saas-admin/tenant/3/rules: 200
+- GET /saas-admin/tenant/3/rules: 200
+- New tenant rules save/read without ID conflict
+- PUT /saas-admin/tenant/3/modules: 200
+- GET /saas-admin/tenant/3/modules: 200
+- Module selection persisted
+- PUT /saas-admin/tenant/3/branding: 200
+- GET /saas-admin/tenant/3/branding: 200
+- Branding draft round trip
+- POST /saas-admin/tenant/3/branding/publish: 200
+- GET /saas-admin/tenant/3/branding: 200
+- Publish round trip
+- PUT /saas-admin/tenant/3/branding: 200
+- GET /saas-admin/tenant/3/branding: 200
+- Later draft leaves publication unchanged
+- GET /saas-admin/tenant/99999/rules: 404
+- GET /saas-admin/tenant/99999/branding: 404
+- GET /saas-admin/tenant/4/rules: 200
+- Legacy rules fallback: null usageDays
+- GET /saas-admin/tenant/4/branding: 200
+- Legacy branding fallback from tenant
+- POST /saas-admin/tenant/4/branding/publish: 500
+- PUT /saas-admin/tenant/4/rules: 200
+- GET /saas-admin/tenant/4/rules: 200
+- First rules insert succeeds after generated seed IDs
+- PUT /saas-admin/tenant/4/branding: 200
+- POST /saas-admin/tenant/4/branding/publish: 200
+- GET /saas-admin/tenant/4/branding: 200
+- Legacy branding publish works after explicit save
+- POST /employee/register: 200
+- GET /saas-admin/unassigned-employees: 200
+- Unassigned DTO fields
+- PUT /saas-admin/assign/99999/10: 404
+- PUT /saas-admin/assign/3/99999: 404
+- PUT /saas-admin/assign/3/10: 403
+- PUT /saas-admin/assign/3/10: 200
+- PUT /saas-admin/assign/1/10: 409
+- GET /saas-admin/unassigned-employees: 200
+- Assigned employee removed from list
+- POST /employee/register: 200
+- OPEN DEFECT: public employee registration persists SAAS_ADMIN
+- POST /restaurantUser/register: 200
+- OPEN DEFECT: public restaurantUser registration persists SAAS_ADMIN
+- POST /employee/login: 500
+- PUT /saas-admin/tenant/99999/modules: 200

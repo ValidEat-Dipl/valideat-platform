@@ -13,7 +13,7 @@ Die Quellen erhalten stabile `SRC-`IDs. Die Capture-ID aus Eriks Firefox-Erweite
 | Abrufuhrzeit      | 14:05                                                                                                                                                                                                                                                                                          |
 | Zeitzone          | MESZ                                                                                                                                                                                                                                                                                           |
 | Autor/Herausgeber | OpenSpec                                                                                                                                                                                                                                                                                       |
-| Verwendung        | Erklärung von Spec-Driven Development und der Idee, Ziele, Umfang und Akzeptanzkriterien vor beziehungsweise während der Implementierung schriftlich festzuhalten. Relevant für die Trennung von Proposal, Design, Tasks und Implementierung sowie für Dokumentation außerhalb eines KI-Chats. |
+| Verwendung        | Erklärung von Spec-Driven Development und der Idee, Ziele, Umfang und Akzeptanzkriterien vor beziehungsweise während der Implementierung schriftlich festzuhalten. Relevant für die Trennung von Proposal, Design, Tasks und Implementierung sowie für dauerhafte Dokumentation außerhalb flüchtiger Gesprächsverläufe. |
 
 ## SRC-002 – OpenSpec README
 
@@ -301,6 +301,167 @@ Die Quellen erhalten stabile `SRC-`IDs. Die Capture-ID aus Eriks Firefox-Erweite
 | Autor/Herausgeber | Angular Team / Google                                                                                                                                                                                                                                                                                                                                                                        |
 | Verwendung        | Offizielle technische Grundlage für den Einsatz eines HTTP-Interceptors im Angular-Frontend. Relevant ist, dass Interceptors als Middleware für `HttpClient`-Requests eingesetzt werden können und typische wiederkehrende Aufgaben wie Authentifizierung zentral behandeln. Für ValidEat wurde diese Idee verwendet, um den gespeicherten JWT automatisch als Bearer-Token bei Backend-Requests mitzuschicken. |
 
+## SRC-024 – Angular Server-side Rendering
+
+| Feld              | Wert                                                                                                                                                                                                                                                                                                                                                                                                   |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Capture-ID        | noch nicht über Firefox-Erweiterung erfasst                                                                                                                                                                                                                                                                                                                                                            |
+| Titel             | Server-side rendering                                                                                                                                                                                                                                                                                                                                                                                   |
+| URL               | <https://angular.dev/best-practices/performance/ssr>                                                                                                                                                                                                                                                                                                                                                   |
+| Abrufdatum        | 2026-09-26                                                                                                                                                                                                                                                                                                                                                                                             |
+| Abrufuhrzeit      | nicht separat festgestellt                                                                                                                                                                                                                                                                                                                                                                              |
+| Zeitzone          | MESZ                                                                                                                                                                                                                                                                                                                                                                                                   |
+| Autor/Herausgeber | Angular Team / Google                                                                                                                                                                                                                                                                                                                                                                                  |
+| Verwendung        | Offizielle technische Grundlage zur Einordnung von serverseitigem Rendering, Prerendering und Client Rendering in Angular. Für ValidEat ist besonders relevant, dass einzelne Server-Routen mit `RenderMode.Client`, `RenderMode.Server` oder `RenderMode.Prerender` konfiguriert werden können. Die Quelle wurde verwendet, um zu begründen, warum geschützte, mandantenabhängige App-Bereiche nicht serverseitig vorgerendert werden sollten. |
+
+## SRC-025 – Angular `isPlatformBrowser`
+
+| Feld              | Wert                                                                                                                                                                                                                                                                                                                                                |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Capture-ID        | noch nicht über Firefox-Erweiterung erfasst                                                                                                                                                                                                                                                                                                         |
+| Titel             | isPlatformBrowser                                                                                                                                                                                                                                                                                                                                   |
+| URL               | <https://angular.dev/api/common/isPlatformBrowser>                                                                                                                                                                                                                                                                                                  |
+| Abrufdatum        | 2026-09-26                                                                                                                                                                                                                                                                                                                                          |
+| Abrufuhrzeit      | nicht separat festgestellt                                                                                                                                                                                                                                                                                                                          |
+| Zeitzone          | MESZ                                                                                                                                                                                                                                                                                                                                                |
+| Autor/Herausgeber | Angular Team / Google                                                                                                                                                                                                                                                                                                                               |
+| Verwendung        | Offizielle API-Referenz für die Prüfung, ob Angular-Code gerade im Browser ausgeführt wird. Die Quelle wurde verwendet, um den Zugriff auf Browser-Funktionen wie `localStorage` im Auth-Interceptor und im Benutzerspeicher gegen serverseitige Ausführung abzusichern. |
+
+## SRC-026 – MDN `Window.localStorage`
+
+| Feld              | Wert                                                                                                                                                                                                                                                                                                                                                      |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Capture-ID        | noch nicht über Firefox-Erweiterung erfasst                                                                                                                                                                                                                                                                                                               |
+| Titel             | Window: localStorage property                                                                                                                                                                                                                                                                                                                             |
+| URL               | <https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage>                                                                                                                                                                                                                                                                                    |
+| Abrufdatum        | 2026-09-26                                                                                                                                                                                                                                                                                                                                                |
+| Abrufuhrzeit      | nicht separat festgestellt                                                                                                                                                                                                                                                                                                                                |
+| Zeitzone          | MESZ                                                                                                                                                                                                                                                                                                                                                      |
+| Autor/Herausgeber | MDN Web Docs / Mozilla contributors                                                                                                                                                                                                                                                                                                                       |
+| Verwendung        | Einordnung von `localStorage` als Web-API des Browser-`window`-Objekts. Die Quelle wurde verwendet, um zu erklären, warum `localStorage` für die einfache lokale JWT-Ablage im Entwicklungsstand geeignet sein kann, aber nicht automatisch in serverseitigem Angular-Code verfügbar ist und kein vollständiges Sicherheitskonzept ersetzt. |
+
+## SRC-027 – Android Debug Bridge
+
+| Feld              | Wert                                                                                                                                                                                                                                                                                                                                                                    |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Capture-ID        | noch nicht über Firefox-Erweiterung erfasst                                                                                                                                                                                                                                                                                                                             |
+| Titel             | Android Debug Bridge (adb)                                                                                                                                                                                                                                                                                                                                              |
+| URL               | <https://developer.android.com/tools/adb>                                                                                                                                                                                                                                                                                                                               |
+| Abrufdatum        | 2026-09-26                                                                                                                                                                                                                                                                                                                                                              |
+| Abrufuhrzeit      | nicht separat festgestellt                                                                                                                                                                                                                                                                                                                                              |
+| Zeitzone          | MESZ                                                                                                                                                                                                                                                                                                                                                                    |
+| Autor/Herausgeber | Android Developers / Google                                                                                                                                                                                                                                                                                                                                             |
+| Verwendung        | Offizielle Grundlage zur Nutzung von Android Debug Bridge für die Kommunikation zwischen Entwicklungsrechner und Android-Gerät. Relevant sind insbesondere USB-Debugging, `adb devices` und der Einsatz eines echten Geräts für lokale Tests. Für ValidEat wurde die Quelle zur Einordnung des temporären Handy-Testaufbaus für den QR-Scan verwendet. |
+
+## SRC-028 – ADB Manpage zu `reverse`
+
+| Feld              | Wert                                                                                                                                                                                                                                                                                                                                                               |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Capture-ID        | noch nicht über Firefox-Erweiterung erfasst                                                                                                                                                                                                                                                                                                                        |
+| Titel             | ADB(1) Man Page                                                                                                                                                                                                                                                                                                                                                    |
+| URL               | <https://android.googlesource.com/platform/packages/modules/adb/+/HEAD/docs/user/adb.1.md>                                                                                                                                                                                                                                                                         |
+| Abrufdatum        | 2026-09-26                                                                                                                                                                                                                                                                                                                                                         |
+| Abrufuhrzeit      | nicht separat festgestellt                                                                                                                                                                                                                                                                                                                                         |
+| Zeitzone          | MESZ                                                                                                                                                                                                                                                                                                                                                               |
+| Autor/Herausgeber | Android Open Source Project                                                                                                                                                                                                                                                                                                                                        |
+| Verwendung        | Technische Referenz für `adb reverse`. Die Quelle beschreibt, dass Reverse-Socket-Verbindungen vom Gerät zum lokalen Entwicklungsrechner eingerichtet und mit `adb reverse --list` geprüft werden können. Für ValidEat wurde das genutzt, um `localhost:4200` und `localhost:8080` temporär vom Android-Gerät auf den Mac weiterzuleiten. |
+
+## SRC-029 – MDN getUserMedia
+
+| Feld | Wert |
+| --- | --- |
+| Capture-ID | noch nicht über Firefox-Erweiterung erfasst |
+| Titel | MediaDevices: getUserMedia() method |
+| URL | <https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia> |
+| Abrufdatum | 2026-09-26 |
+| Abrufuhrzeit | nicht separat festgestellt |
+| Zeitzone | MESZ |
+| Autor/Herausgeber | MDN contributors / MDN Web Docs |
+| Verwendung | Erklärung von Kameraberechtigung, sicherem Browserkontext und asynchronem Kamerastart für den QR-Scan. Relevant sind die Abschnitte zu Rückgabewert, Fehlern und Datenschutz. |
+
+## SRC-030 – ZXing Browser v0.1.5
+
+| Feld | Wert |
+| --- | --- |
+| Capture-ID | noch nicht über Firefox-Erweiterung erfasst |
+| Titel | ZXing for JS – Browser layer, README im Tag v0.1.5 |
+| URL | <https://github.com/zxing-js/browser/blob/v0.1.5/README.md> |
+| Abrufdatum | 2026-09-26 |
+| Abrufuhrzeit | nicht separat festgestellt |
+| Zeitzone | MESZ |
+| Autor/Herausgeber | zxing-js / Mitwirkende am ZXing-Browser-Projekt |
+| Verwendung | Technische Referenz für BrowserQRCodeReader, decodeFromConstraints und Scanner-Controls. Der verlinkte Tag entspricht der im Projekt eingetragenen Version 0.1.5. Belegt die API-Verwendung, aber keine fehlerfreie Erkennung auf ValidEat-Zielgeräten. |
+
+## SRC-031 – MDN WebSocket API
+
+| Feld | Wert |
+| --- | --- |
+| Capture-ID | noch nicht über Firefox-Erweiterung erfasst |
+| Titel | WebSocket API (WebSockets) |
+| URL | <https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API> |
+| Abrufdatum | 2026-09-26 |
+| Abrufuhrzeit | nicht separat festgestellt |
+| Zeitzone | MESZ |
+| Autor/Herausgeber | MDN contributors / MDN Web Docs |
+| Verwendung | Grundlage für die ereignisbasierte Rückmeldung vom Backend an die wartende Mitarbeiterseite. Der konkrete Nachrichtentext SCAN_SUCCESS und seine Zuordnung über qrCodeId sind ValidEat-spezifisch. |
+
+## SRC-032 – RFC 7519 JSON Web Token
+
+| Feld | Wert |
+| --- | --- |
+| Capture-ID | noch nicht über Firefox-Erweiterung erfasst |
+| Titel | RFC 7519: JSON Web Token (JWT) |
+| URL | <https://www.rfc-editor.org/rfc/rfc7519> |
+| Abrufdatum | 2026-09-26 |
+| Abrufuhrzeit | nicht separat festgestellt |
+| Zeitzone | MESZ |
+| Autor/Herausgeber | M. Jones, J. Bradley, N. Sakimura / IETF, RFC Editor |
+| Veröffentlichung | Mai 2015 |
+| Verwendung | Begriffsgrundlage zu JWT, Signatur und Verschlüsselung sowie zu exp (Abschnitt 4.1.4), jti (4.1.7) und privaten Claims (4.3). Hilft, Ablaufzeit und mögliche Wiederverwendung einzuordnen. Der ValidEat-Claim ticketId ist ein eigener Claim und darf nicht mit einer bereits implementierten jti-basierten Einmalprüfung gleichgesetzt werden. |
+
+## SRC-033 – Angular Security
+
+| Feld | Wert |
+| --- | --- |
+| Capture-ID | noch nicht über Firefox-Erweiterung erfasst |
+| Titel | Security |
+| URL | <https://angular.dev/best-practices/security> |
+| Abrufdatum | 2026-09-26 |
+| Abrufuhrzeit | nicht separat festgestellt |
+| Zeitzone | MESZ |
+| Autor/Herausgeber | Angular-Team / Google |
+| Verwendung | Einordnung der Vertrauensgrenze beim Anzeigen des Backend-SVGs mit bypassSecurityTrustUrl. Relevant sind Sanitization und das ausdrückliche Vertrauen von Werten; die Methode ist keine zusätzliche Prüfung des SVG-Inhalts. |
+
+## SRC-034 – Angular Making requests
+
+| Feld | Wert |
+| --- | --- |
+| Capture-ID | noch nicht über Firefox-Erweiterung erfasst |
+| Titel | Making requests |
+| URL | <https://angular.dev/guide/http/making-requests> |
+| Abrufdatum | 2026-09-26 |
+| Abrufuhrzeit | nicht separat festgestellt |
+| Zeitzone | MESZ |
+| Autor/Herausgeber | Angular-Team / Google |
+| Verwendung | Erklärung der HttpClient-Observables, des Sendens von Text-/JSON-Daten und der Grenze generischer Antworttypen. Grundlage zur Beschreibung der zwei unterschiedlichen QR-Endpunkte. |
+
+## SRC-035 – MDN MediaStreamTrack stop
+
+| Feld | Wert |
+| --- | --- |
+| Capture-ID | noch nicht über Firefox-Erweiterung erfasst |
+| Titel | MediaStreamTrack: stop() method |
+| URL | <https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamTrack/stop> |
+| Abrufdatum | 2026-09-26 |
+| Abrufuhrzeit | nicht separat festgestellt |
+| Zeitzone | MESZ |
+| Autor/Herausgeber | MDN contributors / MDN Web Docs |
+| Verwendung | Hintergrund zum Freigeben von Kameraressourcen. ValidEat nutzt hierfür die ZXing-Scanner-Controls; es ruft im Seiten-Code nicht direkt MediaStreamTrack.stop auf. Die Quelle unterscheidet das Stoppen eines Tracks vom vollständigen Abschalten einer möglicherweise gemeinsam genutzten Kameraquelle. |
+
+## Einordnung der QR-Quellen
+
+SRC-029 bis SRC-035 wurden am 26.09.2026 für die technische Erklärung des bereits vorhandenen QR-Flows recherchiert. Sie werden nicht rückwirkend als ursprüngliche Entscheidungsgrundlage oder als Nachweis ausgeführter Gerätetests ausgegeben. MDN beschreibt Browser-APIs, Angular und ZXing ihre eigenen Schnittstellen; RFC 7519 definiert das Tokenformat. Die Aussagen über ValidEat selbst stammen aus dem Repository. Die Quellen ersetzen weder eine fachliche Freigabe noch eine Sicherheitsprüfung oder einen Vergleich verschiedener Scanner auf echten Geräten. Die laufenden Angular-Dokumentationen sind keine eingefrorene Dokumentation speziell für die im Projekt verwendete Angular-Version; die angeführten APIs wurden deshalb zusätzlich mit dem lokalen Code abgeglichen.
+
 ## Einordnung
 
-Die OpenSpec-Quellen beschreiben das Werkzeug und seinen eigenen Workflow. Sie sind keine unabhängige wissenschaftliche Bewertung von OpenSpec. TechTarget, Alltena und BairesDev sind praxisorientierte Webquellen und keine verbindlichen Normen. Das Figma Community UI Kit ist eine Designressource und keine technische Spezifikation. Für Bootstrap werden deshalb zusätzlich die offiziellen Dokumentationsseiten als technische Hauptquellen verwendet. Die neuen Figma-Quellen beschreiben Figma-Funktionen und Arbeitsweisen direkt vom Anbieter. Die W3C-Quellen werden als fachlich stärkere Grundlage für Accessibility verwendet, ersetzen aber keine tatsächliche Prüfung des ValidEat-Prototyps. Die Angular-Quellen sind offizielle technische Dokumentation und API-Referenzen für die verwendeten Router-, Input-, Location-, Change-Detection- und HTTP-Interceptor-Funktionen. Sie belegen nicht, dass die konkrete Aufteilung in einen Employee-Feature-Ordner durch Angular vorgeschrieben ist; diese Aufteilung bleibt eine projektspezifische Architekturentscheidung. Die klassische `@Input`-API ist weiterhin unterstützt, obwohl Angular für neue Projekte signalbasierte Inputs empfiehlt. Die Bootstrap-Breakpoints liefern eine technische Grundlage für responsive Anpassungen, schreiben aber weder konkrete Zielgeräte noch die designspezifische maximale Breite des ValidEat-Mitarbeiterbereichs vor.
+Die OpenSpec-Quellen beschreiben das Werkzeug und seinen eigenen Workflow. Sie sind keine unabhängige wissenschaftliche Bewertung von OpenSpec. TechTarget, Alltena und BairesDev sind praxisorientierte Webquellen und keine verbindlichen Normen. Das Figma Community UI Kit ist eine Designressource und keine technische Spezifikation. Für Bootstrap werden deshalb zusätzlich die offiziellen Dokumentationsseiten als technische Hauptquellen verwendet. Die neuen Figma-Quellen beschreiben Figma-Funktionen und Arbeitsweisen direkt vom Anbieter. Die W3C-Quellen werden als fachlich stärkere Grundlage für Accessibility verwendet, ersetzen aber keine tatsächliche Prüfung des ValidEat-Prototyps. Die Angular-Quellen sind offizielle technische Dokumentation und API-Referenzen für die verwendeten Router-, Input-, Location-, Change-Detection-, SSR- und HTTP-Interceptor-Funktionen. Sie belegen nicht, dass die konkrete Aufteilung in einen Employee-Feature-Ordner durch Angular vorgeschrieben ist; diese Aufteilung bleibt eine projektspezifische Architekturentscheidung. Die klassische `@Input`-API ist weiterhin unterstützt, obwohl Angular für neue Projekte signalbasierte Inputs empfiehlt. Die Bootstrap-Breakpoints liefern eine technische Grundlage für responsive Anpassungen, schreiben aber weder konkrete Zielgeräte noch die designspezifische maximale Breite des ValidEat-Mitarbeiterbereichs vor. Die Android- und ADB-Quellen beschreiben nur den temporären lokalen Testaufbau mit einem Android-Gerät; daraus ergibt sich keine produktive Deployment- oder Netzwerkanforderung für ValidEat.

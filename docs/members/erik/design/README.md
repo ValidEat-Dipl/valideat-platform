@@ -10,8 +10,10 @@ Hier werden die zentralen Verweise auf Eriks persönliche UI/UX-Arbeiten für Va
 - Zugehöriger Change: [VAL-003-design-figma-prototype](../changes/completed/2026-07-09-VAL-003-design-figma-prototype/proposal.md)
 - Zugehöriger Erweiterungs-Change: [VAL-006-design-restaurant-saas-prototype](../changes/active/VAL-006-design-restaurant-saas-prototype/proposal.md)
 - Zugehöriges GitHub Issue: [#2 – Figma Prototyp](https://github.com/ValidEat-Dipl/valideat-platform/issues/2)
-- Stand am 2026-07-08: zwei vollständige und in Figma verknüpfte Prototypbereiche mit insgesamt 21 Screens
-- Status: `implemented`; 
+- Stand am 2026-07-08: zwei vollständige und in Figma verknüpfte Prototypbereiche mit insgesamt 21 Screens.
+- Ergänzungsstand am 2026-08-10: Restaurant-User-, Restaurant-Admin- und SaaS-Seiten wurden als Figma-Entwürfe erstellt.
+- Technischer Stand am 2026-09-27: Employee-, Restaurant-User-, Restaurant-Admin- und SaaS-Admin-Bereiche sind in Angular/Bootstrap umgesetzt beziehungsweise angebunden. Offene Punkte stehen in den jeweiligen Changes und in der zentralen Übersicht [Offene Punkte und Stand](../../open-items.md).
+- Status: `implemented`, aber nicht vollständig fachlich verifiziert.
 
 Der Prototyp konzentriert sich zunächst auf den Porsche-Kernprozess. Offene fachliche Regeln und nicht bestätigte Designentscheidungen bleiben vorläufig.
 
@@ -54,7 +56,14 @@ Der spätere Restaurant- und SaaS-Bereich ist unter demselben Figma-Link dokumen
 
 Stand am 2026-08-10: Restaurant-User-, Restaurant-Admin- und SaaS-Seiten wurden als Figma-Entwürfe erstellt. Es wurde kein vollständiger klickbarer Gesamtprototyp berichtet.
 
+Die technische Umsetzung wurde danach schrittweise begonnen. Restaurant User und Restaurant Admin sind nicht mehr nur Figma-Konzept. Auch der SaaS-Admin-Bereich wurde als Angular-Bereich umgesetzt und später an vorhandene Backendrouten angebunden. Die Figma-Datei bleibt trotzdem die Designreferenz; der tatsächliche Implementierungs- und Prüfstand liegt in den jeweiligen Change-Nachweisen.
+
 ### Restaurant User
+
+Umsetzung und Nachweis:
+
+- Frontend-Umsetzung und QR-Integration: [VAL-007](../changes/active/VAL-007-integrate-qr-code-scan-flow/evidence.md)
+- Stand: QR-Erzeugung, Kamera-/Token-Scan und WebSocket-Rückmeldung sind implementiert; vollständiger echter End-to-End-Gerätetest bleibt offen.
 
 1. Login
 2. Restaurant wählen
@@ -70,12 +79,23 @@ Stand am 2026-08-10: Restaurant-User-, Restaurant-Admin- und SaaS-Seiten wurden 
 
 ### Restaurant Admin
 
+Umsetzung und Nachweis:
+
+- Stand am 2026-09-27: Restaurant-Admin-Oberfläche wurde in Angular/Bootstrap umgesetzt und laut Projektverlauf committed/gepusht. Die Dokumentation liegt nicht als eigener aktiver Change vor, sondern ist im Entwicklungsverlauf und Repository-Stand nachvollziehbar.
+
 1. Übersicht
 2. Einlösungen
 3. Abrechnung
 4. Einstellungen
 
 ### SaaS
+
+Umsetzung und Nachweis:
+
+- Figma-/Konzeptstand: [VAL-006](../changes/active/VAL-006-design-restaurant-saas-prototype/evidence.md)
+- erster SaaS-Admin-Frontendstand: [VAL-008](../changes/active/VAL-008-implement-saas-admin-frontend/evidence.md)
+- Backendanbindung, historischer Stand: [VAL-009](../changes/active/VAL-009-connect-saas-admin-backend/report.md)
+- aktueller SaaS-Stand nach Backendfixes: [VAL-010](../changes/active/VAL-010-adapt-saas-backend-fixes/status.md)
 
 1. Login
 2. Register
@@ -86,3 +106,4 @@ Stand am 2026-08-10: Restaurant-User-, Restaurant-Admin- und SaaS-Seiten wurden 
 7. Branding
 8. Branding-Vorschau
 9. Kundenübersicht
+10. Nutzer-/Tenant-Zuweisung als zusätzliche wichtige Seite außerhalb der ursprünglichen Figma-Liste
