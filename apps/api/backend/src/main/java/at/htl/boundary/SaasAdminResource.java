@@ -10,6 +10,7 @@ import at.htl.repository.RestaurantRepository;
 import at.htl.repository.RestaurantUserRepository;
 import at.htl.repository.SaaSAdminRepository;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
@@ -38,6 +39,7 @@ public class SaasAdminResource {
 
     @POST
     @Path("/tenant")
+    @RolesAllowed("SAAS_ADMIN")
     public Response createTenant(CreateTenantDTO dto) {
 
         Tenant tenant = saasAdminRepository.createTenant(dto);
@@ -49,12 +51,14 @@ public class SaasAdminResource {
 
     @GET
     @Path("/tenants")
+    @RolesAllowed("SAAS_ADMIN")
     public List<TenantOverviewDTO> getTenantOverviews() {
         return saasAdminRepository.getTenantOverviews();
     }
 
     @GET
     @Path("/tenant-overview")
+    @RolesAllowed("SAAS_ADMIN")
     public TenantOverviewDTO getTenantOverview() {
 
         Long tenantId = Long.valueOf(sessionToken.getClaim("tenantId").toString()
@@ -65,6 +69,7 @@ public class SaasAdminResource {
 
     @GET
     @Path("/tenant/{id}")
+    @RolesAllowed("SAAS_ADMIN")
     public Response getTenant(@PathParam("id") Long id) {
 
         Tenant tenant = saasAdminRepository.findTenantById(id);
@@ -78,6 +83,7 @@ public class SaasAdminResource {
 
     @GET
     @Path("/tenantByManager/{id}")
+    @RolesAllowed("SAAS_ADMIN")
     public List<Tenant> getMyTenants(@PathParam("id") Long saasAdminId) {
         Employee saasAdmin = employeeRepository.getEmpById(saasAdminId);
         return saasAdminRepository.findTenantBySaaSAdminId(saasAdmin.getFirstName() + " " + saasAdmin.getLastName());
@@ -85,16 +91,26 @@ public class SaasAdminResource {
 
     @PUT
     @Path("/assign/{empId}")
+    @RolesAllowed("SAAS_ADMIN")
     @Transactional
     public Response assignEmpToTenant(@PathParam("empId") Long empId) {
         Long tenantId = Long.valueOf(sessionToken.getClaim("tenantId").toString());
         Tenant tenant = saasAdminRepository.findTenantById(tenantId);
         Employee employee = employeeRepository.findById(empId);
+        if (tenant == null || employee == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        if (employee.getTenant() != null) {
+            return Response.status(Response.Status.CONFLICT).build();
+        }
+
         return saasAdminRepository.assignEmpToTenant(tenant, employee);
     }
 
     @PUT
     @Path("/restaurant/{restaurantId}")
+    @RolesAllowed("SAAS_ADMIN")
     @Transactional
     public Response assignRestaurantToTenant(
             @PathParam("restaurantId") Long restaurantId) {
@@ -110,6 +126,7 @@ public class SaasAdminResource {
 
     @PUT
     @Path("/restaurant/{restaurantId}/user/{userId}")
+    @RolesAllowed("SAAS_ADMIN")
     @Transactional
     public Response assignUserToRestaurant(
             @PathParam("restaurantId") Long restaurantId,
@@ -129,6 +146,7 @@ public class SaasAdminResource {
 
     @POST
     @Path("/tier")
+    @RolesAllowed("SAAS_ADMIN")
     @Transactional
     @Consumes(MediaType.TEXT_PLAIN)
     public Response createTier(String name, @QueryParam("discount") double discount) {
@@ -141,6 +159,7 @@ public class SaasAdminResource {
 
     @POST
     @Path("/costorder")
+    @RolesAllowed("SAAS_ADMIN")
     @Transactional
     @Consumes(MediaType.TEXT_PLAIN)
     public Response createCostOrder(String name) {
@@ -153,24 +172,33 @@ public class SaasAdminResource {
 
     @GET
     @Path("/unassigned-employees")
+    @RolesAllowed("SAAS_ADMIN")
     public List<UnassignedEmpDTO> findEmpWithoutTenant() {
         return saasAdminRepository.findEmpWithoutTenant();
     }
 
     @PUT
     @Path("/assign/{tenantId}/{empId}")
+    @RolesAllowed("SAAS_ADMIN")
     @Transactional
     public Response assignEmpToFixedTenant(@PathParam("tenantId") Long tenantId, @PathParam("empId") Long empId) {
         Tenant tenant = saasAdminRepository.findTenantById(tenantId);
         Employee employee = employeeRepository.findById(empId);
+        if (tenant == null || employee == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
         if (employee.getTenant() == null) {
             return saasAdminRepository.assignEmpToTenant(tenant, employee);
         }
-        return Response.status(Response.Status.BAD_REQUEST).build();
+
+
+        return Response.status(Response.Status.CONFLICT).build();
     }
 
     @PUT
     @Path("tenant/{id}")
+    @RolesAllowed("SAAS_ADMIN")
     @Transactional
     public Response editTenant(@PathParam("id") Long tenantId, EditTenantDTO dto) {
         saasAdminRepository.updateTenant(tenantId, dto);
@@ -181,6 +209,7 @@ public class SaasAdminResource {
 
     @GET
     @Path("tenant/{tenantId}/modules")
+    @RolesAllowed("SAAS_ADMIN")
     public List<TenantModuleDTO> getModules(
             @PathParam("tenantId") Long tenantId) {
 
@@ -190,6 +219,7 @@ public class SaasAdminResource {
 
     @PUT
     @Path("tenant/{tenantId}/modules")
+    @RolesAllowed("SAAS_ADMIN")
     @Transactional
     public Response updateModules(
             @PathParam("tenantId") Long tenantId,
@@ -208,6 +238,7 @@ public class SaasAdminResource {
 
     @GET
     @Path("tenant/{tenantId}/rules")
+    @RolesAllowed("SAAS_ADMIN")
     public TenantRulesDTO getRules(
             @PathParam("tenantId") Long tenantId) {
 
@@ -217,6 +248,7 @@ public class SaasAdminResource {
 
     @PUT
     @Path("tenant/{tenantId}/rules")
+    @RolesAllowed("SAAS_ADMIN")
     @Transactional
     public Response updateRules(
             @PathParam("tenantId") Long tenantId,
@@ -233,6 +265,7 @@ public class SaasAdminResource {
 
     @GET
     @Path("tenant/{tenantId}/branding")
+    @RolesAllowed("SAAS_ADMIN")
     public TenantBrandingDTO getBranding(
             @PathParam("tenantId") Long tenantId) {
 
@@ -242,6 +275,7 @@ public class SaasAdminResource {
 
     @PUT
     @Path("tenant/{tenantId}/branding")
+    @RolesAllowed("SAAS_ADMIN")
     @Transactional
     public Response updateBranding(
             @PathParam("tenantId") Long tenantId,
@@ -258,6 +292,7 @@ public class SaasAdminResource {
 
     @POST
     @Path("tenant/{tenantId}/branding/publish")
+    @RolesAllowed("SAAS_ADMIN")
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
     public Response publishBranding(

@@ -418,14 +418,13 @@ VALUES
 -- =========================================================
 
 INSERT INTO tenant_rules (
-    id,
     tenant_id,
     restaurantRequired,
     correctionHints
 )
 VALUES
-    (1, 1, true, true),
-    (2, 2, false, true);
+    (1, true, true),
+    (2, false, true);
 
 
 -- =========================================================

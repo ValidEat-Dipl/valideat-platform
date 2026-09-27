@@ -34,6 +34,30 @@ public class SaaSAdminRepository {
         );
 
         entityManager.persist(tenant);
+        entityManager.flush();
+
+        TenantRules rules = new TenantRules();
+        rules.setTenant(tenant);
+        rules.setUsageDays(null);
+        rules.setRestaurantRequired(false);
+        rules.setCorrectionHints(false);
+
+        entityManager.persist(rules);
+
+        TenantBranding branding = new TenantBranding();
+        branding.setTenant(tenant);
+
+        branding.setDraftAppName(dto.name());
+        branding.setDraftShortName(dto.name());
+        branding.setDraftPrimaryColor(dto.primaryColor());
+        branding.setDraftAccentColor(dto.accentColor());
+
+        branding.setPublishedAppName(dto.name());
+        branding.setPublishedShortName(dto.name());
+        branding.setPublishedPrimaryColor(dto.primaryColor());
+        branding.setPublishedAccentColor(dto.accentColor());
+
+        entityManager.persist(branding);
 
         return tenant;
     }
@@ -349,13 +373,29 @@ public class SaaSAdminRepository {
 
     public TenantRulesDTO getTenantRules(Long tenantId) {
 
-        TenantRules rules = entityManager.createQuery("""
-            select r
-            from TenantRules r
-            where r.tenant.id = :tenantId
-            """, TenantRules.class)
+        Tenant tenant = entityManager.find(Tenant.class, tenantId);
+
+        if (tenant == null) {
+            throw new NotFoundException("Tenant not found");
+        }
+
+        List<TenantRules> result = entityManager.createQuery("""
+        select r
+        from TenantRules r
+        where r.tenant.id = :tenantId
+        """, TenantRules.class)
                 .setParameter("tenantId", tenantId)
-                .getSingleResult();
+                .getResultList();
+
+        if (result.isEmpty()) {
+            return new TenantRulesDTO(
+                    null,
+                    false,
+                    false
+            );
+        }
+
+        TenantRules rules = result.getFirst();
 
         return new TenantRulesDTO(
                 rules.getUsageDays(),
@@ -399,18 +439,34 @@ public class SaaSAdminRepository {
     }
 
     public TenantBrandingDTO getTenantBranding(Long tenantId) {
-        if (findTenantById(tenantId) == null) {
-            throw new NotFoundException();
+
+        Tenant tenant = entityManager.find(Tenant.class, tenantId);
+
+        if (tenant == null) {
+            throw new NotFoundException("Tenant not found");
         }
 
-
-        TenantBranding branding = entityManager.createQuery("""
-            select b
-            from TenantBranding b
-            where b.tenant.id = :tenantId
-            """, TenantBranding.class)
+        List<TenantBranding> result = entityManager.createQuery("""
+        select b
+        from TenantBranding b
+        where b.tenant.id = :tenantId
+        """, TenantBranding.class)
                 .setParameter("tenantId", tenantId)
-                .getSingleResult();
+                .getResultList();
+
+        if (result.isEmpty()) {
+            BrandingDTO empty = new BrandingDTO(
+                    tenant.getName(),
+                    tenant.getName(),
+                    tenant.getPrimaryColor(),
+                    tenant.getAccentColor(),
+                    null
+            );
+
+            return new TenantBrandingDTO(empty, empty);
+        }
+
+        TenantBranding branding = result.getFirst();
 
         BrandingDTO draft = new BrandingDTO(
                 branding.getDraftAppName(),
