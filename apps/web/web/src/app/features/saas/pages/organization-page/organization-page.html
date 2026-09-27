@@ -1,136 +1,92 @@
 <h1>Organisation & Regeln</h1>
-<p class="subtitle">
-  Stammdaten, Rollen, Basisdaten und Markerlregeln für
-  {{ state.selected?.tenantName || 'Ihre Organisation' }}.
-</p>
+<p class="subtitle">Stammdaten und Verwendungsregeln der ausgewählten Organisation.</p>
 
 @if (state.selected; as tenant) {
+  @if (loading()) { <p role="status">Organisationsdaten werden geladen …</p> }
+  @if (loadError()) { <div class="alert alert-danger" role="alert">{{ loadError() }}</div> }
 
-  <section class="card mb-3">
+  <form [formGroup]="organizationForm" (ngSubmit)="saveOrganization()" (input)="saved.set(false)" class="card mb-3">
     <div class="card-body">
       <h2 class="border-bottom pb-3">1. Organisationsdaten</h2>
-      <div class="row g-3">
-        <div class="col-md-4">
-          <div class="hint">Name</div>
-          {{ tenant.tenantName }}
-        </div>
-        <div class="col-md-4">
-          <div class="hint">Land / Region</div>
-          {{ tenant.country || 'Nicht angegeben' }}
-        </div>
-        <div class="col-md-4">
-          <div class="hint">Größe</div>
-          {{ tenant.companySize || 'Nicht angegeben' }}
-        </div>
-        <div class="col-md-4">
-          <div class="hint">Kontaktperson</div>
-          {{ tenant.manager || 'Nicht angegeben' }}
-        </div>
-        <div class="col-md-8">
-          <div class="hint">E-Mail</div>
-          {{ tenant.email || 'Nicht angegeben' }}
-        </div>
-      </div>
-      <p class="hint mt-3 mb-0">
-        Änderungen an bestehenden Organisationsdaten werden vom Backend noch nicht unterstützt.
-      </p>
-    </div>
-
-  </section>
-
-  <section class="card mb-3">
-    <div class="card-body">
-      <h2 class="border-bottom pb-3">2. Rollen & Basisdaten</h2>
-      <div class="row g-3">
-        <div class="col-6 col-lg">
-          <div class="metric">{{ tenant.adminCount }}</div>
-          <div class="hint">HR / Admin</div>
-        </div>
-        <div class="col-6 col-lg">
-          <div class="metric">{{ tenant.employeeCount }}</div>
-          <div class="hint">Mitarbeitende gesamt</div>
-        </div>
-        <div class="col-6 col-lg">
-          <div class="metric">{{ tenant.costOrderCount }}</div>
-          <div class="hint">Kostenstellen</div>
-        </div>
-        <div class="col-6 col-lg">
-          <div class="metric">{{ tenant.restaurantCount }}</div>
-          <div class="hint">Restaurants</div>
-        </div>
-        <div class="col-6 col-lg">
-          <div class="metric">{{ tenant.tierCount }}</div>
-          <div class="hint">Markerlstufen</div>
-        </div>
-      </div>
-    </div>
-
-  </section>
-
-} @else {
-  <div class="alert alert-secondary">Bitte eine vorhandene Organisation auswählen.</div>
-}
-
-<form [formGroup]="rulesForm" (ngSubmit)="save()" (input)="saved.set(false)">
-
-  <section class="card">
-    <div class="card-body">
-      <h2 class="border-bottom pb-3">
-        3. Verwendungsregeln
-        <span class="badge text-bg-info">Lokaler Entwurf</span>
-      </h2>
-      <p class="hint">
-        Die angezeigten Anfangswerte sind Vorschläge, keine gespeicherten Unternehmensregeln.
-      </p>
-
-      <fieldset [disabled]="!state.selected">
+      <fieldset [disabled]="loading() || saving() || !!loadError()">
         <div class="row g-3">
           <div class="col-md-6">
-
-            <label for="days" class="form-label">Erlaubte Tage</label>
-            <select id="days" name="days" formControlName="days" class="form-select">
-              <option>Mo–Fr</option>
-              <option>Mo–Sa</option>
-              <option>Alle Tage</option>
-            </select>
+            <label for="org-name" class="form-label">Name</label>
+            <input id="org-name" class="form-control" formControlName="organisationName" maxlength="150" />
           </div>
           <div class="col-md-6">
-
-            <label for="correction" class="form-label">Notiz zu Korrekturregeln</label>
-            <input id="correction"  name="correction"
-              class="form-control"
-              formControlName="correction"
-              maxlength="300"
-            />
+            <label for="contact" class="form-label">Kontaktperson</label>
+            <input id="contact" class="form-control" formControlName="contactPerson" maxlength="150" />
           </div>
-          <div class="col-12">
-
-            <label class="form-check">
-              <input class="form-check-input"
-                type="checkbox"
-                name="restaurant"
-                formControlName="restaurantRequired"
-              />
-              <span class="form-check-label">Restaurantangabe erforderlich</span>
-            </label>
+          <div class="col-md-6">
+            <label for="org-email" class="form-label">E-Mail</label>
+            <input id="org-email" type="email" class="form-control" formControlName="email" />
+          </div>
+          <div class="col-md-3">
+            <label for="country" class="form-label">Land / Region</label>
+            <input id="country" class="form-control" formControlName="country" />
+          </div>
+          <div class="col-md-3">
+            <label for="size" class="form-label">Größe</label>
+            <input id="size" class="form-control" formControlName="companySize" />
           </div>
         </div>
+        <button class="btn btn-primary btn-sm mt-3" [disabled]="organizationForm.invalid">
+          {{ saving() ? 'Wird gespeichert …' : 'Organisation speichern' }}
+        </button>
       </fieldset>
+      @if (saved()) { <p class="text-success mt-3" role="status">Organisation gespeichert.</p> }
+      @if (saveError()) { <p class="text-danger mt-3" role="alert">{{ saveError() }}</p> }
     </div>
+  </form>
 
-  </section>
+  <section class="card mb-3"><div class="card-body">
+    <h2 class="border-bottom pb-3">2. Rollen & Basisdaten</h2>
+    <div class="row g-3">
+      <div class="col"><div class="metric">{{ tenant.adminCount }}</div><div class="hint">HR / Admin</div></div>
+      <div class="col"><div class="metric">{{ tenant.employeeCount }}</div><div class="hint">Mitarbeitende</div></div>
+      <div class="col"><div class="metric">{{ tenant.costOrderCount }}</div><div class="hint">Kostenstellen</div></div>
+      <div class="col"><div class="metric">{{ tenant.restaurantCount }}</div><div class="hint">Restaurants</div></div>
+      <div class="col"><div class="metric">{{ tenant.tierCount }}</div><div class="hint">Markerlstufen</div></div>
+    </div>
+  </div></section>
 
-  <p class="hint mt-3">
-    Keine Backend-Speicherung vorhanden. Der Entwurf bleibt nur bis zum Neuladen oder Verlassen der
-    Verwaltung erhalten.
-  </p>
-  <button class="btn btn-primary btn-sm" [disabled]="!state.selected">
-    Entwurf lokal übernehmen
-  </button>
-  <a class="btn btn-outline-secondary btn-sm ms-2" routerLink="/saas/setup">Zum Setup</a>
+  <form [formGroup]="rulesForm" (ngSubmit)="saveRules()" (change)="rulesSaved.set(false)" class="card">
+    <div class="card-body">
+      <h2 class="border-bottom pb-3">3. Verwendungsregeln</h2>
+      @if (rulesLoading()) { <p role="status">Regeln werden geladen …</p> }
+      @if (rulesError()) { <div class="alert alert-danger" role="alert">{{ rulesError() }}</div> }
 
-  @if (saved()) {
-    <p class="text-success mt-3" role="status">Regeln für diese Sitzung übernommen.</p>
-  }
+      <fieldset [disabled]="loading() || !!loadError() || rulesLoading() || rulesSaving() || !!rulesError()">
+        <legend class="fs-6">Erlaubte Tage</legend>
+        <div class="d-flex flex-wrap gap-3 mb-3">
+          @for (day of days; track day.value) {
+            <label class="form-check">
+              <input #dayInput type="checkbox" class="form-check-input"
+                [checked]="rulesForm.controls.usageDays.value.includes(day.value)"
+                (change)="toggleDay(day.value, dayInput.checked)" />
+              <span class="form-check-label">{{ day.label }}</span>
+            </label>
+          }
+        </div>
+        <label class="form-check mb-2">
+          <input type="checkbox" class="form-check-input" formControlName="restaurantRequired" />
+          <span class="form-check-label">Restaurantangabe erforderlich</span>
+        </label>
+        <label class="form-check">
+          <input type="checkbox" class="form-check-input" formControlName="correctionHints" />
+          <span class="form-check-label">Korrekturhinweise anzeigen</span>
+        </label>
+        <button class="btn btn-primary btn-sm mt-3">{{ rulesSaving() ? 'Wird gespeichert …' : 'Regeln speichern' }}</button>
+      </fieldset>
+      @if (rulesSaved()) { <p class="text-success mt-3" role="status">Regeln gespeichert.</p> }
+      @if (rulesSaveError()) { <p class="text-danger mt-3" role="alert">{{ rulesSaveError() }}</p> }
+      <p class="hint mt-3">Die Regeln werden gespeichert. Ihre Anwendung bei Erfassungen muss noch im Backend ergänzt werden.</p>
+    </div>
+  </form>
 
-</form>
+  <button class="btn btn-outline-secondary btn-sm mt-3" (click)="load()" [disabled]="loading() || rulesLoading() || saving() || rulesSaving()">Daten neu laden</button>
+  <a class="btn btn-outline-secondary btn-sm mt-3 ms-2" routerLink="/saas/setup">Zum Setup</a>
+} @else {
+  <div class="alert alert-secondary">Bitte eine Organisation auswählen.</div>
+}
