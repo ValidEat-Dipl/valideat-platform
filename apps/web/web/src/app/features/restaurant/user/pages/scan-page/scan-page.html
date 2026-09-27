@@ -1,69 +1,57 @@
 <div class="scan-page">
-
-  <app-restaurant-header title="QR-Code scannen" [showBackButton]="true"> </app-restaurant-header>
+  <app-restaurant-header title="QR-Code einlösen" [showBackButton]="true" />
 
   <div class="px-4 py-4">
     <div class="row justify-content-center gx-0">
       <main class="col-12 col-sm-10 col-md-8 col-lg-7 col-xl-6">
+        <h1 class="h4 fw-semibold mb-2">QR-Code prüfen</h1>
+        <p class="text-secondary mb-3">Kamera auf den QR-Code richten. Nach dem Erkennen wird der Code automatisch geprüft.</p>
 
-      
-        <h1 class="h4 fw-semibold mb-2">Scan bereit</h1>
-
-        <p class="text-secondary mb-3">
-          Die Kamera ist hier noch nicht aktiv.
-          Der Bereich zeigt nur die spätere Scanfläche.
-        </p>
-
-        <div class="scanner-frame mb-4">
-          <div class="text-center">
-
-            <div class="scan-corner mx-auto mb-3"></div>
-
-            <p class="fw-semibold mb-1">
-              QR-Code im Rahmen ausrichten
-            </p>
-
-            <p class="small text-secondary mb-0">
-              Statischer Platzhalter ohne Kamera-Zugriff
-            </p>
-
-          </div>
-        </div>
-
-        <div class="card">
+        <div class="card mb-4">
           <div class="card-body">
-
-            <h2 class="h6 mb-3">Demo-Ergebnis öffnen</h2>
-
-            <div class="d-grid gap-2">
-
-              <a routerLink="/restaurant/user/result/success" class="btn btn-outline-success">
-                Erfolgreich
-              </a>
-
-              <a class="btn btn-outline-warning" routerLink="/restaurant/user/result/already-used">
-                Bereits eingelöst
-              </a>
-
-              <a routerLink="/restaurant/user/result/invalid" class="btn btn-outline-danger">
-                Ungültig oder abgelaufen
-              </a>
-
-              <a class="btn btn-outline-secondary" routerLink="/restaurant/user/result/wrong-location">
-                Falscher Standort
-              </a>
-
-              <a routerLink="/restaurant/user/result/offline" class="btn btn-outline-dark">
-                Prüfung nicht möglich
-              </a>
-
-            </div>
+            <video
+              #cameraPreview
+              class="camera-preview w-100 rounded mb-3"
+              [hidden]="!cameraActive()"
+              autoplay muted playsinline
+              aria-label="Kameravorschau zum QR-Code-Scan"
+            ></video>
+            @if (cameraActive()) {
+              <p class="small text-secondary" role="status">{{ isStartingCamera() ? 'Kamera wird gestartet ...' : 'QR-Code vor die Kamera halten.' }}</p>
+              <button class="btn btn-outline-secondary w-100" type="button" (click)="stopCamera()">Kamera stoppen</button>
+            } @else {
+              <button class="btn btn-primary w-100" type="button" [disabled]="isChecking()" (click)="startCamera()">Kamera starten</button>
+            }
           </div>
         </div>
 
+        @if (cameraError()) {
+          <div class="alert alert-warning" role="alert">{{ cameraError() }}</div>
+        }
+
+        <form (submit)="$event.preventDefault(); checkToken()" class="card mb-4">
+          <div class="card-body">
+            <label class="form-label fw-semibold" for="qr-token">Token manuell eingeben</label>
+            <textarea id="qr-token" class="form-control mb-3" rows="4" [formControl]="token" autocomplete="off"></textarea>
+            @if (token.invalid && token.touched) {
+              <p class="text-danger small">Bitte einen QR-Token eingeben.</p>
+            }
+            <button class="btn btn-primary w-100" type="submit" [disabled]="isChecking()">
+              {{ isChecking() ? 'Wird geprüft ...' : 'Code einlösen' }}
+            </button>
+          </div>
+        </form>
+
+        @if (errorMessage()) {
+          <div class="alert alert-danger" role="alert">{{ errorMessage() }}</div>
+        }
+        @if (scannedTicket(); as ticket) {
+          <div class="alert alert-success" role="status">
+            <h2 class="h5">Markerl erfolgreich eingelöst</h2>
+            <p class="mb-0">{{ ticket.firstName }} {{ ticket.lastName }} · {{ ticket.restaurantName }}</p>
+          </div>
+        }
       </main>
     </div>
-
-
   </div>
 </div>

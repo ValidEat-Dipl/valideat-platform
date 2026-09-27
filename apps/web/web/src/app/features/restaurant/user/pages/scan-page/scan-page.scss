@@ -6,21 +6,8 @@
   min-height: 100dvh;
 }
 
-.scanner-frame {
-  min-height: 330px;
-  display: grid;
-  place-items: center;
-  border: 2px dashed var(--bs-secondary-color);
-  border-radius: 1rem;
-  background:
-    linear-gradient(rgb(255 255 255 / 78%), rgb(255 255 255 / 78%)),
-    
-    repeating-linear-gradient(45deg, #f1f3f5 0 10px, #e9ecef 10px 20px);
-}
-
-.scan-corner {
-  width: 4rem;
-  height: 4rem;
-  border: 0.25rem solid var(--bs-primary);
-  border-radius: 0.75rem;
+.camera-preview {
+  max-height: 24rem;
+  background: #111;
+  object-fit: cover;
 }

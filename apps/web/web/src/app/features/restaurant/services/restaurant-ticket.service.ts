@@ -17,6 +17,13 @@ export class RestaurantTicketService {
     return this.http.get<RestaurantTicket[]>(`${API_BASE}/restaurant/tickets`)
   }
 
+  scanQRCode(token: string) {
+    return this.http.post<{ id: number; firstName: string; lastName: string; restaurantName: string; status: string }>(
+      `${API_BASE}/foodticket/scanQRCode`, token,
+      { headers: { 'Content-Type': 'text/plain' } },
+    )
+  }
+
   getTicketsWithFilter(status = '', fromDate = '', toDate = '', costOrder = '') {
     let params: string[] = []
 
