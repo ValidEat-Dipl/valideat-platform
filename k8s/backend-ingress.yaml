@@ -1,0 +1,81 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: valideat-backend
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: it220229.cloud.htl-leonding.ac.at
+      http:
+        paths:
+          - path: /employee
+            pathType: Prefix
+            backend:
+              service:
+                name: valideat-backend
+                port:
+                  number: 8080
+
+          - path: /foodticket
+            pathType: Prefix
+            backend:
+              service:
+                name: valideat-backend
+                port:
+                  number: 8080
+
+          - path: /restaurant
+            pathType: Prefix
+            backend:
+              service:
+                name: valideat-backend
+                port:
+                  number: 8080
+
+          - path: /restaurantUser
+            pathType: Prefix
+            backend:
+              service:
+                name: valideat-backend
+                port:
+                  number: 8080
+
+          - path: /saas-admin
+            pathType: Prefix
+            backend:
+              service:
+                name: valideat-backend
+                port:
+                  number: 8080
+
+          - path: /tier
+            pathType: Prefix
+            backend:
+              service:
+                name: valideat-backend
+                port:
+                  number: 8080
+
+          - path: /costOrder
+            pathType: Prefix
+            backend:
+              service:
+                name: valideat-backend
+                port:
+                  number: 8080
+
+          - path: /logs
+            pathType: Prefix
+            backend:
+              service:
+                name: valideat-backend
+                port:
+                  number: 8080
+
+          - path: /qrCodeScan
+            pathType: Prefix
+            backend:
+              service:
+                name: valideat-backend
+                port:
+                  number: 8080

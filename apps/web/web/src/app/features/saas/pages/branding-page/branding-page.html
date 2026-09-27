@@ -1,0 +1,155 @@
+<h1>Branding konfigurieren</h1>
+<p class="subtitle">Passen Sie ValidEat an das Erscheinungsbild Ihrer Organisation an.</p>
+<div class="alert alert-info">
+  Farben werden aus den Tenant-Daten geladen. Änderungen bleiben bis zum Neuladen oder Verlassen der
+  Verwaltung als lokale Entwürfe erhalten; Speichern im Backend und Veröffentlichen sind noch nicht
+  verfügbar.
+</div>
+
+@if (state.detailLoading()) {
+  <p role="status">Branding wird geladen …</p>
+}
+
+@if (state.detailError()) {
+  <div class="alert alert-danger" role="alert">{{ state.detailError() }}</div>
+}
+
+<form [formGroup]="brandingForm" (ngSubmit)="save()" (input)="saved.set(false)">
+
+  <fieldset [disabled]="!state.selected || state.detailLoading() || !!state.detailError()">
+    <div class="row g-3">
+      <div class="col-lg-8">
+
+        <section class="card mb-3">
+          <div class="card-header">Basis</div>
+          <div class="card-body">
+
+            <label for="app-name" class="form-label">App-Name</label>
+            <input id="app-name"  name="appName"
+              class="form-control mb-3"
+              formControlName="appName"
+              required
+              maxlength="80"
+            />
+
+            <label for="initials" class="form-label">Kurzname / Icon</label>
+            <input id="initials"  name="initials"
+              class="form-control initials-input"
+              formControlName="initials"
+              required
+              maxlength="3"
+            />
+            <p class="hint mt-3 mb-0">
+              Logo-Upload noch nicht verfügbar. In der Vorschau wird der Kurzname verwendet.
+            </p>
+          </div>
+
+        </section>
+
+        <section class="card mb-3">
+          <div class="card-header">Farben</div>
+          <div class="card-body">
+            <div class="d-flex align-items-center gap-3 mb-3">
+              <input id="primary"  name="primary"
+                type="color"
+                class="form-control form-control-color"
+                formControlName="primaryColor"
+              />
+
+              <label for="primary">
+                Primärfarbe
+                <small class="d-block text-secondary">{{ brandingForm.value.primaryColor }}</small>
+              </label>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+              <input id="accent"  name="accent"
+                type="color"
+                class="form-control form-control-color"
+                formControlName="accentColor"
+              />
+
+              <label for="accent">
+                Akzentfarbe
+                <small class="d-block text-secondary">{{ brandingForm.value.accentColor }}</small>
+              </label>
+            </div>
+            <p class="hint border-top pt-3 mt-3 mb-0">
+              Fehler-, Warn- und Erfolgsfarben bleiben unverändert.
+            </p>
+          </div>
+
+        </section>
+
+        <section class="card">
+          <div class="card-header">Kontrastprüfung</div>
+          <div class="card-body d-flex justify-content-between gap-3">
+            <span>
+              Weiß auf Primärfarbe: {{ getContrast() }} : 1
+              <br />
+              <span class="hint">Richtwert 4,5 : 1 für normalen Text</span>
+            </span>
+            <span
+              class="badge align-self-start"
+              [class.text-bg-success]="isReadable()"
+              [class.text-bg-warning]="!isReadable()"
+            >
+              {{ isReadable() ? 'Bestanden' : 'Farbe anpassen' }}
+            </span>
+          </div>
+
+        </section>
+
+      </div>
+
+      <aside class="col-lg-4">
+        <h2>Live-Vorschau</h2>
+        <div class="card">
+          <div class="card-header">Komponenten</div>
+          <div class="card-body">
+            <span class="brand-icon mb-3" [style.background]="brandingForm.value.primaryColor">
+              {{ brandingForm.value.initials }}
+            </span>
+            <h2>{{ brandingForm.value.appName }}</h2>
+            <span
+              class="preview-button d-inline-block text-white"
+              [style.background]="brandingForm.value.primaryColor"
+            >
+              Primär
+            </span>
+            <div
+              class="mt-3 p-2 text-white rounded"
+              [style.background]="brandingForm.value.primaryColor"
+            >
+              Dashboard
+            </div>
+            <div
+              class="mt-3 p-2 border-start border-4"
+              [style.border-left-color]="brandingForm.value.accentColor + ' !important'"
+            >
+              Akzentfarbe
+            </div>
+            <div class="d-flex gap-1 flex-wrap mt-3">
+              <span class="badge text-bg-success">Erfolgreich</span>
+              <span class="badge text-bg-warning">Warnung</span>
+              <span class="badge text-bg-danger">Fehler</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+    <button class="btn btn-primary btn-sm mt-3" [disabled]="brandingForm.invalid">
+      Entwurf lokal übernehmen
+    </button>
+    <button type="button"
+      class="btn btn-outline-secondary btn-sm mt-3 ms-2"
+      (click)="openPreview()"
+    >
+      Vorschau öffnen
+    </button>
+  </fieldset>
+
+  @if (saved()) {
+    <p class="text-success mt-3" role="status">Branding für diese Sitzung übernommen.</p>
+  }
+
+</form>

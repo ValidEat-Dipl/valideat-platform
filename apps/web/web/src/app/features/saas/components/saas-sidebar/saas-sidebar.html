@@ -1,0 +1,23 @@
+<aside class="sidebar">
+  <a class="brand" routerLink="/saas/dashboard">
+    <span class="logo">VE</span>
+    <span>
+      ValidEat
+      <small>SaaS-Verwaltung</small>
+    </span>
+  </a>
+  <nav aria-label="SaaS-Verwaltung">
+
+    @for (link of links; track link.path) {
+      <a [routerLink]="'/saas/' + link.path" routerLinkActive="active" ariaCurrentWhenActive="page">
+        <i [class]="'bi bi-' + link.icon" aria-hidden="true"></i>
+        {{ link.label }}
+      </a>
+    }
+  </nav>
+  <div class="account">
+    <strong>{{ currentUserService.getFullName() }}</strong>
+    <small>SaaS-Admin</small>
+    <button class="btn btn-sm btn-outline-secondary mt-2" (click)="logout()">Abmelden</button>
+  </div>
+</aside>

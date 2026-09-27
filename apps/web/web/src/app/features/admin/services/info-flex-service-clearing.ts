@@ -1,5 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { API_BASE } from '../../../api.config';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +21,7 @@ export class InfoFlexServiceClearing {
     if (status && status != 'ALL') params.status = status;
 
     return this.http.get<Record<string, number>>(
-      'http://localhost:8080/foodticket/clearing-info-box',
+      `${API_BASE}/foodticket/clearing-info-box`,
       { params },
     );
   }

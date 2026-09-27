@@ -34,6 +34,10 @@ import { authGuard } from './core/auth.guard.admin';
     loadChildren: () =>
       import('./features/restaurant/restaurant.routes').then((module) => module.RESTAURANT_ROUTES),
   },
+  {
+    path: 'saas',
+    loadChildren: () => import('./features/saas/saas.routes').then(module => module.SAAS_ROUTES),
+  },
   { path: '**', component: LoginComp },
 ];*/
 export const routes: Routes = [

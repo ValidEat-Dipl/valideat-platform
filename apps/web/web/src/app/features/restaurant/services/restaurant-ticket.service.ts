@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { RestaurantBilling, RestaurantMonthlyBilling, RestaurantOverview, RestaurantTicket } from '../models/restaurant-ticket.model';
 
-const API_BASE = 'http://localhost:8080';
+import { API_BASE } from '../../../api.config';
 
 @Injectable({ providedIn: 'root' })
 export class RestaurantTicketService {
@@ -15,6 +15,13 @@ export class RestaurantTicketService {
 
   getTickets() {
     return this.http.get<RestaurantTicket[]>(`${API_BASE}/restaurant/tickets`)
+  }
+
+  scanQRCode(token: string) {
+    return this.http.post<{ id: number; firstName: string; lastName: string; restaurantName: string; status: string }>(
+      `${API_BASE}/foodticket/scanQRCode`, token,
+      { headers: { 'Content-Type': 'text/plain' } },
+    )
   }
 
   getTicketsWithFilter(status = '', fromDate = '', toDate = '', costOrder = '') {

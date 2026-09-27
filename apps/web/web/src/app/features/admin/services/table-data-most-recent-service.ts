@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AdminFoodTicket } from '../models/admin-food-ticket.model';
+import { API_BASE } from '../../../api.config';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ export class TableDataMostRecentService {
     if (toDate) params.endDate = toDate;
     if (status && status != 'ALL') params.status = status;
 
-    return this.http.get<AdminFoodTicket[]>('http://localhost:8080/foodticket/listAdminTickets', {
+    return this.http.get<AdminFoodTicket[]>(`${API_BASE}/foodticket/listAdminTickets`, {
       params,
     });
   }

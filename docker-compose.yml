@@ -13,7 +13,7 @@ services:
 
   backend:
     build:
-      context: ../../apps/api/backend
+      context: ./apps/api/backend
       dockerfile: src/main/docker/Dockerfile.jvm
     ports:
       - "8080:8080"

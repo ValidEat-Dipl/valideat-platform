@@ -1,0 +1,47 @@
+:host {
+  display: block;
+}
+
+h1 {
+  font-size: 1.55rem;
+  font-weight: 650;
+  margin-bottom: 0.4rem;
+}
+
+h2 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.subtitle {
+  color: #6c757d;
+  margin-bottom: 1.5rem;
+}
+
+.card {
+  border-color: #dee2e6;
+  box-shadow: none;
+}
+
+.card-body {
+  padding: 1.15rem;
+}
+
+.metric {
+  font-size: 1.85rem;
+  font-weight: 650;
+}
+
+.metric-label,
+.hint {
+  color: #6c757d;
+  font-size: 0.85rem;
+}
+
+.form-label {
+  font-size: 0.9rem;
+}
+
+.alert {
+  font-size: 0.9rem;
+}

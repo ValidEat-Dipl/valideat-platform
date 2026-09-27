@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { LoginResponseDTO } from '../../admin/models/LoginResponseDTO';
 import { EmployeeRegisterRequest } from '../models/employee-register-request.model';
 
-const API_BASE = 'http://localhost:8080';
+import { API_BASE } from '../../../api.config';
 
 @Injectable({ providedIn: 'root' })
 export class EmployeeAuthService {

@@ -35,7 +35,12 @@ export class CurrentUserService {
     if (!user) {
       return null;
     }
-    return JSON.parse(user);
+    try {
+      return JSON.parse(user);
+    } catch {
+      localStorage.removeItem(this.storageKey);
+      return null;
+    }
   }
 
   getFullName(): string {

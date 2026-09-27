@@ -1,0 +1,64 @@
+<h1>Setup-Assistent</h1>
+<p class="subtitle">
+  Richten Sie ValidEat Schritt für Schritt für
+  {{ state.selected?.tenantName || 'Ihre Organisation' }} ein.
+</p>
+<div class="row g-4">
+  <div class="col-lg-8">
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="eyebrow mt-0">Nächster empfohlener Schritt</div>
+        <h2>Organisation und Basisdaten prüfen</h2>
+        <p class="hint">Beginnen Sie mit den vorhandenen Organisationsdaten.</p>
+        <a routerLink="/saas/organization" class="btn btn-primary btn-sm">Basisdaten öffnen</a>
+      </div>
+    </div>
+    <h2>Setup-Checkliste</h2>
+    <div class="list-group">
+
+      @for (step of steps; track step.path + step.title) {
+        <a class="list-group-item list-group-item-action" [routerLink]="'/saas/' + step.path">
+          <div class="d-flex justify-content-between gap-3">
+            <strong>{{ step.title }}</strong>
+            <span class="badge text-bg-light border align-self-start">{{ step.status }}</span>
+          </div>
+          <div class="hint mt-1">{{ step.text }}</div>
+        </a>
+      }
+      <div class="list-group-item text-secondary">
+        <i class="bi bi-lock me-2" aria-hidden="true"></i>
+        Umgebung aktivieren
+        <span class="badge text-bg-secondary">Nicht verfügbar</span>
+        <div class="hint mt-1">Eine Aktivierungsroute ist noch nicht vorhanden.</div>
+      </div>
+    </div>
+  </div>
+
+  <aside class="col-lg-4">
+    <div class="card">
+      <div class="card-header">Zusammenfassung</div>
+      <div class="card-body">
+
+        @if (state.selected; as tenant) {
+          <p>
+            Mitarbeitende
+            <strong class="float-end">{{ tenant.employeeCount }}</strong>
+          </p>
+          <p>
+            Restaurants
+            <strong class="float-end">{{ tenant.restaurantCount }}</strong>
+          </p>
+          <p class="mb-0">
+            Markerlstufen
+            <strong class="float-end">{{ tenant.tierCount }}</strong>
+          </p>
+        } @else {
+          <p class="hint mb-0">Wählen Sie eine vorhandene Organisation.</p>
+        }
+      </div>
+    </div>
+    <div class="alert alert-warning mt-3">
+      Kein berechneter Setup-Fortschritt verfügbar. Entwürfe gelten nur in dieser Sitzung.
+    </div>
+  </aside>
+</div>

@@ -1,5 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { API_BASE } from '../../../api.config';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +15,6 @@ export class InfoFlexServiceAdminOverview {
 
 
     return this.http.get<Record<string, number>>(
-      'http://localhost:8080/foodticket/admin-overview-info-box', { params });
+      `${API_BASE}/foodticket/admin-overview-info-box`, { params });
   }
 }

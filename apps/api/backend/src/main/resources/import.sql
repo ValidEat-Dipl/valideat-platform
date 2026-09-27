@@ -378,3 +378,116 @@ INSERT INTO RestaurantUser_foodTicket (RestaurantUser_id, foodTickets_id)
 VALUES
     (2, 13),
     (2, 14);
+
+
+
+INSERT INTO module (name, description)
+VALUES
+    ('EMPLOYEE_APP',
+     'Mitarbeitende können eigene Marker-Verwendungen erfassen und ansehen.'),
+    ('HR_ADMIN',
+     'HR/Admin kann Einträge, Mitarbeitende und Basisdaten verwalten.'),
+    ('CLEARING',
+     'Abgleich von Mitarbeiter-, HR- und Restaurant-Erfassungen, Konflikte bearbeiten.'),
+    ('RESTAURANT',
+     'Restaurant-User können Einlösungen erfassen oder QR-Codes scannen.'),
+    ('REPORTING_EXPORT',
+     'Auswertungen und Export für Abrechnung/Kontrolle.'),
+    ('BRANDING',
+     'Logo/Farben/App-Name pro Organisation.');
+
+INSERT INTO tenant_module (tenant_id, module_id)
+VALUES
+    (1, 1),
+    (1, 2),
+    (1, 3),
+    (1, 4),
+    (1, 5),
+    (1, 6),
+    (2, 1),
+    (2, 2),
+    (2, 3),
+    (2, 6);
+
+
+
+
+
+-- =========================================================
+-- TENANT RULES
+-- =========================================================
+
+INSERT INTO tenant_rules (
+    id,
+    tenant_id,
+    restaurantRequired,
+    correctionHints
+)
+VALUES
+    (1, 1, true, true),
+    (2, 2, false, true);
+
+
+-- =========================================================
+-- USAGE DAYS
+-- =========================================================
+
+INSERT INTO tenant_usage_days (
+    tenant_rules_id,
+    usage_day
+)
+VALUES
+    (1, 'MONDAY'),
+    (1, 'TUESDAY'),
+    (1, 'WEDNESDAY'),
+    (1, 'THURSDAY'),
+    (1, 'FRIDAY'),
+    (2, 'MONDAY'),
+    (2, 'WEDNESDAY'),
+    (2, 'FRIDAY');
+
+
+-- =========================================================
+-- TENANT BRANDING
+-- =========================================================
+
+INSERT INTO tenant_branding (
+    tenant_id,
+    draftAppName,
+    draftShortName,
+    draftPrimaryColor,
+    draftAccentColor,
+    draftLogo,
+    publishedAppName,
+    publishedShortName,
+    publishedPrimaryColor,
+    publishedAccentColor,
+    publishedLogo
+)
+VALUES
+    (
+        1,
+        'ValidEat Test',
+        'ValidEat',
+        '#005F99',
+        '#E63946',
+        NULL,
+        'ValidEat',
+        'VE',
+        '#005F99',
+        '#E63946',
+        NULL
+    ),
+    (
+        2,
+        'Tenant 2 App',
+        'Tenant2',
+        '#222222',
+        '#FFC107',
+        NULL,
+        'Tenant 2',
+        'T2',
+        '#222222',
+        '#FFC107',
+        NULL
+    );

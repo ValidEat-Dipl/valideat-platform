@@ -45,3 +45,99 @@ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJWYWxpZEVhd
 Content-Type: text/plain
 
 140sdf0 - Marketing
+
+
+###
+GET http://localhost:8080/saas-admin/unassigned-employees
+
+###
+PUT http://localhost:8080/saas-admin/assign/2/1
+
+
+###
+PUT http://localhost:8080/saas-admin/tenant/1
+Content-Type: application/json
+
+{
+  "organisationName": "Test GmbH",
+  "contactPerson": "Max Mustermann",
+  "email": "max.mustermann@test.at",
+  "country": "Austria",
+  "primaryColor": "#005F99",
+  "accentColor": "#E63946",
+  "companySize": "50-249"
+}
+
+
+### GET - Alle Module + Aktivierungsstatus eines Tenants
+GET http://localhost:8080/saas-admin/tenant/1/modules
+Accept: application/json
+
+
+### PUT - Module für Tenant speichern
+PUT http://localhost:8080/saas-admin/tenant/1/modules
+Content-Type: application/json
+
+{
+  "moduleIds": [1, 2, 3, 4, 5, 6]
+}
+
+
+
+
+### GET - Regeln eines Tenants
+GET http://localhost:8080/saas-admin/tenant/1/rules
+Accept: application/json
+
+
+### PUT - Regeln speichern
+PUT http://localhost:8080/saas-admin/tenant/1/rules
+Content-Type: application/json
+
+{
+  "usageDays": [
+    "MONDAY",
+    "TUESDAY",
+    "WEDNESDAY",
+    "THURSDAY",
+    "FRIDAY"
+  ],
+  "restaurantRequired": true,
+  "correctionHints": true
+}
+
+
+
+
+
+### GET - Branding eines Tenants
+GET http://localhost:8080/saas-admin/tenant/1/branding
+Accept: application/json
+
+
+### PUT - Branding-Entwurf speichern
+PUT http://localhost:8080/saas-admin/tenant/1/branding
+Content-Type: application/json
+
+{
+  "appName": "ValidEat Test",
+  "shortName": "ValidEat",
+  "primaryColor": "#005Fdfgsdfdfg99",
+  "accentColor": "#E63946",
+  "logo": null
+}
+
+
+### GET - Branding erneut abrufen
+GET http://localhost:8080/saas-admin/tenant/1/branding
+Accept: application/json
+
+
+### POST - Branding veröffentlichen
+POST http://localhost:8080/saas-admin/tenant/1/branding/publish
+Accept: application/json
+
+
+### GET - Nach Veröffentlichung nochmals prüfen
+GET http://localhost:8080/saas-admin/tenant/1/branding
+Accept: application/json

@@ -1,0 +1,136 @@
+<h1>Organisation & Regeln</h1>
+<p class="subtitle">
+  Stammdaten, Rollen, Basisdaten und Markerlregeln für
+  {{ state.selected?.tenantName || 'Ihre Organisation' }}.
+</p>
+
+@if (state.selected; as tenant) {
+
+  <section class="card mb-3">
+    <div class="card-body">
+      <h2 class="border-bottom pb-3">1. Organisationsdaten</h2>
+      <div class="row g-3">
+        <div class="col-md-4">
+          <div class="hint">Name</div>
+          {{ tenant.tenantName }}
+        </div>
+        <div class="col-md-4">
+          <div class="hint">Land / Region</div>
+          {{ tenant.country || 'Nicht angegeben' }}
+        </div>
+        <div class="col-md-4">
+          <div class="hint">Größe</div>
+          {{ tenant.companySize || 'Nicht angegeben' }}
+        </div>
+        <div class="col-md-4">
+          <div class="hint">Kontaktperson</div>
+          {{ tenant.manager || 'Nicht angegeben' }}
+        </div>
+        <div class="col-md-8">
+          <div class="hint">E-Mail</div>
+          {{ tenant.email || 'Nicht angegeben' }}
+        </div>
+      </div>
+      <p class="hint mt-3 mb-0">
+        Änderungen an bestehenden Organisationsdaten werden vom Backend noch nicht unterstützt.
+      </p>
+    </div>
+
+  </section>
+
+  <section class="card mb-3">
+    <div class="card-body">
+      <h2 class="border-bottom pb-3">2. Rollen & Basisdaten</h2>
+      <div class="row g-3">
+        <div class="col-6 col-lg">
+          <div class="metric">{{ tenant.adminCount }}</div>
+          <div class="hint">HR / Admin</div>
+        </div>
+        <div class="col-6 col-lg">
+          <div class="metric">{{ tenant.employeeCount }}</div>
+          <div class="hint">Mitarbeitende gesamt</div>
+        </div>
+        <div class="col-6 col-lg">
+          <div class="metric">{{ tenant.costOrderCount }}</div>
+          <div class="hint">Kostenstellen</div>
+        </div>
+        <div class="col-6 col-lg">
+          <div class="metric">{{ tenant.restaurantCount }}</div>
+          <div class="hint">Restaurants</div>
+        </div>
+        <div class="col-6 col-lg">
+          <div class="metric">{{ tenant.tierCount }}</div>
+          <div class="hint">Markerlstufen</div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+} @else {
+  <div class="alert alert-secondary">Bitte eine vorhandene Organisation auswählen.</div>
+}
+
+<form [formGroup]="rulesForm" (ngSubmit)="save()" (input)="saved.set(false)">
+
+  <section class="card">
+    <div class="card-body">
+      <h2 class="border-bottom pb-3">
+        3. Verwendungsregeln
+        <span class="badge text-bg-info">Lokaler Entwurf</span>
+      </h2>
+      <p class="hint">
+        Die angezeigten Anfangswerte sind Vorschläge, keine gespeicherten Unternehmensregeln.
+      </p>
+
+      <fieldset [disabled]="!state.selected">
+        <div class="row g-3">
+          <div class="col-md-6">
+
+            <label for="days" class="form-label">Erlaubte Tage</label>
+            <select id="days" name="days" formControlName="days" class="form-select">
+              <option>Mo–Fr</option>
+              <option>Mo–Sa</option>
+              <option>Alle Tage</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+
+            <label for="correction" class="form-label">Notiz zu Korrekturregeln</label>
+            <input id="correction"  name="correction"
+              class="form-control"
+              formControlName="correction"
+              maxlength="300"
+            />
+          </div>
+          <div class="col-12">
+
+            <label class="form-check">
+              <input class="form-check-input"
+                type="checkbox"
+                name="restaurant"
+                formControlName="restaurantRequired"
+              />
+              <span class="form-check-label">Restaurantangabe erforderlich</span>
+            </label>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+
+  </section>
+
+  <p class="hint mt-3">
+    Keine Backend-Speicherung vorhanden. Der Entwurf bleibt nur bis zum Neuladen oder Verlassen der
+    Verwaltung erhalten.
+  </p>
+  <button class="btn btn-primary btn-sm" [disabled]="!state.selected">
+    Entwurf lokal übernehmen
+  </button>
+  <a class="btn btn-outline-secondary btn-sm ms-2" routerLink="/saas/setup">Zum Setup</a>
+
+  @if (saved()) {
+    <p class="text-success mt-3" role="status">Regeln für diese Sitzung übernommen.</p>
+  }
+
+</form>

@@ -1,0 +1,42 @@
+:host {
+  display: block;
+  color: #292e33;
+}
+.saas-shell {
+  min-height: 100dvh;
+  background: #f8f9fa;
+  display: flex;
+}
+main {
+  padding: 2rem clamp(1rem, 3vw, 3.5rem);
+  flex: 1;
+  min-width: 0;
+  max-width: 1600px;
+}
+.context-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  color: #6c757d;
+  font-size: 0.8rem;
+}
+.context-bar div {
+  display: flex;
+  align-items: center;
+}
+select {
+  max-width: 270px;
+}
+@media (max-width: 800px) {
+  .saas-shell {
+    display: block;
+  }
+  main {
+    padding: 1.25rem;
+  }
+  .context-bar {
+    flex-wrap: wrap;
+  }
+}

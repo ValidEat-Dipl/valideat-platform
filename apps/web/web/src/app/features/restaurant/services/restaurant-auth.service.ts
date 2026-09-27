@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { LoginResponseDTO } from '../../admin/models/LoginResponseDTO';
 
-const API_BASE = 'http://localhost:8080';
+import { API_BASE } from '../../../api.config';
 
 @Injectable({ providedIn: 'root' })
 export class RestaurantAuthService {
