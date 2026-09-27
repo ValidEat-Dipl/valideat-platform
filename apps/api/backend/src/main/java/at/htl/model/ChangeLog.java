@@ -34,6 +34,13 @@ public class ChangeLog {
     public ChangeLog() {
     }
 
+    public ChangeLog(String description, LocalDate changeDate, FoodTicket foodTicket, Tenant tenant) {
+        this.description = description;
+        this.changeDate = changeDate;
+        this.foodTicket = foodTicket;
+        this.tenant = tenant;
+    }
+
     public ChangeLog(String description, LocalDate changeDate, FoodTicket foodTicket, Employee employee, Tenant tenant) {
         this.description = description;
         this.changeDate = changeDate;

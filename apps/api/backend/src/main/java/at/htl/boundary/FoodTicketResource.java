@@ -232,6 +232,10 @@ public class FoodTicketResource {
                 restaurant,
                 TicketType.EMPLOYEE);
         foodTicketRepository.save(foodTicket);
+
+        ChangeLog newChange = new ChangeLog("Added new Entry.", LocalDate.now(), foodTicket, employee, employee.getTenant());
+        changeLogRepository.save(newChange);
+
         return Response.ok(foodTicket.getId()).build();
     }
 
@@ -280,6 +284,7 @@ public class FoodTicketResource {
     @Transactional
     public Response empEditTicket(@PathParam("ticketId") Long ticketId, @PathParam("empId") Long empId,EmployeeFoodTicketDTO employeeFoodTicketDTO) {
         FoodTicket ticket = foodTicketRepository.findById(ticketId);
+        Employee employee = employeeRepository.findById(empId);
 
         if (ticket == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -320,6 +325,15 @@ public class FoodTicketResource {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
+        ChangeLog newChange = new ChangeLog(
+                "Ticket was edited.",
+                LocalDate.now(),
+                ticket,
+                employee,
+                employee.getTenant()
+        );
+        changeLogRepository.save(newChange);
 
         return Response.noContent().build();
     }
@@ -393,12 +407,28 @@ public class FoodTicketResource {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
 
+        ChangeLog newChange = new ChangeLog(
+                "Ticket was manually assigned.",
+                LocalDate.now(),
+                empTicket,
+                saaSAdminRepository.findTenantById(tenantService.getCurrentTenantId())
+        );
+        changeLogRepository.save(newChange);
+
+        ChangeLog newChange2 = new ChangeLog(
+                "Ticket was manually assigned.",
+                LocalDate.now(),
+                adminTicket,
+                saaSAdminRepository.findTenantById(tenantService.getCurrentTenantId())
+        );
+        changeLogRepository.save(newChange2);
+
         if (empTicket.getMatchingTicket() == null) {
             empTicket.setMatchingTicket(adminTicket);
-            return Response.ok(empTicket).build();
+            return Response.ok(empTicketId).build();
         } else {
             adminTicket.setMatchingTicket(empTicket);
-            return Response.ok(adminTicket).build();
+            return Response.ok(adminTicketId).build();
         }
     }
 
@@ -579,6 +609,12 @@ public class FoodTicketResource {
 
             foodTicketRepository.save(foodTicket);
             foodTicketRepository.save(matchingFoodTicket);
+
+            ChangeLog newChange = new ChangeLog("Added new Entry.", LocalDate.now(), foodTicket, employee, employee.getTenant());
+            changeLogRepository.save(newChange);
+
+            ChangeLog newChange2 = new ChangeLog("Added new Entry.", LocalDate.now(), foodTicket, employee, employee.getTenant());
+            changeLogRepository.save(newChange2);
 
             Long restaurantUserId = Long.valueOf(sessionToken.getClaim("id").toString());
             RestaurantUser restaurantUser = restaurantUserRepository.getRestaurantUserById(restaurantUserId);

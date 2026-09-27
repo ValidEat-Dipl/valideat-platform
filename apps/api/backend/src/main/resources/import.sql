@@ -45,7 +45,7 @@ INSERT INTO Employee (
     passwordHash,
     role
 ) VALUES
-      ('Max', 'Mustermann', 'Musterstraße 1, Linz', 'IT', '+43 660 1111111', 'max.mustermann@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu', 'ADMIN'),
+      ('Max', 'Mustermann', 'Musterstraße 1, Linz', 'IT', '+43 660 1111111', 'max.mustermann@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu', 'SAAS_ADMIN'),
 
       ('Anna', 'Huber', 'Hauptplatz 5, Wels', 'HR', '+43 660 2222222', 'anna.huber@firma.at', '$2a$10$fpNwHdoPCIkfHjbOfnFoMueK6uLOzRqIK8jkFlFVRh2vogI8qNtQu', 'EMPLOYEE'),
 
