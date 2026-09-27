@@ -13,6 +13,26 @@ jobs:
     name: Backend Build
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_DB: valideat
+          POSTGRES_USER: valideat
+          POSTGRES_PASSWORD: valideat
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U valideat -d valideat"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+
+    env:
+      QUARKUS_DATASOURCE_JDBC_URL: jdbc:postgresql://localhost:5432/valideat
+      QUARKUS_DATASOURCE_USERNAME: valideat
+      QUARKUS_DATASOURCE_PASSWORD: valideat
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
