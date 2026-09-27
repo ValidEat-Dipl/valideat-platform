@@ -70,7 +70,10 @@ export const routes: Routes = [
   },
   {
     path: 'saas',
-    loadChildren: () => import('./features/saas/saas.routes').then(module => module.SAAS_ROUTES),
+    loadChildren: () => import('./features/saas/saas.routes').then((module) => module.SAAS_ROUTES),
   },
-  { path: '**', component: LoginComp },
+  {
+    path: '**',
+    component: LoginComp,
+  },
 ];

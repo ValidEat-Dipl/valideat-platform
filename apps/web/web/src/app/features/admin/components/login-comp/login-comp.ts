@@ -57,7 +57,7 @@ export class LoginComp {
 
         console.log('Gespeicherter User:', this.currentUserService.getUser());
 
-        this.router.navigate(['/']);
+        this.router.navigate(['/admin-overview']);
       },
 
       error: () => {
