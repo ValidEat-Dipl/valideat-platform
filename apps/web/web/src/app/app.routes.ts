@@ -68,5 +68,9 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./features/restaurant/restaurant.routes').then((m) => m.RESTAURANT_ROUTES),
   },
+  {
+    path: 'saas',
+    loadChildren: () => import('./features/saas/saas.routes').then(module => module.SAAS_ROUTES),
+  },
   { path: '**', component: LoginComp },
 ];
