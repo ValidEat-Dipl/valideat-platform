@@ -10,8 +10,9 @@ import { MostRecentTicketsComp } from './features/admin/components/most-recent-t
 import { CorrectTicketComp } from './features/admin/components/correct-ticket-comp/correct-ticket-comp';
 import { RegisterComp } from './features/admin/components/register-comp/register-comp';
 import { LoginComp } from './features/admin/components/login-comp/login-comp';
+import { authGuard } from './core/auth.guard.admin';
 
-export const routes: Routes = [
+/*export const routes: Routes = [
   { path: 'admin-overview', component: AdminOverviewComp },
   { path: 'most-recent-created', component: MostRecentTicketsComp },
   { path: 'create-ticket', component: CreateTicketComp },
@@ -33,5 +34,35 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./features/restaurant/restaurant.routes').then((module) => module.RESTAURANT_ROUTES),
   },
-  { path: '**', component: AdminOverviewComp },
+  { path: '**', component: LoginComp },
+];*/
+export const routes: Routes = [
+  {
+    path: '',
+    canActivate: [authGuard],
+    children: [
+      { path: 'admin-overview', component: AdminOverviewComp },
+      { path: 'most-recent-created', component: MostRecentTicketsComp },
+      { path: 'create-ticket', component: CreateTicketComp },
+      { path: 'clearing-tickets', component: ClearingTicketsComp },
+      { path: 'clearing-tickets/check-conflict/:id', component: CheckConflictComp },
+      { path: 'open-conflicts', component: OpenConflictsComp },
+      { path: 'export', component: ExportComp },
+      { path: 'ticket-details/:id', component: TicketDetailsComp },
+      { path: 'ticket-details/correct/:id', component: CorrectTicketComp },
+    ],
+  },
+  { path: 'register', component: RegisterComp },
+  { path: 'login', component: LoginComp },
+  {
+    path: 'employee',
+    loadChildren: () =>
+      import('./features/employee/employee.routes').then((m) => m.EMPLOYEE_ROUTES),
+  },
+  {
+    path: 'restaurant',
+    loadChildren: () =>
+      import('./features/restaurant/restaurant.routes').then((m) => m.RESTAURANT_ROUTES),
+  },
+  { path: '**', component: LoginComp },
 ];
