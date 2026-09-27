@@ -1,17 +1,23 @@
 <h1>
   Branding Vorschau
-  <span class="badge text-bg-info fs-6">Entwurf</span>
+  <span class="badge text-bg-info fs-6">{{ showPublished() ? 'Veröffentlicht' : 'Entwurf' }}</span>
 </h1>
 <p class="subtitle">Prüfen Sie, wie ValidEat für Ihre Organisation aussehen könnte.</p>
 <div class="alert alert-warning">
   Diese Vorschau zeigt nur das Erscheinungsbild. Die dargestellten Aktionen sind nicht ausführbar.
 </div>
 
-@if (state.detailLoading()) {
+@if (loading()) {
   <p role="status">Branding wird geladen …</p>
-} @else if (state.detailError()) {
-  <div class="alert alert-danger" role="alert">{{ state.detailError() }}</div>
+} @else if (error()) {
+  <div class="alert alert-danger" role="alert">{{ error() }}</div>
 } @else if (state.selected; as tenant) {
+  <div class="btn-group mb-3" role="group" aria-label="Brandingstand">
+    <button class="btn btn-outline-primary" [class.active]="!showPublished()" (click)="changeView(false)">Entwurf</button>
+    <button class="btn btn-outline-primary" [class.active]="showPublished()" (click)="changeView(true)">Veröffentlicht</button>
+  </div>
+  @if (brand; as brand) {
+  @if (brand.appName) {
   <div class="row g-3 mb-4">
 
     @for (view of ['Mitarbeiter-App', 'Restaurant-Scanner', 'Adminbereich']; track view) {
@@ -20,7 +26,11 @@
         <h2 class="eyebrow mt-0">{{ view }}</h2>
         <div class="card h-100">
           <div class="preview-bar text-white" [style.background]="brand.primaryColor">
-            <strong class="me-2">{{ brand.initials }}</strong>
+            @if (brand.logo && !logoFailed()) {
+              <img [src]="brand.logo" alt="Organisationslogo" style="max-width: 80px; max-height: 32px" class="me-2" (error)="logoFailed.set(true)" />
+            } @else {
+              <strong class="me-2">{{ brand.shortName }}</strong>
+            }
             {{ brand.appName }}
           </div>
           <div class="card-body">
@@ -64,8 +74,8 @@
     <div class="card-header">Prüfpunkte</div>
     <ul class="list-group list-group-flush">
       <li class="list-group-item">
-        Kurzname statt Logo
-        <span class="badge text-bg-info float-end">{{ brand.initials }}</span>
+        Kurzname
+        <span class="badge text-bg-info float-end">{{ brand.shortName }}</span>
       </li>
       <li class="list-group-item">
         Weißer Text auf Primärfarbe
@@ -85,15 +95,23 @@
 
   </section>
 
+  } @else {
+    <p class="alert alert-secondary">Für diesen Stand ist noch kein Branding gespeichert.</p>
+  }
+  }
 } @else {
   <div class="empty card">Bitte eine Organisation auswählen.</div>
 }
-<button class="btn btn-primary btn-sm mt-3" disabled aria-describedby="publish-help">
-  Branding veröffentlichen
+@if (published()) { <p class="text-success" role="status">Branding veröffentlicht und im Backend gespeichert.</p> }
+@if (publishError()) { <p class="text-danger" role="alert">{{ publishError() }}</p> }
+<button class="btn btn-primary btn-sm mt-3" (click)="publish()" [disabled]="!branding() || loading() || publishing() || !!error()" aria-describedby="publish-help">
+  {{ publishing() ? 'Wird veröffentlicht …' : 'Entwurf veröffentlichen' }}
 </button>
 <a class="btn btn-outline-secondary btn-sm mt-3 ms-2" routerLink="/saas/branding">
   Zurück bearbeiten
 </a>
 <p class="hint mt-2" id="publish-help">
-  Veröffentlichen ist noch nicht angebunden. Die Vorschau verändert keine anderen App-Bereiche.
+  Der veröffentlichte Stand wird gespeichert. Employee-, Restaurant- und HR-Seiten verwenden diese Konfiguration noch nicht automatisch.
 </p>
+
+<button class="btn btn-outline-secondary btn-sm mt-2" (click)="load()" [disabled]="loading() || publishing() || !state.selected">Neu laden</button>

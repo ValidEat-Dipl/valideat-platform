@@ -19,7 +19,7 @@ export const saasGuard: CanActivateFn = () => {
   const user = currentUserService.getUser();
 
 
-  if (user?.role === 'SAAS_ADMIN' && user.token) {
+  if (user && user.role === 'SAAS_ADMIN' && user.token) {
 
     return true;
   }

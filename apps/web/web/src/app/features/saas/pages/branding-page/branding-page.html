@@ -1,22 +1,18 @@
 <h1>Branding konfigurieren</h1>
 <p class="subtitle">Passen Sie ValidEat an das Erscheinungsbild Ihrer Organisation an.</p>
-<div class="alert alert-info">
-  Farben werden aus den Tenant-Daten geladen. Änderungen bleiben bis zum Neuladen oder Verlassen der
-  Verwaltung als lokale Entwürfe erhalten; Speichern im Backend und Veröffentlichen sind noch nicht
-  verfügbar.
-</div>
-
-@if (state.detailLoading()) {
-  <p role="status">Branding wird geladen …</p>
+<p class="hint">Entwürfe werden für die Organisation gespeichert. Veröffentlichen erfolgt anschließend in der Vorschau.</p>
+@if (loading()) { <p role="status">Branding wird geladen …</p> }
+@if (loadError()) {
+  <div class="alert alert-danger" role="alert">
+    {{ loadError() }}
+    <button class="btn btn-sm btn-outline-danger" (click)="load()">Erneut versuchen</button>
+  </div>
 }
-
-@if (state.detailError()) {
-  <div class="alert alert-danger" role="alert">{{ state.detailError() }}</div>
-}
+@if (!state.selected) { <div class="alert alert-secondary">Bitte eine Organisation auswählen.</div> }
 
 <form [formGroup]="brandingForm" (ngSubmit)="save()" (input)="saved.set(false)">
 
-  <fieldset [disabled]="!state.selected || state.detailLoading() || !!state.detailError()">
+  <fieldset [disabled]="!state.selected || loading() || saving() || !!loadError()">
     <div class="row g-3">
       <div class="col-lg-8">
 
@@ -32,16 +28,16 @@
               maxlength="80"
             />
 
-            <label for="initials" class="form-label">Kurzname / Icon</label>
-            <input id="initials"  name="initials"
-              class="form-control initials-input"
-              formControlName="initials"
+            <label for="shortName" class="form-label">Kurzname / Icon</label>
+            <input id="shortName"  name="shortName"
+              class="form-control shortName-input"
+              formControlName="shortName"
               required
-              maxlength="3"
+              maxlength="80"
             />
-            <p class="hint mt-3 mb-0">
-              Logo-Upload noch nicht verfügbar. In der Vorschau wird der Kurzname verwendet.
-            </p>
+            <label for="logo" class="form-label mt-3">Logo-Adresse</label>
+            <input id="logo" class="form-control" formControlName="logo" maxlength="255" />
+            <p class="hint mt-2 mb-0">Optional: Adresse eines vorhandenen Logos. Ein Datei-Upload ist noch nicht verfügbar.</p>
           </div>
 
         </section>
@@ -107,7 +103,7 @@
           <div class="card-header">Komponenten</div>
           <div class="card-body">
             <span class="brand-icon mb-3" [style.background]="brandingForm.value.primaryColor">
-              {{ brandingForm.value.initials }}
+              {{ brandingForm.value.shortName }}
             </span>
             <h2>{{ brandingForm.value.appName }}</h2>
             <span
@@ -138,7 +134,7 @@
       </aside>
     </div>
     <button class="btn btn-primary btn-sm mt-3" [disabled]="brandingForm.invalid">
-      Entwurf lokal übernehmen
+      {{ saving() ? 'Wird gespeichert …' : 'Entwurf speichern' }}
     </button>
     <button type="button"
       class="btn btn-outline-secondary btn-sm mt-3 ms-2"
@@ -149,7 +145,11 @@
   </fieldset>
 
   @if (saved()) {
-    <p class="text-success mt-3" role="status">Branding für diese Sitzung übernommen.</p>
+    <p class="text-success mt-3" role="status">Brandingentwurf gespeichert.</p>
   }
 
+  @if (saveError()) { <p class="text-danger mt-3" role="alert">{{ saveError() }}</p> }
+  @if (brandingForm.invalid && brandingForm.touched) {
+    <p class="text-danger mt-3" role="alert">Bitte Name, Kurzname und gültige Farben ausfüllen.</p>
+  }
 </form>
